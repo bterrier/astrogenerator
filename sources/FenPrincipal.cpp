@@ -458,6 +458,8 @@ bool FenPrincipal::fermerOnglet(Interface *interface)
     int index = tabOnglets->indexOf(interface);
     if(index > -1)
         return fermerOnglet(index);
+
+    return false;
 }
 void FenPrincipal::ouvrirSoa(QString fileSoa)
 {

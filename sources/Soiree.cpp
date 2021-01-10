@@ -1049,7 +1049,7 @@ bool Soiree::paintPdf(QPrinter *printer)
                     painter.setFont(font);
                     painter.drawText(QRectF(0,0,(210-mD-mG)*k,7*k),Qt::AlignRight,QString::number(page));
                 }
-                if(i>0 && (m_listeObjets.at(i)->getDebut().toTime_t()-m_listeObjets.at(i-1)->getFin().toTime_t()) > user->value("generateur/pauseMin",TEMPS_ESPACE).toInt()*60)
+                if(i>0 && (m_listeObjets.at(i)->getDebut().toTime_t()-m_listeObjets.at(i-1)->getFin().toTime_t()) > user->value("generateur/pauseMin",TEMPS_ESPACE).toUInt()*60)
                 {
                     // Si on est pas au premier objet et que le temps entre cet objet et celui d'avant est supérieur à TEMPS_ESPACE, alors on affiche une pause
                     int pause = m_listeObjets.at(i)->getDebut().toTime_t()-m_listeObjets.at(i-1)->getFin().toTime_t();

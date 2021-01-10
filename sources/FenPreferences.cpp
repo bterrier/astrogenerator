@@ -715,7 +715,7 @@ void FenPreferences::reinitialiser()
     QSqlQuery requete;
     m_listeVilles->clear();
     m_listePays->setCurrentIndex(m_listePays->findText(PAYS_DEFAUT));
-    if(PAYS_DEFAUT != "France")
+    if(PAYS_DEFAUT != QStringLiteral("France"))
     {
         m_listeDept->setDisabled(true);
         requete.prepare("SELECT nom FROM villes_monde WHERE pays = :pays ORDER BY nom");
