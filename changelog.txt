@@ -1,0 +1,18 @@
+- Ajout de 45 nouvelles images pour les objets.
+- Vincent Hourdin en tant que traducteur dans les infos de l'application
+- Changement de l'interface de renseignement des oculaires (plus grand choix : 1 mm à 60 mm)
+- Colonne du nom élargi dans l'interface de lecture de soirée
+- Correction du nom de M27 (Haltère)
+- Modification d'un bug dans le grisement des boutons d'actions
+- Ajout des miniatures d'objets au début des listes
+- Possibilité de modifier la BDD (difficulté, icone, intérêt, remarque personnelle)
+- Modification de la fonction diaporama : changement de l'apparence, ajout d'un carte plus précise et calcul des coordonnées différentielles
+- Possibilité de personnaliser le PDF (+ ajout des coordonnées différentielles et des commentaires personelles)
+- Possibilité d'ajouter son propre lieu d'observation (menu Préférences > Localisation)
+- Ajout de la liste de mise à jour (Aide > Nouveautés)
+- Nouveau formulaire pour rapporter les bugs (Aide > Signaler un bug)
+- Correction du bug de coordonnées de certaines villes (caractères d’échappement)
+- Possibilité de préciser un nombre maximum d'objets pour une soirée (fenêtre génération)
+- Résolution du problème d'horaires dans l'interface de création de soirée
+- Ajout du champ "Horizon dégagé (Nord, Sud, Ouest, Est)" pour éviter de placer des objets sur un horizon non dégagé (arbres, immeubles, maison, lumière gênantes).
+- Ajout des actions Annuler/Refaire
