@@ -18,6 +18,8 @@
 
 #include <QSqlQuery>
 
+#include <QDebug>
+
 Carteciel::Carteciel(Carteciel const& carteParam) : QGraphicsScene()
 {
     m_user = new QSettings(NOM_EQUIPE,NOM_PROGRAMME);
@@ -174,10 +176,13 @@ void Carteciel::dessinerCarte()
             couple = line.split(" ");
             dessine = true;
 
-            QSqlQuery requeteDessin("SELECT ascdr, declinaison FROM etoiles WHERE hr = "+couple.at(0)+" OR hr = "+couple.at(1));
+            QSqlQuery requeteDessin("SELECT ascdr, declinaison FROM etoiles WHERE hr = "+couple.at(1)+" OR hr = "+couple.at(2));
 
             // Premier point
-            requeteDessin.next();
+            if (!requeteDessin.next()) {
+                qCritical() << "No result for" << requeteDessin.executedQuery();
+                continue;
+            }
             raDecimal = hmsToDegree(requeteDessin.value(0).toString());
             declinaisonDecimal = dmsToDegree(requeteDessin.value(1).toString());
 
