@@ -73,7 +73,9 @@ SOURCES += sources/ActionsFenetre.cpp \
            sources/WidgetOnglet.cpp
 TRANSLATIONS += sources/astroGenerator_en.ts
 
-RC_FILE = myapp.rc
+RC_ICONS = logoastrogenerator.ico
+VERSION = 3.0.0
+
 INSTALLS += ag_txt ag_translations
 
 ag_translations.path = $$OUT_PWD/translations

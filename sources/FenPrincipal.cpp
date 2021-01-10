@@ -597,6 +597,7 @@ void FenPrincipal::aPropos()
     QString about;
     about = "<strong>Version : </strong>"VERSION"<br />";
     about += "Copyright © 2011-2013 - Univers-Astronomie.fr - Gallouedec Valentin<br />";
+    about += "Copyright © 2021 - Terrier Benjamin<br />";
     about += "<strong>Site web : </strong><a href='"URL_UNIVERS_ASTRONOMIE"'>"URL_UNIVERS_ASTRONOMIE"</a><br />";
     about += "<strong> Outil en ligne : </strong><a href='"URL_GENERATEUR"'>"URL_GENERATEUR"</a><br />";
     about += "<strong> Langue ordinateur : </strong>"+QLocale::system().name()+"<br />";
