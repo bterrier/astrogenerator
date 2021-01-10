@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 
     if(!QDir::setCurrent(QCoreApplication::applicationDirPath()+"/"))
     {
-        QMessageBox::critical(0,QObject::tr("Résolution des liens"),QObject::tr("Problème lors de la résolution des liens, le programme ne peut pas fonctionner correctement."));
+        QMessageBox::critical(0,QObject::tr("RÃ©solution des liens"),QObject::tr("ProblÃ¨me lors de la rÃ©solution des liens, le programme ne peut pas fonctionner correctement."));
         app.quit();
     }
 

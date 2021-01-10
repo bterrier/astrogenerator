@@ -8,7 +8,7 @@ ObjetPlaneteObs::ObjetPlaneteObs(QString nomPlanete, QDateTime debut, QDateTime 
     QVector<double> infosPlanete;
     infosPlanete = Calculastro::coordonneesPlanetes(debut.date(),debut.time(),Calculastro::referencePlaneteToNom(nomPlanete));
     m_ref = nomPlanete;
-    m_type = "Planète";
+    m_type = "PlanÃ¨te";
     m_ascdr = infosPlanete.at(0);
     m_dec = infosPlanete.at(1);
     m_constellation = "-";

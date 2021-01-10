@@ -50,7 +50,7 @@ QString Objet::declinaison()
     double decNew(m_dec);
     if(decNew < 0)
     {
-        decNew *= -1.0; // On le met supérieur à 0
+        decNew *= -1.0; // On le met supÃ©rieur Ã  0
         signe = "-";
     }
 
@@ -58,7 +58,7 @@ QString Objet::declinaison()
     m = floor((decNew-d)*60);
     s = floor(((decNew-d)*60-m)*60);
 
-    return QString(signe + QString::number(d) + "° " + QString::number(m) + "' " + QString::number(s) + "\"");
+    return QString(signe + QString::number(d) + "Â° " + QString::number(m) + "' " + QString::number(s) + "\"");
 }
 
 double Objet::decDouble()
@@ -77,7 +77,7 @@ QString Objet::interet(bool explicite)
     {
         switch(m_interet.toInt())
         {
-            case 1 : return tr("Sans interêt"); break;
+            case 1 : return tr("Sans interÃªt"); break;
             case 2 : return tr("Peu interessant"); break;
             case 3 : return tr("Interessant"); break;
             case 4 : return tr("Remarquable"); break;
@@ -93,7 +93,7 @@ QString Objet::difficulte(bool explicite)
     {
         switch(m_difficulte.toInt())
         {
-            case 1 : return tr("Très facile"); break;
+            case 1 : return tr("TrÃ¨s facile"); break;
             case 2 : return tr("Facile"); break;
             case 3 : return tr("Moyen"); break;
             case 4 : return tr("Difficile"); break;

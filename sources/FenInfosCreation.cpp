@@ -102,13 +102,13 @@ FenInfosCreation::FenInfosCreation(FenPrincipal *parent) :
 
     layoutForm = new QFormLayout;
         layoutForm->addRow(tr("&Pays"),m_pays);
-        layoutForm->addRow(tr("&Département"),m_departement);
+        layoutForm->addRow(tr("&DÃ©partement"),m_departement);
         layoutForm->addRow(tr("&Ville"),m_villes);
         layoutForm->addRow(tr("&Latitude"),m_latitude);
         layoutForm->addRow(tr("&Longitude"),m_longitude);
-        layoutForm->addRow(tr("D&ate de début"),m_date);
-        layoutForm->addRow(tr("&Heure de début"),m_heure);
-        layoutForm->addRow(tr("&Télescope"),m_telescope);
+        layoutForm->addRow(tr("D&ate de dÃ©but"),m_date);
+        layoutForm->addRow(tr("&Heure de dÃ©but"),m_heure);
+        layoutForm->addRow(tr("&TÃ©lescope"),m_telescope);
             QHBoxLayout *layout = new QHBoxLayout;
             layout->addWidget(m_submit);
             layout->addWidget(m_close);
@@ -121,7 +121,7 @@ FenInfosCreation::FenInfosCreation(FenPrincipal *parent) :
     connect(m_villes,SIGNAL(currentIndexChanged(QString)),this,SLOT(actualiserCoordonnees(QString)));
 
     setLayout(layoutForm);
-    setWindowTitle(tr("Informations relatives à la soirée"));
+    setWindowTitle(tr("Informations relatives Ã  la soirÃ©e"));
 }
 void FenInfosCreation::actualiserCoordonnees(QString nom)
 {

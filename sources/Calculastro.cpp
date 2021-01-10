@@ -9,7 +9,7 @@
 
 // ------------------------------------------------------------------------------------
 // NOTE IMPORTANTE
-// Toutes les dates qu'utlisent ces fonctions doivent être données en TEMPS UNIVERSEL
+// Toutes les dates qu'utlisent ces fonctions doivent Ãªtre donnÃ©es en TEMPS UNIVERSEL
 // ------------------------------------------------------------------------------------
 
 double Calculastro::abs(double valeur)
@@ -197,7 +197,7 @@ double Calculastro::partieEntiere(double val)
         return floor(val);
 }
 double Calculastro::heureSiderale(QDate date, QTime heure, bool apparent)
-{ // La méthode de calcul présentée ici est celle de l'exemple 11.b p.85
+{ // La mÃ©thode de calcul prÃ©sentÃ©e ici est celle de l'exemple 11.b p.85
     double T(0), JD(0), Oo(0), HSH(0);
 
     JD = julianDay(date,heure);
@@ -205,15 +205,15 @@ double Calculastro::heureSiderale(QDate date, QTime heure, bool apparent)
 
     // Formule (11.4)
     Oo = 280.46061837 + (360.98564736629 * (JD-2451545.0)) + (0.000387933*T*T) - ((T*T*T)/38710000);
-    // Puis on le ramène dans un intervalle entre 0 et 360°
+    // Puis on le ramÃ¨ne dans un intervalle entre 0 et 360Â°
     while(Oo < 0 || Oo >= 360)
     {
         if(Oo<0) Oo += 360;
         else Oo -= 360;
     }
-    HSH = Oo / 15; // Il était en degrés, pour obtenir en heures, on divise par 15
+    HSH = Oo / 15; // Il Ã©tait en degrÃ©s, pour obtenir en heures, on divise par 15
 
-    if(apparent) // Si on veut temps sidéral APPARENT, il faut corriger la valeur
+    if(apparent) // Si on veut temps sidÃ©ral APPARENT, il faut corriger la valeur
     {
         QVector<double> nuOb = nutationObliquity(JD-2451545.0);
         double correction = (nuOb[0]*cos(deg2rad(nuOb[2]))) / 15; // en secondes
@@ -222,12 +222,12 @@ double Calculastro::heureSiderale(QDate date, QTime heure, bool apparent)
     return HSH; // ATTENTION IL FAUT CORRIGER CETTE VALEUR (voir p.84)
 }
 double Calculastro::toAngleHoraireDegree(QDate date, QTime heure, double ra, double longi)
-{ // Pour vérification, voir exemple 12.b p.91
+{ // Pour vÃ©rification, voir exemple 12.b p.91
     double angleHoraire(0);
 
-    angleHoraire = heureSiderale(date,heure,true) + longi/15.0 - ra/15.0; // résultat en heures
-    angleHoraire *= 15.0; // on le convertit en degrés
-    angleHoraire = toZero360(angleHoraire); // On le ramène dans un intervalle entre 0 et 360°
+    angleHoraire = heureSiderale(date,heure,true) + longi/15.0 - ra/15.0; // rÃ©sultat en heures
+    angleHoraire *= 15.0; // on le convertit en degrÃ©s
+    angleHoraire = toZero360(angleHoraire); // On le ramÃ¨ne dans un intervalle entre 0 et 360Â°
 
     return angleHoraire;
 }
@@ -292,7 +292,7 @@ QString Calculastro::monthNumToName(int i)
     if(i<=12 && i >= 1)
     {
         QStringList mois;
-        mois << QObject::tr("Janvier") << QObject::tr("Février") << QObject::tr("Mars") << QObject::tr("Avril") << QObject::tr("Mai") << QObject::tr("Juin") << QObject::tr("Juillet") << QObject::tr("Août") << QObject::tr("Septembre") << QObject::tr("Octobre") << QObject::tr("Novembre") << QObject::tr("Décembre");
+        mois << QObject::tr("Janvier") << QObject::tr("FÃ©vrier") << QObject::tr("Mars") << QObject::tr("Avril") << QObject::tr("Mai") << QObject::tr("Juin") << QObject::tr("Juillet") << QObject::tr("AoÃ»t") << QObject::tr("Septembre") << QObject::tr("Octobre") << QObject::tr("Novembre") << QObject::tr("DÃ©cembre");
         return mois.at(i-1);
     }
     else
@@ -305,22 +305,22 @@ QString Calculastro::abreviationToNom(QString abreviation, bool inverse)
 {
     QMap<QString,QString> constellations;
     constellations.insert("Aql",QObject::tr("Aigle","Constellation"));
-    constellations.insert("And",QObject::tr("Andromède","Constellation"));
+    constellations.insert("And",QObject::tr("AndromÃ¨de","Constellation"));
     constellations.insert("Ara",QObject::tr("Autel","Constellation"));
     constellations.insert("Lib",QObject::tr("Balance","Constellation"));
     constellations.insert("Cet",QObject::tr("Baleine","Constellation"));
-    constellations.insert("Ari",QObject::tr("Bélier","Constellation"));
+    constellations.insert("Ari",QObject::tr("BÃ©lier","Constellation"));
     constellations.insert("Pyx",QObject::tr("Boussole","Constellation"));
     constellations.insert("Boo",QObject::tr("Bouvier","Constellation"));
     constellations.insert("Cae",QObject::tr("Burin","Constellation"));
-    constellations.insert("Cha",QObject::tr("Caméléon","Constellation"));
+    constellations.insert("Cha",QObject::tr("CamÃ©lÃ©on","Constellation"));
     constellations.insert("Cnc",QObject::tr("Cancer","Constellation"));
     constellations.insert("Cap",QObject::tr("Capricorne","Constellation"));
-    constellations.insert("Car",QObject::tr("Carène","Constellation"));
-    constellations.insert("Cas",QObject::tr("Cassiopée","Constellation"));
+    constellations.insert("Car",QObject::tr("CarÃ¨ne","Constellation"));
+    constellations.insert("Cas",QObject::tr("CassiopÃ©e","Constellation"));
     constellations.insert("Cen",QObject::tr("Centaure","Constellation"));
-    constellations.insert("Cep",QObject::tr("Céphée","Constellation"));
-    constellations.insert("Com",QObject::tr("Chevelure de Bérénice","Constellation"));
+    constellations.insert("Cep",QObject::tr("CÃ©phÃ©e","Constellation"));
+    constellations.insert("Com",QObject::tr("Chevelure de BÃ©rÃ©nice","Constellation"));
     constellations.insert("CVn",QObject::tr("Chiens de chasse","Constellation"));
     constellations.insert("Aur",QObject::tr("Cocher","Constellation"));
     constellations.insert("Col",QObject::tr("Colombe","Constellation"));
@@ -328,7 +328,7 @@ QString Calculastro::abreviationToNom(QString abreviation, bool inverse)
     constellations.insert("Crv",QObject::tr("Corbeau","Constellation"));
     constellations.insert("Crt",QObject::tr("Coupe","Constellation"));
     constellations.insert("CrA",QObject::tr("Couronne australe","Constellation"));
-    constellations.insert("CrB",QObject::tr("Couronne boréale","Constellation"));
+    constellations.insert("CrB",QObject::tr("Couronne borÃ©ale","Constellation"));
     constellations.insert("Cru",QObject::tr("Croix du Sud","Constellation"));
     constellations.insert("Cyg",QObject::tr("Cygne","Constellation"));
     constellations.insert("Del",QObject::tr("Dauphin","Constellation"));
@@ -336,9 +336,9 @@ QString Calculastro::abreviationToNom(QString abreviation, bool inverse)
     constellations.insert("Dra",QObject::tr("Dragon","Constellation"));
     constellations.insert("Sct",QObject::tr("Ecu de Sobieski","Constellation"));
     constellations.insert("Eri",QObject::tr("Eridan","Constellation"));
-    constellations.insert("Sge",QObject::tr("Flèche","Constellation"));
+    constellations.insert("Sge",QObject::tr("FlÃ¨che","Constellation"));
     constellations.insert("For",QObject::tr("Fourneau","Constellation"));
-    constellations.insert("Gem",QObject::tr("Gémeaux","Constellation"));
+    constellations.insert("Gem",QObject::tr("GÃ©meaux","Constellation"));
     constellations.insert("Cam",QObject::tr("Girafe","Constellation"));
     constellations.insert("CMa",QObject::tr("Grand Chien","Constellation"));
     constellations.insert("UMa",QObject::tr("Grande Ourse","Constellation"));
@@ -346,11 +346,11 @@ QString Calculastro::abreviationToNom(QString abreviation, bool inverse)
     constellations.insert("Her",QObject::tr("Hercule","Constellation"));
     constellations.insert("Hor",QObject::tr("Horloge","Constellation"));
     constellations.insert("Hya",QObject::tr("Hydre","Constellation"));
-    constellations.insert("Hyi",QObject::tr("Hydre mâle","Constellation"));
+    constellations.insert("Hyi",QObject::tr("Hydre mÃ¢le","Constellation"));
     constellations.insert("Ind",QObject::tr("Indien","Constellation"));
-    constellations.insert("Lac",QObject::tr("Lézard","Constellation"));
+    constellations.insert("Lac",QObject::tr("LÃ©zard","Constellation"));
     constellations.insert("Mon",QObject::tr("Licorne","Constellation"));
-    constellations.insert("Lep",QObject::tr("Lièvre","Constellation"));
+    constellations.insert("Lep",QObject::tr("LiÃ¨vre","Constellation"));
     constellations.insert("Leo",QObject::tr("Lion","Constellation"));
     constellations.insert("Lup",QObject::tr("Loup","Constellation"));
     constellations.insert("Lyn",QObject::tr("Lynx","Constellation"));
@@ -363,21 +363,21 @@ QString Calculastro::abreviationToNom(QString abreviation, bool inverse)
     constellations.insert("Oph",QObject::tr("Ophiuchus","Constellation"));
     constellations.insert("Ori",QObject::tr("Orion","Constellation"));
     constellations.insert("Pav",QObject::tr("Paon","Constellation"));
-    constellations.insert("Peg",QObject::tr("Pégase","Constellation"));
+    constellations.insert("Peg",QObject::tr("PÃ©gase","Constellation"));
     constellations.insert("Pic",QObject::tr("Peintre","Constellation"));
-    constellations.insert("Per",QObject::tr("Persée","Constellation"));
+    constellations.insert("Per",QObject::tr("PersÃ©e","Constellation"));
     constellations.insert("Equ",QObject::tr("Petit Cheval","Constellation"));
     constellations.insert("CMi",QObject::tr("Petit Chien","Constellation"));
     constellations.insert("LMi",QObject::tr("Petit Lion","Constellation"));
     constellations.insert("Vul",QObject::tr("Petit Renard","Constellation"));
     constellations.insert("UMi",QObject::tr("Petite Ourse","Constellation"));
-    constellations.insert("Phe",QObject::tr("Phénix","Constellation"));
+    constellations.insert("Phe",QObject::tr("PhÃ©nix","Constellation"));
     constellations.insert("PsA",QObject::tr("Poisson Austral","Constellation"));
     constellations.insert("Vol",QObject::tr("Poisson volant","Constellation"));
     constellations.insert("Psc",QObject::tr("Poissons","Constellation"));
     constellations.insert("Pup",QObject::tr("Poupe","Constellation"));
-    constellations.insert("Nor",QObject::tr("Règle","Constellation"));
-    constellations.insert("Ret",QObject::tr("Réticule","Constellation"));
+    constellations.insert("Nor",QObject::tr("RÃ¨gle","Constellation"));
+    constellations.insert("Ret",QObject::tr("RÃ©ticule","Constellation"));
     constellations.insert("Sgr",QObject::tr("Sagittaire","Constellation"));
     constellations.insert("Sco",QObject::tr("Scorpion","Constellation"));
     constellations.insert("Scl",QObject::tr("Sculpteur","Constellation"));
@@ -385,7 +385,7 @@ QString Calculastro::abreviationToNom(QString abreviation, bool inverse)
     constellations.insert("Sex",QObject::tr("Sextant","Constellation"));
     constellations.insert("Men",QObject::tr("Table","Constellation"));
     constellations.insert("Tau",QObject::tr("Taureau","Constellation"));
-    constellations.insert("Tel",QObject::tr("Télescope","Constellation"));
+    constellations.insert("Tel",QObject::tr("TÃ©lescope","Constellation"));
     constellations.insert("Tuc",QObject::tr("Toucan","Constellation"));
     constellations.insert("Tri",QObject::tr("Triangle","Constellation"));
     constellations.insert("TrA",QObject::tr("Triangle Austral","Constellation"));
@@ -400,7 +400,7 @@ QString Calculastro::abreviationToNom(QString abreviation, bool inverse)
         return constellations.key(abreviation);
 }
 QVector<double> Calculastro::nutationObliquity(double j2000)
-{ // Toutes ces formules sont données à la page 132
+{ // Toutes ces formules sont donnÃ©es Ã  la page 132
     double t(0), omega(0), L(0), LP(0), psi(0), dEta(0), eta0(0), eta(0);
 
     t = j2000/36525.0;
@@ -420,8 +420,8 @@ QVector<double> Calculastro::nutationObliquity(double j2000)
 
     QVector<double> retour;
     retour.push_back(psi); // en secondes d'arc
-    retour.push_back(eta0); // en degrés
-    retour.push_back(eta); // en degrés
+    retour.push_back(eta0); // en degrÃ©s
+    retour.push_back(eta); // en degrÃ©s
 
     return retour;
 }
@@ -447,10 +447,10 @@ QVector<double> Calculastro::coordonneesPlanetes(QDate date, QTime heure, QStrin
     z = E['R'] * sin(E['B']) - O['R'] * sin(O['B']);
     // Formules (32.1) p.209
 
-    delta = sqrt( pow(x,2.0) + pow(y,2.0) + pow(z,2.0) ); // distance à la terre - formule (32.4) p.210
+    delta = sqrt( pow(x,2.0) + pow(y,2.0) + pow(z,2.0) ); // distance Ã  la terre - formule (32.4) p.210
     t = (delta*0.0057755183); // Formule (32.3) p.210 Astronimal Algorithms
 
-    // La correction de la vitesse de la lumière a été faite - On recommence les calculs
+    // La correction de la vitesse de la lumiÃ¨re a Ã©tÃ© faite - On recommence les calculs
     jj -= t;
     O = getLBR(jj, "terre");
     E = getLBR(jj, planete);
@@ -518,14 +518,14 @@ QMap<char,double> Calculastro::getLBR(double j2000, QString planete)
     else if(planete == "terre") ext = "ear";
     else
     {
-        QMessageBox::critical(0,QObject::tr("Erreur"),QObject::tr("La planète demandée n'existe pas. Le programme va fermer."));
+        QMessageBox::critical(0,QObject::tr("Erreur"),QObject::tr("La planÃ¨te demandÃ©e n'existe pas. Le programme va fermer."));
         qApp->exit();
     }
 
     // Ouverture du fichier
     QFile fichier("VSOP87/VSOP87B."+ext);
     if(!fichier.open(QIODevice::ReadOnly | QIODevice::Text))
-        QMessageBox::critical(0,QObject::tr("Erreur d'ouverture","N'arrive pas à ouvrir un fichier"),"Le fichier VSOP87/VSOP87B."+ext+" est impossible à ouvrir. Réésayer.");
+        QMessageBox::critical(0,QObject::tr("Erreur d'ouverture","N'arrive pas Ã  ouvrir un fichier"),"Le fichier VSOP87/VSOP87B."+ext+" est impossible Ã  ouvrir. RÃ©Ã©sayer.");
     QTextStream flux(&fichier);
     QString ligne;
 
@@ -581,8 +581,8 @@ QMap<char,double> Calculastro::getLBR(double j2000, QString planete)
     B = series["B0"] + series["B1"]*t + series["B2"]*pow(t,2)+ series["B3"]*pow(t,3)+ series["B4"]*pow(t,4)+ series["B5"]*pow(t,5);
     R = series["R0"] + series["R1"]*t + series["R2"]*pow(t,2)+ series["R3"]*pow(t,3)+ series["R4"]*pow(t,4)+ series["R5"]*pow(t,5);
 
-    L = toZero360(rad2deg(L)); // On convertit en degrés
-    B = rad2deg(B); // On convertit en degrés
+    L = toZero360(rad2deg(L)); // On convertit en degrÃ©s
+    B = rad2deg(B); // On convertit en degrÃ©s
 
     QMap<char,double> retour;
     retour.insert('L',L);
@@ -619,7 +619,7 @@ QString Calculastro::degreeToDms(double val)
     s = floor(((val-d)*60-m)*60);
 
     QString retour;
-    retour = signe + QString::number(d) + "° " + QString::number(m) + "' " + QString::number(s) + "\"";
+    retour = signe + QString::number(d) + "Â° " + QString::number(m) + "' " + QString::number(s) + "\"";
     return retour;
 }
 QString Calculastro::degreeToHms(double val)
@@ -669,7 +669,7 @@ QString Calculastro::referencePlaneteToNom(QString ref, bool read)
     else
     {
         retour = "mercure";
-        QMessageBox::critical(0,QObject::tr("Problème de référence"),QObject::tr("La référence de la planète est inconnue. Contacter le developpeur."));
+        QMessageBox::critical(0,QObject::tr("ProblÃ¨me de rÃ©fÃ©rence"),QObject::tr("La rÃ©fÃ©rence de la planÃ¨te est inconnue. Contacter le developpeur."));
     }
     if(read)
         retour = retour.left(1).toUpper()+retour.right(retour.count()-1); // On met en majuscule la 1ere lettre
@@ -703,11 +703,11 @@ HauteurMaxTemps Calculastro::hauteurMaxObjet(Objet *objet, QDateTime debut, QDat
     hauteurAzimut4 = hauteurAzimutDegree(dateTU4, heureTU4, raDecimal, declinaisonDecimal, latitude , longitude);
 
     if(hauteurAzimut1[0] > hauteurAzimut2[0] && hauteurAzimut3[0] > hauteurAzimut4[0] && hauteurAzimut2[0] > hauteurAzimut3[0])
-    { // Si la hauteur décrôit avec le temps
+    { // Si la hauteur dÃ©crÃ´it avec le temps
         return HauteurMaxTemps(debut,hauteurAzimut1[0]);
     }
     else if(hauteurAzimut1[0] < hauteurAzimut2[0] && hauteurAzimut3[0] < hauteurAzimut4[0] && hauteurAzimut2[0] < hauteurAzimut3[0])
-    { // Si la hauteur croît avec le temps
+    { // Si la hauteur croÃ®t avec le temps
         return HauteurMaxTemps(fin,hauteurAzimut4[0]);
     }
     else
@@ -760,11 +760,11 @@ HauteurMaxTemps Calculastro::hauteurMaxObjet(QString const& planete, QDateTime d
     hauteurAzimut4 = hauteurAzimutDegree(dateTU4, heureTU4, raDecimal, declinaisonDecimal, latitude , longitude);
 
     if(hauteurAzimut1[0] > hauteurAzimut2[0] && hauteurAzimut3[0] > hauteurAzimut4[0] && hauteurAzimut2[0] > hauteurAzimut3[0])
-    { // Si la hauteur décrôit avec le temps
+    { // Si la hauteur dÃ©crÃ´it avec le temps
         return HauteurMaxTemps(debut,hauteurAzimut1[0]);
     }
     else if(hauteurAzimut1[0] < hauteurAzimut2[0] && hauteurAzimut3[0] < hauteurAzimut4[0] && hauteurAzimut2[0] < hauteurAzimut3[0])
-    { // Si la hauteur croît avec le temps
+    { // Si la hauteur croÃ®t avec le temps
         return HauteurMaxTemps(fin,hauteurAzimut4[0]);
     }
     else
@@ -802,9 +802,9 @@ double Calculastro::noterObjetVisible(QString type, int interet, double magnitud
 
     // ON NOTE SUR LE TYPE
     if(type == "Amas Globulaire") note += user->value("generateur/amasGlobulaire",NOTE_AMAS_GLOBULAIRE).toInt();
-    else if(type == "Amas+Nébuleuse") note += user->value("generateur/amasNebuleuse",NOTE_AMAS_NEBULEUSE).toInt();
-    else if(type == "Nébuleuse planétaire") note += user->value("generateur/nebuleusePlanetaire",NOTE_NEBULEUSE_PLANETAIRE).toInt();
-    else if(type == "Nébuleuse en réflection") note += user->value("generateur/nebuleuseReflection",NOTE_NEBULEUSE_REFLECTION).toInt();
+    else if(type == "Amas+NÃ©buleuse") note += user->value("generateur/amasNebuleuse",NOTE_AMAS_NEBULEUSE).toInt();
+    else if(type == "NÃ©buleuse planÃ©taire") note += user->value("generateur/nebuleusePlanetaire",NOTE_NEBULEUSE_PLANETAIRE).toInt();
+    else if(type == "NÃ©buleuse en rÃ©flection") note += user->value("generateur/nebuleuseReflection",NOTE_NEBULEUSE_REFLECTION).toInt();
     else if(type == "Etoile triple") note += user->value("generateur/etoileTriple",NOTE_ETOILE_TRIPLE).toInt();
     else if(type == "Etoile double") note += user->value("generateur/etoileDouble",NOTE_ETOILE_DOUBLE).toInt();
     else if(type == "Galaxie") note += user->value("generateur/galaxie",NOTE_GALAXIE).toInt();
@@ -894,7 +894,7 @@ QString Calculastro::getOculaire(Objet *objet, int diametre, int focale, QVector
 
     if(objet->taille() != 0 && objet->magnitude() != 0)
     {
-        if(objet->magnitude() <= 5) // Si il est visible à l'oeil nu
+        if(objet->magnitude() <= 5) // Si il est visible Ã  l'oeil nu
         {
             if(objet->taille() >= 60)
                 f = 5*fd;
@@ -905,7 +905,7 @@ QString Calculastro::getOculaire(Objet *objet, int diametre, int focale, QVector
             else
                 f = 1.5*fd;
         }
-        else if(objet->magnitude() <= 8) // Si il est très lumineux
+        else if(objet->magnitude() <= 8) // Si il est trÃ¨s lumineux
         {
             if(objet->taille() >= 50)
                 f = 3*fd;

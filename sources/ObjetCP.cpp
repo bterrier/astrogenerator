@@ -46,7 +46,7 @@ ObjetCP::ObjetCP(QString ref) : Objet()
     }
     else
     {
-        QMessageBox::critical(0,tr("Objet introuvable"),tr("L'objet demandé est introuvable : ","Suivi de la référence") + ref);
+        QMessageBox::critical(0,tr("Objet introuvable"),tr("L'objet demandÃ© est introuvable : ","Suivi de la rÃ©fÃ©rence") + ref);
         m_valid = false;
         m_nom = "";
         m_type = "";

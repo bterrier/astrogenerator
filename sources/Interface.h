@@ -25,7 +25,7 @@ class Interface : public QWidget
         virtual Soiree* getSoiree() = 0;
 
 
-    protected: // On y aura aussi accès depuis les élements filles
+    protected: // On y aura aussi accÃ¨s depuis les Ã©lements filles
         ActionsFenetre *m_listeActions;
         bool m_active;
     

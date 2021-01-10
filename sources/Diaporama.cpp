@@ -31,7 +31,7 @@ void Diaporama::afficher(int id)
     diapoCurrent = id;
     widgets.at(id)->setVisible(true);
 
-    timer->stop(); // On arrête le timer précédent
+    timer->stop(); // On arrÃªte le timer prÃ©cÃ©dent
 
     int temps = m_soiree->getPlanning().at(id)->getFin().toTime_t() - m_soiree->getPlanning().at(id)->getDebut().toTime_t(); // On calcule le temps d'affichage
     timer->singleShot(temps*1000,this,SLOT(suivant()));
@@ -41,7 +41,7 @@ void Diaporama::afficher(int id)
 }
 void Diaporama::suivant()
 {
-    if(m_pause) // Si on était en pause
+    if(m_pause) // Si on Ã©tait en pause
     {
         m_pause = false; // On est plus en pause
         timer->stop();
@@ -50,10 +50,10 @@ void Diaporama::suivant()
         if(diapoCurrent+1 < widgets.size()) // On affiche la diapo suivante si possible
             afficher(diapoCurrent+1);
     }
-    else // Si on était pas en pause
+    else // Si on Ã©tait pas en pause
     {
         m_pause = true;
-        // On vérifie si il y a une pause
+        // On vÃ©rifie si il y a une pause
         if(diapoCurrent+1 < widgets.size())
         {
            int tempsPause = m_soiree->getPlanning().at(diapoCurrent+1)->getDebut().toTime_t() - m_soiree->getPlanning().at(diapoCurrent)->getFin().toTime_t();
@@ -117,33 +117,33 @@ void Diaporama::demarrer()
     for(int l(0);l<oculairesString.size();l++)
         oculairesInt.push_back(oculairesString.at(l).toInt());
     premierTemps = m_soiree->getPlanning().at(0)->getFin().toTime_t() - m_soiree->getPlanning().at(0)->getDebut().toTime_t();
-    // On cherche la différence entre le premier et le deuxième objet pour commencer le timer
+    // On cherche la diffÃ©rence entre le premier et le deuxiÃ¨me objet pour commencer le timer
 
     for(int i(0);i<m_soiree->getPlanning().count();i++)
     {
-        // On crée le nom de l'objet
+        // On crÃ©e le nom de l'objet
         QLabel *nom = new QLabel("<font color=\"#FFF\">"+m_soiree->getPlanning().at(i)->nomComplet()+"</font>");
             nom->setFont(QFont("Verdana",30,30));
             nom->setAlignment(Qt::AlignCenter);
 
-        // On crée le compte à rebours
+        // On crÃ©e le compte Ã  rebours
         CompteRebours *lcd = new CompteRebours;
             lcd->setFixedSize(LARGEUR_COMPTE_REBOURS_DIAPO,HAUTEUR_COMPTE_REBOURS_DIAPO);
 
-        // On crée l'image d'icone
+        // On crÃ©e l'image d'icone
         QLabel *icone = new QLabel;
         icone->setPixmap(QPixmap("icones/"+m_soiree->getPlanning().at(i)->ref()+".jpg"));
 
-        // On crée le widget de l'heure
+        // On crÃ©e le widget de l'heure
         WidgetHeure *heure = new WidgetHeure;
             heure->setFixedSize(LARGEUR_COMPTE_REBOURS_DIAPO,HAUTEUR_COMPTE_REBOURS_DIAPO);
 
-        // On crée le widget d'infos
+        // On crÃ©e le widget d'infos
         QWidget *widgetInfos = new QWidget;
             QVBoxLayout *layoutInfos = new QVBoxLayout;
             QLabel *infoAscdr = new QLabel(tr("<font color=\"#FFF\">Ascension droite : ") + m_soiree->getPlanning().at(i)->ascdr()+"</font>");
                 infoAscdr->setFont(QFont("Verdana",15));
-            QLabel *infoDec = new QLabel(tr("<font color=\"#FFF\">Déclinaison : ") + m_soiree->getPlanning().at(i)->declinaison());
+            QLabel *infoDec = new QLabel(tr("<font color=\"#FFF\">DÃ©clinaison : ") + m_soiree->getPlanning().at(i)->declinaison());
                 infoDec->setFont(QFont("Verdana",15));
             QLabel *infoHauteur = new QLabel(tr("<font color=\"#FFF\">Hauteur : ") + Calculastro::degreeToDms(m_soiree->hauteurAzimutObjet(i).at(0))+"</font>");
                 infoHauteur->setFont(QFont("Verdana",15));

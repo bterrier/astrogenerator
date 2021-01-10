@@ -24,7 +24,7 @@ public:
 
     bool soireeToSoa(QString const& fileName);
 
-    // Méthodes de la classe
+    // MÃ©thodes de la classe
     void ajouterObjet(int index, ObjetCP *objetParam, int duree);
     void ajouterObjet(int index, QString refPlanete, int duree);
     void ajouterObjet(ObjetObs *objet);
@@ -74,8 +74,8 @@ public:
     void toPDF();
     bool paintPdf(QPrinter *printer);
 
-    bool hasChanged(); // Si la soirée a changé
-    bool shouldBeSaved(); // Si la soirée a changé ou qu'elle n'est pas enregistré
+    bool hasChanged(); // Si la soirÃ©e a changÃ©
+    bool shouldBeSaved(); // Si la soirÃ©e a changÃ© ou qu'elle n'est pas enregistrÃ©
     bool enregistrerSoiree();
 
 signals:

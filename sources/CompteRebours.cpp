@@ -33,7 +33,7 @@ void CompteRebours::commencer(int secondes)
 {
     m_lcd->display(secToMinSec(secondes));
     secondeRestant = secondes;
-    timer->start(1000); // On le repËte toutes les secondes
+    timer->start(1000); // On le rep√®te toutes les secondes
 }
 QString CompteRebours::secToMinSec(int sec) const
 {

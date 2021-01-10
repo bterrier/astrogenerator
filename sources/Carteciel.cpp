@@ -57,7 +57,7 @@ void Carteciel::dessinerCarte()
     QRectF rectangle(0,0,800,800);;
     addEllipse(rectangle,QColor(0,0,0),m_couleurFond);
 
-    QGraphicsTextItem *carteDuCiel = addText("Carte du ciel le "+m_temps.toLocalTime().date().toString("dd/MM/yyyy")+" à "+m_temps.toLocalTime().time().toString("hh:mm"));
+    QGraphicsTextItem *carteDuCiel = addText("Carte du ciel le "+m_temps.toLocalTime().date().toString("dd/MM/yyyy")+" Ã  "+m_temps.toLocalTime().time().toString("hh:mm"));
     carteDuCiel->setPos(10,20);
     QGraphicsTextItem *latTexte = addText("Latitude : " + QString::number(m_latitude));
     latTexte->setPos(10,40);
@@ -91,11 +91,11 @@ void Carteciel::dessinerCarte()
     polaris->setDefaultTextColor(m_couleurEtoile);
     polaris->setPos(xInt+5,yInt-5);
 
-    // On place les étoiles
+    // On place les Ã©toiles
     QSqlQuery etoiles("SELECT ascdr, declinaison, magnitude, nom FROM etoiles WHERE magnitude < 6");
     while(etoiles.next())
     {
-         // Afficher les étoiles ici : voir code PHP toradian.php
+         // Afficher les Ã©toiles ici : voir code PHP toradian.php
         raDecimal = hmsToDegree(etoiles.value(0).toString());
         declinaisonDecimal = dmsToDegree(etoiles.value(1).toString());
 
@@ -121,7 +121,7 @@ void Carteciel::dessinerCarte()
             }
         }
     }
-    // On place les objets de la soirée
+    // On place les objets de la soirÃ©e
     QString nomPlace;
     double magnitude;
     for(int i(0); i < m_planning.size(); i++)
@@ -144,7 +144,7 @@ void Carteciel::dessinerCarte()
 
             QGraphicsTextItem *nomObjetSoiree = addText(nomPlace);
 
-            if(m_planning.at(i)->type() == "Planète")
+            if(m_planning.at(i)->type() == "PlanÃ¨te")
             {
                 nomObjetSoiree->setDefaultTextColor(planeteToColor(m_planning.at(i)->ref()));
                 addEllipse(xInt,yInt,taille,taille,planeteToColor(m_planning.at(i)->ref()),planeteToColor(m_planning.at(i)->ref()));
@@ -227,7 +227,7 @@ void Carteciel::dessinerCarte()
         dessins.close();
     }
 
-    // On écrit les noms des constellations
+    // On Ã©crit les noms des constellations
     QFile noms("nom_constellation.txt");
     if(noms.open(QIODevice::ReadOnly))
     {
@@ -268,17 +268,17 @@ void Carteciel::dessinerCarte()
     }
 }
 double Carteciel::dmsToDegree(QString dms)
-{ // EXAMPLE : si dms vaut +44° 8' 5"
+{ // EXAMPLE : si dms vaut +44Â° 8' 5"
 
     double d(0), m(0), s(0);
     QString signe;
     QStringList list;
-    list = dms.split(" "); // On a [0] -> +44° [1] -> 8' [2] -> 5"
+    list = dms.split(" "); // On a [0] -> +44Â° [1] -> 8' [2] -> 5"
 
     // On s'occupe du signe
     signe = list.at(0).left(1);
 
-    // On s'occupe des degrés
+    // On s'occupe des degrÃ©s
     if(list.at(0).count() == 4)
         d = list.at(0).mid(1,2).toDouble();
     else if(list.at(0).count() == 3)
@@ -353,9 +353,9 @@ void Carteciel::sauverImage()
         painter->end();
 
         if(pixmap->save(fichier))
-            QMessageBox::information(0,"Enregistrement réussi","La carte du ciel a bien été enregistrée");
+            QMessageBox::information(0,"Enregistrement rÃ©ussi","La carte du ciel a bien Ã©tÃ© enregistrÃ©e");
         else
-            QMessageBox::critical(0,"Erreur d'enregistrement","L'enregistrement de l'image a échoué");
+            QMessageBox::critical(0,"Erreur d'enregistrement","L'enregistrement de l'image a Ã©chouÃ©");
     }
 }
 void Carteciel::setCouleurConstellation()

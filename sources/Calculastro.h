@@ -12,7 +12,7 @@
 #include "ObjetCPObs.h"
 #include "HauteurMaxTemps.h"
 
-// Si "OK" après une fonction, elle a été vérifiée et fonctionne parfaitement
+// Si "OK" aprÃ¨s une fonction, elle a Ã©tÃ© vÃ©rifiÃ©e et fonctionne parfaitement
 
 class Calculastro
 {

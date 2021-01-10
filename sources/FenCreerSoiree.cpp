@@ -86,10 +86,10 @@ FenCreerSoiree::FenCreerSoiree(FenPrincipal *parent) : QDialog()
     m_duree = new QSpinBox;
     m_dureeObjet = new QSpinBox;
     m_niveau = new QComboBox;
-    m_planetes = new QCheckBox(tr("Ajouter les planètes"));
+    m_planetes = new QCheckBox(tr("Ajouter les planÃ¨tes"));
     m_telescope = new QComboBox;
-    m_submit = new QPushButton(tr("Générer la soirée"));
-    m_close = new QPushButton(tr("Fermer","La fenêtre de génération"));
+    m_submit = new QPushButton(tr("GÃ©nÃ©rer la soirÃ©e"));
+    m_close = new QPushButton(tr("Fermer","La fenÃªtre de gÃ©nÃ©ration"));
     m_progress = new QProgressBar;
 
     m_date->setDate(QDate::currentDate());
@@ -107,7 +107,7 @@ FenCreerSoiree::FenCreerSoiree(FenPrincipal *parent) : QDialog()
     m_dureeObjet->setSuffix(tr(" minutes","Laisser l'espace avant"));
 
     QStringList listNiveau;
-    listNiveau << tr("Débutant") << tr("Amateur") << tr("Amateur confirmé") << tr("Expert");
+    listNiveau << tr("DÃ©butant") << tr("Amateur") << tr("Amateur confirmÃ©") << tr("Expert");
     m_niveau->addItems(listNiveau);
     m_niveau->setCurrentIndex(m_parent->getUser()->value("niveau",0).toInt());
 
@@ -120,7 +120,7 @@ FenCreerSoiree::FenCreerSoiree(FenPrincipal *parent) : QDialog()
     m_telescope->addItems(listTelescope);
     m_telescope->setCurrentIndex(m_telescope->findText(m_parent->getUser()->value("telescope/nom",TELESCOPE_DEFAUT).toString()));
 
-    // On crée la fenetre pour les constellations
+    // On crÃ©e la fenetre pour les constellations
     m_fenetreConstellation = new QDialog;
     m_fenetreConstellation->setWindowTitle(tr("Choisissez une ou plusieurs constellations"));
     QHBoxLayout *layoutConst = new QHBoxLayout;
@@ -137,7 +137,7 @@ FenCreerSoiree::FenCreerSoiree(FenPrincipal *parent) : QDialog()
     {
         listeConstellation << Calculastro::abreviationToNom(requeteConst->value(0).toString());
     }
-    listeConstellation.sort(); // on trie les items dans l'ordre alphabétique
+    listeConstellation.sort(); // on trie les items dans l'ordre alphabÃ©tique
     for(int m(0); m<listeConstellation.count();m++)
     {
         checkBox = new QCheckBox(listeConstellation.at(m));
@@ -164,7 +164,7 @@ FenCreerSoiree::FenCreerSoiree(FenPrincipal *parent) : QDialog()
 
     QPushButton *boutonConstFermer = new QPushButton(tr("Valider"));
     QPushButton *boutonToutCocher = new QPushButton(tr("Tout cocher"));
-    QPushButton *boutonToutDecocher = new QPushButton(tr("Tout décocher"));
+    QPushButton *boutonToutDecocher = new QPushButton(tr("Tout dÃ©cocher"));
 
     QVBoxLayout *layoutBoutons = new QVBoxLayout;
     layoutBoutons->addWidget(boutonConstFermer);
@@ -179,23 +179,23 @@ FenCreerSoiree::FenCreerSoiree(FenPrincipal *parent) : QDialog()
 
     layoutForm = new QFormLayout;
 
-    layoutForm->addRow(tr("&Pays","Laisser le & devant la lettre la plus représentative du mot (pour les raccourcis claviers)"), m_pays);
-    layoutForm->addRow(tr("&Département"),m_departement);
+    layoutForm->addRow(tr("&Pays","Laisser le & devant la lettre la plus reprÃ©sentative du mot (pour les raccourcis claviers)"), m_pays);
+    layoutForm->addRow(tr("&DÃ©partement"),m_departement);
     layoutForm->addRow(tr("&Villes"),m_villes);
     layoutForm->addRow(tr("L&atitude"), m_latitude);
     layoutForm->addRow(tr("L&ongitude"),m_longitude);
     layoutForm->addRow(tr("Date d'observation"),m_date);
     layoutForm->addRow(tr("&Heure d'observation"), m_heure);
-    layoutForm->addRow(tr("Durée de la &soirée"), m_duree);
-    layoutForm->addRow(tr("Durée d'observation par objet"), m_dureeObjet);
+    layoutForm->addRow(tr("DurÃ©e de la &soirÃ©e"), m_duree);
+    layoutForm->addRow(tr("DurÃ©e d'observation par objet"), m_dureeObjet);
     layoutForm->addRow(tr("&Niveau astro'"),m_niveau);
         QHBoxLayout *layoutFormConstellation = new QHBoxLayout;
         layoutFormConstellation->addWidget(boutonConst);
         m_texteConstellation = new QLabel(creerTexteConstellation());
         layoutFormConstellation->addWidget(m_texteConstellation);
     layoutForm->addRow(tr("Constellation"),layoutFormConstellation);
-    layoutForm->addRow(tr("Planètes"),m_planetes);
-    layoutForm->addRow(tr("Télescopes"), m_telescope);
+    layoutForm->addRow(tr("PlanÃ¨tes"),m_planetes);
+    layoutForm->addRow(tr("TÃ©lescopes"), m_telescope);
         QHBoxLayout *layoutBouton = new QHBoxLayout;
         layoutBouton->addWidget(m_submit);
         layoutBouton->addWidget(m_close);
@@ -203,7 +203,7 @@ FenCreerSoiree::FenCreerSoiree(FenPrincipal *parent) : QDialog()
     layoutForm->addRow(m_progress);
 
     setLayout(layoutForm);
-    setWindowTitle(tr("Générer une soirée","Titre de la fenêtre"));
+    setWindowTitle(tr("GÃ©nÃ©rer une soirÃ©e","Titre de la fenÃªtre"));
 
     connect(m_close,SIGNAL(clicked()),this,SLOT(close()));
     connect(m_submit,SIGNAL(clicked()),this,SLOT(genererSoiree()));
@@ -233,13 +233,13 @@ void FenCreerSoiree::genererSoiree()
     QString countryLocal = Calculastro::enumQtToPays(QLocale::countryToString(QLocale::system().country()));
 
     if(countryLocal != m_pays->currentText() && countryLocal != "")
-        QMessageBox::warning(this,tr("Attention !"),tr("Vous essayez de générer une soirée dans un pays qui n'est pas le vôtre. L'heure correspond à celle de votre ordinateur (")+countryLocal+").");
+        QMessageBox::warning(this,tr("Attention !"),tr("Vous essayez de gÃ©nÃ©rer une soirÃ©e dans un pays qui n'est pas le vÃ´tre. L'heure correspond Ã  celle de votre ordinateur (")+countryLocal+").");
 
     /*
-    Le problème ici c'est qu'on considère qu'on observe dans le même fuseau que celui où se trouve
+    Le problÃ¨me ici c'est qu'on considÃ¨re qu'on observe dans le mÃªme fuseau que celui oÃ¹ se trouve
     notre machine. En effet on convertit le temps avec toUTC() qui se base sur la localisation du PC
-    et non sur la localisation rentrée dans le formulaire.
-    Donc on met un avertissement pour prévenir si on ne génère pas dans le même pays.
+    et non sur la localisation rentrÃ©e dans le formulaire.
+    Donc on met un avertissement pour prÃ©venir si on ne gÃ©nÃ¨re pas dans le mÃªme pays.
     */
 
     switch(m_niveau->currentIndex())
@@ -290,7 +290,7 @@ void FenCreerSoiree::genererSoiree()
     soiree->setVille(m_villes->currentText());
     soiree->setPays(m_pays->currentText());
 
-    QMessageBox::information(this,tr("Succès"),tr("La soirée a été générée avec succès !"));
+    QMessageBox::information(this,tr("SuccÃ¨s"),tr("La soirÃ©e a Ã©tÃ© gÃ©nÃ©rÃ©e avec succÃ¨s !"));
     m_progress->setValue(0);
     m_close->setDisabled(false);
 
@@ -398,13 +398,13 @@ QString FenCreerSoiree::creerTexteConstellation()
         }
     }
     if(coche < 88 && coche > 1)
-        retour = QString::number(coche)+tr(" constellations selectionnées");
+        retour = QString::number(coche)+tr(" constellations selectionnÃ©es");
     else if(coche == 88)
         retour = tr("Toutes les constellations");
     else if(coche == 1)
-        retour = tr("1 constellation selectionnée")+ " ("+constellation+")";
+        retour = tr("1 constellation selectionnÃ©e")+ " ("+constellation+")";
     else
-        retour = tr("Aucune constellation sélectionnée");
+        retour = tr("Aucune constellation sÃ©lectionnÃ©e");
 
     return retour;
 }

@@ -43,17 +43,17 @@ class InterfaceCreation : public Interface
 
 
     private:
-        Soiree *m_soiree; // liste des objets à observer
+        Soiree *m_soiree; // liste des objets Ã  observer
 
-        QStandardItemModel *m_modeleRecherche; // Contient les objets recherchés
-        QListView *m_vueRecherche; // la vue associée
+        QStandardItemModel *m_modeleRecherche; // Contient les objets recherchÃ©s
+        QListView *m_vueRecherche; // la vue associÃ©e
 
         QStandardItemModel *m_modele;
         QTableView *m_vue;
         QListView *m_vuePlanete;
         QStandardItemModel *m_modelePlanete;
 
-        // Champ quand on demande à créer une soirée
+        // Champ quand on demande Ã  crÃ©er une soirÃ©e
         QDoubleSpinBox *m_champLatitude;
         QDoubleSpinBox *m_champLongitude;
         QSpinBox *m_champDiametre;
@@ -65,7 +65,7 @@ class InterfaceCreation : public Interface
         QDateTimeEdit *champDate;
         QSpinBox *champDureeObjet;
 
-        // Actions spécifiques
+        // Actions spÃ©cifiques
         QAction *ajouterObjet;
         QAction *enleverObjet;
 };

@@ -2,31 +2,31 @@
 
 ActionsFenetre::ActionsFenetre(QWidget *parent)
 {
-    actionInfoSoiree = new QAction(tr("Infos sur la soirée"),parent);
+    actionInfoSoiree = new QAction(tr("Infos sur la soirÃ©e"),parent);
         actionInfoSoiree->setIcon(QIcon("images/info.png"));
-    actionCreerSoiree = new QAction(tr("Générer une soirée"), parent);
+    actionCreerSoiree = new QAction(tr("GÃ©nÃ©rer une soirÃ©e"), parent);
         actionCreerSoiree->setShortcut(QKeySequence(tr("Ctrl+N")));
         actionCreerSoiree->setIcon(QIcon("images/generate.png"));
-    actionFabriquerSoiree = new QAction(tr("Créer une soirée"), parent);
+    actionFabriquerSoiree = new QAction(tr("CrÃ©er une soirÃ©e"), parent);
         actionFabriquerSoiree->setIcon(QIcon("images/creer-soiree.png"));
-    actionOuvrirSoiree = new QAction(tr("Ouvrir une soirée"), parent);
+    actionOuvrirSoiree = new QAction(tr("Ouvrir une soirÃ©e"), parent);
         actionOuvrirSoiree->setShortcut(QKeySequence(tr("Ctrl+O")));
         actionOuvrirSoiree->setIcon(QIcon("images/open.png"));
     actionEnregistrer = new QAction(tr("Enregistrer"), parent);
         actionEnregistrer->setShortcut(QKeySequence(tr("Ctrl+S")));
         actionEnregistrer->setIcon(QIcon("images/save.png"));
-    actionSoireesRecentes = new QAction(tr("Soirées récentes"), parent);
+    actionSoireesRecentes = new QAction(tr("SoirÃ©es rÃ©centes"), parent);
     actionImprimer = new QAction(tr("Imprimer"), parent);
         actionImprimer->setShortcut(QKeySequence(tr("Ctrl+P")));
         actionImprimer->setIcon(QIcon("images/print.png"));
     actionQuitter = new QAction(tr("Quitter"), parent);
         actionQuitter->setShortcut(QKeySequence(tr("Alt+F4")));
-    actionFermer = new QAction(tr("Fermer la soirée"), parent);
+    actionFermer = new QAction(tr("Fermer la soirÃ©e"), parent);
         actionFermer->setIcon(QIcon("images/close.png"));
     actionToutFermer = new QAction(tr("Tout fermer"), parent);
 
     actionDiaporama = new QAction(tr("Diaporama"), parent);
-        actionDiaporama->setText(tr("Présenter la soirée sous forme de diaporama"));
+        actionDiaporama->setText(tr("PrÃ©senter la soirÃ©e sous forme de diaporama"));
         actionDiaporama->setShortcut(QKeySequence(tr("F5")));
         actionDiaporama->setIcon(QIcon("images/slideshow.png"));
     actionBarreStatut = new QAction(tr("Barre de statut"), parent);
@@ -34,8 +34,8 @@ ActionsFenetre::ActionsFenetre(QWidget *parent)
     actionCarteCiel = new QAction(tr("Carte du ciel"), parent);
         actionCarteCiel->setIcon(QIcon("images/carteciel.png"));
             carteCouleurFond = new QAction(tr("Couleur du fond"),parent);
-            carteCouleurEtoiles = new QAction(tr("Couleur des étoiles"),parent);
-            carteCouleurLegende = new QAction(tr("Couleur des légendes"),parent);
+            carteCouleurEtoiles = new QAction(tr("Couleur des Ã©toiles"),parent);
+            carteCouleurLegende = new QAction(tr("Couleur des lÃ©gendes"),parent);
             carteCouleurConstellation = new QAction(tr("Couleur des constellations"),parent);
             carteCouleurObjet = new QAction(tr("Couleur des objets"),parent);
 
@@ -45,7 +45,7 @@ ActionsFenetre::ActionsFenetre(QWidget *parent)
         actionDescendreObjet->setIcon(QIcon("images/arrow-down.png"));
     actionSupprimerObjet = new QAction(tr("Supprimer l'objet"), parent);
         actionSupprimerObjet->setIcon(QIcon("images/list-remove2.png"));
-    actionChangerDureeObjet = new QAction(tr("Changer la durée de l'objet"), parent);
+    actionChangerDureeObjet = new QAction(tr("Changer la durÃ©e de l'objet"), parent);
         actionChangerDureeObjet->setIcon(QIcon("images/chronometer.png"));
     actionExporterXML = new QAction(tr("XML"), parent);
         actionExporterXML->setIcon(QIcon("images/xml.png"));
@@ -55,10 +55,10 @@ ActionsFenetre::ActionsFenetre(QWidget *parent)
     actionPartager = new QAction(tr("Partager..."), parent);
     actionAjouterObjet = new QAction(tr("Ajouter un objet"), parent);
         actionAjouterObjet->setIcon(QIcon("images/add.png"));
-    actionAjouterPlanete = new QAction(tr("Ajouter une planète"),parent);
+    actionAjouterPlanete = new QAction(tr("Ajouter une planÃ¨te"),parent);
         actionAjouterPlanete->setIcon(QIcon("images/planete.png"));
 
-    actionPreferencesTelescope = new QAction(tr("Télescope"), parent);
+    actionPreferencesTelescope = new QAction(tr("TÃ©lescope"), parent);
     actionPreferencesOculaires = new QAction(tr("Oculaires"), parent);
     actionPreferencesLocalisation = new QAction(tr("Localisation"),parent);
     actionPreferencesCarteCiel = new QAction(tr("Carte du ciel"),parent);
@@ -67,17 +67,17 @@ ActionsFenetre::ActionsFenetre(QWidget *parent)
         actionConnexion->setIcon(QIcon("images/sign-in.png"));
     actionCalendrier = new QAction(tr("Calendrier"), parent);
     actionRechercheAstronomes = new QAction(tr("Rechercher des astronomes..."), parent);
-    actionPersonaliserGenerateur = new QAction(tr("Personaliser le générateur..."), parent);
+    actionPersonaliserGenerateur = new QAction(tr("Personaliser le gÃ©nÃ©rateur..."), parent);
 
-    actionBDD = new QAction(tr("Accéder à la base de données"), parent);
-    actionCDS = new QAction(tr("CDS - Données astronomiques"), parent);
+    actionBDD = new QAction(tr("AccÃ©der Ã  la base de donnÃ©es"), parent);
+    actionCDS = new QAction(tr("CDS - DonnÃ©es astronomiques"), parent);
     actionObjetsRemarquables = new QAction(tr("Objets remarquables"), parent);
 
     actionAPropos = new QAction(tr("A propos d'astroGenerator"), parent);
-    actionAProposGenerateur = new QAction(tr("A propos du générateur"), parent);
-    actionUpdate = new QAction(tr("Mise à jour"), parent);
+    actionAProposGenerateur = new QAction(tr("A propos du gÃ©nÃ©rateur"), parent);
+    actionUpdate = new QAction(tr("Mise Ã  jour"), parent);
     actionAide = new QAction(tr("Aide"), parent);
-    actionSiteUniversAstronomie = new QAction(tr("Site de l'éditeur"), parent);
+    actionSiteUniversAstronomie = new QAction(tr("Site de l'Ã©diteur"), parent);
 }
 
 QAction* ActionsFenetre::getActionInfoSoiree() { return actionInfoSoiree; }

@@ -15,7 +15,7 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
 {
     m_parent = parent;
 
-    setWindowTitle(tr("Préférences"));
+    setWindowTitle(tr("PrÃ©fÃ©rences"));
     //setMaximumWidth(600);
     setMinimumWidth(600);
 
@@ -28,18 +28,18 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
         m_menu->setSelectionRectVisible(false);
 
     QStringList listeMenu;
-    listeMenu << tr("Localisation") << tr("Télescope") << tr("Oculaires") << tr("Générateur") << tr("Carte du ciel");
+    listeMenu << tr("Localisation") << tr("TÃ©lescope") << tr("Oculaires") << tr("GÃ©nÃ©rateur") << tr("Carte du ciel");
     m_menu->addItems(listeMenu);
     layoutPrincipal->addWidget(m_menu,0,Qt::AlignLeft);
 
     connect(m_menu,SIGNAL(currentRowChanged(int)),this,SLOT(changerOnglet(int)));
 
-    // On crée toutes les pages
+    // On crÃ©e toutes les pages
 
         // PAGE LOCALISATION
 
         QGroupBox *groupBoxLocalisation = new QGroupBox(tr("Localisation"));
-        QGroupBox *groupBoxCoordonnees = new QGroupBox(tr("Coordonnées"));
+        QGroupBox *groupBoxCoordonnees = new QGroupBox(tr("CoordonnÃ©es"));
 
         QFormLayout *layoutFormLocalisation  = new QFormLayout;
         QFormLayout *layoutFormCoordonnees  = new QFormLayout;
@@ -60,7 +60,7 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
 
         m_listeVilles = new QComboBox;
 
-        layoutFormLocalisation->addRow(tr("&Département"),m_listeDept);
+        layoutFormLocalisation->addRow(tr("&DÃ©partement"),m_listeDept);
         layoutFormLocalisation->addRow(tr("&Ville"),m_listeVilles);
 
         connect(m_listePays,SIGNAL(currentIndexChanged(QString)),this,SLOT(changerVilles(QString)));
@@ -96,8 +96,8 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
 
 
         // PAGE TELESCOPE
-        QGroupBox *groupBoxTelescopeListe = new QGroupBox(tr("Liste des télescopes"));
-        QGroupBox *groupBoxTelescopeAdd = new QGroupBox(tr("Ajouter des télescopes"));
+        QGroupBox *groupBoxTelescopeListe = new QGroupBox(tr("Liste des tÃ©lescopes"));
+        QGroupBox *groupBoxTelescopeAdd = new QGroupBox(tr("Ajouter des tÃ©lescopes"));
 
         QFormLayout *layoutFormTelescopeListe = new QFormLayout;
         QFormLayout *layoutFormTelescopeAdd = new QFormLayout;
@@ -117,7 +117,7 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
             m_focale->setMaximum(FOCALE_MAXIMUM);
 
         m_nomTelescope = new QLineEdit;
-        m_boutonAjouterTelescope = new QPushButton(tr("Ajouter le télescope"));
+        m_boutonAjouterTelescope = new QPushButton(tr("Ajouter le tÃ©lescope"));
         connect(m_boutonAjouterTelescope,SIGNAL(clicked()),this,SLOT(ajouterTelescope()));
 
         m_marque = new QComboBox;
@@ -127,11 +127,11 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
             listeMarque << requete->value(0).toString();
         m_marque->addItems(listeMarque);
 
-        layoutFormTelescopeListe->addRow(tr("Liste des &télescopes"),m_listeTelescope);
+        layoutFormTelescopeListe->addRow(tr("Liste des &tÃ©lescopes"),m_listeTelescope);
         groupBoxTelescopeListe->setLayout(layoutFormTelescopeListe);
 
-        layoutFormTelescopeAdd->addRow(tr("Nom du télescope (unique)"),m_nomTelescope);
-        layoutFormTelescopeAdd->addRow(tr("Diamètre (mm)"),m_diametre);
+        layoutFormTelescopeAdd->addRow(tr("Nom du tÃ©lescope (unique)"),m_nomTelescope);
+        layoutFormTelescopeAdd->addRow(tr("DiamÃ¨tre (mm)"),m_diametre);
         layoutFormTelescopeAdd->addRow(tr("Focale (mm)"),m_focale);
         layoutFormTelescopeAdd->addRow(tr("Marque"),m_marque);
         layoutFormTelescopeAdd->addWidget(m_boutonAjouterTelescope);
@@ -158,7 +158,7 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
 
             for(int i(0); i < 24; i++)
             {
-                QCheckBox *b = new QCheckBox(QString::number(i+6)+tr(" mm","Symbole des millimètres (laisser l'espace avant)"));
+                QCheckBox *b = new QCheckBox(QString::number(i+6)+tr(" mm","Symbole des millimÃ¨tres (laisser l'espace avant)"));
                 m_listeOculaires.push_back(b);
 
                 if(i < 8)
@@ -186,8 +186,8 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
 
         // PAGE GENERATEUR
 
-        QGroupBox *groupBoxGenerateurParam = new QGroupBox(tr("Paramètres d'observation des objets"));
-        QGroupBox *groupBoxGenerateurPriorite = new QGroupBox(tr("Priorité des objets"));
+        QGroupBox *groupBoxGenerateurParam = new QGroupBox(tr("ParamÃ¨tres d'observation des objets"));
+        QGroupBox *groupBoxGenerateurPriorite = new QGroupBox(tr("PrioritÃ© des objets"));
 
         QFormLayout *layoutGenerateurParam = new QFormLayout;
         QFormLayout *layoutGenerateurPriorite = new QFormLayout;
@@ -296,14 +296,14 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
         layoutNoteGalaxie->addWidget(m_labelNoteGalaxie);
         layoutNoteGalaxie->setAlignment(Qt::AlignLeft);
 
-        layoutGenerateurParam->addRow(tr("Hauteur minimum (en °)"),layoutHauteurMinimum);
+        layoutGenerateurParam->addRow(tr("Hauteur minimum (en Â°)"),layoutHauteurMinimum);
         layoutGenerateurParam->addRow(tr("Pause minimum entre 2 objets (min)"),layoutPauseMinimum);
 
         layoutGenerateurPriorite->addRow(tr("Amas Globulaire"),layoutNoteAmasGlobulaire);
-        layoutGenerateurPriorite->addRow(tr("Amas+Nébuleuse"),layoutNoteAmasNebuleuse);
+        layoutGenerateurPriorite->addRow(tr("Amas+NÃ©buleuse"),layoutNoteAmasNebuleuse);
         layoutGenerateurPriorite->addRow(tr("Amas ouvert"),layoutNoteAmasOuvert);
-        layoutGenerateurPriorite->addRow(tr("Nébuleuse planétaire"),layoutNoteNebuleusePlanetaire);
-        layoutGenerateurPriorite->addRow(tr("Nébuleuse en réflection"),layoutNoteNebuleuseReflection);
+        layoutGenerateurPriorite->addRow(tr("NÃ©buleuse planÃ©taire"),layoutNoteNebuleusePlanetaire);
+        layoutGenerateurPriorite->addRow(tr("NÃ©buleuse en rÃ©flection"),layoutNoteNebuleuseReflection);
         layoutGenerateurPriorite->addRow(tr("Etoile double"),layoutNoteEtoileDouble);
         layoutGenerateurPriorite->addRow(tr("Etoile triple"),layoutNoteEtoileTriple);
         layoutGenerateurPriorite->addRow(tr("Galaxie"),layoutNoteGalaxie);
@@ -324,7 +324,7 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
 
         // PAGE CARTE CIEL
 
-        QGroupBox *groupBoxCouleurCarte = new QGroupBox(tr("Couleurs par défaut de la carte du ciel"));
+        QGroupBox *groupBoxCouleurCarte = new QGroupBox(tr("Couleurs par dÃ©faut de la carte du ciel"));
         QFormLayout *layoutFormCouleurCarte = new QFormLayout;
 
         m_boutonCouleurFond = new QPushButton(tr("Changer"));
@@ -362,10 +362,10 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
             layoutCouleurEtoile->addWidget(m_labelCouleurEtoile);
 
         layoutFormCouleurCarte->addRow(tr("Couleur du fond"),layoutCouleurFond);
-        layoutFormCouleurCarte->addRow(tr("Couleur des légendes"),layoutCouleurLegende);
+        layoutFormCouleurCarte->addRow(tr("Couleur des lÃ©gendes"),layoutCouleurLegende);
         layoutFormCouleurCarte->addRow(tr("Couleur des objets"),layoutCouleurObjet);
         layoutFormCouleurCarte->addRow(tr("Couleur des constellations"),layoutCouleurConstellation);
-        layoutFormCouleurCarte->addRow(tr("Couleur des étoiles"),layoutCouleurEtoile);
+        layoutFormCouleurCarte->addRow(tr("Couleur des Ã©toiles"),layoutCouleurEtoile);
 
         groupBoxCouleurCarte->setLayout(layoutFormCouleurCarte);
         QVBoxLayout *layoutOk = new QVBoxLayout;
@@ -383,7 +383,7 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
             layoutPrincipalBoutons->setAlignment(Qt::AlignTop);
         m_boutonAnnuler = new QPushButton(tr("Annuler"));
         m_boutonValider = new QPushButton(tr("Valider"));
-        m_boutonReinitialiser = new QPushButton(tr("Réinitialiser"));
+        m_boutonReinitialiser = new QPushButton(tr("RÃ©initialiser"));
 
         layoutPrincipalBoutons->addWidget(m_boutonValider);
         layoutPrincipalBoutons->addWidget(m_boutonAnnuler);
@@ -480,11 +480,11 @@ void FenPreferences::ajouterTelescope()
             }
             m_listeTelescope->setCurrentIndex(m_listeTelescope->findText(m_nomTelescope->text()));
             emit nouveauTelescope();
-            QMessageBox::information(this,tr("Télescope ajouté"),tr("Le télescope a été ajouté avec succès à la base de données."));
+            QMessageBox::information(this,tr("TÃ©lescope ajoutÃ©"),tr("Le tÃ©lescope a Ã©tÃ© ajoutÃ© avec succÃ¨s Ã  la base de donnÃ©es."));
         }
     }
     else
-        QMessageBox::critical(this,tr("Ajout impossible"),tr("Impossible d'ajouter le télescope car il est déjà dans la base de données."));
+        QMessageBox::critical(this,tr("Ajout impossible"),tr("Impossible d'ajouter le tÃ©lescope car il est dÃ©jÃ  dans la base de donnÃ©es."));
 }
 void FenPreferences::changerCouleurConstellation()
 {
@@ -577,12 +577,12 @@ void FenPreferences::initialiserValeur()
     m_listeVilles->clear(); // on vide les villes
     QSqlQuery *requete = new QSqlQuery;
 
-    // on met soit le pays de l'utilisateur, soit le défaut
+    // on met soit le pays de l'utilisateur, soit le dÃ©faut
     m_listePays->setCurrentIndex(m_listePays->findText(m_parent->getUser()->value("localisation/pays",PAYS_DEFAUT).toString()));
 
     if(m_listePays->currentText() != "France")
     {
-        // On ajoute tous les items qui correspondent à ce pays
+        // On ajoute tous les items qui correspondent Ã  ce pays
         m_listeDept->setDisabled(true);
         requete->prepare("SELECT nom FROM villes_monde WHERE pays = :pays ORDER BY nom");
         requete->bindValue(":pays",m_listePays->currentText());
@@ -592,12 +592,12 @@ void FenPreferences::initialiserValeur()
             listeVilles << requete->value(0).toString();
         m_listeVilles->addItems(listeVilles);
 
-        // On met la ville par défaut
+        // On met la ville par dÃ©faut
         m_listeVilles->setCurrentIndex(m_listeVilles->findText(m_parent->getUser()->value("localisation/ville",VILLE_DEFAUT).toString()));
     }
     else
     {
-        // On trouve le département de la ville
+        // On trouve le dÃ©partement de la ville
         int dept;
         requete->prepare("SELECT departement FROM villes_france WHERE nom = :nom");
         requete->bindValue(":nom",m_parent->getUser()->value("localisation/ville",VILLE_DEFAUT).toString());
@@ -606,14 +606,14 @@ void FenPreferences::initialiserValeur()
         dept = requete->value(0).toInt();
         m_listeDept->setValue(dept);
 
-        // On ajoute toutes les villes de ce département
+        // On ajoute toutes les villes de ce dÃ©partement
         requete->prepare("SELECT nom FROM villes_france WHERE departement = :dept ORDER BY nom");
         requete->bindValue(":dept",dept);
         requete->exec();
         while(requete->next())
             m_listeVilles->addItem(requete->value(0).toString());
 
-        // On met la ville par défaut
+        // On met la ville par dÃ©faut
         m_listeVilles->setCurrentIndex(m_listeVilles->findText(m_parent->getUser()->value("localisation/ville",VILLE_DEFAUT).toString()));
 
     }

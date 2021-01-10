@@ -20,7 +20,7 @@ InterfaceLecture::InterfaceLecture(Soiree *soiree, ActionsFenetre *listeActionsP
     Interface(listeActionsParam, parent)
 {
     m_soiree = soiree;
-    m_active = true; // On considère qu'à sa construction l'interface est active
+    m_active = true; // On considÃ¨re qu'Ã  sa construction l'interface est active
     m_modele = soiree->toModele();
     m_carte = new Carteciel(soiree);
     m_vue = new QTableView;
@@ -102,7 +102,7 @@ void InterfaceLecture::afficherInfosObjet(QModelIndex cells)
                 layout->addWidget(image);
                 QVBoxLayout *layoutV = new QVBoxLayout;
                 QLabel *l_ascdr = new QLabel(tr("<strong>Ascension droite</strong> : ")+objet->ascdr());
-                QLabel *l_dec = new QLabel(tr("<strong>Déclinaison</strong> : ")+objet->declinaison());
+                QLabel *l_dec = new QLabel(tr("<strong>DÃ©clinaison</strong> : ")+objet->declinaison());
                 QLabel *l_type = new QLabel(tr("<strong>Type</strong> : ")+objet->type());
                 QLabel *l_mag = new QLabel(tr("<strong>Magnitude</strong> : ")+QString::number(objet->magnitude()));
                 QLabel *l_cons = new QLabel(tr("<strong>Constellation</strong> : ")+Calculastro::abreviationToNom(objet->constellation()));
@@ -145,7 +145,7 @@ void InterfaceLecture::monterObjet()
                     m_modele = m_soiree->toModele();
                     m_vue->setModel(m_modele);
                     griserActions();
-                    emit afficher(tr("L'objet a été monté"));
+                    emit afficher(tr("L'objet a Ã©tÃ© montÃ©"));
                 }
             }
         }
@@ -171,7 +171,7 @@ void InterfaceLecture::descendreObjet()
                     m_modele = m_soiree->toModele();
                     m_vue->setModel(m_modele);
                     griserActions();
-                    emit afficher(tr("L'objet a été descendu"));
+                    emit afficher(tr("L'objet a Ã©tÃ© descendu"));
                 }
             }
         }
@@ -195,7 +195,7 @@ void InterfaceLecture::supprimerObjet()
                     m_modele = m_soiree->toModele();
                     m_vue->setModel(m_modele);
                     griserActions();
-                    emit afficher(tr("L'objet a été supprimé"));
+                    emit afficher(tr("L'objet a Ã©tÃ© supprimÃ©"));
                 }
             }
         }
@@ -208,7 +208,7 @@ void InterfaceLecture::modifierObjet()
         if(m_vue->currentIndex().isValid())
         {
             bool* ok = new bool;
-            int reponse = QInputDialog::getInt(0,tr("Modifier la durée"),tr("Quelle est la nouvelle durée ? (min)"),5,DUREE_OBJET_MIN,DUREE_OBJET_MAX,1,ok);
+            int reponse = QInputDialog::getInt(0,tr("Modifier la durÃ©e"),tr("Quelle est la nouvelle durÃ©e ? (min)"),5,DUREE_OBJET_MIN,DUREE_OBJET_MAX,1,ok);
             if(*ok == true)
             {
                 QString ref = m_modele->item(m_vue->currentIndex().row(),1)->text();
@@ -220,7 +220,7 @@ void InterfaceLecture::modifierObjet()
                     m_modele = m_soiree->toModele();
                     m_vue->setModel(m_modele);
                     griserActions();
-                    emit afficher(tr("L'objet a été modifié"));
+                    emit afficher(tr("L'objet a Ã©tÃ© modifiÃ©"));
                 }
             }
          }
@@ -234,8 +234,8 @@ void InterfaceLecture::ajouterPlanete()
         {
             bool ok = true;
             QStringList planetes;
-            planetes << tr("Mercure") << tr("Vénus") << tr("Mars") << tr("Jupiter") << tr("Saturne") << tr("Uranus") << tr("Neptune");
-            QString reponse = QInputDialog::getItem(0,tr("Ajouter une planète"),tr("Choisisssez la planète à ajouter"),planetes,0,false,&ok);
+            planetes << tr("Mercure") << tr("VÃ©nus") << tr("Mars") << tr("Jupiter") << tr("Saturne") << tr("Uranus") << tr("Neptune");
+            QString reponse = QInputDialog::getItem(0,tr("Ajouter une planÃ¨te"),tr("Choisisssez la planÃ¨te Ã  ajouter"),planetes,0,false,&ok);
             if(ok)
             {
                 int index = planetes.indexOf(reponse);
@@ -251,7 +251,7 @@ void InterfaceLecture::ajouterPlanete()
                     m_modele = m_soiree->toModele();
                     m_vue->setModel(m_modele);
                     griserActions();
-                    emit afficher(tr("La planète a été ajoutée"));
+                    emit afficher(tr("La planÃ¨te a Ã©tÃ© ajoutÃ©e"));
                 }
             }
         }
@@ -279,7 +279,7 @@ void InterfaceLecture::ajouterObjet()
                         m_modele = m_soiree->toModele();
                         m_vue->setModel(m_modele);
                         griserActions();
-                        emit afficher(tr("La planète a été ajoutée"));
+                        emit afficher(tr("La planÃ¨te a Ã©tÃ© ajoutÃ©e"));
                     }
                 }
                 else
@@ -296,7 +296,7 @@ void InterfaceLecture::ajouterObjet()
                             m_modele = m_soiree->toModele();
                             m_vue->setModel(m_modele);
                             griserActions();
-                            emit afficher(tr("L'objet a été ajouté"));
+                            emit afficher(tr("L'objet a Ã©tÃ© ajoutÃ©"));
                         }
                     }
                 }
@@ -333,11 +333,11 @@ void InterfaceLecture::enregistrerSoiree()
 {
     if(m_active)
     {
-        emit afficher(tr("Enregistrement de la soirée en cours..."));
-        if(m_soiree->shouldBeSaved()) // Si on doit réellement l'enregistrer
+        emit afficher(tr("Enregistrement de la soirÃ©e en cours..."));
+        if(m_soiree->shouldBeSaved()) // Si on doit rÃ©ellement l'enregistrer
         {
             m_soiree->enregistrerSoiree(); // On l'enregistre
-            QMessageBox::information(this,tr("Succès"),tr("Enregistrement réussi."));
+            QMessageBox::information(this,tr("SuccÃ¨s"),tr("Enregistrement rÃ©ussi."));
             griserActions();
         }
     }
@@ -346,7 +346,7 @@ void InterfaceLecture::carteCiel()
 {
     if(m_active)
     {
-        emit afficher(tr("Création de la carte du ciel..."));
+        emit afficher(tr("CrÃ©ation de la carte du ciel..."));
         m_carte->afficherQDialog();
     }
 }
@@ -356,8 +356,8 @@ void InterfaceLecture::diaporama()
     {
         bool ok;
         QStringList reponses;
-        reponses << tr("1 - Lire la soirée maintenant","Important : laisser le 1 comme premier caractère") << tr("2 - Démarrer la soirée à l'heure prévue","Important : laisser le 2 comme premier caractère") << tr("3 - Ne rien faire","Important : laisser le 3 comme premier caractère");
-        QString reponse = QInputDialog::getItem(0,tr("Choisissez le mode"),tr("Comment voulez-vous démarrer la soirée ?"),reponses,0,false,&ok);
+        reponses << tr("1 - Lire la soirÃ©e maintenant","Important : laisser le 1 comme premier caractÃ¨re") << tr("2 - DÃ©marrer la soirÃ©e Ã  l'heure prÃ©vue","Important : laisser le 2 comme premier caractÃ¨re") << tr("3 - Ne rien faire","Important : laisser le 3 comme premier caractÃ¨re");
+        QString reponse = QInputDialog::getItem(0,tr("Choisissez le mode"),tr("Comment voulez-vous dÃ©marrer la soirÃ©e ?"),reponses,0,false,&ok);
         if(ok)
         {
             if(reponse.left(1) == "1") // Si on demarre tout de suite
@@ -366,9 +366,9 @@ void InterfaceLecture::diaporama()
                 Diaporama *diapo = new Diaporama(m_soiree);
                 diapo->demarrer();
             }
-            else if(reponse.left(1) == "2") // Si on décide de démarrer la soirée à l'heure prévue
+            else if(reponse.left(1) == "2") // Si on dÃ©cide de dÃ©marrer la soirÃ©e Ã  l'heure prÃ©vue
             {
-                if(m_soiree->getDebut().toLocalTime().date() == QDate::currentDate() && m_soiree->getDebut().toTime_t() > QDateTime::currentDateTime().toTime_t()) // Si on est sur une soirée qui commence aujourd'hui et après maintenant
+                if(m_soiree->getDebut().toLocalTime().date() == QDate::currentDate() && m_soiree->getDebut().toTime_t() > QDateTime::currentDateTime().toTime_t()) // Si on est sur une soirÃ©e qui commence aujourd'hui et aprÃ¨s maintenant
                 {
                     int secondesRestantes(0);
                     secondesRestantes = m_soiree->getDebut().toLocalTime().toTime_t() - QDateTime::currentDateTime().toTime_t();
@@ -377,7 +377,7 @@ void InterfaceLecture::diaporama()
                     QTimer::singleShot(secondesRestantes*1000,diapo,SLOT(demarrer()));
                 }
                 else
-                    QMessageBox::warning(this,tr("Impossible d'effectuer l'action"),tr("Il est impossible de programmer le lancement de cette soirée, elle ne correspond pas à l'heure et à la date actuelle."));
+                    QMessageBox::warning(this,tr("Impossible d'effectuer l'action"),tr("Il est impossible de programmer le lancement de cette soirÃ©e, elle ne correspond pas Ã  l'heure et Ã  la date actuelle."));
             }
         }
     }
@@ -405,7 +405,7 @@ void InterfaceLecture::infosSoiree()
         QLabel *pays = new QLabel(tr("<strong>Pays</strong> : ")+m_soiree->getPays());
         QLabel *latitude = new QLabel(tr("<strong>Latitude</strong> : ")+Calculastro::degreeToDms(m_soiree->getLat()));
         QLabel *longitude = new QLabel(tr("<strong>Longitude</strong> : ")+Calculastro::degreeToDms(m_soiree->getLongi()));
-        QLabel *debut = new QLabel(tr("<strong>Début</strong> : ")+m_soiree->getDebut().toLocalTime().toString("dd/MM/yyyy hh:mm"));
+        QLabel *debut = new QLabel(tr("<strong>DÃ©but</strong> : ")+m_soiree->getDebut().toLocalTime().toString("dd/MM/yyyy hh:mm"));
         QLabel *fin = new QLabel(tr("<strong>Fin</strong> : ")+m_soiree->getFin().toLocalTime().toString("dd/MM/yyyy hh:mm"));
         QLabel *nbObjets = new QLabel(tr("<strong>Nombre d'objets</strong> : ")+QString::number(m_soiree->getPlanning().count()));
 
@@ -419,7 +419,7 @@ void InterfaceLecture::infosSoiree()
         layout->addWidget(nbObjets);
 
         fenetreInfos.setLayout(layout);
-        fenetreInfos.setWindowTitle(tr("Infos sur la soirée"));
+        fenetreInfos.setWindowTitle(tr("Infos sur la soirÃ©e"));
 
         fenetreInfos.exec();
     }
@@ -465,7 +465,7 @@ void InterfaceLecture::imprimer()
     printer->setPageMargins(7,7,7,7,QPrinter::Millimeter);
 
     QPrintDialog *dialog = new QPrintDialog(printer, this);
-    dialog->setWindowTitle(tr("Imprimer la soirée"));
+    dialog->setWindowTitle(tr("Imprimer la soirÃ©e"));
     dialog->addEnabledOption(QAbstractPrintDialog::PrintSelection);
 
     if (dialog->exec() != QDialog::Accepted)

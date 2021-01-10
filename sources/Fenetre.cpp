@@ -17,7 +17,7 @@ void Fenetre::afficherInfosObjet(Objet *objet)
             layout->addWidget(image);
             QVBoxLayout *layoutV = new QVBoxLayout;
             QLabel *l_ascdr = new QLabel(tr("<strong>Ascension droite</strong> : ")+objet->ascdr());
-            QLabel *l_dec = new QLabel(tr("<strong>Déclinaison</strong> : ")+objet->declinaison());
+            QLabel *l_dec = new QLabel(tr("<strong>DÃ©clinaison</strong> : ")+objet->declinaison());
             QLabel *l_mag = new QLabel(tr("<strong>Magnitude</strong> : ")+QString::number(objet->magnitude()));
             QLabel *l_cons = new QLabel(tr("<strong>Constellation</strong> : ")+Calculastro::abreviationToNom(objet->constellation()));
             QLabel *l_taille = new QLabel(tr("<strong>Taille</strong> : ")+QString::number(objet->taille())+"'");

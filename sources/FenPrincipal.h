@@ -40,10 +40,10 @@ class FenPrincipal : public QMainWindow
         void aPropos();
         void aide();
 
-        // Verifie à la demande de l'utilisateur
-        void miseAJour1(); // Crée le module de recherche de mise à jour et l'active
-        void miseAJour2(bool ok); // Traite le résultat de la mise à jour
-        // Vérifie au demarrage
+        // Verifie Ã  la demande de l'utilisateur
+        void miseAJour1(); // CrÃ©e le module de recherche de mise Ã  jour et l'active
+        void miseAJour2(bool ok); // Traite le rÃ©sultat de la mise Ã  jour
+        // VÃ©rifie au demarrage
         void searchNewVersion(bool ok);
         static bool existsNewVersion(QString ligne);
 
@@ -57,17 +57,17 @@ class FenPrincipal : public QMainWindow
         void closeEvent(QCloseEvent * event);
 
     private:
-        // Liste des actions dans une classe (pour être accessible partout
+        // Liste des actions dans une classe (pour Ãªtre accessible partout
         ActionsFenetre *listeActions;
 
-        // Pour les mises à jour (module qui accedera au fichier)
+        // Pour les mises Ã  jour (module qui accedera au fichier)
         QWebView *m_view;
         QWebView *m_view2;
 
         // La classe Utilisateur qui stocke toutes les informations variables de l'utilisateur
         QSettings *m_user;
 
-        // Pour gérer les soirées récentes
+        // Pour gÃ©rer les soirÃ©es rÃ©centes
         QMenu *menuSoireesRecentes;
 
         QTabWidget *tabOnglets;

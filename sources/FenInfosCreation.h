@@ -7,13 +7,13 @@
 #include "FenPrincipal.h"
 
 /*
-    Cette classe crée une fenêtre qui demande des infos préalables pour la création manuelle de la soirée
-    Les informations rentrées ici seront ensuite envoyées à la fonction nouvelOngletCreation() de la classe
+    Cette classe crÃ©e une fenÃªtre qui demande des infos prÃ©alables pour la crÃ©ation manuelle de la soirÃ©e
+    Les informations rentrÃ©es ici seront ensuite envoyÃ©es Ã  la fonction nouvelOngletCreation() de la classe
     FenPrincipal qui se chargera d'ouvrir un nouvel onglet.
 
-    Cette classe est équivalente à FenCreerSoiree pour la génération de soirée
+    Cette classe est Ã©quivalente Ã  FenCreerSoiree pour la gÃ©nÃ©ration de soirÃ©e
 
-    Pour lancer cette fenêtre, il faut utiliser son slot exec()
+    Pour lancer cette fenÃªtre, il faut utiliser son slot exec()
 */
 
 

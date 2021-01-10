@@ -16,7 +16,7 @@ HauteurMaxTemps::HauteurMaxTemps(QDateTime temps, double hauteurMax)
         m_hauteurMax = hauteurMax;
     else
     {
-        QMessageBox::critical(0,QObject::tr("Hauteur maximum"),QObject::tr("La hauteur maximum doit être comprise entre -90° et 90°"));
+        QMessageBox::critical(0,QObject::tr("Hauteur maximum"),QObject::tr("La hauteur maximum doit Ãªtre comprise entre -90Â° et 90Â°"));
         m_hauteurMax = 0;
     }
 }
@@ -33,7 +33,7 @@ void HauteurMaxTemps::setHauteurMax(double hauteur)
     if(hauteur < 90 && hauteur > -90)
         m_hauteurMax = hauteur;
     else
-        QMessageBox::critical(0,QObject::tr("Hauteur maximum"),QObject::tr("La hauteur maximum doit être comprise entre -90° et 90°"));
+        QMessageBox::critical(0,QObject::tr("Hauteur maximum"),QObject::tr("La hauteur maximum doit Ãªtre comprise entre -90Â° et 90Â°"));
 }
 void HauteurMaxTemps::setDateTime(QDateTime date)
 {

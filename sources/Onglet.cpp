@@ -29,10 +29,10 @@ QWidget* Onglet::getWidget(QString ref)
             label->setPixmap(QPixmap("icones/"+m_soiree->getPlanning().at(i)->ref()));
             layoutIcoDesc->addWidget(label,0,Qt::AlignLeft);
 
-        // On crée la description de l'objet
+        // On crÃ©e la description de l'objet
         QString descObjet;
         descObjet = tr(" <strong>Ascension droite</strong> : ","Laisser les balises et les espaces") + m_soiree->getPlanning().at(i)->ascdr() +
-                tr("<br /><strong>Déclinaison</strong> : ","Laisser les balises et les espaces") + m_soiree->getPlanning().at(i)->declinaison() +
+                tr("<br /><strong>DÃ©clinaison</strong> : ","Laisser les balises et les espaces") + m_soiree->getPlanning().at(i)->declinaison() +
                 tr("<br /><strong>Magnitude</strong> : ","Laisser les balises et les espaces") + QString::number(m_soiree->getPlanning().at(i)->magnitude()) +
                 tr("<br /><strong>Type</strong> : ","Laisser les balises et les espaces") + m_soiree->getPlanning().at(i)->type() +
                 tr("<br /><strong>Constellation</strong> : ","Laisser les balises et les espaces") + m_soiree->getPlanning().at(i)->constellation();
@@ -41,7 +41,7 @@ QWidget* Onglet::getWidget(QString ref)
         layoutIcoDesc->addWidget(new QLabel(descObjet),0,Qt::AlignLeft);
         layoutIcoDesc->setAlignment(Qt::AlignLeft);
     layoutSec->addLayout(layoutIcoDesc);
-        QTextEdit *champRemarques = new QTextEdit("L'amas a été découvert par Giovanni Domenico Maraldi en 1746 alors qu'il recherchait la comète de De Cheseaux : il le décrivit comme une étoile floue constituée de plusieurs étoiles. En 1760 il fut intégré dans le catalogue Messier qui y vit plutôt, comme pour la plupart des objets qu'il a catalogués, une « nébuleuse sans étoiles ». Une fois encore, cet amas fut résolu en étoiles par William Herschel en 1783. En 1927, des photos prises à l'observatoire du Mont Wilson permirent d'y découvrir une nébuleuse planétaire, Pease 1.");
+        QTextEdit *champRemarques = new QTextEdit("L'amas a Ã©tÃ© dÃ©couvert par Giovanni Domenico Maraldi en 1746 alors qu'il recherchait la comÃ¨te de De Cheseaux : il le dÃ©crivit comme une Ã©toile floue constituÃ©e de plusieurs Ã©toiles. En 1760 il fut intÃ©grÃ© dans le catalogue Messier qui y vit plutÃ´t, comme pour la plupart des objets qu'il a cataloguÃ©s, une Â« nÃ©buleuse sans Ã©toiles Â». Une fois encore, cet amas fut rÃ©solu en Ã©toiles par William Herschel en 1783. En 1927, des photos prises Ã  l'observatoire du Mont Wilson permirent d'y dÃ©couvrir une nÃ©buleuse planÃ©taire, Pease 1.");
         champRemarques->setMaximumHeight(100);
     layoutSec->addWidget(champRemarques);
         QHBoxLayout *layoutActions = new QHBoxLayout;

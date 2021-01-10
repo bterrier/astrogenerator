@@ -6,10 +6,10 @@
 #include "FenPrincipal.h"
 #include "Soiree.h"
 
- Classe abstraite qui contient les fenêtres de type CREATION OU LECTURE/MODIFICATION
-    - Les fenêtres contiennent une soirée et peuvent la modifier
-    - Les fenêtres peuvent enregistrer une soirée
-    - Les fenêtres peuvent afficher les infos d'un objet
+ Classe abstraite qui contient les fenÃªtres de type CREATION OU LECTURE/MODIFICATION
+    - Les fenÃªtres contiennent une soirÃ©e et peuvent la modifier
+    - Les fenÃªtres peuvent enregistrer une soirÃ©e
+    - Les fenÃªtres peuvent afficher les infos d'un objet
 
 class Fenetre : public QObject
 {
