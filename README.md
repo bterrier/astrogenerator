@@ -62,8 +62,8 @@ along with astroGenerator.  If not, see <https://www.gnu.org/licenses/>.
 
 This version only works on Windows with MinGW.
 
-- Qt 4.8
-- MinGW 4.8.2
+- Qt 4.5
+- MinGW 4.9.2
 
 ### Build steps
 
@@ -80,28 +80,16 @@ cd build-astrogenerator
 qmake ../astrogenerator/astrogenerator.pro
 mingw32-make
 mingw32-make install
+windeployqt astroGenerator.exe
 ```
 
-The `make install` step will copy required files and assets in the build directory. This includes Qt DLLs, Qt plugins, images, ...
-
-Finally you will need to copy MinGW DLLs in the build directory:
-
-```cmd
-copy C:\Qt\Tools\mingw482_32\bin\libgcc_s_dw2-1.dll C:\Users\Bob\build-astrogenerator\.
-copy C:\Qt\Tools\mingw482_32\bin\libstdc++-6.dll C:\Users\Bob\build-astrogenerator\.
-copy C:\Qt\Tools\mingw482_32\bin\libwinpthread-1.dll C:\Users\Bob\build-astrogenerator\.
-```
+The `make install` step will copy required files and assets in the build directory.
 
 ### Linux, macOs and others
 
-Since the only dependancy is Qt 4, this should build on any platform where Qt 4 is available.
+Since the only dependancy is Qt 5, this should build on any platform where Qt 5 is available.
 
-The only shortcoming is the handling of deployments. There are 2 solutions:
+The only shortcoming is the handling of deployments.
+On macOs you can replace `windeployqt` by `macdeployqt`.
 
-1. Update the .pro so that it does not deploy DLLs and plugins during the install step.
-2. Do not run the install step and manually copy-paste to the build directory:
-   - icones/
-   - images/
-   - VSOP87/
-   - *.txt
-   - dbastrogenerator
+On Linux, if you use your system installed Qt, you can skip this step.

@@ -74,30 +74,12 @@ SOURCES += sources/ActionsFenetre.cpp \
 TRANSLATIONS += sources/astroGenerator_en.ts
 
 RC_FILE = myapp.rc
-INSTALLS += qt_translations qt_imageformats qt_libs ag_txt qt_sqldrivers
-qt_imageformats.path = $$OUT_PWD/imageformats
-qt_imageformats.files += \
-    $$[QT_INSTALL_PLUGINS]/imageformats/*.dll
+INSTALLS += ag_txt ag_translations
 
-qt_sqldrivers.path = $$OUT_PWD/sqldrivers
-qt_sqldrivers.files += \
-    $$[QT_INSTALL_PLUGINS]/sqldrivers/*.dll
-
-qt_libs.path = $$OUT_PWD
-qt_libs.files += \
-    $$[QT_INSTALL_BINS]/QtCore4.dll \
-    $$[QT_INSTALL_BINS]/QtGui4.dll \
-    $$[QT_INSTALL_BINS]/QtNetwork4.dll \
-    $$[QT_INSTALL_BINS]/QtSql4.dll \
-    $$[QT_INSTALL_BINS]/QtWebKit4.dll \
-    $$[QT_INSTALL_BINS]/QtXml4.dll
-
-
-qt_translations.path = $$OUT_PWD/translations
-qt_translations.files += \
-    $$[QT_INSTALL_TRANSLATIONS]/qt_*.qm \
-    $$PWD/sources/astroGenerator_en.qm
-
+ag_translations.path = $$OUT_PWD/translations
+ag_translations.files += \
+     $$PWD/sources/astroGenerator_en.qm
+     
 ag_txt.path = $$OUT_PWD
 ag_txt.files += \
     $$PWD/*.txt \
