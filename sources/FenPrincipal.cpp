@@ -223,7 +223,7 @@ FenPrincipal::FenPrincipal()
         label_copyright->setFont(QFont("Verdana",8));
         label_copyright->setOpenExternalLinks(true);
     barreStatut->addPermanentWidget(label_copyright);
-    connect(listeActions->getActionBarreStatut(),SIGNAL(toggled(bool)),barreStatut,SLOT(setShown(bool)));
+    connect(listeActions->getActionBarreStatut(),SIGNAL(toggled(bool)),barreStatut,SLOT(setVisible(bool)));
     listeActions->getActionBarreStatut()->setChecked(false);
     barreStatut->setVisible(false);
 
