@@ -5,7 +5,7 @@
 TEMPLATE = app
 TARGET = astroGenerator
 
-CONFIG += lrelease
+CONFIG += lrelease c++11
 QT += core gui widgets sql xml webkit webkitwidgets printsupport
 
 INCLUDEPATH += .

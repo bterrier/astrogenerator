@@ -36,6 +36,8 @@
     #define DEBUT_URL_CDS_OBJET    "http://simbad.u-strasbg.fr/simbad/sim-id?Ident="
     #define URL_OBJET_REMARQUABLE  "http://www.univers-astronomie.fr/articles/techniques/121-50-objets-remarquables-du-ciel-profond.html"
 
+constexpr auto URL_GITHUB = "https://github.com/bterrier/astrogenerator";
+
     #define HAUTEUR_COMPTE_REBOURS_DIAPO 80
     #define LARGEUR_COMPTE_REBOURS_DIAPO 200
 

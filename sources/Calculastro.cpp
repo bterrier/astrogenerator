@@ -1,6 +1,8 @@
 #include "Calculastro.h"
 #include "Constantes.h"
 
+#include <QtMath>
+
 #include <QApplication>
 #include <QFile>
 #include <QMessageBox>
