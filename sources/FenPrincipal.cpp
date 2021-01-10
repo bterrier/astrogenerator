@@ -14,6 +14,24 @@
 #include "FenInfosCreation.h"
 #include "FenPreferences.h"
 
+#include <QCloseEvent>
+#include <QMessageBox>
+#include <QDesktopServices>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QSqlQuery>
+#include <QStandardPaths>
+#include <QDir>
+#include <QCoreApplication>
+#include <QStatusBar>
+#include <QToolBar>
+#include <QPushButton>
+#include <QSignalMapper>
+#include <QMenu>
+#include <QMenuBar>
+#include <QApplication>
+#include <QFileDialog>
+
 FenPrincipal::FenPrincipal()
 {
     if(!QDir::setCurrent(QCoreApplication::applicationDirPath()+"/"))
@@ -207,7 +225,7 @@ FenPrincipal::FenPrincipal()
     barreStatut->addPermanentWidget(label_copyright);
     connect(listeActions->getActionBarreStatut(),SIGNAL(toggled(bool)),barreStatut,SLOT(setShown(bool)));
     listeActions->getActionBarreStatut()->setChecked(false);
-    barreStatut->setShown(false);
+    barreStatut->setVisible(false);
 
     // On grise les actions qu'on ne peut pas faire à l'ouverture du programme
     listeActions->griserActionMonterObjet(true);
@@ -444,7 +462,7 @@ bool FenPrincipal::fermerOnglet(Interface *interface)
 void FenPrincipal::ouvrirSoa(QString fileSoa)
 {
     if(fileSoa == "")
-        fileSoa = QFileDialog::getOpenFileName(0,tr("Ouvrir fichier de soirée"),QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation),"Soirée Observation Astronomie (*.soa)");
+        fileSoa = QFileDialog::getOpenFileName(0,tr("Ouvrir fichier de soirée"), QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),"Soirée Observation Astronomie (*.soa)");
 
     if(fileSoa != "")
     {

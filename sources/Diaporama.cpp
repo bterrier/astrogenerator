@@ -5,6 +5,10 @@
 #include "Calculastro.h"
 #include "Constantes.h"
 
+#include <QHBoxLayout>
+#include <QKeyEvent>
+#include <QLabel>
+
 Diaporama::Diaporama(Soiree *soiree)
 {
     // Initialisation des attributs

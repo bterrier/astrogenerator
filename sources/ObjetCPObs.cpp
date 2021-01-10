@@ -2,6 +2,10 @@
 #include "ObjetObs.h"
 #include "ObjetCP.h"
 
+#include <QMessageBox>
+#include <QSqlQuery>
+#include <QVariant>
+
 ObjetCPObs::ObjetCPObs(ObjetCP *objet, QDateTime debut, QDateTime fin) : ObjetObs(debut,fin)
 {
     initialiser(objet->ref());

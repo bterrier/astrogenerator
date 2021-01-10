@@ -1,5 +1,10 @@
 #include "CompteRebours.h"
 
+#include <cmath>
+
+#include <QTimer>
+#include <QVBoxLayout>
+
 CompteRebours::CompteRebours()
 {
     m_lcd = new QLCDNumber;

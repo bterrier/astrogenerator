@@ -3,6 +3,10 @@
 #include "Constantes.h"
 #include "Calculastro.h"
 
+#include <QMessageBox>
+#include <QPushButton>
+#include <QSqlQuery>
+
 FenCreerSoiree::FenCreerSoiree(FenPrincipal *parent) : QDialog()
 {
     m_parent = parent;

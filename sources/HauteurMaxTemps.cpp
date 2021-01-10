@@ -1,5 +1,7 @@
 #include "HauteurMaxTemps.h"
 
+#include <QMessageBox>
+
 HauteurMaxTemps::HauteurMaxTemps() {}
 HauteurMaxTemps::HauteurMaxTemps(QDateTime temps, double hauteurMax)
 {

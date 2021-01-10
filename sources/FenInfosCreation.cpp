@@ -1,6 +1,11 @@
 #include "FenInfosCreation.h"
 #include "Constantes.h"
 
+#include <QComboBox>
+#include <QFormLayout>
+#include <QPushButton>
+#include <QSqlQuery>
+
 FenInfosCreation::FenInfosCreation(FenPrincipal *parent) :
     QDialog(parent)
 {

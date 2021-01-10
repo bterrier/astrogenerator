@@ -1,7 +1,7 @@
 #ifndef COMPTEREBOURS_H
 #define COMPTEREBOURS_H
 
-#include <QtGui>
+#include <QLCDNumber>
 
 class CompteRebours : public QWidget
 {

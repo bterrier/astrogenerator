@@ -1,9 +1,9 @@
 #ifndef OBJETOBS_H
 #define OBJETOBS_H
 
-#include <QtGui>
 #include "Objet.h"
 
+#include <QDateTime>
 // ATTENTION CLASSE ABSTRAITE !!!!
 
 class ObjetObs : public Objet

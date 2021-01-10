@@ -1,7 +1,12 @@
 #ifndef INTERFACECREATION_H
 #define INTERFACECREATION_H
 
-#include <QtGui>
+#include <QDateEdit>
+#include <QDoubleSpinBox>
+#include <QListView>
+#include <QSpinBox>
+#include <QTimeEdit>
+
 #include "Soiree.h"
 #include "ActionsFenetre.h"
 #include "FenPrincipal.h"

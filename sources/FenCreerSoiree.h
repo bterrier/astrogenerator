@@ -1,7 +1,11 @@
 #ifndef FENCREERSOIREE_H
 #define FENCREERSOIREE_H
-
-#include <QtGui>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QDialog>
+#include <QFormLayout>
+#include <QLabel>
+#include <QProgressBar>
 #include "FenPrincipal.h"
 
 class FenCreerSoiree : public QDialog

@@ -1,8 +1,13 @@
 #ifndef CALCULASTRO_H
 #define CALCULASTRO_H
 
-#include <QtGui>
 #include <cmath>
+
+#include <QLocale>
+#include <QSettings>
+#include <QString>
+#include <QVector>
+
 #include "ObjetObs.h"
 #include "ObjetCPObs.h"
 #include "HauteurMaxTemps.h"

@@ -1,6 +1,13 @@
 #include "Onglet.h"
 #include "Carteciel.h"
 
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QTextEdit>
+#include <QVBoxLayout>
+#include <QWidget>
+
 Onglet::Onglet(Soiree *soiree)
 {
     m_soiree = soiree;

@@ -8,6 +8,14 @@
 #include "ObjetCPObs.h"
 #include "Calculastro.h"
 
+#include <QInputDialog>
+#include <QHBoxLayout>
+#include <QHeaderView>
+#include <QMessageBox>
+#include <QPrintDialog>
+#include <QToolBar>
+#include <QLabel>
+
 InterfaceLecture::InterfaceLecture(Soiree *soiree, ActionsFenetre *listeActionsParam, QWidget *parent) :
     Interface(listeActionsParam, parent)
 {
@@ -22,7 +30,7 @@ InterfaceLecture::InterfaceLecture(Soiree *soiree, ActionsFenetre *listeActionsP
         m_vue->setSelectionBehavior(QAbstractItemView::SelectRows);
         m_vue->setSelectionMode(QAbstractItemView::SingleSelection);
         m_vue->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        m_vue->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+        m_vue->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     QHBoxLayout *layoutPrincipal = new QHBoxLayout;
 
@@ -200,7 +208,7 @@ void InterfaceLecture::modifierObjet()
         if(m_vue->currentIndex().isValid())
         {
             bool* ok = new bool;
-            int reponse = QInputDialog::getInteger(0,tr("Modifier la durée"),tr("Quelle est la nouvelle durée ? (min)"),5,DUREE_OBJET_MIN,DUREE_OBJET_MAX,1,ok);
+            int reponse = QInputDialog::getInt(0,tr("Modifier la durée"),tr("Quelle est la nouvelle durée ? (min)"),5,DUREE_OBJET_MIN,DUREE_OBJET_MAX,1,ok);
             if(*ok == true)
             {
                 QString ref = m_modele->item(m_vue->currentIndex().row(),1)->text();

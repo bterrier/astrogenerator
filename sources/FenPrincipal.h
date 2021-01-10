@@ -1,9 +1,9 @@
 #ifndef FENPRINCIPAL_H
 #define FENPRINCIPAL_H
 
-#include <QtGui>
-#include <QtWebKit/QWebView>
-#include <QtWebKit/QWebFrame>
+#include <QMainWindow>
+#include <QWebView>
+#include <QWebFrame>
 #include "Carteciel.h"
 #include "Soiree.h"
 #include "Interface.h"

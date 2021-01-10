@@ -1,8 +1,7 @@
 #ifndef OBJET_H
 #define OBJET_H
 
-#include <QtGui>
-#include <QtSql>
+#include <QObject>
 #include <cmath>
 
 class Objet : public QObject

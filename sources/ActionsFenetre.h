@@ -1,7 +1,8 @@
 #ifndef ACTIONSFENETRE_H
 #define ACTIONSFENETRE_H
 
-#include <QtGui>
+#include <QObject>
+#include <QAction>
 
 class ActionsFenetre : public QObject
 {

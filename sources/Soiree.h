@@ -1,11 +1,14 @@
 #ifndef SOIREE_H
 #define SOIREE_H
 
-#include <QtGui>
+#include <QObject>
+#include <QPrinter>
 #include "ObjetObs.h"
 #include "ObjetCPObs.h"
 #include "ObjetCP.h"
-#include <QtSql>
+
+#include <QSettings>
+#include <QStandardItemModel>
 
 class Soiree : public QObject
 {

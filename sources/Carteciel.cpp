@@ -3,6 +3,21 @@
 #include "Soiree.h"
 #include "Constantes.h"
 
+#include <QColorDialog>
+#include <QDesktopServices>
+#include <QDialog>
+#include <QFile>
+#include <QFileDialog>
+#include <QGraphicsTextItem>
+#include <QGraphicsView>
+#include <QMessageBox>
+#include <QPushButton>
+#include <QStandardPaths>
+#include <QTextStream>
+#include <QVBoxLayout>
+
+#include <QSqlQuery>
+
 Carteciel::Carteciel(Carteciel const& carteParam) : QGraphicsScene()
 {
     m_user = new QSettings(NOM_EQUIPE,NOM_PROGRAMME);
@@ -322,7 +337,7 @@ void Carteciel::afficherQDialog()
 }
 void Carteciel::sauverImage()
 {
-    QString fichier = QFileDialog::getSaveFileName(0, "Enregistrer la carte", QDesktopServices::storageLocation(QDesktopServices::PicturesLocation)+"/carte.png", "Images (*.png *.gif *.jpg *.jpeg)");
+    QString fichier = QFileDialog::getSaveFileName(0, "Enregistrer la carte", QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)+"/carte.png", "Images (*.png *.gif *.jpg *.jpeg)");
 
     if(fichier != "")
     {        

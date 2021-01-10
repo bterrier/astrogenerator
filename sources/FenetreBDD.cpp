@@ -1,4 +1,11 @@
 #include "FenetreBDD.h"
+#include <QDesktopServices>
+#include <QFormLayout>
+#include <QGroupBox>
+#include <QHeaderView>
+#include <QMessageBox>
+#include <QPushButton>
+#include <QVBoxLayout>
 #include <QtSql>
 #include "Objet.h"
 #include "Calculastro.h"
@@ -14,7 +21,7 @@ FenetreBDD::FenetreBDD(QWidget *parent) :
         m_vue->setSelectionBehavior(QAbstractItemView::SelectRows);
         m_vue->setSelectionMode(QAbstractItemView::SingleSelection);
         m_vue->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        m_vue->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+        m_vue->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
         m_vue->horizontalHeader()->hide();
         m_vue->verticalHeader()->hide();
 

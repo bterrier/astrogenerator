@@ -1,5 +1,7 @@
 #include "ObjetObs.h"
 
+#include <QMessageBox>
+
 ObjetObs::ObjetObs(QDateTime debut, QDateTime fin) : Objet()
 {
     if(debut.isValid() && !debut.isNull() && fin.isValid() && !fin.isNull())

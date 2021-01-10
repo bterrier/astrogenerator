@@ -1,5 +1,6 @@
 #include <QApplication>
-#include <QtGui>
+#include <QDir>
+#include <QMessageBox>
 #include <QTranslator>
 #include <QLocale>
 #include <QLibraryInfo>

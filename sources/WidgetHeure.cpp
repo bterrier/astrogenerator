@@ -2,7 +2,7 @@
 
 WidgetHeure::WidgetHeure()
 {
-    setNumDigits(5);
+    setDigitCount(5);
     tempsActuel = QTime::currentTime();
     QString texte = tempsActuel.toString("hh:mm");
     display(texte);

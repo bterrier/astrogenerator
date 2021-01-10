@@ -1,7 +1,8 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
-#include <QtGui>
+#include <QWidget>
+
 #include "ActionsFenetre.h"
 #include "Soiree.h"
 

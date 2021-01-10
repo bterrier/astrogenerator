@@ -1,7 +1,11 @@
 #ifndef FENPREFERENCES_H
 #define FENPREFERENCES_H
 
-#include <QtGui>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QDialog>
+#include <QLabel>
+#include <QListWidget>
 #include "FenPrincipal.h"
 
 class FenPreferences : public QDialog

@@ -1,7 +1,6 @@
 #ifndef OBJETCP_H
 #define OBJETCP_H
 
-#include <QtGui>
 #include "Objet.h"
 
 class ObjetCP : public Objet

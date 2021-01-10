@@ -1,7 +1,9 @@
 #ifndef WIDGETHEURE_H
 #define WIDGETHEURE_H
 
-#include <QtGui>
+#include <QLCDNumber>
+#include <QTime>
+#include <QTimer>
 
 class WidgetHeure : public QLCDNumber
 {

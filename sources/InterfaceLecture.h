@@ -1,7 +1,8 @@
 #ifndef INTERFACELECTURE_H
 #define INTERFACELECTURE_H
 
-#include <QtGui>
+#include <QStandardItemModel>
+#include <QTableView>
 #include "ActionsFenetre.h"
 #include "Soiree.h"
 #include "Carteciel.h"

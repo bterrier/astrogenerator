@@ -1,6 +1,12 @@
 #include "Calculastro.h"
 #include "Constantes.h"
 
+#include <QApplication>
+#include <QFile>
+#include <QMessageBox>
+#include <QTextStream>
+#include <QSqlQuery>
+
 // ------------------------------------------------------------------------------------
 // NOTE IMPORTANTE
 // Toutes les dates qu'utlisent ces fonctions doivent être données en TEMPS UNIVERSEL

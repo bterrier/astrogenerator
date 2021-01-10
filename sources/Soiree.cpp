@@ -8,7 +8,15 @@
 #include "ObjetCP.h"
 #include "ObjetPlaneteObs.h"
 #include <cmath>
+
+#include <QMessageBox>
+
 #include <QtXml>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QGraphicsView>
+#include <QFileDialog>
+#include <QApplication>
 
 Soiree::Soiree() {}
 void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime fin, int duree_une, QString constellation, QString niveau, unsigned int diametre, unsigned int focale, QSettings *user, bool boolPlanete)
@@ -894,7 +902,7 @@ void Soiree::toXML() const
         }
         soiree.appendChild(listeObjet);
 
-    QString nomFichier = QFileDialog::getSaveFileName(0,tr("Sauver la soirée au format XML"),QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)+"/soiree.xml","Extensible Markup Language (*.xml)");
+    QString nomFichier = QFileDialog::getSaveFileName(0,tr("Sauver la soirée au format XML"),QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)+"/soiree.xml","Extensible Markup Language (*.xml)");
     if(nomFichier != "")
     {
         QFile file(nomFichier);
@@ -1219,7 +1227,7 @@ bool Soiree::paintPdf(QPrinter *printer)
 }
 void Soiree::toPDF()
 {
-    QString fileName = QFileDialog::getSaveFileName(0,tr("Exporter la soirée en PDF"),QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)+"/soiree-pdf.pdf","*.pdf");
+    QString fileName = QFileDialog::getSaveFileName(0,tr("Exporter la soirée en PDF"),QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)+"/soiree-pdf.pdf","*.pdf");
     if(!fileName.isEmpty())
     {
         QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -1282,7 +1290,7 @@ bool Soiree::enregistrerSoiree()
 {
     if(m_file == "") // si il n'y a pas de fichier raccordés à la soirée, alors on l'enregistre
     {
-        QString fileName = QFileDialog::getSaveFileName(0,tr("Enregistrer la soirée"),QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)+"/soiree.soa","Soirée d'observation astronomie (*.soa)");
+        QString fileName = QFileDialog::getSaveFileName(0,tr("Enregistrer la soirée"),QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)+"/soiree.soa","Soirée d'observation astronomie (*.soa)");
         if(fileName != "")
         {
             if(!soireeToSoa(fileName))

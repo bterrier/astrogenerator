@@ -1,7 +1,8 @@
 #ifndef CARTECIEL_H
 #define CARTECIEL_H
 
-#include <QtGui>
+#include <QGraphicsScene>
+
 #include "ObjetObs.h"
 #include "Soiree.h"
 

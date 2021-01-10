@@ -1,7 +1,7 @@
 #ifndef HAUTEURMAXTEMPS_H
 #define HAUTEURMAXTEMPS_H
 
-#include <QtGui>
+#include <QDateTime>
 
 class HauteurMaxTemps
 {

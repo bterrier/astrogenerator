@@ -1,7 +1,9 @@
 #ifndef FENINFOSCREATION_H
 #define FENINFOSCREATION_H
 
-#include <QtGui>
+#include <QComboBox>
+#include <QDialog>
+#include <QFormLayout>
 #include "FenPrincipal.h"
 
 /*

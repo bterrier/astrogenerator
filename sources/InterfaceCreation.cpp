@@ -6,6 +6,18 @@
 #include "ObjetCPObs.h"
 #include "Soiree.h"
 
+#include <QDialog>
+#include <QFormLayout>
+#include <QInputDialog>
+#include <QHeaderView>
+#include <QLabel>
+#include <QLineEdit>
+#include <QMessageBox>
+#include <QPushButton>
+#include <QSqlQuery>
+#include <QToolBar>
+#include <QVBoxLayout>
+
 InterfaceCreation::InterfaceCreation(double latitude, double longitude, QDateTime heureDebut, uint diametre, uint focale, ActionsFenetre *listeAction, QWidget *parent) :
     Interface(listeAction, parent)
 {
@@ -254,7 +266,7 @@ void InterfaceCreation::raffraichirListeObjet()
         m_modele->setHeaderData(6, Qt::Horizontal, tr("Heure d'observation"));
 
         m_vue->setModel(m_modele);
-        m_vue->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+        m_vue->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
         griserActions();
      }
 }
@@ -430,7 +442,7 @@ void InterfaceCreation::modifierObjet()
         if(m_vue->currentIndex().isValid())
         {
             bool* ok = new bool;
-            int reponse = QInputDialog::getInteger(0,tr("Modifier la durée"),tr("Quelle est la nouvelle durée ?"),5,DUREE_OBJET_MIN,DUREE_OBJET_MAX,1,ok);
+            int reponse = QInputDialog::getInt(0,tr("Modifier la durée"),tr("Quelle est la nouvelle durée ?"),5,DUREE_OBJET_MIN,DUREE_OBJET_MAX,1,ok);
             if(*ok == true)
             {
                 int ligne = m_vue->currentIndex().row();

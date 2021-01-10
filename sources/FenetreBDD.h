@@ -1,7 +1,13 @@
 #ifndef FENETREBDD_H
 #define FENETREBDD_H
 
-#include <QtGui>
+#include <QCheckBox>
+#include <QDialog>
+#include <QLabel>
+#include <QLineEdit>
+#include <QSpinBox>
+#include <QStandardItemModel>
+#include <QTableView>
 
 class FenetreBDD : public QDialog
 {

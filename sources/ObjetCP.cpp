@@ -1,5 +1,9 @@
 #include "ObjetCP.h"
 
+#include <QMessageBox>
+#include <QSqlQuery>
+#include <QVariant>
+
 ObjetCP::ObjetCP()
 {
     m_valid = false;

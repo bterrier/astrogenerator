@@ -1,6 +1,15 @@
 #include "FenPreferences.h"
 #include "Constantes.h"
 
+#include <QColorDialog>
+#include <QFormLayout>
+#include <QGroupBox>
+#include <QHBoxLayout>
+#include <QLineEdit>
+#include <QMessageBox>
+#include <QPushButton>
+#include <QSqlQuery>
+
 FenPreferences::FenPreferences(FenPrincipal *parent) :
     QDialog(parent)
 {

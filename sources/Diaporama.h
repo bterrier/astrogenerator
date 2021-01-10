@@ -1,7 +1,10 @@
 #ifndef DIAPORAMA_H
 #define DIAPORAMA_H
 
-#include <QtGui>
+#include <QTimer>
+#include <QVector>
+#include <QWidget>
+
 #include "Soiree.h"
 #include "CompteRebours.h"
 

@@ -1,7 +1,6 @@
 #ifndef OBJETCPOBS_H
 #define OBJETCPOBS_H
 
-#include <QtGui>
 #include "ObjetObs.h"
 #include "ObjetCP.h"
 
