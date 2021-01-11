@@ -62,7 +62,7 @@ along with astroGenerator.  If not, see <https://www.gnu.org/licenses/>.
 
 This version only works on Windows with MinGW.
 
-- Qt 4.5
+- Qt 5.5
 - MinGW 4.9.2
 
 ### Build steps
