@@ -462,7 +462,7 @@ void InterfaceLecture::griserActions()
 void InterfaceLecture::imprimer()
 {
     QPrinter *printer = new QPrinter(QPrinter::ScreenResolution);
-    printer->setPageMargins(7,7,7,7,QPrinter::Millimeter);
+    printer->setPageMargins(QMarginsF(7,7,7,7), QPageLayout::Millimeter);
 
     QPrintDialog *dialog = new QPrintDialog(printer, this);
     dialog->setWindowTitle(tr("Imprimer la soirée"));

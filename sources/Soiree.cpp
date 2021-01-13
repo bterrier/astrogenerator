@@ -803,11 +803,11 @@ bool Soiree::soireeToSoa(const QString &fileName)
     {
         QTextStream flux(&soa);
         flux.setCodec("UTF-8");
-        flux << ligne1 << endl << ligne2 << endl;
+        flux << ligne1 << Qt::endl << ligne2 << Qt::endl;
 
         for(int j(0); j < m_listeObjets.count(); j++)
         {
-            flux << m_listeObjets.at(j)->ref() << "|" << QString::number(m_listeObjets.at(j)->getDebut().toTime_t()) << "|" << QString::number(m_listeObjets.at(j)->getFin().toTime_t()) << endl;
+            flux << m_listeObjets.at(j)->ref() << "|" << QString::number(m_listeObjets.at(j)->getDebut().toTime_t()) << "|" << QString::number(m_listeObjets.at(j)->getFin().toTime_t()) << Qt::endl;
         }
         soa.close();
         return true;
@@ -920,7 +920,12 @@ void Soiree::toXML() const
 bool Soiree::paintPdf(QPrinter *printer)
 {
     qreal mT(7),mG(7),mD(7),mB(7);
-    printer->getPageMargins(&mG,&mT,&mD,&mB,QPrinter::Millimeter);
+    const auto margins = printer->pageLayout().margins(QPageLayout::Millimeter);
+    mT = margins.top();
+    mB = margins.bottom();
+    mG = margins.left();
+    mD = margins.right();
+
     if(printer->isValid())
     {
         QSettings *user = new QSettings(NOM_EQUIPE,NOM_PROGRAMME);
@@ -1064,7 +1069,7 @@ bool Soiree::paintPdf(QPrinter *printer)
                         painter.setPen(QColor(0,0,0));
                         font.setPointSize(2.2*k);
                         painter.setFont(font);
-                        painter.drawText(QRectF(13*k-mG*k,tL*k-mT*k,(210-mD-mG-13)*k,6*k),Qt::AlignCenter,tr("Pause de ")+QString::number(pause)+tr(" min. Conseil : ")+listeConseils.at(qrand()%listeConseils.size()));
+                        painter.drawText(QRectF(13*k-mG*k,tL*k-mT*k,(210-mD-mG-13)*k,6*k),Qt::AlignCenter,tr("Pause de ")+QString::number(pause)+tr(" min. Conseil : ")+listeConseils.at(QRandomGenerator::global()->bounded(listeConseils.size())));
                      tL += 10;
                      if(tL+28 > 285)
                      {
@@ -1239,7 +1244,7 @@ void Soiree::toPDF()
         QPrinter printer(QPrinter::ScreenResolution);
         printer.setOutputFormat(QPrinter::PdfFormat);
         printer.setOutputFileName(fileName);
-        printer.setPageMargins(mG,mT,mD,mB,QPrinter::Millimeter);
+        printer.setPageMargins(QMarginsF(mG,mT,mD,mB), QPageLayout::Millimeter);
         if(printer.isValid())
         {
 

@@ -169,7 +169,7 @@ void InterfaceCreation::ajoutObjet()
         if(m_vueRecherche->currentIndex().isValid())
         {
             QItemSelectionModel *selection = m_vueRecherche->selectionModel();
-            QModelIndex indexElementSelectionne = selection->currentIndex().child(0,0);
+            QModelIndex indexElementSelectionne = m_modeleRecherche->index(0,0,selection->currentIndex());
             QVariant elementSelectionne = m_modeleRecherche->data(indexElementSelectionne, Qt::DisplayRole);
 
             QString ref = elementSelectionne.toString();
@@ -408,7 +408,7 @@ void InterfaceCreation::ajouterPlanete()
             if(champDate->dateTime().isValid())
             {
                 QItemSelectionModel *selection = m_vuePlanete->selectionModel();
-                QModelIndex indexElementSelectionne = selection->currentIndex().child(0,0);
+                QModelIndex indexElementSelectionne = m_modelePlanete->index(0,0,selection->currentIndex());
                 QVariant elementSelectionne = m_modelePlanete->data(indexElementSelectionne, Qt::DisplayRole);
 
                 QString ref(elementSelectionne.toString());

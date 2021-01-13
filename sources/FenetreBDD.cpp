@@ -256,7 +256,7 @@ QString FenetreBDD::creerRequete() const
 }
 void FenetreBDD::afficherObjet(QModelIndex index) const
 {
-    QString ref = m_modele->data(index.child(0,0)).toString();
+    QString ref = m_modele->data(m_modele->index(0, 0, index)).toString();
     ObjetCPObs *objet = new ObjetCPObs(ref,QDateTime::currentDateTime(),QDateTime::currentDateTime().addSecs(600));
     if(objet->isValid())
     {
@@ -300,7 +300,7 @@ void FenetreBDD::afficherObjet(QModelIndex index) const
 void FenetreBDD::ouvrirCDS()
 {
     QItemSelectionModel *selection = m_vue->selectionModel();
-    QModelIndex indexElementSelectionne = selection->currentIndex().child(0,0);
+    QModelIndex indexElementSelectionne = m_modele->index(0,0,selection->currentIndex());
     QVariant elementSelectionne = m_modele->data(indexElementSelectionne, Qt::DisplayRole);
 
     QDesktopServices::openUrl(QUrl(DEBUT_URL_CDS_OBJET+elementSelectionne.toString()));
