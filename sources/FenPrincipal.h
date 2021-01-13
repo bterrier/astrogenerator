@@ -2,8 +2,6 @@
 #define FENPRINCIPAL_H
 
 #include <QMainWindow>
-#include <QWebView>
-#include <QWebFrame>
 #include "Carteciel.h"
 #include "Soiree.h"
 #include "Interface.h"
@@ -40,11 +38,7 @@ class FenPrincipal : public QMainWindow
         void aPropos();
         void aide();
 
-        // Verifie à la demande de l'utilisateur
-        void miseAJour1(); // Crée le module de recherche de mise à jour et l'active
-        void miseAJour2(bool ok); // Traite le résultat de la mise à jour
-        // Vérifie au demarrage
-        void searchNewVersion(bool ok);
+
         static bool existsNewVersion(QString ligne);
 
         void initialiserOngletActif(int index);
@@ -59,10 +53,6 @@ class FenPrincipal : public QMainWindow
     private:
         // Liste des actions dans une classe (pour être accessible partout
         ActionsFenetre *listeActions;
-
-        // Pour les mises à jour (module qui accedera au fichier)
-        QWebView *m_view;
-        QWebView *m_view2;
 
         // La classe Utilisateur qui stocke toutes les informations variables de l'utilisateur
         QSettings *m_user;

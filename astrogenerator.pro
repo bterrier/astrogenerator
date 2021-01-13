@@ -6,7 +6,7 @@ TEMPLATE = app
 TARGET = astroGenerator
 
 CONFIG += lrelease c++11
-QT += core gui widgets sql xml webkit webkitwidgets printsupport
+QT += core gui widgets sql xml printsupport
 
 INCLUDEPATH += .
 DESTDIR = $$OUT_PWD

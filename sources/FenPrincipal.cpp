@@ -57,13 +57,6 @@ FenPrincipal::FenPrincipal()
     // On ajoute les soirées récentes dans la BDD
     actionSoireesRecentes();
 
-    // On crée le widget pour les accès aux mises à jour
-    m_view = new QWebView;
-        connect(m_view,SIGNAL(loadFinished(bool)),this,SLOT(miseAJour2(bool)));
-    m_view2 = new QWebView;
-        connect(m_view2,SIGNAL(loadFinished(bool)),this,SLOT(searchNewVersion(bool)));
-        m_view2->load(QUrl(FICHIER_VERSION));
-
     // On crée la barre d'outils
         QToolBar *toolBar = addToolBar(tr("Toolbar","Peu important, nom d'un widget"));
     toolBar->addAction(listeActions->getActionCreerSoiree());
@@ -206,7 +199,6 @@ FenPrincipal::FenPrincipal()
     connect(listeActions->getActionAPropos(),SIGNAL(triggered()),this,SLOT(aPropos()));
     connect(listeActions->getActionCDS(),SIGNAL(triggered()),this,SLOT(ouvrirCDS()));
     connect(listeActions->getActionBDD(),SIGNAL(triggered()),fenBDD,SLOT(exec()));
-    connect(listeActions->getActionUpdate(),SIGNAL(triggered()),this,SLOT(miseAJour1()));
 
     // IMPORTANT !!!!!!
     connect(tabOnglets,SIGNAL(currentChanged(int)),this,SLOT(initialiserOngletActif(int)));
@@ -627,34 +619,7 @@ void FenPrincipal::aide()
         QMessageBox::critical(this, tr("Erreur"), tr("Impossible d'ouvrir le fichier aide."));
     }
 }
-void FenPrincipal::miseAJour1()
-{
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-    m_view->load(QUrl(FICHIER_VERSION));
-}
-void FenPrincipal::miseAJour2(bool ok)
-{
-    if(ok)
-    {
-        QApplication::restoreOverrideCursor(); // On remet le curseur normal
 
-        QString versionNew = m_view->page()->currentFrame()->toPlainText(); // On récupère le contenu de version.vs
-        if(existsNewVersion(versionNew))
-        {
-            int reponse  = QMessageBox::question(this,tr("Nouvelle version"),tr("Une nouvelle version est disponible. Voulez-vous la télécharger ?"),QMessageBox::Yes|QMessageBox::No);
-            if(reponse == QMessageBox::Yes) // Si on veut télécharger la mise à jour
-            {
-                QDesktopServices::openUrl(QUrl(PAGE_TELECHARGEMENT"?name=astroGenerator-" + versionNew + "-setup.exe&version="+versionNew+"&by=astroGenerator"));
-            }
-        }
-        else
-        {
-            QMessageBox::information(this,tr("Logiciel à jour"),tr("Votre logiciel est à jour ("VERSION")."));
-        }
-    }
-    else
-        QMessageBox::warning(this,tr("Récupération impossible"),tr("Impossible de récupérer les informations de mise à jour. Vérifiez votre connexion internet ou réesayer plus tard."));
-}
 bool FenPrincipal::existsNewVersion(QString ligne)
 {
     QStringList versionNewChiffreListe = ligne.split(".");
@@ -681,18 +646,4 @@ bool FenPrincipal::existsNewVersion(QString ligne)
     }
     return false;
 }
-void FenPrincipal::searchNewVersion(bool ok)
-{
-    if(ok)
-    {
-        QString versionNew = m_view2->page()->currentFrame()->toPlainText(); // On récupère le contenu de version.vs
-        if(existsNewVersion(versionNew))
-        {
-            int reponse  = QMessageBox::question(this,tr("Nouvelle version"),tr("Une nouvelle version est disponible. Voulez-vous la télécharger ?"),QMessageBox::Yes|QMessageBox::No);
-            if(reponse == QMessageBox::Yes) // Si on veut télécharger la mise à jour
-            {
-                QDesktopServices::openUrl(QUrl(PAGE_TELECHARGEMENT"?name=astroGenerator-" + versionNew + "-setup.exe&version="+versionNew+"&by=astroGenerator"));
-            }
-        }
-    }
-}
+
