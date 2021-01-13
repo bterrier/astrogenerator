@@ -59,11 +59,8 @@ along with astroGenerator.  If not, see <https://www.gnu.org/licenses/>.
 
 ## How to build
 ### Requirements
-
-This version only works on Windows with MinGW.
-
-- Qt 5.5
-- MinGW 4.9.2
+Since the only dependancy is Qt 5, this should build on any platform where Qt 5 is available.
+However, it has mostly been tested on Window with MinGW.
 
 ### Build steps
 
@@ -86,8 +83,6 @@ windeployqt astroGenerator.exe
 The `make install` step will copy required files and assets in the build directory.
 
 ### Linux, macOs and others
-
-Since the only dependancy is Qt 5, this should build on any platform where Qt 5 is available.
 
 The only shortcoming is the handling of deployments.
 On macOs you can replace `windeployqt` by `macdeployqt`.
