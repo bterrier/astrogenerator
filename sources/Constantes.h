@@ -3,7 +3,6 @@
 
     #define NOM_PROGRAMME     "astroGenerator"
     #define NOM_EQUIPE        "ua"
-    #define VERSION           "3.0.0"
     #define FICHIER_VERSION   "http://www.univers-astronomie.fr/generateur-soiree/astrogenerator/version.vs"
     #define PAGE_TELECHARGEMENT "http://www.univers-astronomie.fr/generateur-soiree/astrogenerator/telecharger.php"
 

@@ -589,7 +589,7 @@ void FenPrincipal::ajouterSoireeRecente(const QString &fichier)
 void FenPrincipal::aPropos()
 {
     QString about;
-    about = "<strong>Version : </strong>" VERSION "<br />";
+    about = "<strong>Version : </strong>" VERSION_STRING "<br />";
     about += "Copyright © 2011-2013 - Univers-Astronomie.fr - Gallouedec Valentin<br />";
     about += "Copyright © 2021 - Terrier Benjamin<br />";
     about += tr("<strong>Sources&nbsp;: </strong><a href='%1'>%1</a><br />").arg(URL_GITHUB);
@@ -623,7 +623,7 @@ void FenPrincipal::aide()
 bool FenPrincipal::existsNewVersion(QString ligne)
 {
     QStringList versionNewChiffreListe = ligne.split(".");
-    QStringList versionChiffreListe = QString(VERSION).split(".");
+    QStringList versionChiffreListe = QStringLiteral(VERSION_STRING).split('.');
 
     // On fait en sorte qu'ils aient le même nombre de chiffre
     if(versionNewChiffreListe.count() < versionChiffreListe.count())

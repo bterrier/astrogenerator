@@ -75,6 +75,8 @@ TRANSLATIONS += sources/astroGenerator_en.ts
 
 RC_ICONS = logoastrogenerator.ico
 VERSION = 3.0.0
+DEFINES += VERSION=$${VERSION} \
+           VERSION_STRING=\\\"$${VERSION}\\\"
 
 INSTALLS += ag_txt ag_translations
 
