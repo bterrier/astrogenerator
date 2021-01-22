@@ -34,6 +34,7 @@
 
 FenPrincipal::FenPrincipal()
 {
+    resize(1024, 768);
     if(!QDir::setCurrent(QCoreApplication::applicationDirPath()+"/"))
     {
         QMessageBox::critical(this,tr("Résolution des liens"),tr("Problème lors de la résolution des liens, le programme ne peut pas fonctionner correctement."));
