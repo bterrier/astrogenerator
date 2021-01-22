@@ -114,28 +114,28 @@ FenetreBDD::FenetreBDD(QWidget *parent) :
         nombreResultat = new QLabel;
         nombreResultat->setAlignment(Qt::AlignCenter);
 
-        connect(champRecherche,SIGNAL(returnPressed()),this,SLOT(actualiserVue()));
-        connect(typeGalaxie,SIGNAL(clicked()),this,SLOT(actualiserVue()));
-        connect(typeAmasG,SIGNAL(clicked()),this,SLOT(actualiserVue()));
-        connect(typeNebuleuseR,SIGNAL(clicked()),this,SLOT(actualiserVue()));
-        connect(typeNebuleuseP,SIGNAL(clicked()),this,SLOT(actualiserVue()));
-        connect(typeAmasNebuleuse,SIGNAL(clicked()),this,SLOT(actualiserVue()));
-        connect(typeAmasOuvert,SIGNAL(clicked()),this,SLOT(actualiserVue()));
+        connect(champRecherche, &QLineEdit::returnPressed, this, &FenetreBDD::actualiserVue);
+        connect(typeGalaxie, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+        connect(typeAmasG, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+        connect(typeNebuleuseR, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+        connect(typeNebuleuseP, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+        connect(typeAmasNebuleuse, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+        connect(typeAmasOuvert, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
 
-        connect(interet1,SIGNAL(clicked()),this,SLOT(actualiserVue()));
-        connect(interet2,SIGNAL(clicked()),this,SLOT(actualiserVue()));
-        connect(interet3,SIGNAL(clicked()),this,SLOT(actualiserVue()));
-        connect(interet4,SIGNAL(clicked()),this,SLOT(actualiserVue()));
+        connect(interet1, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+        connect(interet2, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+        connect(interet3, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+        connect(interet4, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
 
-        connect(difficulte0,SIGNAL(clicked()),this,SLOT(actualiserVue()));
-        connect(difficulte1,SIGNAL(clicked()),this,SLOT(actualiserVue()));
-        connect(difficulte2,SIGNAL(clicked()),this,SLOT(actualiserVue()));
-        connect(difficulte3,SIGNAL(clicked()),this,SLOT(actualiserVue()));
-        connect(difficulte4,SIGNAL(clicked()),this,SLOT(actualiserVue()));
+        connect(difficulte0, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+        connect(difficulte1, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+        connect(difficulte2, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+        connect(difficulte3, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+        connect(difficulte4, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
 
-        connect(champMagnitude,SIGNAL(valueChanged(int)),this,SLOT(actualiserVue()));
+        connect(champMagnitude, qOverload<int>(&QSpinBox::valueChanged),this, &FenetreBDD::actualiserVue);
 
-        connect(m_vue,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(afficherObjet(QModelIndex)));
+        connect(m_vue, &QTableView::doubleClicked, this, &FenetreBDD::afficherObjet);
 
         layoutVertical->addLayout(layoutRecherche);
         layoutVertical->addWidget(groupeBoxType);
@@ -289,7 +289,7 @@ void FenetreBDD::afficherObjet(QModelIndex index) const
                     layoutVertical->addLayout(layoutV);
                     layoutVertical->addWidget(boutonInfos);
 
-                connect(boutonInfos,SIGNAL(clicked()),this,SLOT(ouvrirCDS()));
+                connect(boutonInfos, &QPushButton::clicked, this, &FenetreBDD::ouvrirCDS);
 
             fenetreInfos.setLayout(layoutVertical);
         fenetreInfos.exec();

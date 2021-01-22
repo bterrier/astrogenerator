@@ -335,8 +335,8 @@ void Carteciel::afficherQDialog()
     layout->addLayout(layoutH);
     secondeFenetre.setLayout(layout);
 
-    connect(boutonFermer,SIGNAL(clicked()),&secondeFenetre,SLOT(close()));
-    connect(boutonEnregistrer,SIGNAL(clicked()),this,SLOT(sauverImage()));
+    connect(boutonFermer, &QPushButton::clicked, &secondeFenetre, &QDialog::close);
+    connect(boutonEnregistrer, &QPushButton::clicked, this, &Carteciel::sauverImage);
 
     secondeFenetre.exec();
 }

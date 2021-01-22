@@ -34,7 +34,7 @@ void Diaporama::afficher(int id)
     timer->stop(); // On arrête le timer précédent
 
     int temps = m_soiree->getPlanning().at(id)->getFin().toTime_t() - m_soiree->getPlanning().at(id)->getDebut().toTime_t(); // On calcule le temps d'affichage
-    timer->singleShot(temps*1000,this,SLOT(suivant()));
+    timer->singleShot(temps*1000,this, &Diaporama::suivant);
     // Commencer le timer correspondant ici
     CompteRebours *timer = widgets.at(id)->findChild<CompteRebours *>();
     timer->commencer(temps);
@@ -105,7 +105,7 @@ void Diaporama::pause(int secondes)
 
     widgetPause->setVisible(true);
     lcd_pause->commencer(secondes);
-    timer->singleShot(secondes*1000,this,SLOT(suivant()));
+    timer->singleShot(secondes*1000, this, &Diaporama::suivant);
 }
 void Diaporama::demarrer()
 {
@@ -211,7 +211,7 @@ void Diaporama::demarrer()
 
     setLayout(layoutPrincipal);
 
-    timer->singleShot(premierTemps*1000,this,SLOT(suivant()));
+    timer->singleShot(premierTemps*1000, this, &Diaporama::suivant);
     widgets.at(0)->findChild<CompteRebours *>()->commencer(premierTemps);
 
     showFullScreen();

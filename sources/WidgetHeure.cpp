@@ -9,7 +9,7 @@ WidgetHeure::WidgetHeure()
 
 
     timer = new QTimer;
-    connect(timer,SIGNAL(timeout()),this,SLOT(ajouterMin()));
+    connect(timer, &QTimer::timeout, this, &WidgetHeure::ajouterMin);
     timer->start(60000);
 }
 void WidgetHeure::ajouterMin()

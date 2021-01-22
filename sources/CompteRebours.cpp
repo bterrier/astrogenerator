@@ -15,8 +15,8 @@ CompteRebours::CompteRebours()
         m_lcd->setPalette(palette);
     timer = new QTimer;
 
-    connect(timer,SIGNAL(timeout()),this,SLOT(enlever()));
-    connect(this,SIGNAL(fin()),timer,SLOT(stop()));
+    connect(timer, &QTimer::timeout, this, &CompteRebours::enlever);
+    connect(this, &CompteRebours::fin, timer, &QTimer::stop);
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->addWidget(m_lcd);

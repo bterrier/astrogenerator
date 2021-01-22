@@ -32,7 +32,7 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
     m_menu->addItems(listeMenu);
     layoutPrincipal->addWidget(m_menu,0,Qt::AlignLeft);
 
-    connect(m_menu,SIGNAL(currentRowChanged(int)),this,SLOT(changerOnglet(int)));
+    connect(m_menu, &QListWidget::currentRowChanged, this, &FenPreferences::changerOnglet);
 
     // On crée toutes les pages
 
@@ -63,9 +63,9 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
         layoutFormLocalisation->addRow(tr("&Département"),m_listeDept);
         layoutFormLocalisation->addRow(tr("&Ville"),m_listeVilles);
 
-        connect(m_listePays,SIGNAL(currentIndexChanged(QString)),this,SLOT(changerVilles(QString)));
-        connect(m_listeDept,SIGNAL(valueChanged(int)),this,SLOT(changerVilles()));
-        connect(m_listeVilles,SIGNAL(currentIndexChanged(QString)),this,SLOT(changerCoordonnees(QString)));
+        connect(m_listePays, qOverload<const QString &>(&QComboBox::currentIndexChanged), this, &FenPreferences::changerVilles);
+        connect(m_listeDept, qOverload<int>(&QSpinBox::valueChanged), this, [this](){ changerVilles(); });
+        connect(m_listeVilles, qOverload<const QString &>(&QComboBox::currentIndexChanged), this, &FenPreferences::changerCoordonnees);
 
         groupBoxLocalisation->setLayout(layoutFormLocalisation);
 
@@ -118,7 +118,7 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
 
         m_nomTelescope = new QLineEdit;
         m_boutonAjouterTelescope = new QPushButton(tr("Ajouter le télescope"));
-        connect(m_boutonAjouterTelescope,SIGNAL(clicked()),this,SLOT(ajouterTelescope()));
+        connect(m_boutonAjouterTelescope, &QPushButton::clicked, this, &FenPreferences::ajouterTelescope);
 
         m_marque = new QComboBox;
         QStringList listeMarque;
@@ -245,16 +245,16 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
             m_noteAmasOuvert->setMinimum(0);
             m_noteAmasOuvert->setMaximum(15);
 
-        connect(m_hauteurMinimum,SIGNAL(valueChanged(int)),m_labelHauteurMinimum,SLOT(setNum(int)));
-        connect(m_pauseMinimum,SIGNAL(valueChanged(int)),m_labelPauseMinimum,SLOT(setNum(int)));
-        connect(m_noteAmasGlobulaire,SIGNAL(valueChanged(int)),m_labelNoteAmasGlobulaire,SLOT(setNum(int)));
-        connect(m_noteAmasNebuleuse,SIGNAL(valueChanged(int)),m_labelNoteAmasNebuleuse,SLOT(setNum(int)));
-        connect(m_noteNebuleuseReflection,SIGNAL(valueChanged(int)),m_labelNoteNebuleuseReflection,SLOT(setNum(int)));
-        connect(m_noteNebuleusePlanetaire,SIGNAL(valueChanged(int)),m_labelNoteNebuleusePlanetaire,SLOT(setNum(int)));
-        connect(m_noteEtoileDouble,SIGNAL(valueChanged(int)),m_labelNoteEtoileDouble,SLOT(setNum(int)));
-        connect(m_noteEtoileTriple,SIGNAL(valueChanged(int)),m_labelNoteEtoileTriple,SLOT(setNum(int)));
-        connect(m_noteAmasOuvert,SIGNAL(valueChanged(int)),m_labelNoteAmasOuvert,SLOT(setNum(int)));
-        connect(m_noteGalaxie,SIGNAL(valueChanged(int)),m_labelNoteGalaxie,SLOT(setNum(int)));
+        connect(m_hauteurMinimum, &QSlider::valueChanged, m_labelHauteurMinimum, qOverload<int>(&QLabel::setNum));
+        connect(m_pauseMinimum, &QSlider::valueChanged, m_labelPauseMinimum, qOverload<int>(&QLabel::setNum));
+        connect(m_noteAmasGlobulaire, &QSlider::valueChanged, m_labelNoteAmasGlobulaire, qOverload<int>(&QLabel::setNum));
+        connect(m_noteAmasNebuleuse, &QSlider::valueChanged, m_labelNoteAmasNebuleuse, qOverload<int>(&QLabel::setNum));
+        connect(m_noteNebuleuseReflection, &QSlider::valueChanged, m_labelNoteNebuleuseReflection, qOverload<int>(&QLabel::setNum));
+        connect(m_noteNebuleusePlanetaire, &QSlider::valueChanged, m_labelNoteNebuleusePlanetaire, qOverload<int>(&QLabel::setNum));
+        connect(m_noteEtoileDouble, &QSlider::valueChanged, m_labelNoteEtoileDouble, qOverload<int>(&QLabel::setNum));
+        connect(m_noteEtoileTriple, &QSlider::valueChanged, m_labelNoteEtoileTriple, qOverload<int>(&QLabel::setNum));
+        connect(m_noteAmasOuvert, &QSlider::valueChanged, m_labelNoteAmasOuvert, qOverload<int>(&QLabel::setNum));
+        connect(m_noteGalaxie, &QSlider::valueChanged, m_labelNoteGalaxie, qOverload<int>(&QLabel::setNum));
 
         layoutHauteurMinimum->addWidget(m_hauteurMinimum);
         layoutHauteurMinimum->addWidget(m_labelHauteurMinimum);
@@ -333,11 +333,11 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
         m_boutonCouleurEtoile = new QPushButton(tr("Changer"));
         m_boutonCouleurConstellation = new QPushButton(tr("Changer"));
 
-        connect(m_boutonCouleurFond,SIGNAL(clicked()),this,SLOT(changerCouleurFond()));
-        connect(m_boutonCouleurLegende,SIGNAL(clicked()),this,SLOT(changerCouleurLegende()));
-        connect(m_boutonCouleurObjet,SIGNAL(clicked()),this,SLOT(changerCouleurObjet()));
-        connect(m_boutonCouleurEtoile,SIGNAL(clicked()),this,SLOT(changerCouleurEtoile()));
-        connect(m_boutonCouleurConstellation,SIGNAL(clicked()),this,SLOT(changerCouleurConstellation()));
+        connect(m_boutonCouleurFond, &QPushButton::clicked, this, &FenPreferences::changerCouleurFond);
+        connect(m_boutonCouleurLegende, &QPushButton::clicked, this, &FenPreferences::changerCouleurLegende);
+        connect(m_boutonCouleurObjet, &QPushButton::clicked, this, &FenPreferences::changerCouleurObjet);
+        connect(m_boutonCouleurEtoile, &QPushButton::clicked, this, &FenPreferences::changerCouleurEtoile);
+        connect(m_boutonCouleurConstellation, &QPushButton::clicked, this, &FenPreferences::changerCouleurConstellation);
 
         m_labelCouleurFond = new QLabel;
         m_labelCouleurLegende = new QLabel;
@@ -391,9 +391,9 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
 
         layoutPrincipal->addLayout(layoutPrincipalBoutons);
 
-        connect(m_boutonValider,SIGNAL(clicked()),this,SLOT(valider()));
-        connect(m_boutonAnnuler,SIGNAL(clicked()),this,SLOT(fermer()));
-        connect(m_boutonReinitialiser,SIGNAL(clicked()),this,SLOT(reinitialiser()));
+        connect(m_boutonValider, &QPushButton::clicked, this, &FenPreferences::valider);
+        connect(m_boutonAnnuler, &QPushButton::clicked, this, &FenPreferences::fermer);
+        connect(m_boutonReinitialiser, &QPushButton::clicked, this, &FenPreferences::reinitialiser);
 
     initialiserValeur(); // Initialise tout
     setLayout(layoutPrincipal);

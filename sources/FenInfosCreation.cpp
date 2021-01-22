@@ -114,11 +114,11 @@ FenInfosCreation::FenInfosCreation(FenPrincipal *parent) :
             layout->addWidget(m_close);
         layoutForm->addRow(layout);
 
-    connect(m_submit,SIGNAL(clicked()),this,SLOT(creer()));
-    connect(m_close,SIGNAL(clicked()),this,SLOT(close()));
-    connect(m_pays,SIGNAL(currentIndexChanged(QString)),this,SLOT(actualiserVilles(QString)));
-    connect(m_departement,SIGNAL(valueChanged(int)),this,SLOT(actualiserVilles()));
-    connect(m_villes,SIGNAL(currentIndexChanged(QString)),this,SLOT(actualiserCoordonnees(QString)));
+    connect(m_submit, &QPushButton::clicked, this, &FenInfosCreation::creer);
+    connect(m_close, &QPushButton::clicked, this, &FenInfosCreation::close);
+    connect(m_pays, qOverload<const QString &>(&QComboBox::currentIndexChanged), this, &FenInfosCreation::actualiserVilles);
+    connect(m_departement, qOverload<int>(&QSpinBox::valueChanged), this, [this](){ actualiserVilles(); });
+    connect(m_villes, qOverload<const QString &>(&QComboBox::currentIndexChanged), this, &FenInfosCreation::actualiserCoordonnees);
 
     setLayout(layoutForm);
     setWindowTitle(tr("Informations relatives à la soirée"));

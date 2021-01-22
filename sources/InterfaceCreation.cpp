@@ -49,7 +49,7 @@ InterfaceCreation::InterfaceCreation(double latitude, double longitude, QDateTim
         m_vueRecherche->setMaximumWidth(LARGEUR_LISTE_OBJET_FENETRE_CREATION);
         m_vueRecherche->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-        connect(m_vueRecherche,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(getDate()));
+        connect(m_vueRecherche, &QListView::doubleClicked, this, &InterfaceCreation::getDate);
 
     // ON CREE LA PAGE POUR L'AJOUT D'OBJET
 
@@ -90,18 +90,18 @@ InterfaceCreation::InterfaceCreation(double latitude, double longitude, QDateTim
 
     // ETAPE 3 : On crée toutes les connexions
 
-    connect(ajouterObjet,SIGNAL(triggered()),this,SLOT(getDate()));
-    connect(enleverObjet,SIGNAL(triggered()),this,SLOT(enleveObjet()));
-    connect(m_listeActions->getActionMonterObjet(),SIGNAL(triggered()),this,SLOT(monterObjet()));
-    connect(m_listeActions->getActionDescendreObjet(),SIGNAL(triggered()),this,SLOT(descendreObjet()));
-    connect(m_listeActions->getActionChangerDureeObjet(),SIGNAL(triggered(bool)),this,SLOT(modifierObjet()));
-    connect(m_listeActions->getActionEnregistrer(),SIGNAL(triggered()),this,SLOT(enregistrerSoiree()));
-    connect(m_listeActions->getActionAjouterPlanete(),SIGNAL(triggered()),this,SLOT(fenetrePlanete()));
-    connect(m_listeActions->getActionInfoSoiree(),SIGNAL(triggered()),this,SLOT(infosSoiree()));
-    connect(m_vue,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(afficherInfosObjet(QModelIndex)));
-    connect(m_vue,SIGNAL(clicked(QModelIndex)),this,SLOT(griserActions()));
-    connect(m_vueRecherche,SIGNAL(clicked(QModelIndex)),this,SLOT(griserActions()));
-    connect(barre_recherche,SIGNAL(textChanged(QString)),this,SLOT(nouvelleRecherche(QString)));
+    connect(ajouterObjet, &QAction::triggered, this, &InterfaceCreation::getDate);
+    connect(enleverObjet, &QAction::triggered, this, &InterfaceCreation::enleveObjet);
+    connect(m_listeActions->getActionMonterObjet(), &QAction::triggered, this, &InterfaceCreation::monterObjet);
+    connect(m_listeActions->getActionDescendreObjet(), &QAction::triggered,this, &InterfaceCreation::descendreObjet);
+    connect(m_listeActions->getActionChangerDureeObjet(), &QAction::triggered,this, &InterfaceCreation::modifierObjet);
+    connect(m_listeActions->getActionEnregistrer(), &QAction::triggered,this, &InterfaceCreation::enregistrerSoiree);
+    connect(m_listeActions->getActionAjouterPlanete(), &QAction::triggered,this, &InterfaceCreation::fenetrePlanete);
+    connect(m_listeActions->getActionInfoSoiree(), &QAction::triggered,this, &InterfaceCreation::infosSoiree);
+    connect(m_vue, &QTableView::doubleClicked, this, &InterfaceCreation::afficherInfosObjet);
+    connect(m_vue, &QTableView::clicked, this, &InterfaceCreation::griserActions);
+    connect(m_vueRecherche, &QListView::clicked, this, &InterfaceCreation::griserActions);
+    connect(barre_recherche, &QLineEdit::textChanged, this,  &InterfaceCreation::nouvelleRecherche);
 
     // ETAPE 4 : On remplit les infos
 
@@ -220,10 +220,10 @@ void InterfaceCreation::getDate()
                 fenetreDemandeDate->setLayout(layoutGrille);
 
                 //  Les deux boutons ferment la fenêtre
-                connect(boutonAnnuler,SIGNAL(clicked()),fenetreDemandeDate,SLOT(close()));
-                connect(boutonValider,SIGNAL(clicked()),fenetreDemandeDate,SLOT(close()));
+                connect(boutonAnnuler, &QPushButton::clicked, fenetreDemandeDate, &QDialog::close);
+                connect(boutonValider, &QPushButton::clicked, fenetreDemandeDate, &QDialog::close);
                 // Si on valide, alors on apelle le slot d'ajout
-                connect(boutonValider,SIGNAL(clicked()),this,SLOT(ajoutObjet()));
+                connect(boutonValider, &QPushButton::clicked, this, &InterfaceCreation::ajoutObjet);
 
                 fenetreDemandeDate->exec();
         }
@@ -392,9 +392,9 @@ void InterfaceCreation::fenetrePlanete()
             layout->addRow(layoutH);
         fenetreAjouterPlanete->setLayout(layout);
 
-        connect(boutonKoPlanete,SIGNAL(clicked()),fenetreAjouterPlanete,SLOT(close()));
-        connect(boutonOkPlanete,SIGNAL(clicked()),fenetreAjouterPlanete,SLOT(close()));
-        connect(boutonOkPlanete,SIGNAL(clicked()),this,SLOT(ajouterPlanete()));
+        connect(boutonKoPlanete, &QPushButton::clicked, fenetreAjouterPlanete, &QDialog::close);
+        connect(boutonOkPlanete, &QPushButton::clicked, fenetreAjouterPlanete, &QDialog::close);
+        connect(boutonOkPlanete,  &QPushButton::clicked, this, &InterfaceCreation::ajouterPlanete);
 
         fenetreAjouterPlanete->exec();
     }

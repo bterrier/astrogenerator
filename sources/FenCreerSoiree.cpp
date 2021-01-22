@@ -154,7 +154,7 @@ FenCreerSoiree::FenCreerSoiree(FenPrincipal *parent) : QDialog()
         else if(m < 100)
             layoutConstV5->addWidget(checkBox);
 
-        connect(checkBox,SIGNAL(stateChanged(int)),this,SLOT(updateTexteConstellation()));
+        connect(checkBox, &QCheckBox::stateChanged, this, &FenCreerSoiree::updateTexteConstellation);
     }
     layoutConst->addLayout(layoutConstV1);
     layoutConst->addLayout(layoutConstV2);
@@ -205,15 +205,15 @@ FenCreerSoiree::FenCreerSoiree(FenPrincipal *parent) : QDialog()
     setLayout(layoutForm);
     setWindowTitle(tr("Générer une soirée","Titre de la fenêtre"));
 
-    connect(m_close,SIGNAL(clicked()),this,SLOT(close()));
-    connect(m_submit,SIGNAL(clicked()),this,SLOT(genererSoiree()));
-    connect(m_departement,SIGNAL(valueChanged(int)),this,SLOT(actualiserVilles()));
-    connect(m_pays,SIGNAL(currentIndexChanged(QString)),this,SLOT(actualiserVilles(QString)));
-    connect(m_villes,SIGNAL(currentIndexChanged(QString)),this,SLOT(actualiserCoordonnees(QString)));
-    connect(boutonConst,SIGNAL(clicked()),m_fenetreConstellation,SLOT(exec()));
-    connect(boutonConstFermer,SIGNAL(clicked()),m_fenetreConstellation,SLOT(close()));
-    connect(boutonToutCocher,SIGNAL(clicked()),this,SLOT(toutCocherConstellation()));
-    connect(boutonToutDecocher,SIGNAL(clicked()),this,SLOT(toutDecocherConstellation()));
+    connect(m_close, &QPushButton::clicked, this, &FenCreerSoiree::close);
+    connect(m_submit, &QPushButton::clicked, this, &FenCreerSoiree::genererSoiree);
+    connect(m_departement, qOverload<int>(&QSpinBox::valueChanged), this, [this](){ actualiserVilles(); });
+    connect(m_pays, qOverload<const QString &>(&QComboBox::currentIndexChanged), this, &FenCreerSoiree::actualiserVilles);
+    connect(m_villes, qOverload<const QString &>(&QComboBox::currentIndexChanged), this, &FenCreerSoiree::actualiserCoordonnees);
+    connect(boutonConst, &QPushButton::clicked, m_fenetreConstellation, &QDialog::exec);
+    connect(boutonConstFermer, &QPushButton::clicked, m_fenetreConstellation, &QDialog::close);
+    connect(boutonToutCocher, &QPushButton::clicked, this, &FenCreerSoiree::toutCocherConstellation);
+    connect(boutonToutDecocher, &QPushButton::clicked, this, &FenCreerSoiree::toutDecocherConstellation);
 }
 void FenCreerSoiree::genererSoiree()
 {
@@ -282,7 +282,7 @@ void FenCreerSoiree::genererSoiree()
         constList = constList.left(constList.count()-1);
 
     m_close->setDisabled(true);
-    connect(soiree,SIGNAL(generation(int)),m_progress,SLOT(setValue(int)));
+    connect(soiree, &Soiree::generation, m_progress, &QProgressBar::setValue);
 
     soiree->genererSoiree(m_latitude->value(),m_longitude->value(),debut, fin, m_dureeObjet->value(),constList,niveau, requeteTelescope->value(0).toUInt(), requeteTelescope->value(1).toUInt(), m_parent->getUser(), m_planetes->isChecked());
 

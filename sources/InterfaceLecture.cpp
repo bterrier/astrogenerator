@@ -56,26 +56,26 @@ InterfaceLecture::InterfaceLecture(Soiree *soiree, ActionsFenetre *listeActionsP
     setLayout(layoutPrincipal);
 
     // On fait toutes les connexions
-    connect(m_vue,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(afficherInfosObjet(QModelIndex)));
-    connect(m_vue,SIGNAL(clicked(QModelIndex)),this,SLOT(griserActions()));
-    connect(m_listeActions->getActionMonterObjet(),SIGNAL(triggered()),this,SLOT(monterObjet()));
-    connect(m_listeActions->getActionDescendreObjet(),SIGNAL(triggered()),this,SLOT(descendreObjet()));
-    connect(m_listeActions->getActionSupprimerObjet(),SIGNAL(triggered()),this,SLOT(supprimerObjet()));
-    connect(m_listeActions->getActionChangerDureeObjet(),SIGNAL(triggered()),this,SLOT(modifierObjet()));
-    connect(m_listeActions->getActionAjouterObjet(),SIGNAL(triggered()),this,SLOT(ajouterObjet()));
-    connect(m_listeActions->getActionAjouterPlanete(),SIGNAL(triggered()),this,SLOT(ajouterPlanete()));
-    connect(m_listeActions->getCarteCouleurConstellation(),SIGNAL(triggered()),this,SLOT(setCouleurConstellations()));
-    connect(m_listeActions->getCarteCouleurEtoiles(),SIGNAL(triggered()),this,SLOT(setCouleurEtoiles()));
-    connect(m_listeActions->getCarteCouleurFond(),SIGNAL(triggered()),this,SLOT(setCouleurFond()));
-    connect(m_listeActions->getCarteCouleurLegende(),SIGNAL(triggered()),this,SLOT(setCouleurLegende()));
-    connect(m_listeActions->getCarteCouleurObjet(),SIGNAL(triggered()),this,SLOT(setCouleurObjet()));
-    connect(m_listeActions->getActionEnregistrer(),SIGNAL(triggered()),this,SLOT(enregistrerSoiree()));
-    connect(m_listeActions->getActionCarteCiel(),SIGNAL(triggered()),this,SLOT(carteCiel()));
-    connect(m_listeActions->getActionDiaporama(),SIGNAL(triggered()),this,SLOT(diaporama()));
-    connect(m_listeActions->getActionExporterXML(),SIGNAL(triggered()),this,SLOT(toXML()));
-    connect(m_listeActions->getActionExporterPDF(),SIGNAL(triggered()),this,SLOT(toPDF()));
-    connect(m_listeActions->getActionInfoSoiree(),SIGNAL(triggered()),this,SLOT(infosSoiree()));
-    connect(m_listeActions->getActionImprimer(),SIGNAL(triggered()),this,SLOT(imprimer()));
+    connect(m_vue, &QTableView::doubleClicked, this, &InterfaceLecture::afficherInfosObjet);
+    connect(m_vue, &QTableView::clicked, this, &InterfaceLecture::griserActions);
+    connect(m_listeActions->getActionMonterObjet(), &QAction::triggered, this, &InterfaceLecture::monterObjet);
+    connect(m_listeActions->getActionDescendreObjet(), &QAction::triggered, this, &InterfaceLecture::descendreObjet);
+    connect(m_listeActions->getActionSupprimerObjet(), &QAction::triggered, this, &InterfaceLecture::supprimerObjet);
+    connect(m_listeActions->getActionChangerDureeObjet(), &QAction::triggered, this, &InterfaceLecture::modifierObjet);
+    connect(m_listeActions->getActionAjouterObjet(), &QAction::triggered, this, &InterfaceLecture::ajouterObjet);
+    connect(m_listeActions->getActionAjouterPlanete(), &QAction::triggered, this, &InterfaceLecture::ajouterPlanete);
+    connect(m_listeActions->getCarteCouleurConstellation(), &QAction::triggered, this, &InterfaceLecture::setCouleurConstellations);
+    connect(m_listeActions->getCarteCouleurEtoiles(), &QAction::triggered, this, &InterfaceLecture::setCouleurEtoiles);
+    connect(m_listeActions->getCarteCouleurFond(), &QAction::triggered, this, &InterfaceLecture::setCouleurFond);
+    connect(m_listeActions->getCarteCouleurLegende(), &QAction::triggered, this, &InterfaceLecture::setCouleurLegende);
+    connect(m_listeActions->getCarteCouleurObjet(), &QAction::triggered, this, &InterfaceLecture::setCouleurObjet);
+    connect(m_listeActions->getActionEnregistrer(), &QAction::triggered, this, &InterfaceLecture::enregistrerSoiree);
+    connect(m_listeActions->getActionCarteCiel(), &QAction::triggered, this, &InterfaceLecture::carteCiel);
+    connect(m_listeActions->getActionDiaporama(), &QAction::triggered, this, &InterfaceLecture::diaporama);
+    connect(m_listeActions->getActionExporterXML(), &QAction::triggered, this, &InterfaceLecture::toXML);
+    connect(m_listeActions->getActionExporterPDF(), &QAction::triggered, this, &InterfaceLecture::toPDF);
+    connect(m_listeActions->getActionInfoSoiree(), &QAction::triggered, this, &InterfaceLecture::infosSoiree);
+    connect(m_listeActions->getActionImprimer(), &QAction::triggered, this, &InterfaceLecture::imprimer);
 }
 void InterfaceLecture::afficherInfosObjet(QModelIndex cells)
 {
@@ -374,7 +374,7 @@ void InterfaceLecture::diaporama()
                     secondesRestantes = m_soiree->getDebut().toLocalTime().toTime_t() - QDateTime::currentDateTime().toTime_t();
                     Diaporama *diapo = new Diaporama(m_soiree);
 
-                    QTimer::singleShot(secondesRestantes*1000,diapo,SLOT(demarrer()));
+                    QTimer::singleShot(secondesRestantes*1000, diapo, &Diaporama::demarrer);
                 }
                 else
                     QMessageBox::warning(this,tr("Impossible d'effectuer l'action"),tr("Il est impossible de programmer le lancement de cette soirée, elle ne correspond pas à l'heure et à la date actuelle."));

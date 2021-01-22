@@ -164,45 +164,45 @@ FenPrincipal::FenPrincipal()
     FenPreferences *fenPreferences = new FenPreferences(this);
 
     // on fait les différentes connexions
-    connect(groupeOuvrirSoiree,SIGNAL(clicked()),this,SLOT(ouvrirSoa()));
-    connect(groupeGenererSoiree,SIGNAL(clicked()),fenCreation,SLOT(exec()));
-    connect(groupeCreerSoiree,SIGNAL(clicked()),fenInfos,SLOT(exec()));
-    connect(groupePreferenceGenerateur,SIGNAL(clicked()),fenPreferences,SLOT(exec()));
+    connect(groupeOuvrirSoiree, &QPushButton::clicked, this, [this](){ ouvrirSoa(); });
+    connect(groupeGenererSoiree, &QPushButton::clicked, fenCreation, &FenCreerSoiree::exec);
+    connect(groupeCreerSoiree, &QPushButton::clicked, fenInfos, &FenInfosCreation::exec);
+    connect(groupePreferenceGenerateur, &QPushButton::clicked, fenPreferences, &FenPreferences::exec);
 
-    connect(fenPreferences,SIGNAL(telescopeChange(QString)),fenCreation,SLOT(changerTelescope(QString)));
-    connect(fenPreferences,SIGNAL(nouveauTelescope()),fenCreation,SLOT(actualiserTelescope()));
-    connect(fenPreferences,SIGNAL(villeChange(QString,QString,int)),fenCreation,SLOT(changerVille(QString,QString,int)));
+    connect(fenPreferences, &FenPreferences::telescopeChange, fenCreation, &FenCreerSoiree::changerTelescope);
+    connect(fenPreferences, &FenPreferences::nouveauTelescope, fenCreation, &FenCreerSoiree::actualiserTelescope);
+    connect(fenPreferences, &FenPreferences::villeChange, fenCreation, &FenCreerSoiree::changerVille);
 
     QSignalMapper *mapper = new QSignalMapper;
-    connect(mapper,SIGNAL(mapped(int)),fenPreferences,SLOT(ouvrir(int)));
+    connect(mapper, &QSignalMapper::mappedInt, fenPreferences, &FenPreferences::ouvrir);
 
     mapper->setMapping(listeActions->getActionPreferencesTelescope(),2);
-    connect(listeActions->getActionPreferencesTelescope(),SIGNAL(triggered()),mapper,SLOT(map()));
+    connect(listeActions->getActionPreferencesTelescope(), &QAction::triggered, mapper, qOverload<>(&QSignalMapper::map));
     mapper->setMapping(listeActions->getActionPreferencesOculaires(),3);
-    connect(listeActions->getActionPreferencesOculaires(),SIGNAL(triggered()),mapper,SLOT(map()));
+    connect(listeActions->getActionPreferencesOculaires(), &QAction::triggered, mapper, qOverload<>(&QSignalMapper::map));
     mapper->setMapping(listeActions->getActionPreferencesCarteCiel(),5);
-    connect(listeActions->getActionPreferencesCarteCiel(),SIGNAL(triggered()),mapper,SLOT(map()));
+    connect(listeActions->getActionPreferencesCarteCiel(), &QAction::triggered, mapper, qOverload<>(&QSignalMapper::map));
     mapper->setMapping(listeActions->getActionPreferencesLocalisation(),1);
-    connect(listeActions->getActionPreferencesLocalisation(),SIGNAL(triggered()),mapper,SLOT(map()));
+    connect(listeActions->getActionPreferencesLocalisation(), &QAction::triggered, mapper, qOverload<>(&QSignalMapper::map));
     mapper->setMapping(listeActions->getActionPersonaliserGenerateur(),4);
-    connect(listeActions->getActionPersonaliserGenerateur(),SIGNAL(triggered()),mapper,SLOT(map()));
+    connect(listeActions->getActionPersonaliserGenerateur(), &QAction::triggered, mapper, qOverload<>(&QSignalMapper::map));
 
-    connect(listeActions->getActionCreerSoiree(),SIGNAL(triggered()),fenCreation,SLOT(exec()));
-    connect(listeActions->getActionFabriquerSoiree(),SIGNAL(triggered()),fenInfos,SLOT(exec()));
-    connect(listeActions->getActionOuvrirSoiree(),SIGNAL(triggered()),this,SLOT(ouvrirSoa()));
-    connect(tabOnglets,SIGNAL(tabCloseRequested(int)),this,SLOT(fermerOnglet(int)));   
-    connect(listeActions->getActionFermer(),SIGNAL(triggered()),this,SLOT(fermerOnglet()));
+    connect(listeActions->getActionCreerSoiree(), &QAction::triggered, fenCreation, &FenCreerSoiree::exec);
+    connect(listeActions->getActionFabriquerSoiree(), &QAction::triggered, fenInfos, &FenInfosCreation::exec);
+    connect(listeActions->getActionOuvrirSoiree(), &QAction::triggered, this, [this](){ ouvrirSoa(); });
+    connect(tabOnglets, &QTabWidget::tabCloseRequested, this, qOverload<int>(&FenPrincipal::fermerOnglet));
+    connect(listeActions->getActionFermer(), &QAction::triggered, this, qOverload<>(&FenPrincipal::fermerOnglet));
 
-    connect(listeActions->getActionQuitter(),SIGNAL(triggered()),this,SLOT(quitterApplication()));
-    connect(listeActions->getActionSiteUniversAstronomie(),SIGNAL(triggered()),this,SLOT(ouvrirUniversAstronomie()));
-    connect(listeActions->getActionObjetsRemarquables(),SIGNAL(triggered()),this,SLOT(ouvrirObjetsRemarquables()));
-    connect(listeActions->getActionAide(),SIGNAL(triggered()),this,SLOT(aide()));
-    connect(listeActions->getActionAPropos(),SIGNAL(triggered()),this,SLOT(aPropos()));
-    connect(listeActions->getActionCDS(),SIGNAL(triggered()),this,SLOT(ouvrirCDS()));
-    connect(listeActions->getActionBDD(),SIGNAL(triggered()),fenBDD,SLOT(exec()));
+    connect(listeActions->getActionQuitter(), &QAction::triggered, this, &FenPrincipal::quitterApplication);
+    connect(listeActions->getActionSiteUniversAstronomie(), &QAction::triggered, this, &FenPrincipal::ouvrirUniversAstronomie);
+    connect(listeActions->getActionObjetsRemarquables(), &QAction::triggered, this, &FenPrincipal::ouvrirObjetsRemarquables);
+    connect(listeActions->getActionAide(), &QAction::triggered, this, &FenPrincipal::aide);
+    connect(listeActions->getActionAPropos(), &QAction::triggered, this, &FenPrincipal::aPropos);
+    connect(listeActions->getActionCDS(), &QAction::triggered, this, &FenPrincipal::ouvrirCDS);
+    connect(listeActions->getActionBDD(), &QAction::triggered, fenBDD, &FenetreBDD::exec);
 
     // IMPORTANT !!!!!!
-    connect(tabOnglets,SIGNAL(currentChanged(int)),this,SLOT(initialiserOngletActif(int)));
+    connect(tabOnglets, &QTabWidget::currentChanged, this, qOverload<int>(&FenPrincipal::initialiserOngletActif));
 
     // Informations sur la fenêtre
     setWindowTitle(tr("Générateur de soirées d'observation - astroGenerator"));
@@ -216,7 +216,7 @@ FenPrincipal::FenPrincipal()
         label_copyright->setFont(QFont("Verdana",8));
         label_copyright->setOpenExternalLinks(true);
     barreStatut->addPermanentWidget(label_copyright);
-    connect(listeActions->getActionBarreStatut(),SIGNAL(toggled(bool)),barreStatut,SLOT(setVisible(bool)));
+    connect(listeActions->getActionBarreStatut(), &QAction::toggled, barreStatut, &QStatusBar::setVisible);
     listeActions->getActionBarreStatut()->setChecked(false);
     barreStatut->setVisible(false);
 
@@ -340,8 +340,8 @@ void FenPrincipal::nouvelOngletSoiree(Soiree& soiree)
 
     initialiserOngletActif();
 
-    connect(interface,SIGNAL(fermer(Interface*)),this,SLOT(fermerOnglet(Interface*)));
-    connect(interface,SIGNAL(afficher(QString)),this,SLOT(afficherMessage(QString)));
+    connect(interface, &InterfaceLecture::fermer, this, qOverload<Interface *>(&FenPrincipal::fermerOnglet));
+    connect(interface, &InterfaceLecture::afficher, this, [this](const QString &message){ afficherMessage(message); });
 
     // On dégrise les actions
     listeActions->griserActionMonterObjet(false);
@@ -516,8 +516,8 @@ void FenPrincipal::nouvelOngletCreation(double latitude, double longitude, QDate
 
     initialiserOngletActif();
 
-    connect(interface,SIGNAL(fermer(Interface*)),this,SLOT(fermerOnglet(Interface*)));
-    connect(interface,SIGNAL(afficher(QString)),this,SLOT(afficherMessage(QString)));
+    connect(interface, &InterfaceCreation::fermer, this, qOverload<Interface *>(&FenPrincipal::fermerOnglet));
+    connect(interface, &InterfaceCreation::afficher, this, [this](const QString &message){ afficherMessage(message); });
 }
 void FenPrincipal::initialiserOngletActif(int index)
 {
@@ -580,10 +580,10 @@ void FenPrincipal::ajouterSoireeRecente(const QString &fichier)
 
     QAction *action = new QAction(fichier,this);
     QSignalMapper *mapper = new QSignalMapper;
-    connect(mapper,SIGNAL(mapped(QString)),this,SLOT(ouvrirSoa(QString)));
+    connect(mapper, &QSignalMapper::mappedString, this, &FenPrincipal::ouvrirSoa);
 
     mapper->setMapping(action,fichier);
-    connect(action,SIGNAL(triggered()),mapper,SLOT(map()));
+    connect(action, &QAction::triggered, mapper, qOverload<>(&QSignalMapper::map));
 
     menuSoireesRecentes->addAction(action);
 }
