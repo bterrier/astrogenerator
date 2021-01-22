@@ -18,7 +18,7 @@ void ObjetCPObs::initialiser(QString ref)
 {
     QString sql("WHERE reference = '"+ref+"'");
 
-    if(ref.left(1) == "M")
+    if(ref.at(0) == 'M')
         sql = "WHERE messier = '"+ref+"'";
 
     QSqlQuery count("SELECT COUNT(*) as nbr FROM ngcic "+sql);
@@ -40,11 +40,11 @@ void ObjetCPObs::initialiser(QString ref)
         m_taille = requete.value(9).toDouble(); // taille
 
         if(requete.value(1).toString().left(3) == "NGC")
-            m_ngc = requete.value(1).toString().right(requete.value(1).toString().count()-3).toInt();
+            m_ngc = requete.value(1).toString().rightRef(requete.value(1).toString().count()-3).toInt();
         else
             m_ngc = 0;
         if(requete.value(7).toString() != "0")
-            m_messier = requete.value(7).toString().right(requete.value(7).toString().count()-1).toInt(); // messier
+            m_messier = requete.value(7).toString().rightRef(requete.value(7).toString().count()-1).toInt(); // messier
         else
             m_messier = 0;
 

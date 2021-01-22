@@ -14,12 +14,10 @@ class FenetreBDD : public QDialog
     Q_OBJECT
     public:
         FenetreBDD(QWidget *parent = 0);
-
-    signals:
+        QString creerRequete() const;
 
     public slots:
         void actualiserVue();
-        QString creerRequete() const;
         void afficherObjet(QModelIndex index) const;
         void ouvrirCDS();
     

@@ -275,6 +275,7 @@ void FenCreerSoiree::genererSoiree()
     else if(coche == 0)
     {
         QMessageBox::critical(this,tr("Erreur"),tr("Vous devez choisir au moins une constellation"));
+        delete soiree;
         return;
     }
     else

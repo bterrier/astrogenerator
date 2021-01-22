@@ -114,10 +114,10 @@ double Objet::dmsToDegree(QString val)
 {
     double degree;
 
-    degree = val.mid(1,2).toDouble();
-    degree += val.mid(5,2).toDouble() / 60;
+    degree = val.midRef(1,2).toDouble();
+    degree += val.midRef(5,2).toDouble() / 60;
 
-    if(val.left(1) == "-")
+    if(val.at(0) == '-')
         return degree*(-1.0);
     else
         return degree;
@@ -128,9 +128,9 @@ double Objet::hmsToDegree(QString val)
 
     QStringList list = val.split(' ');
 
-    degree = list.value(0).left(list.value(0).count()-1).toDouble()*15;
-    degree += list.value(1).left(list.value(1).count()-3).toDouble()*15/60;
-    degree += list.value(2).left(list.value(2).count()-1).toDouble()*15/3600;
+    degree = list.value(0).leftRef(list.value(0).count()-1).toDouble()*15;
+    degree += list.value(1).leftRef(list.value(1).count()-3).toDouble()*15/60;
+    degree += list.value(2).leftRef(list.value(2).count()-1).toDouble()*15/3600;
 
     return degree;
 }
