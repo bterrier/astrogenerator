@@ -7,7 +7,7 @@ class ObjetCP : public Objet
 {
     public:
         ObjetCP();
-        ObjetCP(QString ref);
+        explicit ObjetCP(QString ref);
         int ngc() const;
         int messier() const;
         QString ref() const;

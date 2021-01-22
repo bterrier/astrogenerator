@@ -11,8 +11,8 @@ class Carteciel : public QGraphicsScene
     Q_OBJECT
 
     public:
-        Carteciel(Soiree *soiree);
-        Carteciel(Carteciel const& carte);
+        explicit Carteciel(Soiree *soiree);
+        explicit Carteciel(Carteciel const& carte);
         static double hmsToDegree(QString hms);
         static double dmsToDegree(QString dms);
 

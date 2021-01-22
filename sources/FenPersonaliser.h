@@ -7,7 +7,7 @@ class FenPersonaliser : public QDialog
 {
     Q_OBJECT
     public:
-        FenPersonaliser(QWidget *parent = 0);
+        explicit FenPersonaliser(QWidget *parent = 0);
 
     signals:
 

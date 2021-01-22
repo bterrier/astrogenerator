@@ -13,7 +13,7 @@ class FenCreerSoiree : public QDialog
     Q_OBJECT
 
     public:
-        FenCreerSoiree(FenPrincipal *parent);
+        explicit FenCreerSoiree(FenPrincipal *parent);
         QString creerTexteConstellation(); // Crée un texte en fonction des constellations selectionnées
 
     public slots:

@@ -9,7 +9,7 @@ class ActionsFenetre : public QObject
     Q_OBJECT
 
     public:
-        ActionsFenetre(QWidget *parent = 0);
+        explicit ActionsFenetre(QWidget *parent = 0);
 
         QAction *getActionInfoSoiree();
         QAction *getActionCreerSoiree();

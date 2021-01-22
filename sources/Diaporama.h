@@ -13,7 +13,7 @@ class Diaporama : public QWidget
     Q_OBJECT
 
     public:
-        Diaporama(Soiree* soiree);
+        explicit Diaporama(Soiree* soiree);
         void keyPressEvent(QKeyEvent *event);
     public slots:
         void afficher(int id);
