@@ -136,5 +136,7 @@ double Objet::hmsToDegree(QString val)
 }
 QString Objet::nomComplet(bool abrege) const
 {
+    Q_UNUSED(abrege)
+
     return m_nom;
 }

@@ -23,6 +23,8 @@ ObjetPlaneteObs::ObjetPlaneteObs(QString nomPlanete, QDateTime debut, QDateTime 
 }
 QString ObjetPlaneteObs::nomComplet(bool abrege) const
 {
+    Q_UNUSED(abrege)
+
     return m_nom;
 }
 double ObjetPlaneteObs::distance() const

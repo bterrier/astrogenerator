@@ -237,7 +237,7 @@ QVector<double> Calculastro::hauteurAzimutDegree(QDate const& date, QTime const&
 {
     std::vector<double> radecCorriger;
     double angleHoraireDegre(0), sinDec(0), sinLat(0), cosDec(0), cosLat(0), cosHA(0), sinHA(0), tanDec(0);
-    double sinHauteur(0), hauteur(0), cosHauteur(0), azimuth(0);
+    double sinHauteur(0), hauteur(0), azimuth(0);
 
     radecCorriger = RaDecPrecession(date.year(), ra, dec); // OK
 
@@ -253,7 +253,6 @@ QVector<double> Calculastro::hauteurAzimutDegree(QDate const& date, QTime const&
 
     sinHauteur = (sinDec * sinLat) + (cosDec * cosLat * cosHA); // Formule (12.6) p.89 Astronomical Algorithms
     hauteur = asin(sinHauteur);
-    cosHauteur = cos(hauteur);
 
     azimuth = atan2(sinHA,(cosHA*sinLat - tanDec*cosLat)); // Formule (12.5) p.89
 
