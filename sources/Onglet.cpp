@@ -45,7 +45,7 @@ QWidget* Onglet::getWidget(QString ref)
         champRemarques->setMaximumHeight(100);
     layoutSec->addWidget(champRemarques);
         QHBoxLayout *layoutActions = new QHBoxLayout;
-        QLabel *dateObs = new QLabel("Observer entre " + m_soiree->getPlanning().at(i)->getDebut().time().toString(Qt::SystemLocaleShortDate) + " et " + m_soiree->getPlanning().at(i)->getFin().time().toString(Qt::SystemLocaleShortDate));
+        QLabel *dateObs = new QLabel("Observer entre " + QLocale().toString(m_soiree->getPlanning().at(i)->getDebut().time(), QLocale::ShortFormat) + " et " + QLocale().toString(m_soiree->getPlanning().at(i)->getFin().time(), QLocale::ShortFormat));
         layoutActions->addWidget(dateObs);
     layoutSec->addLayout(layoutActions);
     layoutSec->addWidget(new QPushButton("Lancer"),0,Qt::AlignRight);

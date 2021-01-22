@@ -843,6 +843,7 @@ bool Soiree::hasChanged()
 }
 void Soiree::toXML() const
 {
+    QLocale locale;
     QDomDocument doc;
     QDomProcessingInstruction instr =  doc.createProcessingInstruction("xml", "version=\"1.0\"  encoding=\"UTF-8\"");
     doc.appendChild(instr);
@@ -850,11 +851,11 @@ void Soiree::toXML() const
     QDomElement soiree = doc.createElement("soiree");
     doc.appendChild(soiree);
         QDomElement date = doc.createElement("date");
-        date.appendChild(doc.createTextNode(m_debut.date().toString(Qt::SystemLocaleShortDate)));
+        date.appendChild(doc.createTextNode(locale.toString(m_debut.date(), QLocale::ShortFormat)));
         soiree.appendChild(date);
 
         QDomElement heure = doc.createElement("heure");
-        heure.appendChild(doc.createTextNode("De " + m_debut.time().toString(Qt::SystemLocaleShortDate) + " à " + m_fin.time().toString(Qt::SystemLocaleShortDate)));
+        heure.appendChild(doc.createTextNode("De " + locale.toString(m_debut.time(), QLocale::ShortFormat) + " à " + locale.toString(m_fin.time(), QLocale::ShortFormat)));
         soiree.appendChild(heure);
 
         QDomElement listeObjet = doc.createElement("listeObject");
@@ -866,7 +867,8 @@ void Soiree::toXML() const
                 objet.appendChild(nom);
 
                 QDomElement horaire = doc.createElement("horaire");
-                horaire.appendChild(doc.createTextNode("Entre " + m_listeObjets.at(i)->getDebut().time().toString(Qt::SystemLocaleShortDate) + " et " + m_listeObjets.at(i)->getFin().time().toString(Qt::SystemLocaleShortDate)));
+                horaire.appendChild(doc.createTextNode("Entre " + locale.toString(m_listeObjets.at(i)->getDebut().time(), QLocale::ShortFormat) + " et "
+                                        + locale.toString(m_listeObjets.at(i)->getFin().time(), QLocale::ShortFormat)));
                 objet.appendChild(horaire);
 
                 QDomElement element = doc.createElement("infos");
