@@ -151,10 +151,11 @@ void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime 
                                  }
                              }
                          }
-                         tempsPlus[0].addSecs(60);
-                         tempsPlus[1].addSecs(60);
-                         tempsMoins[0].addSecs(-60);
-                         tempsMoins[1].addSecs(-60);
+
+                         tempsPlus[0] = tempsPlus[0].addSecs(60);
+                         tempsPlus[1] = tempsPlus[1].addSecs(60);
+                         tempsMoins[0] = tempsMoins[0].addSecs(-60);
+                         tempsMoins[1] = tempsMoins[1].addSecs(-60);
                          j++;
                      }
                  }
@@ -919,10 +920,9 @@ void Soiree::toXML() const
 }
 bool Soiree::paintPdf(QPrinter *printer)
 {
-    qreal mT(7),mG(7),mD(7),mB(7);
+    qreal mT(7),mG(7),mD(7);
     const auto margins = printer->pageLayout().margins(QPageLayout::Millimeter);
     mT = margins.top();
-    mB = margins.bottom();
     mG = margins.left();
     mD = margins.right();
 
