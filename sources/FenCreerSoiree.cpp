@@ -219,7 +219,6 @@ void FenCreerSoiree::genererSoiree()
 {
     Soiree *soiree = new Soiree;
     QString niveau;
-    uint diametreTelescope(DIAMETRE_DEFAULT), focaleTelescope(FOCALE_DEFAULT);
 
     QDateTime debut(m_date->date(),m_heure->time());
     QDateTime fin(m_date->date(),m_heure->time());
@@ -252,13 +251,12 @@ void FenCreerSoiree::genererSoiree()
     }
 
     // TELESCOPE
-    QSqlQuery *requeteTelescope = new QSqlQuery("SELECT diametre, focale FROM telescope WHERE nom = :nom");
+    QSqlQuery *requeteTelescope = new QSqlQuery();
+            requeteTelescope->prepare("SELECT diametre, focale FROM telescope WHERE nom = :nom");
     requeteTelescope->bindValue(":nom",m_telescope->currentText());
     if(requeteTelescope->exec())
     {
         requeteTelescope->next();
-        diametreTelescope = requeteTelescope->value(0).toUInt();
-        focaleTelescope = requeteTelescope->value(1).toUInt();
     }
 
     // CONSTELLATION
