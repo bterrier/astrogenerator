@@ -16,13 +16,6 @@
 // Toutes les dates qu'utlisent ces fonctions doivent être données en TEMPS UNIVERSEL
 // ------------------------------------------------------------------------------------
 
-double Calculastro::abs(double valeur)
-{
-    if (valeur < 0)
-        return valeur * (-1.0);
-    else
-        return valeur;
-}
 QString Calculastro::enumQtToPays(QString ref)
 {
     QFile fichier("qlocale-pays.txt");
@@ -106,7 +99,7 @@ QVector<QString> Calculastro::trouverVillePays(double latitude, double longitude
     requete.bindValue(":longitudeMax", longitude + 10);
     requete.exec();
     while (requete.next()) {
-        ecart = abs(requete.value(2).toDouble() - latitude) + abs(requete.value(3).toDouble() - longitude);
+        ecart = qAbs(requete.value(2).toDouble() - latitude) + qAbs(requete.value(3).toDouble() - longitude);
         if (ecartMin > ecart) {
             ecartMin = ecart;
             retour.clear();
@@ -117,7 +110,7 @@ QVector<QString> Calculastro::trouverVillePays(double latitude, double longitude
     if (retour.at(1) == "France") {
         requete.exec("SELECT nom, latitude, longitude FROM villes_france");
         while (requete.next()) {
-            ecart2 = abs(requete.value(1).toDouble() - latitude) + abs(requete.value(2).toDouble() - longitude);
+            ecart2 = qAbs(requete.value(1).toDouble() - latitude) + qAbs(requete.value(2).toDouble() - longitude);
             if (ecart2 < ecartMin2) {
                 ecartMin2 = ecart2;
                 retour1.clear();
@@ -942,7 +935,7 @@ QString Calculastro::getOculaire(Objet *objet, int diametre, int focale, QVector
         int ecart(0);
 
         for (int i(0); i < oculaires.size(); i++) {
-            ecart = abs(oculaires.at(i) - f);
+            ecart = qAbs(oculaires.at(i) - f);
             if (ecart < bonOculaire[1]) {
                 bonOculaire[0] = oculaires.at(i);
                 bonOculaire[1] = ecart;

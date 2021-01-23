@@ -17,7 +17,6 @@
 class Calculastro
 {
 public:
-    static double abs(double valeur);
     static QVector<QString> trouverVillePays(double latitude, double longitude);
     static QString paysToEnumQt(QString ref);
     static QString enumQtToPays(QString ref);
