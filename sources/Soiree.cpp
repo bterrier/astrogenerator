@@ -938,7 +938,7 @@ bool Soiree::paintPdf(QPrinter *printer)
 
             // PAGE DE GARDE
             QRectF rect;
-            painter.drawImage(52*k-mG*k,101*k-mT*k,QImage("images/bandeau-pdf"));
+            painter.drawImage(52*k-mG*k,101*k-mT*k,QImage(":/icons/bandeau-pdf"));
             QFont font = painter.font();
             font.setPointSize(7*k);
             font.setFamily("Arial");
@@ -977,7 +977,7 @@ bool Soiree::paintPdf(QPrinter *printer)
             font.setWeight(QFont::Bold);
             painter.setFont(font);
             painter.setPen(QColor(36,42,112));
-            painter.drawImage(QRectF(13*k-mG*k,45*k-mT*k,7*k,7*k),QImage("images/title-pdf.png"));
+            painter.drawImage(QRectF(13*k-mG*k,45*k-mT*k,7*k,7*k),QImage(":/icons/title-pdf.png"));
             painter.drawText(QRectF(22*k-mG*k,45*k-mT*k,(210-mD-mG)*k,10*k),Qt::AlignLeft,tr("Checklist"));
             painter.drawLine(13*k-mG*k,55*k-mT*k,(210-mD-mG-13)*k,55*k-mT*k);
             // On écrit le texte de la checklist
@@ -1012,7 +1012,7 @@ bool Soiree::paintPdf(QPrinter *printer)
             font.setWeight(QFont::Bold);
             painter.setFont(font);
             painter.setPen(QColor(36,42,112));
-            painter.drawImage(QRectF(13*k-mG*k,125*k-mT*k,7*k,7*k),QImage("images/title-pdf.png"));
+            painter.drawImage(QRectF(13*k-mG*k,125*k-mT*k,7*k,7*k),QImage(":/icons/title-pdf.png"));
             painter.drawText(QRectF(22*k-mG*k,125*k-mT*k,(210-mD-mG)*k,10*k),Qt::AlignLeft,tr("Planning d'observation de la soirée"));
             painter.drawLine(13*k-mG*k,135*k-mT*k,(210-mD-mG-13)*k,135*k-mT*k);
             // On écrit la légende
@@ -1153,7 +1153,7 @@ bool Soiree::paintPdf(QPrinter *printer)
             font.setWeight(QFont::Bold);
             painter.setFont(font);
             painter.setPen(QColor(36,42,112));
-            painter.drawImage(QRectF(13*k-mG*k,10*k-mT*k,7*k,7*k),QImage("images/title-pdf.png"));
+            painter.drawImage(QRectF(13*k-mG*k,10*k-mT*k,7*k,7*k),QImage(":/icons/title-pdf.png"));
             painter.drawText(QRectF(22*k-mG*k,10*k-mT*k,(210-mD-mG)*k,10*k),Qt::AlignLeft,tr("Carte du ciel"));
             painter.drawLine(13*k-mG*k,20*k-mT*k,(210-mD-mG-13)*k,20*k-mT*k);
             // On écrit la légende
@@ -1187,7 +1187,7 @@ bool Soiree::paintPdf(QPrinter *printer)
             font.setWeight(QFont::Bold);
             painter.setFont(font);
             painter.setPen(QColor(36,42,112));
-            painter.drawImage(QRectF(13*k-mG*k,10*k-mT*k,7*k,7*k),QImage("images/title-pdf.png"));
+            painter.drawImage(QRectF(13*k-mG*k,10*k-mT*k,7*k,7*k),QImage(":/icons/title-pdf.png"));
             painter.drawText(QRectF(22*k-mG*k,10*k-mT*k,(210-mD-mG)*k,10*k),Qt::AlignLeft,tr("Pages de notes"));
             painter.drawLine(13*k-mG*k,20*k-mT*k,(210-mD-mG-13)*k,20*k-mT*k);
             // Ecriture des pointillés

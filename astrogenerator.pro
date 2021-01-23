@@ -87,9 +87,11 @@ ag_txt.path = $$OUT_PWD
 ag_txt.files += \
     $$PWD/*.txt \
     $$PWD/icones \
-    $$PWD/images \
     $$PWD/VSOP87 \
     $$PWD/dbastrogenerator \
     $$PWD/*.ico \
     $$PWD/doc.pdf
+
+RESOURCES += \
+    resources.qrc
 

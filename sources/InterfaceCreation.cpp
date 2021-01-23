@@ -41,9 +41,9 @@ InterfaceCreation::InterfaceCreation(double latitude, double longitude, QDateTim
     m_modelePlanete = new QStandardItemModel;
 
     ajouterObjet = new QAction(tr("Ajouter l'objet"),this);
-    ajouterObjet->setIcon(QIcon("images/arrow-right.png"));
+    ajouterObjet->setIcon(QIcon(":/icons/arrow-right.png"));
     enleverObjet = new QAction(tr("Enlever l'objet"),this);
-    enleverObjet->setIcon(QIcon("images/arrow-left.png"));
+    enleverObjet->setIcon(QIcon(":/icons/arrow-left.png"));
 
     m_vueRecherche = new QListView;
     m_vueRecherche->setModel(m_modeleRecherche);

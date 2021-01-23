@@ -1,0 +1,35 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/add.png</file>
+        <file>icons/arrow-down.png</file>
+        <file>icons/arrow-left.png</file>
+        <file>icons/arrow-right.png</file>
+        <file>icons/arrow-up.png</file>
+        <file>icons/bandeau-pdf.png</file>
+        <file>icons/carteciel.png</file>
+        <file>icons/chronometer.png</file>
+        <file>icons/close.png</file>
+        <file>icons/create.png</file>
+        <file>icons/creer-soiree.png</file>
+        <file>icons/edit-bdd.png</file>
+        <file>icons/generate.png</file>
+        <file>icons/info.png</file>
+        <file>icons/list-remove2.png</file>
+        <file>icons/logo-astrogenerator.png</file>
+        <file>icons/open.png</file>
+        <file>icons/ouvrir.png</file>
+        <file>icons/pause.png</file>
+        <file>icons/pdf.png</file>
+        <file>icons/planete.png</file>
+        <file>icons/play.png</file>
+        <file>icons/preferences.png</file>
+        <file>icons/print.png</file>
+        <file>icons/redo.png</file>
+        <file>icons/save.png</file>
+        <file>icons/sign-in.png</file>
+        <file>icons/slideshow.png</file>
+        <file>icons/title-pdf.png</file>
+        <file>icons/undo.png</file>
+        <file>icons/xml.png</file>
+    </qresource>
+</RCC>

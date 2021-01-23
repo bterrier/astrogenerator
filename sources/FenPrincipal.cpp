@@ -69,7 +69,7 @@ FenPrincipal::FenPrincipal()
     QPushButton *groupeGenererSoiree = new QPushButton;
     groupeGenererSoiree->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL,HAUTEUR_BLOC_PAGE_ACCUEIL);
     QLabel *imageGenerer = new QLabel(groupeGenererSoiree);
-    imageGenerer->setPixmap(QPixmap("images/generate.png"));
+    imageGenerer->setPixmap(QPixmap(":/icons/generate.png"));
     imageGenerer->setAlignment(Qt::AlignCenter);
     QLabel *texteGenerer = new QLabel(tr("Générer une soirée"),groupeGenererSoiree);
     texteGenerer->setFont(QFont("Verdana",15));
@@ -85,7 +85,7 @@ FenPrincipal::FenPrincipal()
     QPushButton *groupeCreerSoiree = new QPushButton;
     groupeCreerSoiree->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL,HAUTEUR_BLOC_PAGE_ACCUEIL);
     QLabel *imageCreer = new QLabel(groupeCreerSoiree);
-    imageCreer->setPixmap(QPixmap("images/creer-soiree.png"));
+    imageCreer->setPixmap(QPixmap(":/icons/creer-soiree.png"));
     imageCreer->setAlignment(Qt::AlignCenter);
     QLabel *texteCreer = new QLabel(tr("Créer une soirée"),groupeCreerSoiree);
     texteCreer->setFont(QFont("Verdana",15));
@@ -101,7 +101,7 @@ FenPrincipal::FenPrincipal()
     QPushButton *groupeOuvrirSoiree = new QPushButton;
     groupeOuvrirSoiree->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL,HAUTEUR_BLOC_PAGE_ACCUEIL);
     QLabel *imageOuvrir = new QLabel(groupeOuvrirSoiree);
-    imageOuvrir->setPixmap(QPixmap("images/ouvrir.png"));
+    imageOuvrir->setPixmap(QPixmap(":/icons/ouvrir.png"));
     imageOuvrir->setAlignment(Qt::AlignCenter);
     QLabel *texteOuvrir = new QLabel(tr("Ouvrir une soirée"),groupeOuvrirSoiree);
     texteOuvrir->setFont(QFont("Verdana",15));
@@ -117,7 +117,7 @@ FenPrincipal::FenPrincipal()
     QPushButton *groupePreferenceGenerateur = new QPushButton;
     groupePreferenceGenerateur->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL,HAUTEUR_BLOC_PAGE_ACCUEIL);
     QLabel *imagePreferences = new QLabel(groupePreferenceGenerateur);
-    imagePreferences->setPixmap(QPixmap("images/preferences.png"));
+    imagePreferences->setPixmap(QPixmap(":/icons/preferences.png"));
     imagePreferences->setAlignment(Qt::AlignCenter);
     QLabel *textePreferences = new QLabel(tr("Personnaliser"),groupePreferenceGenerateur);
     textePreferences->setFont(QFont("Verdana",15));
@@ -196,7 +196,7 @@ FenPrincipal::FenPrincipal()
     setWindowTitle(tr("Générateur de soirées d'observation - astroGenerator"));
     setMinimumHeight(HAUTEUR_MIN_FENETRE);
     setMinimumWidth(LARGEUR_MIN_FENETRE);
-    setWindowIcon(QIcon("images/logo-astrogenerator.png"));
+    setWindowIcon(QIcon(":/icons/logo-astrogenerator.png"));
 
     // La barre de statut
     barreStatut = statusBar();
