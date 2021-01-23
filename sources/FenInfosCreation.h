@@ -4,6 +4,7 @@
 #include <QComboBox>
 #include <QDialog>
 #include <QFormLayout>
+
 #include "FenPrincipal.h"
 
 /*
@@ -20,28 +21,28 @@
 class FenInfosCreation : public QDialog
 {
     Q_OBJECT
-    public:
-        explicit FenInfosCreation(FenPrincipal *parent = 0);
+public:
+    explicit FenInfosCreation(FenPrincipal *parent = 0);
 
-    public slots:
-        void actualiserCoordonnees(QString nom);
-        void actualiserVilles(QString pays = "France");
-        void creer();
+public slots:
+    void actualiserCoordonnees(QString nom);
+    void actualiserVilles(QString pays = "France");
+    void creer();
 
-    private :
-        FenPrincipal *m_parent;
+private :
+    FenPrincipal *m_parent;
 
-        QComboBox *m_pays;
-        QSpinBox *m_departement;
-        QComboBox *m_villes;
-        QDoubleSpinBox *m_latitude;
-        QDoubleSpinBox *m_longitude;
-        QDateEdit *m_date;
-        QTimeEdit *m_heure;
-        QComboBox *m_telescope;
-        QPushButton *m_submit;
-        QPushButton *m_close;
-        QFormLayout *layoutForm;
+    QComboBox *m_pays;
+    QSpinBox *m_departement;
+    QComboBox *m_villes;
+    QDoubleSpinBox *m_latitude;
+    QDoubleSpinBox *m_longitude;
+    QDateEdit *m_date;
+    QTimeEdit *m_heure;
+    QComboBox *m_telescope;
+    QPushButton *m_submit;
+    QPushButton *m_close;
+    QFormLayout *layoutForm;
     
 };
 

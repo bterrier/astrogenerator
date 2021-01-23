@@ -3,12 +3,13 @@
 
 #include <QObject>
 #include <QPrinter>
+#include <QSettings>
+#include <QStandardItemModel>
+
 #include "ObjetObs.h"
 #include "ObjetCPObs.h"
 #include "ObjetCP.h"
 
-#include <QSettings>
-#include <QStandardItemModel>
 
 class Soiree : public QObject
 {

@@ -5,18 +5,18 @@
 
 class ObjetCP : public Objet
 {
-    public:
-        ObjetCP();
-        explicit ObjetCP(QString ref);
-        int ngc() const;
-        int messier() const;
-        QString ref() const;
-        QString nomComplet() const;
+public:
+    ObjetCP();
+    explicit ObjetCP(QString ref);
+    int ngc() const;
+    int messier() const;
+    QString ref() const;
+    QString nomComplet() const;
 
-    protected:
-      int m_ngc;
-      int m_messier;
-      QString m_refBdd;
+protected:
+    int m_ngc;
+    int m_messier;
+    QString m_refBdd;
 };
 
 #endif // OBJETCP_H

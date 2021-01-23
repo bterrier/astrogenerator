@@ -7,6 +7,7 @@
 #include "Soiree.h"
 
 #include <QDialog>
+#include <QFile>
 #include <QFormLayout>
 #include <QInputDialog>
 #include <QHeaderView>

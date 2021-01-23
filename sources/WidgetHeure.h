@@ -9,13 +9,15 @@ class WidgetHeure : public QLCDNumber
 {
     Q_OBJECT
 
-    public:
-        WidgetHeure();
-    public slots :
-        void ajouterMin();
-    private :
-         QTime tempsActuel;
-         QTimer *timer;
+public:
+    WidgetHeure();
+
+public slots:
+    void ajouterMin();
+
+private:
+    QTime tempsActuel;
+    QTimer *timer;
     
 };
 

@@ -8,6 +8,7 @@
 #include "ObjetCPObs.h"
 #include "Calculastro.h"
 
+#include <QFile>
 #include <QInputDialog>
 #include <QHBoxLayout>
 #include <QHeaderView>
@@ -15,6 +16,8 @@
 #include <QPrintDialog>
 #include <QToolBar>
 #include <QLabel>
+
+#include <QDebug>
 
 InterfaceLecture::InterfaceLecture(Soiree *soiree, ActionsFenetre *listeActionsParam, QWidget *parent) :
     Interface(listeActionsParam, parent)

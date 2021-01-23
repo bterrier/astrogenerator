@@ -6,13 +6,10 @@
 class FenPersonaliser : public QDialog
 {
     Q_OBJECT
-    public:
-        explicit FenPersonaliser(QWidget *parent = 0);
 
-    signals:
+public:
+    explicit FenPersonaliser(QWidget *parent = 0);
 
-    public slots:
-    
 };
 
 #endif // FENPERSONALISER_H
