@@ -14,6 +14,7 @@ private slots:
     void test_case1();
     void test_julian();
     void test_julian2000();
+    void test_angleNormalization();
 };
 
 tst_AstroCalc::tst_AstroCalc()
@@ -53,6 +54,18 @@ void tst_AstroCalc::test_julian2000()
     // But we do not handle TT
     dt = QDateTime::fromString("2000-01-01T12:00:00Z", Qt::ISODate);
     QCOMPARE(AstroCalc::julianDay2000(dt), 0);
+}
+
+void tst_AstroCalc::test_angleNormalization()
+{
+    QCOMPARE(AstroCalc::toZero360(0.0), 0.0);
+    QCOMPARE(AstroCalc::toZero360(-360.0), 0.0);
+    QCOMPARE(AstroCalc::toZero360(360.0), 0.0);
+    QCOMPARE(AstroCalc::toZero360(720.0), 0.0);
+    QCOMPARE(AstroCalc::toZero360(180.0), 180.0);
+    QCOMPARE(AstroCalc::toZero360(730.0), 10.0);
+    QCOMPARE(AstroCalc::toZero360(402.42), 42.42);
+    QCOMPARE(AstroCalc::toZero360(-3.5), 356.5);
 }
 
 QTEST_APPLESS_MAIN(tst_AstroCalc)

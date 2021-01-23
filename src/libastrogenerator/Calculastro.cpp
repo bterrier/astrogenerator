@@ -173,7 +173,7 @@ double Calculastro::toAngleHoraireDegree(QDate date, QTime heure, double ra, dou
 
     angleHoraire = heureSiderale(date, heure, true) + longi / 15.0 - ra / 15.0; // résultat en heures
     angleHoraire *= 15.0; // on le convertit en degrés
-    angleHoraire = toZero360(angleHoraire); // On le ramène dans un intervalle entre 0 et 360°
+    angleHoraire = AstroCalc::toZero360(angleHoraire); // On le ramène dans un intervalle entre 0 et 360°
 
     return angleHoraire;
 }
@@ -202,7 +202,7 @@ QVector<double> Calculastro::hauteurAzimutDegree(QDate const &date, QTime const 
 
     hauteur = rad2deg(hauteur);
     azimuth = rad2deg(azimuth);
-    azimuth = toZero360(azimuth + 180); // on rajoute 180
+    azimuth = AstroCalc::toZero360(azimuth + 180); // on rajoute 180
 
     QVector<double> altAz;
     altAz.push_back(hauteur);
@@ -338,7 +338,7 @@ QVector<double> Calculastro::nutationObliquity(double j2000)
     t = j2000 / 36525.0;
 
     omega = 125.04452 - 1934.136261 * t + 0.0020708 * pow(t, 2.0) + pow(t, 3.0) / 450000;
-    omega = toZero360(omega);
+    omega = AstroCalc::toZero360(omega);
 
     omega = deg2rad(omega);
 
@@ -415,7 +415,7 @@ QVector<double> Calculastro::coordonneesPlanetes(QDate date, QTime heure, QStrin
         alpha += M_PI; // supprime une erreur avec l'arctangeant
     declinaison = asin(sin(beta) * cos(nuOb[2]) + cos(beta) * sin(nuOb[2]) * sin(lambda)); // Formule (12.4) p.89
 
-    alpha = toZero360(rad2deg(alpha));
+    alpha = AstroCalc::toZero360(rad2deg(alpha));
     declinaison = rad2deg(declinaison);
 
     k = (pow(E['R'] + delta, 2.0) - pow(O['R'], 2.0)) / (4 * E['R'] * delta) * 100; // formule (40.2) p.267
@@ -528,7 +528,7 @@ QMap<char, double> Calculastro::getLBR(double j2000, QString planete)
     B = series["B0"] + series["B1"] * t + series["B2"] * pow(t, 2) + series["B3"] * pow(t, 3) + series["B4"] * pow(t, 4) + series["B5"] * pow(t, 5);
     R = series["R0"] + series["R1"] * t + series["R2"] * pow(t, 2) + series["R3"] * pow(t, 3) + series["R4"] * pow(t, 4) + series["R5"] * pow(t, 5);
 
-    L = toZero360(rad2deg(L)); // On convertit en degrés
+    L = AstroCalc::toZero360(rad2deg(L)); // On convertit en degrés
     B = rad2deg(B); // On convertit en degrés
 
     QMap<char, double> retour;
@@ -537,16 +537,7 @@ QMap<char, double> Calculastro::getLBR(double j2000, QString planete)
     retour.insert('R', R);
     return retour;
 }
-double Calculastro::toZero360(double deg)
-{
-    while (deg > 360 || deg < 0) {
-        if (deg > 360)
-            deg -= 360;
-        else
-            deg += 360;
-    }
-    return deg;
-}
+
 QString Calculastro::degreeToDms(double val)
 {
     int d(0), m(0), s(0);

@@ -32,7 +32,6 @@ public:
     static double rad2deg(double rad);
     static double deg2rad(double deg);
     static QMap<char, double> getLBR(double j2000, QString planete);
-    static double toZero360(double deg);
     static QString degreeToDms(double val);
     static QString degreeToHms(double val);
     static double round(double n, unsigned d);

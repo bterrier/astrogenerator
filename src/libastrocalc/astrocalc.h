@@ -7,6 +7,7 @@ namespace AstroCalc
 {
 
 double deg2rad(double deg);
+double toZero360(double deg);
 
 double julianDay(const QDateTime &datetime);
 inline double julianDay(const QDate &date, const QTime &time)

@@ -37,4 +37,14 @@ double julianDay2000(const QDateTime &datetime)
     return julianDay(datetime) - 2451545.0;
 }
 
+double toZero360(double deg)
+{
+    double result = std::fmod(deg, 360.0);
+
+    if (result < 0)
+        result += 360.0;
+
+    return result;
+}
+
 } // namespace AstroCalc
