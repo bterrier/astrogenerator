@@ -132,39 +132,7 @@ double Calculastro::rad2deg(double rad)
 {
     return 180 * rad / M_PI;
 }
-double Calculastro::julianDay(QDate date, QTime heure) // OK
-{
-    double A(0), B(0), T(0), jd(0);
 
-    int y(date.year());
-    int m(date.month());
-    int d(date.day());
-
-    int h(heure.hour());
-    int min(heure.minute());
-    int s(heure.second());
-
-    if (m < 3) {
-        y -= 1;
-        m += 12;
-    }
-    A = std::trunc(y / 100);
-    B = 2 - A + std::trunc(A / 4);
-    T = h / 24.0 + min / 1440.0 + s / 86400.0;
-
-    if (y < 1582) // Si on est encore dans le calendrier Julien
-        B = 0;
-
-    jd = std::trunc(365.25 * (y + 4716)) + std::trunc(30.6001 * (m + 1)) + d + T + B - 1524.5;
-    return jd;
-}
-double Calculastro::julianDay2000(QDate date, QTime heure)
-{
-    double j2000(0), jd(0);
-    jd = julianDay(date, heure);
-    j2000 = jd - 2451545.0;
-    return j2000;
-}
 double Calculastro::partieDecimal(double val)
 {
     if (val < 0)
@@ -175,9 +143,9 @@ double Calculastro::partieDecimal(double val)
 
 double Calculastro::heureSiderale(QDate date, QTime heure, bool apparent)
 { // La méthode de calcul présentée ici est celle de l'exemple 11.b p.85
-    double T(0), JD(0), Oo(0), HSH(0);
+    double T(0), Oo(0), HSH(0);
 
-    JD = julianDay(date, heure);
+    double JD = AstroCalc::julianDay(date, heure);
     T = (JD - 2451545.0) / 36525.0;
 
     // Formule (11.4)
@@ -397,7 +365,7 @@ QVector<double> Calculastro::coordonneesPlanetes(QDate date, QTime heure, QStrin
     QVector<double> nuOb;
     QMap<char, double> E, O;
 
-    jj = julianDay2000(date, heure);
+    jj = AstroCalc::julianDay2000(date, heure);
     O = getLBR(jj, "terre");
     E = getLBR(jj, planete);
 

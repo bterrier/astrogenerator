@@ -21,8 +21,6 @@ public:
     static QString paysToEnumQt(QString ref);
     static QString enumQtToPays(QString ref);
     static QString enumQtToPays(QLocale::Country country);
-    static double julianDay(QDate date, QTime heure); // OK
-    static double julianDay2000(QDate date, QTime heure); // OK
     static double partieDecimal(double val); // OK
     static double heureSiderale(QDate date, QTime heure, bool apparent = false); // OK
     static double toAngleHoraireDegree(QDate date, QTime heure, double ra, double longi); // OK
