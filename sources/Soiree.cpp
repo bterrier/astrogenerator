@@ -180,7 +180,7 @@ void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime 
     db.open();
 
     QMap<double,QString> objets_visibles1;
-    ObjetCP *objet(0);
+    ObjetCP *objet(nullptr);
 
     HauteurMaxTemps hauteurMax2;
 
@@ -484,7 +484,7 @@ void Soiree::supprimerObjet(int index)
     if(index >= 0 && index < m_listeObjets.size())
         m_listeObjets.erase(m_listeObjets.begin()+index);
     else
-        QMessageBox::critical(0,tr("Suppression impossible"),tr("L'index fourni pour la supression est invalide"));
+        QMessageBox::critical(nullptr,tr("Suppression impossible"),tr("L'index fourni pour la supression est invalide"));
 }
 QString Soiree::getPays() const
 {
@@ -526,7 +526,7 @@ void Soiree::monterObjet(int index)
         m_listeObjets = trierPlanning(m_listeObjets);
     }
     else
-        QMessageBox::critical(0,tr("Erreur de modification"),tr("L'index de modification fournie est invalide"));
+        QMessageBox::critical(nullptr,tr("Erreur de modification"),tr("L'index de modification fournie est invalide"));
 }
 void Soiree::descendreObjet(int index)
 {
@@ -549,10 +549,10 @@ void Soiree::modifierDuree(int index, int duree)
             }
         }
         else
-            QMessageBox::critical(0,tr("Erreur de modification"),tr("Il est impossible de modifier l'objet avec la durée indiquée : %n min. Elle doit être comprise entre 1 et 20 min.","",duree));
+            QMessageBox::critical(nullptr,tr("Erreur de modification"),tr("Il est impossible de modifier l'objet avec la durée indiquée : %n min. Elle doit être comprise entre 1 et 20 min.","",duree));
     }
     else
-        QMessageBox::critical(0,tr("Erreur de modification"),tr("L'index fourni pour la modification est invalide"));
+        QMessageBox::critical(nullptr,tr("Erreur de modification"),tr("L'index fourni pour la modification est invalide"));
 }
 void Soiree::ajouterObjet(int index, ObjetCP* objetParam, int duree)
 { // INDEX : index de l'objet précédent REFERENCE : pour instancier Objet DUREE : duree de l'objet
@@ -581,14 +581,14 @@ void Soiree::ajouterObjet(int index, ObjetCP* objetParam, int duree)
                 m_listeObjets = trierPlanning(m_listeObjets);
             }
             else
-                QMessageBox::critical(0,tr("Ajout impossible"),tr("Il est impossible d'ajouter l'objet car il est trop bas sur l'horizon. Minimum 10°"));
+                QMessageBox::critical(nullptr,tr("Ajout impossible"),tr("Il est impossible d'ajouter l'objet car il est trop bas sur l'horizon. Minimum 10°"));
         }
         else
-            QMessageBox::critical(0,tr("Ajout impossible"),tr("L'objet demandé est introuvable"));
+            QMessageBox::critical(nullptr,tr("Ajout impossible"),tr("L'objet demandé est introuvable"));
 
     }
     else
-        QMessageBox::critical(0,tr("Erreur d'ajout"),tr("L'index fourni pour l'ajout de l'objet est invalide."));
+        QMessageBox::critical(nullptr,tr("Erreur d'ajout"),tr("L'index fourni pour l'ajout de l'objet est invalide."));
 }
 void Soiree::ajouterObjet(int index, QString refPlanete, int duree)
 {
@@ -616,13 +616,13 @@ void Soiree::ajouterObjet(int index, QString refPlanete, int duree)
                 m_listeObjets = trierPlanning(m_listeObjets);
             }
             else
-                QMessageBox::critical(0,tr("Ajout impossible"),tr("Il est impossible d'ajouter l'objet car il est trop bas sur l'horizon."));
+                QMessageBox::critical(nullptr,tr("Ajout impossible"),tr("Il est impossible d'ajouter l'objet car il est trop bas sur l'horizon."));
         }
         else
-            QMessageBox::critical(0,tr("Ajout impossible"),tr("L'objet demandé est introuvable"));
+            QMessageBox::critical(nullptr,tr("Ajout impossible"),tr("L'objet demandé est introuvable"));
     }
     else
-        QMessageBox::critical(0,tr("Erreur d'ajout"),tr("L'index fourni pour l'ajout de l'objet est invalide."));
+        QMessageBox::critical(nullptr,tr("Erreur d'ajout"),tr("L'index fourni pour l'ajout de l'objet est invalide."));
 }
 void Soiree::ajouterObjet(ObjetObs *objet)
 {
@@ -648,19 +648,19 @@ void Soiree::ajouterObjet(ObjetObs *objet)
                 m_listeObjets = trierPlanning(m_listeObjets);
             }
             else
-                QMessageBox::critical(0,tr("Erreur"),tr("L'objet n'est pas assez haut au moment demandé pour pouvoir être ajouté dans la soirée."));
+                QMessageBox::critical(nullptr,tr("Erreur"),tr("L'objet n'est pas assez haut au moment demandé pour pouvoir être ajouté dans la soirée."));
         }
         else
-            QMessageBox::critical(0,tr("Erreur"),tr("L'objet n'est pas valide ou ne peut être placé ici"));
+            QMessageBox::critical(nullptr,tr("Erreur"),tr("L'objet n'est pas valide ou ne peut être placé ici"));
     }
     else
-        QMessageBox::critical(0,tr("Erreur"),tr("La date de l'objet ne correspond pas avec la date de la soirée."));
+        QMessageBox::critical(nullptr,tr("Erreur"),tr("La date de l'objet ne correspond pas avec la date de la soirée."));
 }
 
 QStandardItemModel* Soiree::toModele() const
 {
     QStandardItemModel *modele = new QStandardItemModel;
-    QStandardItem *reference(0), *reference2(0), *reference3(0), *reference4(0), *reference5(0), *reference6(0), *reference7(0), *reference8(0), *reference9(0);
+    QStandardItem *reference(nullptr), *reference2(nullptr), *reference3(nullptr), *reference4(nullptr), *reference5(nullptr), *reference6(nullptr), *reference7(nullptr), *reference8(nullptr), *reference9(nullptr);
     for(int i(0); i < m_listeObjets.count();i++)
     {
         reference = new QStandardItem(m_listeObjets.at(i)->nomComplet());
@@ -713,7 +713,7 @@ Soiree* Soiree::soaToSoiree(QString const& fileName)
 
         if(listInfosSoiree.count() != 9)
         {
-            QMessageBox::critical(0,tr("Fichier incorrect"),tr("Le fichier demandé est incorrect"));
+            QMessageBox::critical(nullptr,tr("Fichier incorrect"),tr("Le fichier demandé est incorrect"));
             return new Soiree;
         }
         else
@@ -730,10 +730,10 @@ Soiree* Soiree::soaToSoiree(QString const& fileName)
                 listInfosObjet = ligne.split("|");
                 if(listInfosObjet.count() != 3)
                 {
-                    QMessageBox::critical(0,tr("Fichier incorrect"),tr("Le fichier demandé est incorrect"));
+                    QMessageBox::critical(nullptr,tr("Fichier incorrect"),tr("Le fichier demandé est incorrect"));
                     return new Soiree;
                 }
-                if(listInfosObjet.at(0).left(1) != "P")
+                if(listInfosObjet.at(0).at(0) != 'P')
                 {
                     debut.setTime_t(listInfosObjet.at(1).toInt());
                     fin.setTime_t(listInfosObjet.at(2).toInt());
@@ -782,7 +782,7 @@ Soiree* Soiree::soaToSoiree(QString const& fileName)
     }
     else
     {
-        QMessageBox::critical(0,tr("Erreur d'ouverture"),tr("Le fichier demandé est impossible à ouvrir : ","Suivi du nom du fichier") + fileName);
+        QMessageBox::critical(nullptr,tr("Erreur d'ouverture"),tr("Le fichier demandé est impossible à ouvrir : ","Suivi du nom du fichier") + fileName);
         Soiree *soiree = new Soiree;
         return soiree;
     }
@@ -905,7 +905,7 @@ void Soiree::toXML() const
     }
     soiree.appendChild(listeObjet);
 
-    QString nomFichier = QFileDialog::getSaveFileName(0,tr("Sauver la soirée au format XML"),QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)+"/soiree.xml","Extensible Markup Language (*.xml)");
+    QString nomFichier = QFileDialog::getSaveFileName(nullptr,tr("Sauver la soirée au format XML"),QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)+"/soiree.xml","Extensible Markup Language (*.xml)");
     if(nomFichier != "")
     {
         QFile file(nomFichier);
@@ -1234,7 +1234,7 @@ bool Soiree::paintPdf(QPrinter *printer)
 }
 void Soiree::toPDF()
 {
-    QString fileName = QFileDialog::getSaveFileName(0,tr("Exporter la soirée en PDF"),QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)+"/soiree-pdf.pdf","*.pdf");
+    QString fileName = QFileDialog::getSaveFileName(nullptr,tr("Exporter la soirée en PDF"),QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)+"/soiree-pdf.pdf","*.pdf");
     if(!fileName.isEmpty())
     {
         QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -1253,7 +1253,7 @@ void Soiree::toPDF()
             if(paintPdf(&printer)) // ON DIT QUE TOUT S'EST BIEN PASSE
             {
                 QApplication::restoreOverrideCursor();
-                QMessageBox::information(0,tr("Enregistrement réussi"),tr("La soirée a bien été enregistrée au format PDF"));
+                QMessageBox::information(nullptr,tr("Enregistrement réussi"),tr("La soirée a bien été enregistrée au format PDF"));
             }
             else
                 QApplication::restoreOverrideCursor();
@@ -1261,7 +1261,7 @@ void Soiree::toPDF()
         else
         {
             QApplication::restoreOverrideCursor();
-            QMessageBox::critical(0,tr("Erreur d'ouverture"),tr("Erreur d'ouverture, le fichier est-il lisible ?"));
+            QMessageBox::critical(nullptr,tr("Erreur d'ouverture"),tr("Erreur d'ouverture, le fichier est-il lisible ?"));
         }
     }
 }
@@ -1297,12 +1297,12 @@ bool Soiree::enregistrerSoiree()
 {
     if(m_file == "") // si il n'y a pas de fichier raccordés à la soirée, alors on l'enregistre
     {
-        QString fileName = QFileDialog::getSaveFileName(0,tr("Enregistrer la soirée"),QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)+"/soiree.soa","Soirée d'observation astronomie (*.soa)");
+        QString fileName = QFileDialog::getSaveFileName(nullptr,tr("Enregistrer la soirée"),QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)+"/soiree.soa","Soirée d'observation astronomie (*.soa)");
         if(fileName != "")
         {
             if(!soireeToSoa(fileName))
             {
-                QMessageBox::critical(0,tr("Echec"),tr("Echec de l'enregistrement de la soirée."));
+                QMessageBox::critical(nullptr,tr("Echec"),tr("Echec de l'enregistrement de la soirée."));
                 return false;
             }
             else
@@ -1323,7 +1323,7 @@ bool Soiree::enregistrerSoiree()
 
         if(!soireeToSoa(m_file))
         {
-            QMessageBox::critical(0,tr("Echec"),tr("Echec de l'enregistrement de la soirée."));
+            QMessageBox::critical(nullptr,tr("Echec"),tr("Echec de l'enregistrement de la soirée."));
             return false;
         }
         else

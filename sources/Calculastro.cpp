@@ -298,7 +298,7 @@ QString Calculastro::monthNumToName(int i)
     }
     else
     {
-        QMessageBox::information(0,QObject::tr("Mois introuvable"),QObject::tr("Une erreur avec la reconnaissance du mois s'est produite."));
+        QMessageBox::information(nullptr,QObject::tr("Mois introuvable"),QObject::tr("Une erreur avec la reconnaissance du mois s'est produite."));
         return "Janvier";
     }
 }
@@ -519,14 +519,14 @@ QMap<char,double> Calculastro::getLBR(double j2000, QString planete)
     else if(planete == "terre") ext = "ear";
     else
     {
-        QMessageBox::critical(0,QObject::tr("Erreur"),QObject::tr("La planète demandée n'existe pas. Le programme va fermer."));
+        QMessageBox::critical(nullptr,QObject::tr("Erreur"),QObject::tr("La planète demandée n'existe pas. Le programme va fermer."));
         qApp->exit();
     }
 
     // Ouverture du fichier
     QFile fichier("VSOP87/VSOP87B."+ext);
     if(!fichier.open(QIODevice::ReadOnly | QIODevice::Text))
-        QMessageBox::critical(0,QObject::tr("Erreur d'ouverture","N'arrive pas à ouvrir un fichier"),"Le fichier VSOP87/VSOP87B."+ext+" est impossible à ouvrir. Réésayer.");
+        QMessageBox::critical(nullptr,QObject::tr("Erreur d'ouverture","N'arrive pas à ouvrir un fichier"),"Le fichier VSOP87/VSOP87B."+ext+" est impossible à ouvrir. Réésayer.");
     QTextStream flux(&fichier);
     QString ligne;
 
@@ -670,7 +670,7 @@ QString Calculastro::referencePlaneteToNom(QString ref, bool read)
     else
     {
         retour = "mercure";
-        QMessageBox::critical(0,QObject::tr("Problème de référence"),QObject::tr("La référence de la planète est inconnue. Contacter le developpeur."));
+        QMessageBox::critical(nullptr,QObject::tr("Problème de référence"),QObject::tr("La référence de la planète est inconnue. Contacter le developpeur."));
     }
     if(read)
         retour = retour.at(0).toUpper() + retour.right(retour.count()-1); // On met en majuscule la 1ere lettre

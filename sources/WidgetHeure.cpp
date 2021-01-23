@@ -10,6 +10,7 @@ WidgetHeure::WidgetHeure(QWidget *parent) :
     connect(&m_timer, &QTimer::timeout, this, &WidgetHeure::refresh);
     m_timer.start(10'000);
 }
+
 void WidgetHeure::refresh()
 {
     const QTime time = QTime::currentTime();

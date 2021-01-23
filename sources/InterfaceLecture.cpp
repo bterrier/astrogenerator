@@ -133,7 +133,7 @@ void InterfaceLecture::monterObjet()
     {
         if(m_vue->currentIndex().isValid())
         {
-            int reponse = QMessageBox::question(0, tr("Confirmer"), tr("Voulez-vous vraiment monter l'objet ?"), QMessageBox::Yes|QMessageBox::No);
+            int reponse = QMessageBox::question(nullptr, tr("Confirmer"), tr("Voulez-vous vraiment monter l'objet ?"), QMessageBox::Yes|QMessageBox::No);
 
             if(reponse == QMessageBox::Yes)
             {
@@ -160,7 +160,7 @@ void InterfaceLecture::descendreObjet()
     {
         if(m_vue->currentIndex().isValid())
         {
-            int reponse = QMessageBox::question(0, tr("Confirmer"), tr("Voulez-vous vraiment descendre l'objet ?"), QMessageBox ::Yes | QMessageBox::No);
+            int reponse = QMessageBox::question(nullptr, tr("Confirmer"), tr("Voulez-vous vraiment descendre l'objet ?"), QMessageBox ::Yes | QMessageBox::No);
 
             if(reponse == QMessageBox::Yes)
             {
@@ -186,7 +186,7 @@ void InterfaceLecture::supprimerObjet()
     {
         if(m_vue->currentIndex().isValid())
         {
-            int reponse = QMessageBox::question(0, tr("Confirmer"), tr("Voulez-vous vraiment supprimer l'objet ?"), QMessageBox ::Yes | QMessageBox::No);
+            int reponse = QMessageBox::question(nullptr, tr("Confirmer"), tr("Voulez-vous vraiment supprimer l'objet ?"), QMessageBox ::Yes | QMessageBox::No);
             if(reponse == QMessageBox::Yes)
             {
                 QString ref = m_modele->item(m_vue->currentIndex().row(),1)->text();
@@ -211,7 +211,7 @@ void InterfaceLecture::modifierObjet()
         if(m_vue->currentIndex().isValid())
         {
             bool* ok = new bool;
-            int reponse = QInputDialog::getInt(0,tr("Modifier la durée"),tr("Quelle est la nouvelle durée ? (min)"),5,DUREE_OBJET_MIN,DUREE_OBJET_MAX,1,ok);
+            int reponse = QInputDialog::getInt(nullptr,tr("Modifier la durée"),tr("Quelle est la nouvelle durée ? (min)"),5,DUREE_OBJET_MIN,DUREE_OBJET_MAX,1,ok);
             if(*ok == true)
             {
                 QString ref = m_modele->item(m_vue->currentIndex().row(),1)->text();
@@ -238,7 +238,7 @@ void InterfaceLecture::ajouterPlanete()
             bool ok = true;
             QStringList planetes;
             planetes << tr("Mercure") << tr("Vénus") << tr("Mars") << tr("Jupiter") << tr("Saturne") << tr("Uranus") << tr("Neptune");
-            QString reponse = QInputDialog::getItem(0,tr("Ajouter une planète"),tr("Choisisssez la planète à ajouter"),planetes,0,false,&ok);
+            QString reponse = QInputDialog::getItem(nullptr,tr("Ajouter une planète"),tr("Choisisssez la planète à ajouter"),planetes,0,false,&ok);
             if(ok)
             {
                 int index = planetes.indexOf(reponse);
@@ -268,10 +268,10 @@ void InterfaceLecture::ajouterObjet()
         if(m_vue->currentIndex().isValid())
         {
             bool ok = true;
-            QString reponse = QInputDialog::getText(0,tr("Ajouter un objet"),tr("Quel objet ajouter ? (NGC****, M** ou P*)"),QLineEdit::Normal,"",&ok);
+            QString reponse = QInputDialog::getText(nullptr,tr("Ajouter un objet"),tr("Quel objet ajouter ? (NGC****, M** ou P*)"),QLineEdit::Normal,"",&ok);
             if(ok == true)
             {
-                if(reponse.left(1)=="P")
+                if(reponse.at(0) == 'P')
                 {
                     QString ref = m_modele->item(m_vue->currentIndex().row(),1)->text();
 
@@ -360,21 +360,21 @@ void InterfaceLecture::diaporama()
         bool ok;
         QStringList reponses;
         reponses << tr("1 - Lire la soirée maintenant","Important : laisser le 1 comme premier caractère") << tr("2 - Démarrer la soirée à l'heure prévue","Important : laisser le 2 comme premier caractère") << tr("3 - Ne rien faire","Important : laisser le 3 comme premier caractère");
-        QString reponse = QInputDialog::getItem(0,tr("Choisissez le mode"),tr("Comment voulez-vous démarrer la soirée ?"),reponses,0,false,&ok);
+        QString reponse = QInputDialog::getItem(nullptr,tr("Choisissez le mode"),tr("Comment voulez-vous démarrer la soirée ?"),reponses,0,false,&ok);
         if(ok)
         {
-            if(reponse.left(1) == "1") // Si on demarre tout de suite
+            if(reponse.at(0) == '1') // Si on demarre tout de suite
             {
                 emit afficher(tr("Initialisation du diaporama en cours..."));
                 Diaporama *diapo = new Diaporama(m_soiree);
                 diapo->demarrer();
             }
-            else if(reponse.left(1) == "2") // Si on décide de démarrer la soirée à l'heure prévue
+            else if(reponse.at(0) == '2') // Si on décide de démarrer la soirée à l'heure prévue
             {
-                if(m_soiree->getDebut().toLocalTime().date() == QDate::currentDate() && m_soiree->getDebut().toTime_t() > QDateTime::currentDateTime().toTime_t()) // Si on est sur une soirée qui commence aujourd'hui et après maintenant
+                if(m_soiree->getDebut().toLocalTime().date() == QDate::currentDate() && m_soiree->getDebut().toTime_t() > QDateTime::currentDateTimeUtc().toTime_t()) // Si on est sur une soirée qui commence aujourd'hui et après maintenant
                 {
                     int secondesRestantes(0);
-                    secondesRestantes = m_soiree->getDebut().toLocalTime().toTime_t() - QDateTime::currentDateTime().toTime_t();
+                    secondesRestantes = m_soiree->getDebut().toLocalTime().toTime_t() - QDateTime::currentDateTimeUtc().toTime_t();
                     Diaporama *diapo = new Diaporama(m_soiree);
 
                     QTimer::singleShot(secondesRestantes*1000, diapo, &Diaporama::demarrer);

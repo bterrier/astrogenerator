@@ -52,7 +52,7 @@ void ObjetCPObs::initialiser(QString ref)
     }
     else
     {
-        QMessageBox::critical(0,tr("Objet introuvable"),tr("L'objet demandé est introuvable : ", "Suivi de l'objet introuvable") + ref);
+        QMessageBox::critical(nullptr,tr("Objet introuvable"),tr("L'objet demandé est introuvable : ", "Suivi de l'objet introuvable") + ref);
         m_valid = false;
         m_nom = "";
         m_type = "";

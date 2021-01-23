@@ -234,9 +234,9 @@ void InterfaceCreation::raffraichirListeObjet()
 {
     if(m_active)
     {
-        QSettings *user = new QSettings(NOM_EQUIPE,NOM_PROGRAMME);
+        QSettings user(NOM_EQUIPE,NOM_PROGRAMME);
         m_modele = new QStandardItemModel;
-        QStandardItem *reference(0), *reference2(0), *reference3(0), *reference4(0), *reference5(0), *reference6(0), *reference9(0);
+        QStandardItem *reference(nullptr), *reference2(nullptr), *reference3(nullptr), *reference4(nullptr), *reference5(nullptr), *reference6(nullptr), *reference9(nullptr);
         for(int i(0);i < m_soiree->getPlanning().count(); i++)
         {
             reference = new QStandardItem(m_soiree->getPlanning().at(i)->nomComplet());
@@ -256,7 +256,7 @@ void InterfaceCreation::raffraichirListeObjet()
             m_modele->setItem(i,6,reference9);
 
             if(i+1 == m_soiree->getPlanning().count()) // On met le champ de date à jour avec l'objet le plus loin dans la soirée
-                champDate->setDateTime(m_soiree->getPlanning().at(i)->getFin().addSecs(user->value("generateur/pauseMin",TEMPS_ESPACE).toInt()*60));
+                champDate->setDateTime(m_soiree->getPlanning().at(i)->getFin().addSecs(user.value("generateur/pauseMin",TEMPS_ESPACE).toInt()*60));
         }
         m_modele->setHeaderData(0, Qt::Horizontal, tr("Nom"));
         m_modele->setHeaderData(1, Qt::Horizontal, tr("Référence"));
@@ -277,7 +277,7 @@ void InterfaceCreation::enleveObjet()
     {
         if(m_vue->currentIndex().isValid())
         {
-            int reponse = QMessageBox::question(0, tr("Confirmer"), tr("Voulez-vous vraiment enlever l'objet de la soirée ?"), QMessageBox ::Yes | QMessageBox::No);
+            int reponse = QMessageBox::question(nullptr, tr("Confirmer"), tr("Voulez-vous vraiment enlever l'objet de la soirée ?"), QMessageBox ::Yes | QMessageBox::No);
             if(reponse == QMessageBox::Yes)
             {
                 int index = m_vue->currentIndex().row();
@@ -307,7 +307,7 @@ void InterfaceCreation::monterObjet()
     {
         if(m_vue->currentIndex().isValid())
         {
-            int reponse = QMessageBox::question(0, tr("Confirmer"), tr("Voulez-vous vraiment monter l'objet ?"), QMessageBox::Yes|QMessageBox::No);
+            int reponse = QMessageBox::question(nullptr, tr("Confirmer"), tr("Voulez-vous vraiment monter l'objet ?"), QMessageBox::Yes|QMessageBox::No);
             if(reponse == QMessageBox::Yes)
             {
                 int ligne = m_vue->currentIndex().row();
@@ -331,7 +331,7 @@ void InterfaceCreation::descendreObjet()
     {
         if(m_vue->currentIndex().isValid())
         {
-            int reponse = QMessageBox::question(0, tr("Confirmer"), tr("Voulez-vous vraiment descendre l'objet ?"), QMessageBox::Yes|QMessageBox::No);
+            int reponse = QMessageBox::question(nullptr, tr("Confirmer"), tr("Voulez-vous vraiment descendre l'objet ?"), QMessageBox::Yes|QMessageBox::No);
             if(reponse == QMessageBox::Yes)
             {
                 int ligne = m_vue->currentIndex().row();
@@ -443,7 +443,7 @@ void InterfaceCreation::modifierObjet()
         if(m_vue->currentIndex().isValid())
         {
             bool* ok = new bool;
-            int reponse = QInputDialog::getInt(0,tr("Modifier la durée"),tr("Quelle est la nouvelle durée ?"),5,DUREE_OBJET_MIN,DUREE_OBJET_MAX,1,ok);
+            int reponse = QInputDialog::getInt(nullptr,tr("Modifier la durée"),tr("Quelle est la nouvelle durée ?"),5,DUREE_OBJET_MIN,DUREE_OBJET_MAX,1,ok);
             if(*ok == true)
             {
                 int ligne = m_vue->currentIndex().row();

@@ -289,7 +289,7 @@ double Carteciel::dmsToDegree(QString dms)
     else if(list.at(0).count() == 3)
         d = list.at(0).midRef(1,1).toDouble();
     else
-        QMessageBox::critical(0,"Erreur dans dmsToDegree()","Une erreur s'est produite ...");
+        QMessageBox::critical(nullptr,"Erreur dans dmsToDegree()","Une erreur s'est produite ...");
 
     // On s'occupe des minutes
     m = list.at(1).leftRef(list.at(1).count()-1).toDouble();
@@ -342,7 +342,7 @@ void Carteciel::afficherQDialog()
 }
 void Carteciel::sauverImage()
 {
-    QString fichier = QFileDialog::getSaveFileName(0, "Enregistrer la carte", QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)+"/carte.png", "Images (*.png *.gif *.jpg *.jpeg)");
+    QString fichier = QFileDialog::getSaveFileName(nullptr, "Enregistrer la carte", QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)+"/carte.png", "Images (*.png *.gif *.jpg *.jpeg)");
 
     if(fichier != "")
     {
@@ -358,9 +358,9 @@ void Carteciel::sauverImage()
         painter->end();
 
         if(pixmap->save(fichier))
-            QMessageBox::information(0,"Enregistrement réussi","La carte du ciel a bien été enregistrée");
+            QMessageBox::information(nullptr,"Enregistrement réussi","La carte du ciel a bien été enregistrée");
         else
-            QMessageBox::critical(0,"Erreur d'enregistrement","L'enregistrement de l'image a échoué");
+            QMessageBox::critical(nullptr,"Erreur d'enregistrement","L'enregistrement de l'image a échoué");
     }
 }
 void Carteciel::setCouleurConstellation()

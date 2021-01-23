@@ -130,7 +130,7 @@ FenCreerSoiree::FenCreerSoiree(FenPrincipal *parent) : QDialog()
     QVBoxLayout *layoutConstV4 = new QVBoxLayout;
     QVBoxLayout *layoutConstV5 = new QVBoxLayout;
     layoutConstV5->setAlignment(Qt::AlignTop);
-    QCheckBox *checkBox(0);
+    QCheckBox *checkBox(nullptr);
     QSqlQuery *requeteConst = new QSqlQuery("SELECT constellation FROM ngcic GROUP BY constellation");
     QStringList listeConstellation;
     while(requeteConst->next())

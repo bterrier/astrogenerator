@@ -457,7 +457,7 @@ bool FenPrincipal::fermerOnglet(Interface *interface)
 void FenPrincipal::ouvrirSoa(QString fileSoa)
 {
     if(fileSoa == "")
-        fileSoa = QFileDialog::getOpenFileName(0,tr("Ouvrir fichier de soirée"), QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),"Soirée Observation Astronomie (*.soa)");
+        fileSoa = QFileDialog::getOpenFileName(nullptr,tr("Ouvrir fichier de soirée"), QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),"Soirée Observation Astronomie (*.soa)");
 
     if(fileSoa != "")
     {

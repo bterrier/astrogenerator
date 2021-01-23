@@ -23,14 +23,14 @@ void ObjetObs::setDebut(QDateTime const& debut)
     if(debut.isValid() && !debut.isNull())
         m_debutObs = debut;
     else
-        QMessageBox::critical(0,tr("Date invalide"),tr("La date donnée est invalide dans ObjetObs.","ObjetObs est le nom de la classe, laisser ce nom"));
+        QMessageBox::critical(nullptr,tr("Date invalide"),tr("La date donnée est invalide dans ObjetObs.","ObjetObs est le nom de la classe, laisser ce nom"));
 }
 void ObjetObs::setFin(QDateTime const& fin)
 {
     if(fin.isValid() && !fin.isNull())
         m_finObs = fin;
     else
-        QMessageBox::critical(0,tr("Date invalide"),tr("La date donnée est invalide dans ObjetObs."));
+        QMessageBox::critical(nullptr,tr("Date invalide"),tr("La date donnée est invalide dans ObjetObs."));
 }
 bool ObjetObs::estEgal(const ObjetObs &objet) const
 {

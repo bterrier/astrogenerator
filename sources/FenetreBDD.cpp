@@ -295,7 +295,7 @@ void FenetreBDD::afficherObjet(QModelIndex index) const
         fenetreInfos.exec();
     }
     else
-        QMessageBox::critical(0,tr("Erreur"),tr("Une erreur s'est produite : l'objet est introuvable"));
+        QMessageBox::critical(nullptr,tr("Erreur"),tr("Une erreur s'est produite : l'objet est introuvable"));
 }
 void FenetreBDD::ouvrirCDS()
 {
