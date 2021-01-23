@@ -7,8 +7,10 @@
 #include "Carteciel.h"
 #include "ObjetCP.h"
 #include "ObjetPlaneteObs.h"
+
 #include <cmath>
 
+#include <QDesktopServices>
 #include <QMessageBox>
 
 #include <QtXml>
@@ -1239,20 +1241,19 @@ void Soiree::toPDF()
         printer.setOutputFormat(QPrinter::PdfFormat);
         printer.setOutputFileName(fileName);
         printer.setPageMargins(QMarginsF(mG,mT,mD,mB), QPageLayout::Millimeter);
+
+        QApplication::restoreOverrideCursor();
+
         if(printer.isValid())
         {
-
             if(paintPdf(&printer)) // ON DIT QUE TOUT S'EST BIEN PASSE
             {
-                QApplication::restoreOverrideCursor();
                 QMessageBox::information(nullptr,tr("Enregistrement réussi"),tr("La soirée a bien été enregistrée au format PDF"));
+                QDesktopServices::openUrl(QUrl::fromLocalFile(fileName));
             }
-            else
-                QApplication::restoreOverrideCursor();
         }
         else
         {
-            QApplication::restoreOverrideCursor();
             QMessageBox::critical(nullptr,tr("Erreur d'ouverture"),tr("Erreur d'ouverture, le fichier est-il lisible ?"));
         }
     }
