@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en_US">
+<TS version="2.1" language="fr_FR">
 <context>
     <name>ActionsFenetre</name>
     <message>
@@ -795,11 +795,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="FenPrincipal.cpp" line="608"/>
-        <source>Erreur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="FenPrincipal.cpp" line="50"/>
         <source>Toolbar</source>
         <comment>Peu important, nom d&apos;un widget</comment>
@@ -956,6 +951,11 @@
     <message>
         <location filename="FenPrincipal.cpp" line="584"/>
         <source>&lt;strong&gt;Sources&amp;nbsp;: &lt;/strong&gt;&lt;a href=&apos;%1&apos;&gt;%1&lt;/a&gt;&lt;br /&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="FenPrincipal.cpp" line="608"/>
+        <source>Erreur</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2559,18 +2559,19 @@
         <location filename="main.cpp" line="24"/>
         <location filename="main.cpp" line="36"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <location filename="main.cpp" line="25"/>
         <source>Missing database: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Base de donnée manquante : %1</translation>
     </message>
     <message>
         <location filename="main.cpp" line="37"/>
         <source>Failed to open database: %1
 Error: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;ouvrir la base de donnée : %1
+Erreur : %2</translation>
     </message>
     <message>
         <location filename="main.cpp" line="53"/>

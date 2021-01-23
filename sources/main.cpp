@@ -15,7 +15,6 @@
 #include "Objet.h"
 #include "Soiree.h"
 
-
 static void initDatabase()
 {
     const QString dbPath = QCoreApplication::applicationDirPath() % "/dbastrogenerator";
@@ -40,6 +39,17 @@ static void initDatabase()
     }
 }
 
+static void initTranslation()
+{
+    QTranslator *translator = new QTranslator(qApp);
+    translator->load(QLocale(), "qt", "_", QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    qApp->installTranslator(translator);
+
+    translator = new QTranslator(qApp);
+    translator->load(QLocale(), "astroGenerator", "_", ":/i18n");
+    qApp->installTranslator(translator);
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::setApplicationName(NOM_PROGRAMME);
@@ -54,12 +64,8 @@ int main(int argc, char *argv[])
         app.quit();
     }
 
-    QString locale = QLocale::system().name().section('_', 0, 0);
-    QTranslator translator;
-    if(!translator.load(QString("qt_")+locale, "translations"))
-        QMessageBox::critical(nullptr,QObject::tr("Traduction"),QObject::tr("L'application ne fonctionnera pas correctement car le fichier : translations/qt_")+locale+QObject::tr(".qm est introuvable."));
-    app.installTranslator(&translator);
-
+    
+    initTranslation();
     initDatabase();
 
     FenPrincipal fenetre;

@@ -5,7 +5,11 @@
 TEMPLATE = app
 TARGET = astroGenerator
 
-CONFIG += lrelease c++17
+CONFIG += \
+          lrelease \
+          embed_translations \
+          c++17
+
 QT += core gui widgets sql xml printsupport
 
 INCLUDEPATH += .
@@ -67,19 +71,18 @@ SOURCES += sources/ActionsFenetre.cpp \
            sources/Onglet.cpp \
            sources/Soiree.cpp \
            sources/WidgetHeure.cpp
-TRANSLATIONS += sources/astroGenerator_en.ts
+
+TRANSLATIONS += \
+    sources/astroGenerator_en.ts \
+    sources/astroGenerator_fr.ts
 
 RC_ICONS = logoastrogenerator.ico
 VERSION = 3.0.0
 DEFINES += VERSION=$${VERSION} \
            VERSION_STRING=\\\"$${VERSION}\\\"
 
-INSTALLS += ag_txt ag_translations
+INSTALLS += ag_txt
 
-ag_translations.path = $$OUT_PWD/translations
-ag_translations.files += \
-     $$PWD/sources/astroGenerator_en.qm
-     
 ag_txt.path = $$OUT_PWD
 ag_txt.files += \
     $$PWD/*.txt \
