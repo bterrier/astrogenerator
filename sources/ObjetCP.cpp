@@ -8,18 +8,18 @@ ObjetCP::ObjetCP()
 {
     m_valid = false;
 }
-ObjetCP::ObjetCP(QString ref) : Objet()
+ObjetCP::ObjetCP(QString ref) :
+    Objet()
 {
-    QString sql("WHERE reference = '"+ref+"'");
+    QString sql("WHERE reference = '" + ref + "'");
 
-    if(ref.at(0) == 'M')
-        sql = "WHERE messier = '"+ref+"'";
+    if (ref.at(0) == 'M')
+        sql = "WHERE messier = '" + ref + "'";
 
-    QSqlQuery count("SELECT COUNT(*) as nbr FROM ngcic "+sql);
+    QSqlQuery count("SELECT COUNT(*) as nbr FROM ngcic " + sql);
     count.next();
-    if(count.value(0).toInt() > 0)
-    {
-        QSqlQuery requete("SELECT nom, reference, type, ascdr, declinaison, constellation, magnitude, messier, interet, taille, difficulte FROM ngcic "+sql);
+    if (count.value(0).toInt() > 0) {
+        QSqlQuery requete("SELECT nom, reference, type, ascdr, declinaison, constellation, magnitude, messier, interet, taille, difficulte FROM ngcic " + sql);
         requete.next();
 
         m_valid = true;
@@ -33,20 +33,18 @@ ObjetCP::ObjetCP(QString ref) : Objet()
         m_difficulte = requete.value(10).toString(); // difficulte
         m_taille = requete.value(9).toDouble(); // taille
 
-        if(requete.value(1).toString().left(3) == "NGC")
-            m_ngc = requete.value(1).toString().rightRef(requete.value(1).toString().count()-3).toInt();
+        if (requete.value(1).toString().left(3) == "NGC")
+            m_ngc = requete.value(1).toString().rightRef(requete.value(1).toString().count() - 3).toInt();
         else
             m_ngc = 0;
-        if(requete.value(7).toString() != "0")
-            m_messier = requete.value(7).toString().rightRef(requete.value(7).toString().count()-1).toInt(); // messier
+        if (requete.value(7).toString() != "0")
+            m_messier = requete.value(7).toString().rightRef(requete.value(7).toString().count() - 1).toInt(); // messier
         else
             m_messier = 0;
 
         m_refBdd = ref;
-    }
-    else
-    {
-        QMessageBox::critical(nullptr,tr("Objet introuvable"),tr("L'objet demandé est introuvable : ","Suivi de la référence") + ref);
+    } else {
+        QMessageBox::critical(nullptr, tr("Objet introuvable"), tr("L'objet demandé est introuvable : ", "Suivi de la référence") + ref);
         m_valid = false;
         m_nom = "";
         m_type = "";
@@ -75,16 +73,14 @@ QString ObjetCP::nomComplet(bool) const
 {
     QString retour;
 
-    if(m_nom != "")
-    {
+    if (m_nom != "") {
         retour = m_nom + " (";
-        if(m_messier > 0)
-            retour += "M"+QString::number(m_messier)+", "+m_refBdd+")";
+        if (m_messier > 0)
+            retour += "M" + QString::number(m_messier) + ", " + m_refBdd + ")";
         else
-            retour += m_refBdd+")";
-    }
-    else if(m_messier > 0)
-        retour = "M"+QString::number(m_messier)+" ("+m_refBdd+")";
+            retour += m_refBdd + ")";
+    } else if (m_messier > 0)
+        retour = "M" + QString::number(m_messier) + " (" + m_refBdd + ")";
     else
         retour = m_refBdd;
 

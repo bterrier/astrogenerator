@@ -1,18 +1,19 @@
 #include "ObjetPlaneteObs.h"
-#include "ObjetObs.h"
 #include "Calculastro.h"
+#include "ObjetObs.h"
 
-ObjetPlaneteObs::ObjetPlaneteObs(QString nomPlanete, QDateTime debut, QDateTime fin) : ObjetObs(debut,fin)
+ObjetPlaneteObs::ObjetPlaneteObs(QString nomPlanete, QDateTime debut, QDateTime fin) :
+    ObjetObs(debut, fin)
 {
-    m_nom = Calculastro::referencePlaneteToNom(nomPlanete,true);
+    m_nom = Calculastro::referencePlaneteToNom(nomPlanete, true);
     QVector<double> infosPlanete;
-    infosPlanete = Calculastro::coordonneesPlanetes(debut.date(),debut.time(),Calculastro::referencePlaneteToNom(nomPlanete));
+    infosPlanete = Calculastro::coordonneesPlanetes(debut.date(), debut.time(), Calculastro::referencePlaneteToNom(nomPlanete));
     m_ref = nomPlanete;
     m_type = "Planète";
     m_ascdr = infosPlanete.at(0);
     m_dec = infosPlanete.at(1);
     m_constellation = "-";
-    m_magnitude = Calculastro::round(infosPlanete.at(2),1);
+    m_magnitude = Calculastro::round(infosPlanete.at(2), 1);
     m_interet = "4";
     m_difficulte = "1";
     m_taille = 0;

@@ -8,6 +8,7 @@ AllowShortFunctionsOnASingleLine: Inline
 AllowShortLambdasOnASingleLine: Inline
 ColumnLimit: 0
 BreakBeforeBinaryOperators: All
+BreakConstructorInitializers: AfterColon
 IncludeBlocks: Preserve
 PointerAlignment: Right
 SpaceBeforeAssignmentOperators: true

@@ -1,31 +1,32 @@
 #include "ObjetCPObs.h"
-#include "ObjetObs.h"
 #include "ObjetCP.h"
+#include "ObjetObs.h"
 
 #include <QMessageBox>
 #include <QSqlQuery>
 #include <QVariant>
 
-ObjetCPObs::ObjetCPObs(ObjetCP *objet, QDateTime debut, QDateTime fin) : ObjetObs(debut,fin)
+ObjetCPObs::ObjetCPObs(ObjetCP *objet, QDateTime debut, QDateTime fin) :
+    ObjetObs(debut, fin)
 {
     initialiser(objet->ref());
 }
-ObjetCPObs::ObjetCPObs(QString ref, QDateTime debut, QDateTime fin) : ObjetObs(debut,fin)
+ObjetCPObs::ObjetCPObs(QString ref, QDateTime debut, QDateTime fin) :
+    ObjetObs(debut, fin)
 {
     initialiser(ref);
 }
 void ObjetCPObs::initialiser(QString ref)
 {
-    QString sql("WHERE reference = '"+ref+"'");
+    QString sql("WHERE reference = '" + ref + "'");
 
-    if(ref.at(0) == 'M')
-        sql = "WHERE messier = '"+ref+"'";
+    if (ref.at(0) == 'M')
+        sql = "WHERE messier = '" + ref + "'";
 
-    QSqlQuery count("SELECT COUNT(*) as nbr FROM ngcic "+sql);
+    QSqlQuery count("SELECT COUNT(*) as nbr FROM ngcic " + sql);
     count.next();
-    if(count.value(0).toInt() > 0)
-    {
-        QSqlQuery requete("SELECT nom, reference, type, ascdr, declinaison, constellation, magnitude, messier, interet, taille, difficulte FROM ngcic "+sql);
+    if (count.value(0).toInt() > 0) {
+        QSqlQuery requete("SELECT nom, reference, type, ascdr, declinaison, constellation, magnitude, messier, interet, taille, difficulte FROM ngcic " + sql);
         requete.next();
 
         m_valid = true;
@@ -39,20 +40,18 @@ void ObjetCPObs::initialiser(QString ref)
         m_difficulte = requete.value(10).toString(); // difficulte
         m_taille = requete.value(9).toDouble(); // taille
 
-        if(requete.value(1).toString().left(3) == "NGC")
-            m_ngc = requete.value(1).toString().rightRef(requete.value(1).toString().count()-3).toInt();
+        if (requete.value(1).toString().left(3) == "NGC")
+            m_ngc = requete.value(1).toString().rightRef(requete.value(1).toString().count() - 3).toInt();
         else
             m_ngc = 0;
-        if(requete.value(7).toString() != "0")
-            m_messier = requete.value(7).toString().rightRef(requete.value(7).toString().count()-1).toInt(); // messier
+        if (requete.value(7).toString() != "0")
+            m_messier = requete.value(7).toString().rightRef(requete.value(7).toString().count() - 1).toInt(); // messier
         else
             m_messier = 0;
 
         m_ref = ref;
-    }
-    else
-    {
-        QMessageBox::critical(nullptr,tr("Objet introuvable"),tr("L'objet demandé est introuvable : ", "Suivi de l'objet introuvable") + ref);
+    } else {
+        QMessageBox::critical(nullptr, tr("Objet introuvable"), tr("L'objet demandé est introuvable : ", "Suivi de l'objet introuvable") + ref);
         m_valid = false;
         m_nom = "";
         m_type = "";
@@ -77,24 +76,19 @@ QString ObjetCPObs::nomComplet(bool abrege) const
 {
     QString retour;
 
-    if(!abrege)
-    {
-        if(m_nom != "")
-        {
+    if (!abrege) {
+        if (m_nom != "") {
             retour = m_nom + " (";
-            if(m_messier > 0)
-                retour += "M"+QString::number(m_messier)+", "+m_ref+")";
+            if (m_messier > 0)
+                retour += "M" + QString::number(m_messier) + ", " + m_ref + ")";
             else
-                retour += m_ref+")";
-        }
-        else if(m_messier > 0)
-            retour = "M"+QString::number(m_messier)+" ("+m_ref+")";
+                retour += m_ref + ")";
+        } else if (m_messier > 0)
+            retour = "M" + QString::number(m_messier) + " (" + m_ref + ")";
         else
             retour = m_ref;
-    }
-    else
-    {
-        if(m_messier > 0)
+    } else {
+        if (m_messier > 0)
             retour = "M" + QString::number(m_messier);
         else
             retour = m_ref;

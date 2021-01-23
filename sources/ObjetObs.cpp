@@ -2,10 +2,10 @@
 
 #include <QMessageBox>
 
-ObjetObs::ObjetObs(QDateTime debut, QDateTime fin) : Objet()
+ObjetObs::ObjetObs(QDateTime debut, QDateTime fin) :
+    Objet()
 {
-    if(debut.isValid() && !debut.isNull() && fin.isValid() && !fin.isNull())
-    {
+    if (debut.isValid() && !debut.isNull() && fin.isValid() && !fin.isNull()) {
         m_debutObs = debut;
         m_finObs = fin;
     }
@@ -18,37 +18,36 @@ QDateTime ObjetObs::getFin() const
 {
     return m_finObs;
 }
-void ObjetObs::setDebut(QDateTime const& debut)
+void ObjetObs::setDebut(QDateTime const &debut)
 {
-    if(debut.isValid() && !debut.isNull())
+    if (debut.isValid() && !debut.isNull())
         m_debutObs = debut;
     else
-        QMessageBox::critical(nullptr,tr("Date invalide"),tr("La date donnée est invalide dans ObjetObs.","ObjetObs est le nom de la classe, laisser ce nom"));
+        QMessageBox::critical(nullptr, tr("Date invalide"), tr("La date donnée est invalide dans ObjetObs.", "ObjetObs est le nom de la classe, laisser ce nom"));
 }
-void ObjetObs::setFin(QDateTime const& fin)
+void ObjetObs::setFin(QDateTime const &fin)
 {
-    if(fin.isValid() && !fin.isNull())
+    if (fin.isValid() && !fin.isNull())
         m_finObs = fin;
     else
-        QMessageBox::critical(nullptr,tr("Date invalide"),tr("La date donnée est invalide dans ObjetObs."));
+        QMessageBox::critical(nullptr, tr("Date invalide"), tr("La date donnée est invalide dans ObjetObs."));
 }
 bool ObjetObs::estEgal(const ObjetObs &objet) const
 {
-    if(objet.getDebut() == m_debutObs
-            && objet.getFin() == m_finObs
-            && objet.ref() == m_ref) {
+    if (objet.getDebut() == m_debutObs
+        && objet.getFin() == m_finObs
+        && objet.ref() == m_ref) {
         return true;
-    }
-    else
+    } else
         return false;
 }
-bool operator==(ObjetObs const& a, ObjetObs const& b)
+bool operator==(ObjetObs const &a, ObjetObs const &b)
 {
     return a.estEgal(b);
 }
-bool operator!=(ObjetObs const& a, ObjetObs const& b)
+bool operator!=(ObjetObs const &a, ObjetObs const &b)
 {
-    if(a.estEgal(b))
+    if (a.estEgal(b))
         return false;
     else
         return true;

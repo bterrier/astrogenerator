@@ -30,7 +30,7 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
     QStringList listeMenu;
     listeMenu << tr("Localisation") << tr("Télescope") << tr("Oculaires") << tr("Générateur") << tr("Carte du ciel");
     m_menu->addItems(listeMenu);
-    layoutPrincipal->addWidget(m_menu,0,Qt::AlignLeft);
+    layoutPrincipal->addWidget(m_menu, 0, Qt::AlignLeft);
 
     connect(m_menu, &QListWidget::currentRowChanged, this, &FenPreferences::changerOnglet);
 
@@ -41,18 +41,17 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
     QGroupBox *groupBoxLocalisation = new QGroupBox(tr("Localisation"));
     QGroupBox *groupBoxCoordonnees = new QGroupBox(tr("Coordonnées"));
 
-    QFormLayout *layoutFormLocalisation  = new QFormLayout;
-    QFormLayout *layoutFormCoordonnees  = new QFormLayout;
+    QFormLayout *layoutFormLocalisation = new QFormLayout;
+    QFormLayout *layoutFormCoordonnees = new QFormLayout;
 
     m_listePays = new QComboBox;
 
     QSqlQuery *requete = new QSqlQuery;
     requete->exec("SELECT pays FROM villes_monde GROUP BY pays ORDER BY pays");
-    while(requete->next())
+    while (requete->next())
         m_listePays->addItem(requete->value(0).toString());
 
-    layoutFormLocalisation->addRow("&Pays",m_listePays);
-
+    layoutFormLocalisation->addRow("&Pays", m_listePays);
 
     m_listeDept = new QSpinBox;
     m_listeDept->setMinimum(1);
@@ -60,11 +59,11 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
 
     m_listeVilles = new QComboBox;
 
-    layoutFormLocalisation->addRow(tr("&Département"),m_listeDept);
-    layoutFormLocalisation->addRow(tr("&Ville"),m_listeVilles);
+    layoutFormLocalisation->addRow(tr("&Département"), m_listeDept);
+    layoutFormLocalisation->addRow(tr("&Ville"), m_listeVilles);
 
     connect(m_listePays, qOverload<const QString &>(&QComboBox::currentIndexChanged), this, &FenPreferences::changerVilles);
-    connect(m_listeDept, qOverload<int>(&QSpinBox::valueChanged), this, [this](){ changerVilles(); });
+    connect(m_listeDept, qOverload<int>(&QSpinBox::valueChanged), this, [this]() { changerVilles(); });
     connect(m_listeVilles, qOverload<const QString &>(&QComboBox::currentIndexChanged), this, &FenPreferences::changerCoordonnees);
 
     groupBoxLocalisation->setLayout(layoutFormLocalisation);
@@ -78,8 +77,8 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
     m_longitude->setMaximum(180);
     m_longitude->setMinimum(-180);
 
-    layoutFormCoordonnees->addRow(tr("L&atitude"),m_latitude);
-    layoutFormCoordonnees->addRow(tr("L&ongitude"),m_longitude);
+    layoutFormCoordonnees->addRow(tr("L&atitude"), m_latitude);
+    layoutFormCoordonnees->addRow(tr("L&ongitude"), m_longitude);
 
     groupBoxCoordonnees->setLayout(layoutFormCoordonnees);
 
@@ -94,7 +93,6 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
 
     layoutPrincipal->addWidget(page_localisation);
 
-
     // PAGE TELESCOPE
     QGroupBox *groupBoxTelescopeListe = new QGroupBox(tr("Liste des télescopes"));
     QGroupBox *groupBoxTelescopeAdd = new QGroupBox(tr("Ajouter des télescopes"));
@@ -104,7 +102,7 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
 
     m_listeTelescope = new QComboBox;
     requete->exec("SELECT nom FROM telescope ORDER BY nom");
-    while(requete->next())
+    while (requete->next())
         m_listeTelescope->addItem(requete->value(0).toString());
 
     m_diametre = new QSpinBox;
@@ -123,17 +121,17 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
     m_marque = new QComboBox;
     QStringList listeMarque;
     requete->exec("SELECT marque FROM telescope GROUP BY marque ORDER BY marque");
-    while(requete->next())
+    while (requete->next())
         listeMarque << requete->value(0).toString();
     m_marque->addItems(listeMarque);
 
-    layoutFormTelescopeListe->addRow(tr("Liste des &télescopes"),m_listeTelescope);
+    layoutFormTelescopeListe->addRow(tr("Liste des &télescopes"), m_listeTelescope);
     groupBoxTelescopeListe->setLayout(layoutFormTelescopeListe);
 
-    layoutFormTelescopeAdd->addRow(tr("Nom du télescope (unique)"),m_nomTelescope);
-    layoutFormTelescopeAdd->addRow(tr("Diamètre (mm)"),m_diametre);
-    layoutFormTelescopeAdd->addRow(tr("Focale (mm)"),m_focale);
-    layoutFormTelescopeAdd->addRow(tr("Marque"),m_marque);
+    layoutFormTelescopeAdd->addRow(tr("Nom du télescope (unique)"), m_nomTelescope);
+    layoutFormTelescopeAdd->addRow(tr("Diamètre (mm)"), m_diametre);
+    layoutFormTelescopeAdd->addRow(tr("Focale (mm)"), m_focale);
+    layoutFormTelescopeAdd->addRow(tr("Marque"), m_marque);
     layoutFormTelescopeAdd->addWidget(m_boutonAjouterTelescope);
     groupBoxTelescopeAdd->setLayout(layoutFormTelescopeAdd);
 
@@ -148,7 +146,6 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
     m_listePages.push_back(page_telescope);
     layoutPrincipal->addWidget(page_telescope);
 
-
     // PAGE OCULAIRES
     QGroupBox *groupBoxOculaireListe = new QGroupBox(tr("Liste des oculaires"));
     QHBoxLayout *layoutOculaires = new QHBoxLayout;
@@ -156,18 +153,16 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
     QVBoxLayout *layoutV2 = new QVBoxLayout;
     QVBoxLayout *layoutV3 = new QVBoxLayout;
 
-    for(int i(0); i < 24; i++)
-    {
-        QCheckBox *b = new QCheckBox(QString::number(i+6)+tr(" mm","Symbole des millimètres (laisser l'espace avant)"));
+    for (int i(0); i < 24; i++) {
+        QCheckBox *b = new QCheckBox(QString::number(i + 6) + tr(" mm", "Symbole des millimètres (laisser l'espace avant)"));
         m_listeOculaires.push_back(b);
 
-        if(i < 8)
+        if (i < 8)
             layoutV1->addWidget(b);
-        else if(i < 16)
+        else if (i < 16)
             layoutV2->addWidget(b);
         else
             layoutV3->addWidget(b);
-
     }
     layoutOculaires->addLayout(layoutV1);
     layoutOculaires->addLayout(layoutV2);
@@ -177,7 +172,7 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
     groupBoxOculaireListe->setLayout(layoutOculaires);
     layoutObligatoire->addWidget(groupBoxOculaireListe);
 
-    QWidget* page_oculaires = new QWidget;
+    QWidget *page_oculaires = new QWidget;
     page_oculaires->setFixedWidth(350);
     page_oculaires->setLayout(layoutObligatoire);
     page_oculaires->setVisible(false);
@@ -296,17 +291,17 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
     layoutNoteGalaxie->addWidget(m_labelNoteGalaxie);
     layoutNoteGalaxie->setAlignment(Qt::AlignLeft);
 
-    layoutGenerateurParam->addRow(tr("Hauteur minimum (en °)"),layoutHauteurMinimum);
-    layoutGenerateurParam->addRow(tr("Pause minimum entre 2 objets (min)"),layoutPauseMinimum);
+    layoutGenerateurParam->addRow(tr("Hauteur minimum (en °)"), layoutHauteurMinimum);
+    layoutGenerateurParam->addRow(tr("Pause minimum entre 2 objets (min)"), layoutPauseMinimum);
 
-    layoutGenerateurPriorite->addRow(tr("Amas Globulaire"),layoutNoteAmasGlobulaire);
-    layoutGenerateurPriorite->addRow(tr("Amas+Nébuleuse"),layoutNoteAmasNebuleuse);
-    layoutGenerateurPriorite->addRow(tr("Amas ouvert"),layoutNoteAmasOuvert);
-    layoutGenerateurPriorite->addRow(tr("Nébuleuse planétaire"),layoutNoteNebuleusePlanetaire);
-    layoutGenerateurPriorite->addRow(tr("Nébuleuse en réflection"),layoutNoteNebuleuseReflection);
-    layoutGenerateurPriorite->addRow(tr("Etoile double"),layoutNoteEtoileDouble);
-    layoutGenerateurPriorite->addRow(tr("Etoile triple"),layoutNoteEtoileTriple);
-    layoutGenerateurPriorite->addRow(tr("Galaxie"),layoutNoteGalaxie);
+    layoutGenerateurPriorite->addRow(tr("Amas Globulaire"), layoutNoteAmasGlobulaire);
+    layoutGenerateurPriorite->addRow(tr("Amas+Nébuleuse"), layoutNoteAmasNebuleuse);
+    layoutGenerateurPriorite->addRow(tr("Amas ouvert"), layoutNoteAmasOuvert);
+    layoutGenerateurPriorite->addRow(tr("Nébuleuse planétaire"), layoutNoteNebuleusePlanetaire);
+    layoutGenerateurPriorite->addRow(tr("Nébuleuse en réflection"), layoutNoteNebuleuseReflection);
+    layoutGenerateurPriorite->addRow(tr("Etoile double"), layoutNoteEtoileDouble);
+    layoutGenerateurPriorite->addRow(tr("Etoile triple"), layoutNoteEtoileTriple);
+    layoutGenerateurPriorite->addRow(tr("Galaxie"), layoutNoteGalaxie);
 
     groupBoxGenerateurParam->setLayout(layoutGenerateurParam);
     groupBoxGenerateurPriorite->setLayout(layoutGenerateurPriorite);
@@ -361,11 +356,11 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
     layoutCouleurEtoile->addWidget(m_boutonCouleurEtoile);
     layoutCouleurEtoile->addWidget(m_labelCouleurEtoile);
 
-    layoutFormCouleurCarte->addRow(tr("Couleur du fond"),layoutCouleurFond);
-    layoutFormCouleurCarte->addRow(tr("Couleur des légendes"),layoutCouleurLegende);
-    layoutFormCouleurCarte->addRow(tr("Couleur des objets"),layoutCouleurObjet);
-    layoutFormCouleurCarte->addRow(tr("Couleur des constellations"),layoutCouleurConstellation);
-    layoutFormCouleurCarte->addRow(tr("Couleur des étoiles"),layoutCouleurEtoile);
+    layoutFormCouleurCarte->addRow(tr("Couleur du fond"), layoutCouleurFond);
+    layoutFormCouleurCarte->addRow(tr("Couleur des légendes"), layoutCouleurLegende);
+    layoutFormCouleurCarte->addRow(tr("Couleur des objets"), layoutCouleurObjet);
+    layoutFormCouleurCarte->addRow(tr("Couleur des constellations"), layoutCouleurConstellation);
+    layoutFormCouleurCarte->addRow(tr("Couleur des étoiles"), layoutCouleurEtoile);
 
     groupBoxCouleurCarte->setLayout(layoutFormCouleurCarte);
     QVBoxLayout *layoutOk = new QVBoxLayout;
@@ -400,55 +395,48 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
 }
 void FenPreferences::changerOnglet(int onglet)
 {
-    for(int i(0); i < m_listePages.count();i++)
-    {
+    for (int i(0); i < m_listePages.count(); i++) {
         m_listePages.at(i)->setVisible(false);
-        m_menu->item(i)->setBackground(QColor(255,255,255));
+        m_menu->item(i)->setBackground(QColor(255, 255, 255));
     }
     m_listePages.at(onglet)->setVisible(true);
-    m_menu->item(onglet)->setBackground(QColor(220,220,220));
+    m_menu->item(onglet)->setBackground(QColor(220, 220, 220));
 }
 void FenPreferences::changerVilles(QString pays)
 {
-    if(pays != "France")
-    {
+    if (pays != "France") {
         QSqlQuery *requeteVilles = new QSqlQuery;
         requeteVilles->prepare("SELECT nom FROM villes_monde WHERE pays = :pays ORDER BY nom");
-        requeteVilles->bindValue(":pays",pays);
+        requeteVilles->bindValue(":pays", pays);
         requeteVilles->exec();
         m_listeVilles->clear();
-        while(requeteVilles->next())
-        {
+        while (requeteVilles->next()) {
             m_listeVilles->addItem(requeteVilles->value(0).toString());
         }
         m_listeDept->setDisabled(true);
-    }
-    else
-    {
+    } else {
         m_listeDept->setDisabled(false);
-        QSqlQuery *requeteVilles = new QSqlQuery("SELECT nom FROM villes_france WHERE departement = "+QString::number(m_listeDept->value())+" ORDER BY nom");
+        QSqlQuery *requeteVilles = new QSqlQuery("SELECT nom FROM villes_france WHERE departement = " + QString::number(m_listeDept->value()) + " ORDER BY nom");
         m_listeVilles->clear();
-        while(requeteVilles->next())
-        {
+        while (requeteVilles->next()) {
             m_listeVilles->addItem(requeteVilles->value(0).toString());
         }
     }
 }
+
 void FenPreferences::changerCoordonnees(QString nom)
 {
-    if(m_listePays->currentText() == "France")
-    {
-        QSqlQuery *requeteCoordonnees = new QSqlQuery("SELECT latitude, longitude FROM villes_france WHERE nom = '"+nom+"' AND departement = "+QString::number(m_listeDept->value()));
+    if (m_listePays->currentText() == "France") {
+        //! \todo Fix warning when nom === ""
+        QSqlQuery *requeteCoordonnees = new QSqlQuery("SELECT latitude, longitude FROM villes_france WHERE nom = '" + nom + "' AND departement = " + QString::number(m_listeDept->value()));
         requeteCoordonnees->next();
         m_latitude->setValue(requeteCoordonnees->value(0).toDouble());
         m_longitude->setValue(requeteCoordonnees->value(1).toDouble());
-    }
-    else
-    {
+    } else {
         QSqlQuery *requeteCoordonnees = new QSqlQuery;
         requeteCoordonnees->prepare("SELECT latitude, longitude FROM villes_monde WHERE nom = :nom AND pays = :pays");
-        requeteCoordonnees->bindValue(":nom",nom);
-        requeteCoordonnees->bindValue(":pays",m_listePays->currentText());
+        requeteCoordonnees->bindValue(":nom", nom);
+        requeteCoordonnees->bindValue(":pays", m_listePays->currentText());
         requeteCoordonnees->exec();
         requeteCoordonnees->next();
 
@@ -459,113 +447,107 @@ void FenPreferences::changerCoordonnees(QString nom)
 void FenPreferences::ajouterTelescope()
 {
     QSqlQuery requete("SELECT COUNT(*) as nbr FROM telescope WHERE nom = :nom");
-    requete.bindValue(":nom",m_nomTelescope->text());
+    requete.bindValue(":nom", m_nomTelescope->text());
     requete.exec();
     requete.next();
 
-    if(requete.value(0).toInt() == 0)
-    {
+    if (requete.value(0).toInt() == 0) {
         requete.prepare("INSERT INTO telescope (nom,diametre,focale,marque) VALUES(:nom,:diametre,:focale,:marque)");
-        requete.bindValue(":nom",m_nomTelescope->text());
-        requete.bindValue(":diametre",m_diametre->value());
-        requete.bindValue(":focale",m_focale->value());
-        requete.bindValue(":marque",m_marque->currentText());
-        if(requete.exec())
-        {
+        requete.bindValue(":nom", m_nomTelescope->text());
+        requete.bindValue(":diametre", m_diametre->value());
+        requete.bindValue(":focale", m_focale->value());
+        requete.bindValue(":marque", m_marque->currentText());
+        if (requete.exec()) {
             requete.exec("SELECT nom FROM telescope ORDER BY nom");
             m_listeTelescope->clear();
-            while(requete.next())
-            {
+            while (requete.next()) {
                 m_listeTelescope->addItem(requete.value(0).toString());
             }
             m_listeTelescope->setCurrentIndex(m_listeTelescope->findText(m_nomTelescope->text()));
             emit nouveauTelescope();
-            QMessageBox::information(this,tr("Télescope ajouté"),tr("Le télescope a été ajouté avec succès à la base de données."));
+            QMessageBox::information(this, tr("Télescope ajouté"), tr("Le télescope a été ajouté avec succès à la base de données."));
         }
-    }
-    else
-        QMessageBox::critical(this,tr("Ajout impossible"),tr("Impossible d'ajouter le télescope car il est déjà dans la base de données."));
+    } else
+        QMessageBox::critical(this, tr("Ajout impossible"), tr("Impossible d'ajouter le télescope car il est déjà dans la base de données."));
 }
 void FenPreferences::changerCouleurConstellation()
 {
     QColor color = QColorDialog::getColor(QColor(m_labelCouleurConstellation->text()));
     m_labelCouleurConstellation->setText(color.name().toUpper());
-    m_labelCouleurConstellation->setStyleSheet("color:"+color.name());
+    m_labelCouleurConstellation->setStyleSheet("color:" + color.name());
 }
 void FenPreferences::changerCouleurEtoile()
 {
     QColor color = QColorDialog::getColor(QColor(m_labelCouleurEtoile->text()));
     m_labelCouleurEtoile->setText(color.name().toUpper());
-    m_labelCouleurEtoile->setStyleSheet("color:"+color.name());
+    m_labelCouleurEtoile->setStyleSheet("color:" + color.name());
 }
 void FenPreferences::changerCouleurFond()
 {
     QColor color = QColorDialog::getColor(QColor(m_labelCouleurFond->text()));
     m_labelCouleurFond->setText(color.name().toUpper());
-    m_labelCouleurFond->setStyleSheet("color:"+color.name());
+    m_labelCouleurFond->setStyleSheet("color:" + color.name());
 }
 void FenPreferences::changerCouleurLegende()
 {
     QColor color = QColorDialog::getColor(QColor(m_labelCouleurLegende->text()));
     m_labelCouleurLegende->setText(color.name().toUpper());
-    m_labelCouleurLegende->setStyleSheet("color:"+color.name());
+    m_labelCouleurLegende->setStyleSheet("color:" + color.name());
 }
 void FenPreferences::changerCouleurObjet()
 {
     QColor color = QColorDialog::getColor(QColor(m_labelCouleurObjet->text()));
     m_labelCouleurObjet->setText(color.name().toUpper());
-    m_labelCouleurObjet->setStyleSheet("color:"+color.name());
+    m_labelCouleurObjet->setStyleSheet("color:" + color.name());
 }
 void FenPreferences::valider()
 {
     QSettings *s = m_parent->getUser();
 
-    s->setValue("localisation/pays",m_listePays->currentText());
-    s->setValue("localisation/ville",m_listeVilles->currentText());
-    s->setValue("localisation/latitude",m_latitude->value());
-    s->setValue("localisation/longitude",m_longitude->value());
+    s->setValue("localisation/pays", m_listePays->currentText());
+    s->setValue("localisation/ville", m_listeVilles->currentText());
+    s->setValue("localisation/latitude", m_latitude->value());
+    s->setValue("localisation/longitude", m_longitude->value());
 
-    emit villeChange(m_listePays->currentText(),m_listeVilles->currentText(),m_listeDept->value());
+    emit villeChange(m_listePays->currentText(), m_listeVilles->currentText(), m_listeDept->value());
 
     QSqlQuery requete("SELECT diametre, focale, nom, marque FROM telescope WHERE nom = :nom");
-    requete.bindValue(":nom",m_listeTelescope->currentText());
+    requete.bindValue(":nom", m_listeTelescope->currentText());
     requete.exec();
     requete.next();
-    s->setValue("telescope/diametre",requete.value(0).toInt());
-    s->setValue("telescope/focale",requete.value(1).toInt());
-    s->setValue("telescope/marque",requete.value(3).toString());
-    s->setValue("telescope/nom",requete.value(2).toString());
+    s->setValue("telescope/diametre", requete.value(0).toInt());
+    s->setValue("telescope/focale", requete.value(1).toInt());
+    s->setValue("telescope/marque", requete.value(3).toString());
+    s->setValue("telescope/nom", requete.value(2).toString());
 
     emit telescopeChange(requete.value(2).toString());
 
-    QString taille,oculaires;
-    for(int i(0);i<m_listeOculaires.count();i++)
-    {
-        if(m_listeOculaires.at(i)->isChecked())
-        {
-            taille = m_listeOculaires.at(i)->text().left(m_listeOculaires.at(i)->text().count()-3);
-            oculaires += "|"+taille;
+    QString taille, oculaires;
+    for (int i(0); i < m_listeOculaires.count(); i++) {
+        if (m_listeOculaires.at(i)->isChecked()) {
+            taille = m_listeOculaires.at(i)->text().left(m_listeOculaires.at(i)->text().count() - 3);
+            oculaires += "|" + taille;
         }
     }
-    oculaires = oculaires.right(oculaires.count()-1);
-    s->setValue("oculaires",oculaires);
+    oculaires = oculaires.right(oculaires.count() - 1);
+    s->setValue("oculaires", oculaires);
 
-    s->setValue("couleurCarte/fond",m_labelCouleurFond->text());
-    s->setValue("couleurCarte/etoile",m_labelCouleurEtoile->text());
-    s->setValue("couleurCarte/constellation",m_labelCouleurConstellation->text());
-    s->setValue("couleurCarte/objet",m_labelCouleurObjet->text());
-    s->setValue("couleurCarte/legende",m_labelCouleurLegende->text());
+    s->setValue("couleurCarte/fond", m_labelCouleurFond->text());
+    s->setValue("couleurCarte/etoile", m_labelCouleurEtoile->text());
+    s->setValue("couleurCarte/constellation", m_labelCouleurConstellation->text());
+    s->setValue("couleurCarte/objet", m_labelCouleurObjet->text());
+    s->setValue("couleurCarte/legende", m_labelCouleurLegende->text());
 
-    s->setValue("generateur/hauteurMin",m_hauteurMinimum->value());
-    s->setValue("generateur/pauseMin",m_pauseMinimum->value());
-    s->setValue("generateur/amasGlobulaire",m_noteAmasGlobulaire->value());
-    s->setValue("generateur/amasNebuleuse",m_noteAmasNebuleuse->value());
-    s->setValue("generateur/amasOuvert",m_noteAmasOuvert->value());
-    s->setValue("generateur/nebuleuseReflection",m_noteNebuleuseReflection->value());
-    s->setValue("generateur/nebuleusePlanetaire",m_noteNebuleusePlanetaire->value());
-    s->setValue("generateur/etoileTriple",m_noteEtoileTriple->value());
-    s->setValue("generateur/etoileDouble",m_noteEtoileDouble->value());
-    s->setValue("generateur/galaxie",m_noteGalaxie->value());
+    s->setValue("generateur/hauteurMin", m_hauteurMinimum->value());
+    s->setValue("generateur/pauseMin", m_pauseMinimum->value());
+    s->setValue("generateur/amasGlobulaire", m_noteAmasGlobulaire->value());
+    s->setValue("generateur/amasNebuleuse", m_noteAmasNebuleuse->value());
+    s->setValue("generateur/amasOuvert", m_noteAmasOuvert->value());
+    s->setValue("generateur/nebuleuseReflection", m_noteNebuleuseReflection->value());
+    s->setValue("generateur/nebuleusePlanetaire", m_noteNebuleusePlanetaire->value());
+    s->setValue("generateur/etoileTriple", m_noteEtoileTriple->value());
+    s->setValue("generateur/etoileDouble", m_noteEtoileDouble->value());
+    s->setValue("generateur/galaxie", m_noteGalaxie->value());
 
     this->close();
 }
@@ -578,29 +560,26 @@ void FenPreferences::initialiserValeur()
     QSqlQuery *requete = new QSqlQuery;
 
     // on met soit le pays de l'utilisateur, soit le défaut
-    m_listePays->setCurrentIndex(m_listePays->findText(m_parent->getUser()->value("localisation/pays",PAYS_DEFAUT).toString()));
+    m_listePays->setCurrentIndex(m_listePays->findText(m_parent->getUser()->value("localisation/pays", PAYS_DEFAUT).toString()));
 
-    if(m_listePays->currentText() != "France")
-    {
+    if (m_listePays->currentText() != "France") {
         // On ajoute tous les items qui correspondent à ce pays
         m_listeDept->setDisabled(true);
         requete->prepare("SELECT nom FROM villes_monde WHERE pays = :pays ORDER BY nom");
-        requete->bindValue(":pays",m_listePays->currentText());
+        requete->bindValue(":pays", m_listePays->currentText());
         requete->exec();
         QStringList listeVilles;
-        while(requete->next())
+        while (requete->next())
             listeVilles << requete->value(0).toString();
         m_listeVilles->addItems(listeVilles);
 
         // On met la ville par défaut
-        m_listeVilles->setCurrentIndex(m_listeVilles->findText(m_parent->getUser()->value("localisation/ville",VILLE_DEFAUT).toString()));
-    }
-    else
-    {
+        m_listeVilles->setCurrentIndex(m_listeVilles->findText(m_parent->getUser()->value("localisation/ville", VILLE_DEFAUT).toString()));
+    } else {
         // On trouve le département de la ville
         int dept;
         requete->prepare("SELECT departement FROM villes_france WHERE nom = :nom");
-        requete->bindValue(":nom",m_parent->getUser()->value("localisation/ville",VILLE_DEFAUT).toString());
+        requete->bindValue(":nom", m_parent->getUser()->value("localisation/ville", VILLE_DEFAUT).toString());
         requete->exec();
         requete->next();
         dept = requete->value(0).toInt();
@@ -608,31 +587,27 @@ void FenPreferences::initialiserValeur()
 
         // On ajoute toutes les villes de ce département
         requete->prepare("SELECT nom FROM villes_france WHERE departement = :dept ORDER BY nom");
-        requete->bindValue(":dept",dept);
+        requete->bindValue(":dept", dept);
         requete->exec();
-        while(requete->next())
+        while (requete->next())
             m_listeVilles->addItem(requete->value(0).toString());
 
         // On met la ville par défaut
-        m_listeVilles->setCurrentIndex(m_listeVilles->findText(m_parent->getUser()->value("localisation/ville",VILLE_DEFAUT).toString()));
-
+        m_listeVilles->setCurrentIndex(m_listeVilles->findText(m_parent->getUser()->value("localisation/ville", VILLE_DEFAUT).toString()));
     }
-    if(m_listePays->currentText() == "France")
-    {
+    if (m_listePays->currentText() == "France") {
         requete->prepare("SELECT latitude, longitude FROM villes_france WHERE departement = :dept AND nom = :nom");
-        requete->bindValue(":dept",m_listeDept->value());
-        requete->bindValue(":nom",m_listeVilles->currentText());
+        requete->bindValue(":dept", m_listeDept->value());
+        requete->bindValue(":nom", m_listeVilles->currentText());
         requete->exec();
         requete->next();
 
         m_latitude->setValue(requete->value(0).toDouble());
         m_longitude->setValue(requete->value(1).toDouble());
-    }
-    else
-    {
+    } else {
         requete->prepare("SELECT latitude, longitude FROM villes_monde WHERE pays = :pays AND nom = :nom");
-        requete->bindValue(":pays",m_listePays->currentText());
-        requete->bindValue(":nom",m_listeVilles->currentText());
+        requete->bindValue(":pays", m_listePays->currentText());
+        requete->bindValue(":nom", m_listeVilles->currentText());
         requete->exec();
         requete->next();
         m_latitude->setValue(requete->value(0).toDouble());
@@ -640,69 +615,66 @@ void FenPreferences::initialiserValeur()
     }
 
     // PAGE TELESCOPE
-    m_listeTelescope->setCurrentIndex(m_listeTelescope->findText(m_parent->getUser()->value("telescope/nom",TELESCOPE_DEFAUT).toString()));
+    m_listeTelescope->setCurrentIndex(m_listeTelescope->findText(m_parent->getUser()->value("telescope/nom", TELESCOPE_DEFAUT).toString()));
 
     // PAGE OCULAIRES
-    QStringList oculaires = m_parent->getUser()->value("oculaires",OCULAIREES_DEFAUT).toString().split("|");
-    for(int i(0); i < m_listeOculaires.count();i++)
-    {
-        if(oculaires.indexOf(QString::number(i+6)) != -1)
+    QStringList oculaires = m_parent->getUser()->value("oculaires", OCULAIREES_DEFAUT).toString().split("|");
+    for (int i(0); i < m_listeOculaires.count(); i++) {
+        if (oculaires.indexOf(QString::number(i + 6)) != -1)
             m_listeOculaires.at(i)->setChecked(true);
         else
             m_listeOculaires.at(i)->setChecked(false);
     }
 
     // PAGE GENERATEUR
-    m_labelHauteurMinimum->setText(m_parent->getUser()->value("generateur/hauteurMin",HAUTEUR_MIN_OBJET).toString());
-    m_hauteurMinimum->setValue(m_parent->getUser()->value("generateur/hauteurMin",HAUTEUR_MIN_OBJET).toInt());
+    m_labelHauteurMinimum->setText(m_parent->getUser()->value("generateur/hauteurMin", HAUTEUR_MIN_OBJET).toString());
+    m_hauteurMinimum->setValue(m_parent->getUser()->value("generateur/hauteurMin", HAUTEUR_MIN_OBJET).toInt());
 
-    m_labelPauseMinimum->setText(m_parent->getUser()->value("generateur/pauseMin",TEMPS_ESPACE).toString());
-    m_pauseMinimum->setValue(m_parent->getUser()->value("generateur/pauseMin",TEMPS_ESPACE).toInt());
+    m_labelPauseMinimum->setText(m_parent->getUser()->value("generateur/pauseMin", TEMPS_ESPACE).toString());
+    m_pauseMinimum->setValue(m_parent->getUser()->value("generateur/pauseMin", TEMPS_ESPACE).toInt());
 
-    m_labelNoteAmasGlobulaire->setText(m_parent->getUser()->value("generateur/amasGlobulaire",NOTE_AMAS_GLOBULAIRE).toString());
-    m_noteAmasGlobulaire->setValue(m_parent->getUser()->value("generateur/amasGlobulaire",NOTE_AMAS_GLOBULAIRE).toInt());
+    m_labelNoteAmasGlobulaire->setText(m_parent->getUser()->value("generateur/amasGlobulaire", NOTE_AMAS_GLOBULAIRE).toString());
+    m_noteAmasGlobulaire->setValue(m_parent->getUser()->value("generateur/amasGlobulaire", NOTE_AMAS_GLOBULAIRE).toInt());
 
-    m_labelNoteAmasNebuleuse->setText(m_parent->getUser()->value("generateur/amasNebuleuse",NOTE_AMAS_NEBULEUSE).toString());
-    m_noteAmasNebuleuse->setValue(m_parent->getUser()->value("generateur/amasNebuleuse",NOTE_AMAS_NEBULEUSE).toInt());
+    m_labelNoteAmasNebuleuse->setText(m_parent->getUser()->value("generateur/amasNebuleuse", NOTE_AMAS_NEBULEUSE).toString());
+    m_noteAmasNebuleuse->setValue(m_parent->getUser()->value("generateur/amasNebuleuse", NOTE_AMAS_NEBULEUSE).toInt());
 
-    m_labelNoteNebuleusePlanetaire->setText(m_parent->getUser()->value("generateur/nebuleusePlanetaire",NOTE_NEBULEUSE_PLANETAIRE).toString());
-    m_noteNebuleusePlanetaire->setValue(m_parent->getUser()->value("generateur/nebuleusePlanetaire",NOTE_NEBULEUSE_PLANETAIRE).toInt());
+    m_labelNoteNebuleusePlanetaire->setText(m_parent->getUser()->value("generateur/nebuleusePlanetaire", NOTE_NEBULEUSE_PLANETAIRE).toString());
+    m_noteNebuleusePlanetaire->setValue(m_parent->getUser()->value("generateur/nebuleusePlanetaire", NOTE_NEBULEUSE_PLANETAIRE).toInt());
 
-    m_labelNoteNebuleuseReflection->setText(m_parent->getUser()->value("generateur/nebuleuseReflection",NOTE_NEBULEUSE_REFLECTION).toString());
-    m_noteNebuleuseReflection->setValue(m_parent->getUser()->value("generateur/nebuleuseReflection",NOTE_NEBULEUSE_REFLECTION).toInt());
+    m_labelNoteNebuleuseReflection->setText(m_parent->getUser()->value("generateur/nebuleuseReflection", NOTE_NEBULEUSE_REFLECTION).toString());
+    m_noteNebuleuseReflection->setValue(m_parent->getUser()->value("generateur/nebuleuseReflection", NOTE_NEBULEUSE_REFLECTION).toInt());
 
-    m_labelNoteEtoileDouble->setText(m_parent->getUser()->value("generateur/etoileDouble",NOTE_ETOILE_DOUBLE).toString());
-    m_noteEtoileDouble->setValue(m_parent->getUser()->value("generateur/etoileDouble",NOTE_ETOILE_DOUBLE).toInt());
+    m_labelNoteEtoileDouble->setText(m_parent->getUser()->value("generateur/etoileDouble", NOTE_ETOILE_DOUBLE).toString());
+    m_noteEtoileDouble->setValue(m_parent->getUser()->value("generateur/etoileDouble", NOTE_ETOILE_DOUBLE).toInt());
 
-    m_labelNoteEtoileTriple->setText(m_parent->getUser()->value("generateur/etoileTriple",NOTE_ETOILE_TRIPLE).toString());
-    m_noteEtoileTriple->setValue(m_parent->getUser()->value("generateur/etoileTriple",NOTE_ETOILE_TRIPLE).toInt());
+    m_labelNoteEtoileTriple->setText(m_parent->getUser()->value("generateur/etoileTriple", NOTE_ETOILE_TRIPLE).toString());
+    m_noteEtoileTriple->setValue(m_parent->getUser()->value("generateur/etoileTriple", NOTE_ETOILE_TRIPLE).toInt());
 
-    m_labelNoteGalaxie->setText(m_parent->getUser()->value("generateur/galaxie",NOTE_GALAXIE).toString());
-    m_noteGalaxie->setValue(m_parent->getUser()->value("generateur/galaxie",NOTE_GALAXIE).toInt());
+    m_labelNoteGalaxie->setText(m_parent->getUser()->value("generateur/galaxie", NOTE_GALAXIE).toString());
+    m_noteGalaxie->setValue(m_parent->getUser()->value("generateur/galaxie", NOTE_GALAXIE).toInt());
 
-    m_labelNoteAmasOuvert->setText(m_parent->getUser()->value("generateur/amasOuvert",NOTE_AMAS_OUVERT).toString());
-    m_noteAmasOuvert->setValue(m_parent->getUser()->value("generateur/amasOuvert",NOTE_AMAS_OUVERT).toInt());
-
+    m_labelNoteAmasOuvert->setText(m_parent->getUser()->value("generateur/amasOuvert", NOTE_AMAS_OUVERT).toString());
+    m_noteAmasOuvert->setValue(m_parent->getUser()->value("generateur/amasOuvert", NOTE_AMAS_OUVERT).toInt());
 
     // PAGE CARTE CIEL
     QString cFond, cLegende, cObjet, cEtoile, cConstellation;
-    cFond = m_parent->getUser()->value("couleurCarte/fond",COULEUR_FOND).toString();
-    cLegende = m_parent->getUser()->value("couleurCarte/legende",COULEUR_LEGENDE).toString();
-    cObjet = m_parent->getUser()->value("couleurCarte/objet",COULEUR_OBJET).toString();
-    cConstellation = m_parent->getUser()->value("couleurCarte/constellation",COULEUR_CONSTELLATION).toString();
-    cEtoile = m_parent->getUser()->value("couleurCarte/etoile",COULEUR_ETOILE).toString();
+    cFond = m_parent->getUser()->value("couleurCarte/fond", COULEUR_FOND).toString();
+    cLegende = m_parent->getUser()->value("couleurCarte/legende", COULEUR_LEGENDE).toString();
+    cObjet = m_parent->getUser()->value("couleurCarte/objet", COULEUR_OBJET).toString();
+    cConstellation = m_parent->getUser()->value("couleurCarte/constellation", COULEUR_CONSTELLATION).toString();
+    cEtoile = m_parent->getUser()->value("couleurCarte/etoile", COULEUR_ETOILE).toString();
 
     m_labelCouleurFond->setText(cFond.toUpper());
-    m_labelCouleurFond->setStyleSheet("color:"+cFond);
+    m_labelCouleurFond->setStyleSheet("color:" + cFond);
     m_labelCouleurLegende->setText(cLegende.toUpper());
-    m_labelCouleurLegende->setStyleSheet("color:"+cLegende);
+    m_labelCouleurLegende->setStyleSheet("color:" + cLegende);
     m_labelCouleurObjet->setText(cObjet.toUpper());
-    m_labelCouleurObjet->setStyleSheet("color:"+cObjet);
+    m_labelCouleurObjet->setStyleSheet("color:" + cObjet);
     m_labelCouleurEtoile->setText(cEtoile.toUpper());
-    m_labelCouleurEtoile->setStyleSheet("color:"+cEtoile);
+    m_labelCouleurEtoile->setStyleSheet("color:" + cEtoile);
     m_labelCouleurConstellation->setText(cConstellation.toUpper());
-    m_labelCouleurConstellation->setStyleSheet("color:"+cConstellation);
-
+    m_labelCouleurConstellation->setStyleSheet("color:" + cConstellation);
 }
 void FenPreferences::fermer()
 {
@@ -715,31 +687,27 @@ void FenPreferences::reinitialiser()
     QSqlQuery requete;
     m_listeVilles->clear();
     m_listePays->setCurrentIndex(m_listePays->findText(PAYS_DEFAUT));
-    if(PAYS_DEFAUT != QStringLiteral("France"))
-    {
+    if (PAYS_DEFAUT != QStringLiteral("France")) {
         m_listeDept->setDisabled(true);
         requete.prepare("SELECT nom FROM villes_monde WHERE pays = :pays ORDER BY nom");
-        requete.bindValue(":pays",PAYS_DEFAUT);
+        requete.bindValue(":pays", PAYS_DEFAUT);
         requete.exec();
-        while(requete.next())
-        {
+        while (requete.next()) {
             m_listeVilles->addItem(requete.value(0).toString());
         }
         m_listeVilles->setCurrentIndex(m_listeVilles->findText(VILLE_DEFAUT));
 
         requete.prepare("SELECT latitude, longitude FROM villes_monde WHERE pays = :pays AND nom = :nom");
-        requete.bindValue(":pays",PAYS_DEFAUT);
-        requete.bindValue(":nom",VILLE_DEFAUT);
+        requete.bindValue(":pays", PAYS_DEFAUT);
+        requete.bindValue(":nom", VILLE_DEFAUT);
         requete.exec();
         requete.next();
         m_latitude->setValue(requete.value(0).toDouble());
         m_longitude->setValue(requete.value(1).toDouble());
-    }
-    else
-    {
+    } else {
         m_listeDept->setDisabled(false);
         requete.prepare("SELECT departement, latitude, longitude FROM villes_france WHERE nom = :nom");
-        requete.bindValue(":nom",VILLE_DEFAUT);
+        requete.bindValue(":nom", VILLE_DEFAUT);
         requete.exec();
         requete.next();
         int dept = requete.value(0).toInt();
@@ -747,10 +715,9 @@ void FenPreferences::reinitialiser()
         double longitude = requete.value(2).toDouble();
 
         requete.prepare("SELECT nom FROM villes_france WHERE departement = :dept ORDER BY nom");
-        requete.bindValue(":dept",dept);
+        requete.bindValue(":dept", dept);
         requete.exec();
-        while(requete.next())
-        {
+        while (requete.next()) {
             m_listeVilles->addItem(requete.value(0).toString());
         }
         m_listeVilles->setCurrentIndex(m_listeVilles->findText(VILLE_DEFAUT));
@@ -764,9 +731,8 @@ void FenPreferences::reinitialiser()
     // PAGE OCULAIRES
     QString oculairesParse(OCULAIREES_DEFAUT);
     QStringList oculaires = oculairesParse.split("|");
-    for(int i(0); i < m_listeOculaires.count();i++)
-    {
-        if(oculaires.indexOf(QString::number(i+6)) != -1)
+    for (int i(0); i < m_listeOculaires.count(); i++) {
+        if (oculaires.indexOf(QString::number(i + 6)) != -1)
             m_listeOculaires.at(i)->setChecked(true);
         else
             m_listeOculaires.at(i)->setChecked(false);
@@ -812,21 +778,20 @@ void FenPreferences::reinitialiser()
     cEtoile = COULEUR_ETOILE;
 
     m_labelCouleurFond->setText(cFond.toUpper());
-    m_labelCouleurFond->setStyleSheet("color:"+cFond);
+    m_labelCouleurFond->setStyleSheet("color:" + cFond);
     m_labelCouleurLegende->setText(cLegende.toUpper());
-    m_labelCouleurLegende->setStyleSheet("color:"+cLegende);
+    m_labelCouleurLegende->setStyleSheet("color:" + cLegende);
     m_labelCouleurObjet->setText(cObjet.toUpper());
-    m_labelCouleurObjet->setStyleSheet("color:"+cObjet);
+    m_labelCouleurObjet->setStyleSheet("color:" + cObjet);
     m_labelCouleurEtoile->setText(cEtoile.toUpper());
-    m_labelCouleurEtoile->setStyleSheet("color:"+cEtoile);
+    m_labelCouleurEtoile->setStyleSheet("color:" + cEtoile);
     m_labelCouleurConstellation->setText(cConstellation.toUpper());
-    m_labelCouleurConstellation->setStyleSheet("color:"+cConstellation);
+    m_labelCouleurConstellation->setStyleSheet("color:" + cConstellation);
 }
 void FenPreferences::ouvrir(int page)
 {
-    if(page > 0 && page <= m_listePages.size())
-    {
-        changerOnglet(page-1);
+    if (page > 0 && page <= m_listePages.size()) {
+        changerOnglet(page - 1);
         exec();
     }
 }

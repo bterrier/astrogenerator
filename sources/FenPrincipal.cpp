@@ -1,42 +1,41 @@
 #include "FenPrincipal.h"
-#include "Objet.h"
+#include "ActionsFenetre.h"
 #include "Calculastro.h"
-#include "Soiree.h"
 #include "Carteciel.h"
-#include "FenCreerSoiree.h"
+#include "CompteRebours.h"
 #include "Constantes.h"
 #include "Diaporama.h"
-#include "CompteRebours.h"
-#include "WidgetHeure.h"
-#include "InterfaceCreation.h"
-#include "ActionsFenetre.h"
-#include "FenetreBDD.h"
+#include "FenCreerSoiree.h"
 #include "FenInfosCreation.h"
 #include "FenPreferences.h"
+#include "FenetreBDD.h"
+#include "InterfaceCreation.h"
+#include "Objet.h"
+#include "Soiree.h"
+#include "WidgetHeure.h"
 
+#include <QApplication>
 #include <QCloseEvent>
-#include <QMessageBox>
+#include <QCoreApplication>
 #include <QDesktopServices>
+#include <QDir>
+#include <QFileDialog>
+#include <QMenu>
+#include <QMenuBar>
+#include <QMessageBox>
+#include <QPushButton>
+#include <QSignalMapper>
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QStandardPaths>
-#include <QDir>
-#include <QCoreApplication>
 #include <QStatusBar>
 #include <QToolBar>
-#include <QPushButton>
-#include <QSignalMapper>
-#include <QMenu>
-#include <QMenuBar>
-#include <QApplication>
-#include <QFileDialog>
 
 FenPrincipal::FenPrincipal()
 {
     resize(1024, 768);
-    if(!QDir::setCurrent(QCoreApplication::applicationDirPath()+"/"))
-    {
-        QMessageBox::critical(this,tr("Résolution des liens"),tr("Problème lors de la résolution des liens, le programme ne peut pas fonctionner correctement."));
+    if (!QDir::setCurrent(QCoreApplication::applicationDirPath() + "/")) {
+        QMessageBox::critical(this, tr("Résolution des liens"), tr("Problème lors de la résolution des liens, le programme ne peut pas fonctionner correctement."));
         qApp->quit();
     }
 
@@ -47,7 +46,7 @@ FenPrincipal::FenPrincipal()
     actionSoireesRecentes();
 
     // On crée la barre d'outils
-    QToolBar *toolBar = addToolBar(tr("Toolbar","Peu important, nom d'un widget"));
+    QToolBar *toolBar = addToolBar(tr("Toolbar", "Peu important, nom d'un widget"));
     toolBar->addAction(listeActions->getActionCreerSoiree());
     toolBar->addAction(listeActions->getActionFabriquerSoiree());
     toolBar->addAction(listeActions->getActionOuvrirSoiree());
@@ -67,14 +66,14 @@ FenPrincipal::FenPrincipal()
     QGridLayout *layoutGrille = new QGridLayout;
 
     QPushButton *groupeGenererSoiree = new QPushButton;
-    groupeGenererSoiree->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL,HAUTEUR_BLOC_PAGE_ACCUEIL);
+    groupeGenererSoiree->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL, HAUTEUR_BLOC_PAGE_ACCUEIL);
     QLabel *imageGenerer = new QLabel(groupeGenererSoiree);
     imageGenerer->setPixmap(QPixmap(":/icons/generate.png"));
     imageGenerer->setAlignment(Qt::AlignCenter);
-    QLabel *texteGenerer = new QLabel(tr("Générer une soirée"),groupeGenererSoiree);
-    texteGenerer->setFont(QFont("Verdana",15));
+    QLabel *texteGenerer = new QLabel(tr("Générer une soirée"), groupeGenererSoiree);
+    texteGenerer->setFont(QFont("Verdana", 15));
     texteGenerer->setAlignment(Qt::AlignCenter);
-    QLabel *descGenerer = new QLabel(tr("Rentrez plusieurs informations telles que votre latitude, longitude, niveau en astronomie ainsi que l'heure et la date d'observation et notre générateur vous créera automatiquement une liste d'objets à observer pour la soirée."),groupeGenererSoiree);
+    QLabel *descGenerer = new QLabel(tr("Rentrez plusieurs informations telles que votre latitude, longitude, niveau en astronomie ainsi que l'heure et la date d'observation et notre générateur vous créera automatiquement une liste d'objets à observer pour la soirée."), groupeGenererSoiree);
     descGenerer->setWordWrap(true);
     descGenerer->setAlignment(Qt::AlignJustify);
     QVBoxLayout *layoutGenerer = new QVBoxLayout(groupeGenererSoiree);
@@ -83,14 +82,14 @@ FenPrincipal::FenPrincipal()
     layoutGenerer->addWidget(descGenerer);
 
     QPushButton *groupeCreerSoiree = new QPushButton;
-    groupeCreerSoiree->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL,HAUTEUR_BLOC_PAGE_ACCUEIL);
+    groupeCreerSoiree->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL, HAUTEUR_BLOC_PAGE_ACCUEIL);
     QLabel *imageCreer = new QLabel(groupeCreerSoiree);
     imageCreer->setPixmap(QPixmap(":/icons/creer-soiree.png"));
     imageCreer->setAlignment(Qt::AlignCenter);
-    QLabel *texteCreer = new QLabel(tr("Créer une soirée"),groupeCreerSoiree);
-    texteCreer->setFont(QFont("Verdana",15));
+    QLabel *texteCreer = new QLabel(tr("Créer une soirée"), groupeCreerSoiree);
+    texteCreer->setFont(QFont("Verdana", 15));
     texteCreer->setAlignment(Qt::AlignCenter);
-    QLabel *descCreer = new QLabel(tr("Créez facilement votre soirée de toute pièce sans la générer. Les objets qu'il est possible d'observer sont accessibles grâce à une grande base de données. Outil réservé aux astronomes confirmés."),groupeCreerSoiree);
+    QLabel *descCreer = new QLabel(tr("Créez facilement votre soirée de toute pièce sans la générer. Les objets qu'il est possible d'observer sont accessibles grâce à une grande base de données. Outil réservé aux astronomes confirmés."), groupeCreerSoiree);
     descCreer->setWordWrap(true);
     descCreer->setAlignment(Qt::AlignJustify);
     QVBoxLayout *layoutCreer = new QVBoxLayout(groupeCreerSoiree);
@@ -99,14 +98,14 @@ FenPrincipal::FenPrincipal()
     layoutCreer->addWidget(descCreer);
 
     QPushButton *groupeOuvrirSoiree = new QPushButton;
-    groupeOuvrirSoiree->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL,HAUTEUR_BLOC_PAGE_ACCUEIL);
+    groupeOuvrirSoiree->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL, HAUTEUR_BLOC_PAGE_ACCUEIL);
     QLabel *imageOuvrir = new QLabel(groupeOuvrirSoiree);
     imageOuvrir->setPixmap(QPixmap(":/icons/ouvrir.png"));
     imageOuvrir->setAlignment(Qt::AlignCenter);
-    QLabel *texteOuvrir = new QLabel(tr("Ouvrir une soirée"),groupeOuvrirSoiree);
-    texteOuvrir->setFont(QFont("Verdana",15));
+    QLabel *texteOuvrir = new QLabel(tr("Ouvrir une soirée"), groupeOuvrirSoiree);
+    texteOuvrir->setFont(QFont("Verdana", 15));
     texteOuvrir->setAlignment(Qt::AlignCenter);
-    QLabel *descOuvrir = new QLabel(tr("Ouvrez un fichier de soirée. Les fichiers de soirée sont de type SOA (Soiree Observation Astronomie). Vous pouvez les trouver en générant votre soirée en ligne ou en enregistrant votre soirée."),groupeOuvrirSoiree);
+    QLabel *descOuvrir = new QLabel(tr("Ouvrez un fichier de soirée. Les fichiers de soirée sont de type SOA (Soiree Observation Astronomie). Vous pouvez les trouver en générant votre soirée en ligne ou en enregistrant votre soirée."), groupeOuvrirSoiree);
     descOuvrir->setWordWrap(true);
     descOuvrir->setAlignment(Qt::AlignJustify);
     QVBoxLayout *layoutOuvrir = new QVBoxLayout(groupeOuvrirSoiree);
@@ -115,14 +114,14 @@ FenPrincipal::FenPrincipal()
     layoutOuvrir->addWidget(descOuvrir);
 
     QPushButton *groupePreferenceGenerateur = new QPushButton;
-    groupePreferenceGenerateur->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL,HAUTEUR_BLOC_PAGE_ACCUEIL);
+    groupePreferenceGenerateur->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL, HAUTEUR_BLOC_PAGE_ACCUEIL);
     QLabel *imagePreferences = new QLabel(groupePreferenceGenerateur);
     imagePreferences->setPixmap(QPixmap(":/icons/preferences.png"));
     imagePreferences->setAlignment(Qt::AlignCenter);
-    QLabel *textePreferences = new QLabel(tr("Personnaliser"),groupePreferenceGenerateur);
-    textePreferences->setFont(QFont("Verdana",15));
+    QLabel *textePreferences = new QLabel(tr("Personnaliser"), groupePreferenceGenerateur);
+    textePreferences->setFont(QFont("Verdana", 15));
     textePreferences->setAlignment(Qt::AlignCenter);
-    QLabel *descPreferences = new QLabel(tr("Vous pouvez personnaliser le générateur pour que les résultats qu'il vous fournit soient plus proches de vos attentes."),groupePreferenceGenerateur);
+    QLabel *descPreferences = new QLabel(tr("Vous pouvez personnaliser le générateur pour que les résultats qu'il vous fournit soient plus proches de vos attentes."), groupePreferenceGenerateur);
     descPreferences->setWordWrap(true);
     descPreferences->setAlignment(Qt::AlignJustify);
     QVBoxLayout *layoutPreferences = new QVBoxLayout(groupePreferenceGenerateur);
@@ -130,10 +129,10 @@ FenPrincipal::FenPrincipal()
     layoutPreferences->addWidget(imagePreferences);
     layoutPreferences->addWidget(descPreferences);
 
-    layoutGrille->addWidget(groupeGenererSoiree,0,0);
-    layoutGrille->addWidget(groupeCreerSoiree,0,1);
-    layoutGrille->addWidget(groupeOuvrirSoiree,1,0);
-    layoutGrille->addWidget(groupePreferenceGenerateur,1,1);
+    layoutGrille->addWidget(groupeGenererSoiree, 0, 0);
+    layoutGrille->addWidget(groupeCreerSoiree, 0, 1);
+    layoutGrille->addWidget(groupeOuvrirSoiree, 1, 0);
+    layoutGrille->addWidget(groupePreferenceGenerateur, 1, 1);
     widgetAccueil->setLayout(layoutGrille);
 
     QWidget *widgetCentral = new QWidget;
@@ -143,8 +142,7 @@ FenPrincipal::FenPrincipal()
     widgetCentral->setLayout(layoutCentral);
     setCentralWidget(widgetCentral);
 
-    m_user = new QSettings(NOM_EQUIPE,NOM_PROGRAMME);
-
+    m_user = new QSettings(NOM_EQUIPE, NOM_PROGRAMME);
 
     FenCreerSoiree *fenCreation = new FenCreerSoiree(this);
     FenetreBDD *fenBDD = new FenetreBDD(this);
@@ -152,7 +150,7 @@ FenPrincipal::FenPrincipal()
     FenPreferences *fenPreferences = new FenPreferences(this);
 
     // on fait les différentes connexions
-    connect(groupeOuvrirSoiree, &QPushButton::clicked, this, [this](){ ouvrirSoa(); });
+    connect(groupeOuvrirSoiree, &QPushButton::clicked, this, [this]() { ouvrirSoa(); });
     connect(groupeGenererSoiree, &QPushButton::clicked, fenCreation, &FenCreerSoiree::exec);
     connect(groupeCreerSoiree, &QPushButton::clicked, fenInfos, &FenInfosCreation::exec);
     connect(groupePreferenceGenerateur, &QPushButton::clicked, fenPreferences, &FenPreferences::exec);
@@ -164,20 +162,20 @@ FenPrincipal::FenPrincipal()
     QSignalMapper *mapper = new QSignalMapper;
     connect(mapper, &QSignalMapper::mappedInt, fenPreferences, &FenPreferences::ouvrir);
 
-    mapper->setMapping(listeActions->getActionPreferencesTelescope(),2);
+    mapper->setMapping(listeActions->getActionPreferencesTelescope(), 2);
     connect(listeActions->getActionPreferencesTelescope(), &QAction::triggered, mapper, qOverload<>(&QSignalMapper::map));
-    mapper->setMapping(listeActions->getActionPreferencesOculaires(),3);
+    mapper->setMapping(listeActions->getActionPreferencesOculaires(), 3);
     connect(listeActions->getActionPreferencesOculaires(), &QAction::triggered, mapper, qOverload<>(&QSignalMapper::map));
-    mapper->setMapping(listeActions->getActionPreferencesCarteCiel(),5);
+    mapper->setMapping(listeActions->getActionPreferencesCarteCiel(), 5);
     connect(listeActions->getActionPreferencesCarteCiel(), &QAction::triggered, mapper, qOverload<>(&QSignalMapper::map));
-    mapper->setMapping(listeActions->getActionPreferencesLocalisation(),1);
+    mapper->setMapping(listeActions->getActionPreferencesLocalisation(), 1);
     connect(listeActions->getActionPreferencesLocalisation(), &QAction::triggered, mapper, qOverload<>(&QSignalMapper::map));
-    mapper->setMapping(listeActions->getActionPersonaliserGenerateur(),4);
+    mapper->setMapping(listeActions->getActionPersonaliserGenerateur(), 4);
     connect(listeActions->getActionPersonaliserGenerateur(), &QAction::triggered, mapper, qOverload<>(&QSignalMapper::map));
 
     connect(listeActions->getActionCreerSoiree(), &QAction::triggered, fenCreation, &FenCreerSoiree::exec);
     connect(listeActions->getActionFabriquerSoiree(), &QAction::triggered, fenInfos, &FenInfosCreation::exec);
-    connect(listeActions->getActionOuvrirSoiree(), &QAction::triggered, this, [this](){ ouvrirSoa(); });
+    connect(listeActions->getActionOuvrirSoiree(), &QAction::triggered, this, [this]() { ouvrirSoa(); });
     connect(tabOnglets, &QTabWidget::tabCloseRequested, this, qOverload<int>(&FenPrincipal::fermerOnglet));
     connect(listeActions->getActionFermer(), &QAction::triggered, this, qOverload<>(&FenPrincipal::fermerOnglet));
 
@@ -201,7 +199,7 @@ FenPrincipal::FenPrincipal()
     // La barre de statut
     barreStatut = statusBar();
     QLabel *label_copyright = new QLabel(tr("Copyright © 2010-2013 <a href=\"http://wwww.univers-astronomie.fr/\">Univers-Astronomie.fr</a>, All rights reserved"));
-    label_copyright->setFont(QFont("Verdana",8));
+    label_copyright->setFont(QFont("Verdana", 8));
     label_copyright->setOpenExternalLinks(true);
     barreStatut->addPermanentWidget(label_copyright);
     connect(listeActions->getActionBarreStatut(), &QAction::toggled, barreStatut, &QStatusBar::setVisible);
@@ -233,11 +231,9 @@ FenPrincipal::FenPrincipal()
 
     // Si on demande à ouvrir un ou plusieurs fichiers à l'ouverture du programme
     QStringList liste = QCoreApplication::arguments();
-    if(liste.size() > 1)
-    {
-        for(int i(1); i < liste.size();i++)
-        {
-            if(liste.at(i).right(4) == ".soa")
+    if (liste.size() > 1) {
+        for (int i(1); i < liste.size(); i++) {
+            if (liste.at(i).right(4) == ".soa")
                 ouvrirSoa(liste.at(i));
         }
     }
@@ -307,29 +303,28 @@ void FenPrincipal::creerMenu()
     menuAide->addAction(listeActions->getActionAide());
     menuAide->addAction(listeActions->getActionSiteUniversAstronomie());
 }
-void FenPrincipal::nouvelOngletSoiree(Soiree& soiree)
+void FenPrincipal::nouvelOngletSoiree(Soiree &soiree)
 {
-    QApplication::setOverrideCursor( Qt::WaitCursor ); // changer de curseur
-    if(!tabOnglets->isVisible())
-    {
+    QApplication::setOverrideCursor(Qt::WaitCursor); // changer de curseur
+    if (!tabOnglets->isVisible()) {
         tabOnglets->setVisible(true);
         widgetAccueil->setVisible(false);
     } // Essayer de remplacer ça par une fonction
 
     // On crée un objet de type InterfaceLecture
-    InterfaceLecture *interface = new InterfaceLecture(&soiree,listeActions,this);
+    InterfaceLecture *interface = new InterfaceLecture(&soiree, listeActions, this);
 
     // On l'ajoute à la liste des onglets et on crée un nouvel onglet
     m_listeInterface.push_back(interface);
-    int newIndex = tabOnglets->addTab(interface,tr("Soirée du ","Cette chaîne est suivie de la date de la soirée")+interface->getSoiree()->getDebut().toString(tr("dd/MM/yyyy","Format de la date")));
+    int newIndex = tabOnglets->addTab(interface, tr("Soirée du ", "Cette chaîne est suivie de la date de la soirée") + interface->getSoiree()->getDebut().toString(tr("dd/MM/yyyy", "Format de la date")));
     tabOnglets->setCurrentIndex(newIndex);
 
-    barreStatut->showMessage(tr("Nouvel onglet de soirée ajouté avec succès"),2000);
+    barreStatut->showMessage(tr("Nouvel onglet de soirée ajouté avec succès"), 2000);
 
     initialiserOngletActif();
 
     connect(interface, &InterfaceLecture::fermer, this, qOverload<Interface *>(&FenPrincipal::fermerOnglet));
-    connect(interface, &InterfaceLecture::afficher, this, [this](const QString &message){ afficherMessage(message); });
+    connect(interface, &InterfaceLecture::afficher, this, [this](const QString &message) { afficherMessage(message); });
 
     // On dégrise les actions
     listeActions->griserActionMonterObjet(false);
@@ -358,21 +353,19 @@ void FenPrincipal::nouvelOngletSoiree(Soiree& soiree)
 }
 bool FenPrincipal::fermerOnglet(int index)
 {
-    if(tabOnglets->count() > 0 && index >= 0 && index < tabOnglets->count())
-    {
+    if (tabOnglets->count() > 0 && index >= 0 && index < tabOnglets->count()) {
         bool continuer(true);
-        if(m_listeInterface.at(index)->getSoiree()->shouldBeSaved()) // Si la soirée a été modifiée
+        if (m_listeInterface.at(index)->getSoiree()->shouldBeSaved()) // Si la soirée a été modifiée
         {
             QMessageBox msgBox;
             msgBox.setText(tr("La soirée a été modifiée."));
             msgBox.setDetailedText(tr("Soirée modifiée"));
             msgBox.setInformativeText(tr("Voulez-vous sauver les changements ?"));
-            msgBox.setStandardButtons(QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel);
+            msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
             msgBox.setDefaultButton(QMessageBox::Save);
             int ret = msgBox.exec();
 
-            switch(ret)
-            {
+            switch (ret) {
             case QMessageBox::Save:
                 continuer = m_listeInterface.at(index)->getSoiree()->enregistrerSoiree();
                 break;
@@ -387,18 +380,17 @@ bool FenPrincipal::fermerOnglet(int index)
                 break;
             }
         }
-        if(continuer)
-        {
+        if (continuer) {
             tabOnglets->removeTab(index);
             Interface *interface = m_listeInterface.at(index);
             m_listeInterface.remove(index);
             delete interface;
 
-            barreStatut->showMessage(tr("Onglet fermé avec succès"),2000);
+            barreStatut->showMessage(tr("Onglet fermé avec succès"), 2000);
 
             initialiserOngletActif();
 
-            if(tabOnglets->count() == 0) // On regarde le nombre d'onglets
+            if (tabOnglets->count() == 0) // On regarde le nombre d'onglets
             {
                 tabOnglets->setVisible(false);
                 widgetAccueil->setVisible(true);
@@ -437,18 +429,17 @@ bool FenPrincipal::fermerOnglet()
 bool FenPrincipal::fermerOnglet(Interface *interface)
 {
     int index = tabOnglets->indexOf(interface);
-    if(index > -1)
+    if (index > -1)
         return fermerOnglet(index);
 
     return false;
 }
 void FenPrincipal::ouvrirSoa(QString fileSoa)
 {
-    if(fileSoa == "")
-        fileSoa = QFileDialog::getOpenFileName(nullptr,tr("Ouvrir fichier de soirée"), QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),"Soirée Observation Astronomie (*.soa)");
+    if (fileSoa == "")
+        fileSoa = QFileDialog::getOpenFileName(nullptr, tr("Ouvrir fichier de soirée"), QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation), "Soirée Observation Astronomie (*.soa)");
 
-    if(fileSoa != "")
-    {
+    if (fileSoa != "") {
         Soiree *soiree = Soiree::soaToSoiree(fileSoa);
         nouvelOngletSoiree(*soiree);
     }
@@ -456,13 +447,11 @@ void FenPrincipal::ouvrirSoa(QString fileSoa)
 bool FenPrincipal::quitterApplication()
 {
     bool accept(true);
-    if(tabOnglets->count() == 0)
+    if (tabOnglets->count() == 0)
         qApp->quit();
-    else
-    {
-        for(int i(0); i < tabOnglets->count(); i++)
-        {
-            if(!fermerOnglet(i)) // Si on n'a pas fermé l'onglet, on ne peut pas quitter
+    else {
+        for (int i(0); i < tabOnglets->count(); i++) {
+            if (!fermerOnglet(i)) // Si on n'a pas fermé l'onglet, on ne peut pas quitter
                 accept = false;
         }
     }
@@ -470,7 +459,7 @@ bool FenPrincipal::quitterApplication()
 }
 void FenPrincipal::closeEvent(QCloseEvent *event)
 {
-    if(quitterApplication())
+    if (quitterApplication())
         event->accept();
     else
         event->ignore();
@@ -489,30 +478,27 @@ void FenPrincipal::ouvrirCDS()
 }
 void FenPrincipal::nouvelOngletCreation(double latitude, double longitude, QDateTime heureDebut, uint diametre, uint focale)
 {
-    if(!tabOnglets->isVisible())
-    {
+    if (!tabOnglets->isVisible()) {
         tabOnglets->setVisible(true);
         widgetAccueil->setVisible(false);
     }
 
-    InterfaceCreation *interface = new InterfaceCreation(latitude,longitude,heureDebut,diametre,focale,listeActions, this);
+    InterfaceCreation *interface = new InterfaceCreation(latitude, longitude, heureDebut, diametre, focale, listeActions, this);
     m_listeInterface.push_back(interface);
-    int newIndex = tabOnglets->addTab(interface, tr("Créer une soirée","Titre d'un onglet de création de soirée"));
+    int newIndex = tabOnglets->addTab(interface, tr("Créer une soirée", "Titre d'un onglet de création de soirée"));
     tabOnglets->setCurrentIndex(newIndex);
 
-    barreStatut->showMessage(tr("Nouvel onglet de création de soirée ajouté"),2000);
+    barreStatut->showMessage(tr("Nouvel onglet de création de soirée ajouté"), 2000);
 
     initialiserOngletActif();
 
     connect(interface, &InterfaceCreation::fermer, this, qOverload<Interface *>(&FenPrincipal::fermerOnglet));
-    connect(interface, &InterfaceCreation::afficher, this, [this](const QString &message){ afficherMessage(message); });
+    connect(interface, &InterfaceCreation::afficher, this, [this](const QString &message) { afficherMessage(message); });
 }
 void FenPrincipal::initialiserOngletActif(int index)
 {
-    if(m_listeInterface.count() > 0 && index > -1)
-    {
-        for(int i(0);i < m_listeInterface.count();i++)
-        {
+    if (m_listeInterface.count() > 0 && index > -1) {
+        for (int i(0); i < m_listeInterface.count(); i++) {
             m_listeInterface.at(i)->setActive(false);
         }
         m_listeInterface.at(index)->setActive(true);
@@ -520,10 +506,8 @@ void FenPrincipal::initialiserOngletActif(int index)
 }
 void FenPrincipal::initialiserOngletActif()
 {
-    if(m_listeInterface.count() > 0 && tabOnglets->currentIndex() > -1)
-    {
-        for(int i(0);i < m_listeInterface.count();i++)
-        {
+    if (m_listeInterface.count() > 0 && tabOnglets->currentIndex() > -1) {
+        for (int i(0); i < m_listeInterface.count(); i++) {
             m_listeInterface.at(i)->setActive(false);
         }
         m_listeInterface.at(tabOnglets->currentIndex())->setActive(true);
@@ -535,7 +519,7 @@ QSettings *FenPrincipal::getUser() const
 }
 void FenPrincipal::afficherMessage(QString message, int duree)
 {
-    barreStatut->showMessage(message,duree);
+    barreStatut->showMessage(message, duree);
 }
 void FenPrincipal::actionSoireesRecentes()
 { // Initialise au début toutes les soirées de la BDD et les affiche dans le menu avec ajouterSoireeRecente()
@@ -544,33 +528,32 @@ void FenPrincipal::actionSoireesRecentes()
     QSqlQuery effacer;
     QString fichier;
     int id(0), i(0);
-    while(requete.next())
-    {
+    while (requete.next()) {
         fichier = requete.value(0).toString();
         id = requete.value(1).toInt();
 
-        if(fichier.right(4) == ".soa" && QFile::exists(fichier)) // SI le fichier existe et est correct
+        if (fichier.right(4) == ".soa" && QFile::exists(fichier)) // SI le fichier existe et est correct
         {
             ajouterSoireeRecente(fichier); // On l'ajoute dans le menu
             i++;
-        }
-        else // Sinon on le supprime de la BDD
+        } else // Sinon on le supprime de la BDD
         {
             effacer.prepare("DELETE FROM soireesRecentes WHERE ID = :id");
-            effacer.bindValue(":id",id);
+            effacer.bindValue(":id", id);
             effacer.exec();
         }
     }
-    if(i==0) listeActions->griserActionSoireesRecentes(true);
+    if (i == 0)
+        listeActions->griserActionSoireesRecentes(true);
 }
 void FenPrincipal::ajouterSoireeRecente(const QString &fichier)
 { // Ajoute une soirée récente en fonction du nom et le connecte au SIGNAL
 
-    QAction *action = new QAction(fichier,this);
+    QAction *action = new QAction(fichier, this);
     QSignalMapper *mapper = new QSignalMapper;
     connect(mapper, &QSignalMapper::mappedString, this, &FenPrincipal::ouvrirSoa);
 
-    mapper->setMapping(action,fichier);
+    mapper->setMapping(action, fichier);
     connect(action, &QAction::triggered, mapper, qOverload<>(&QSignalMapper::map));
 
     menuSoireesRecentes->addAction(action);
@@ -583,8 +566,8 @@ void FenPrincipal::aPropos()
     about += "Copyright © 2021 - Terrier Benjamin<br />";
     about += tr("<strong>Sources&nbsp;: </strong><a href='%1'>%1</a><br />").arg(URL_GITHUB);
     about += "<strong>Site web : </strong><a href='" URL_UNIVERS_ASTRONOMIE "'>" URL_UNIVERS_ASTRONOMIE "</a><br />";
-    about += "<strong> Outil en ligne : </strong><a href='" URL_GENERATEUR"'> " URL_GENERATEUR "</a><br />";
-    about += "<strong> Langue ordinateur : </strong>"+QLocale::system().name();
+    about += "<strong> Outil en ligne : </strong><a href='" URL_GENERATEUR "'> " URL_GENERATEUR "</a><br />";
+    about += "<strong> Langue ordinateur : </strong>" + QLocale::system().name();
     about += R"(
 <p>astroGenerator is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -599,12 +582,11 @@ GNU General Public License for more details.</p>
 <p>You should have received a copy of the GNU General Public License
 along with astroGenerator.  If not, see <a href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>.</p>
 )";
-    QMessageBox::information(this,"A propos d'Astrogenerator",about);
+    QMessageBox::information(this, "A propos d'Astrogenerator", about);
 }
 void FenPrincipal::aide()
 {
-    if(!QDesktopServices::openUrl(QUrl::fromLocalFile("doc.pdf")))
-    {
+    if (!QDesktopServices::openUrl(QUrl::fromLocalFile("doc.pdf"))) {
         QMessageBox::critical(this, tr("Erreur"), tr("Impossible d'ouvrir le fichier aide."));
     }
 }
@@ -615,24 +597,19 @@ bool FenPrincipal::existsNewVersion(QString ligne)
     QStringList versionChiffreListe = QStringLiteral(VERSION_STRING).split('.');
 
     // On fait en sorte qu'ils aient le même nombre de chiffre
-    if(versionNewChiffreListe.count() < versionChiffreListe.count())
-    {
-        int ecart(versionChiffreListe.count()-versionNewChiffreListe.count());
-        for(int i(0);i<ecart;i++)
+    if (versionNewChiffreListe.count() < versionChiffreListe.count()) {
+        int ecart(versionChiffreListe.count() - versionNewChiffreListe.count());
+        for (int i(0); i < ecart; i++)
             versionNewChiffreListe.push_back("0");
-    }
-    else if(versionNewChiffreListe.count() > versionChiffreListe.count())
-    {
-        int ecart(versionNewChiffreListe.count()-versionChiffreListe.count());
-        for(int i(0);i<ecart;i++)
+    } else if (versionNewChiffreListe.count() > versionChiffreListe.count()) {
+        int ecart(versionNewChiffreListe.count() - versionChiffreListe.count());
+        for (int i(0); i < ecart; i++)
             versionChiffreListe.push_back("0");
     }
     // On traite
-    for(int j(0);j<versionChiffreListe.count();j++)
-    {
-        if(versionChiffreListe.at(j).toInt() < versionNewChiffreListe.at(j).toInt())
+    for (int j(0); j < versionChiffreListe.count(); j++) {
+        if (versionChiffreListe.at(j).toInt() < versionNewChiffreListe.at(j).toInt())
             return true;
     }
     return false;
 }
-

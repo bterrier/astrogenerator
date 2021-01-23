@@ -1,16 +1,16 @@
 #include "InterfaceCreation.h"
-#include "ObjetObs.h"
-#include "Constantes.h"
 #include "Calculastro.h"
-#include "ObjetPlaneteObs.h"
+#include "Constantes.h"
 #include "ObjetCPObs.h"
+#include "ObjetObs.h"
+#include "ObjetPlaneteObs.h"
 #include "Soiree.h"
 
 #include <QDialog>
 #include <QFile>
 #include <QFormLayout>
-#include <QInputDialog>
 #include <QHeaderView>
+#include <QInputDialog>
 #include <QLabel>
 #include <QLineEdit>
 #include <QMessageBox>
@@ -25,14 +25,14 @@ InterfaceCreation::InterfaceCreation(double latitude, double longitude, QDateTim
     // ETAPE 1 : On initialise toutes les variables
 
     m_modeleRecherche = new QStandardItemModel;
-    m_modeleRecherche = rechercheToModele("",true); // On met a true car par défaut on affiche que les interet = 4
+    m_modeleRecherche = rechercheToModele("", true); // On met a true car par défaut on affiche que les interet = 4
     m_soiree = new Soiree;
     champDate = new QDateTimeEdit;
-    champDate->setDisplayFormat(tr("dd/MM/yyyy hh:mm","Format de la date et l'heure"));
+    champDate->setDisplayFormat(tr("dd/MM/yyyy hh:mm", "Format de la date et l'heure"));
     champDureeObjet = new QSpinBox;
     champDureeObjet->setMinimum(DUREE_OBJET_MIN);
     champDureeObjet->setMaximum(DUREE_OBJET_MAX);
-    champDureeObjet->setSuffix(tr(" min","Unité (minutes), laisser l'espace avant"));
+    champDureeObjet->setSuffix(tr(" min", "Unité (minutes), laisser l'espace avant"));
 
     m_modele = new QStandardItemModel;
     m_vue = new QTableView;
@@ -40,9 +40,9 @@ InterfaceCreation::InterfaceCreation(double latitude, double longitude, QDateTim
     m_vuePlanete->setEditTriggers(QAbstractItemView::NoEditTriggers);
     m_modelePlanete = new QStandardItemModel;
 
-    ajouterObjet = new QAction(tr("Ajouter l'objet"),this);
+    ajouterObjet = new QAction(tr("Ajouter l'objet"), this);
     ajouterObjet->setIcon(QIcon(":/icons/arrow-right.png"));
-    enleverObjet = new QAction(tr("Enlever l'objet"),this);
+    enleverObjet = new QAction(tr("Enlever l'objet"), this);
     enleverObjet->setIcon(QIcon(":/icons/arrow-left.png"));
 
     m_vueRecherche = new QListView;
@@ -53,7 +53,6 @@ InterfaceCreation::InterfaceCreation(double latitude, double longitude, QDateTim
     connect(m_vueRecherche, &QListView::doubleClicked, this, &InterfaceCreation::getDate);
 
     // ON CREE LA PAGE POUR L'AJOUT D'OBJET
-
 
     // ETAPE 2 : On crée la page avec les layout
 
@@ -94,21 +93,21 @@ InterfaceCreation::InterfaceCreation(double latitude, double longitude, QDateTim
     connect(ajouterObjet, &QAction::triggered, this, &InterfaceCreation::getDate);
     connect(enleverObjet, &QAction::triggered, this, &InterfaceCreation::enleveObjet);
     connect(m_listeActions->getActionMonterObjet(), &QAction::triggered, this, &InterfaceCreation::monterObjet);
-    connect(m_listeActions->getActionDescendreObjet(), &QAction::triggered,this, &InterfaceCreation::descendreObjet);
-    connect(m_listeActions->getActionChangerDureeObjet(), &QAction::triggered,this, &InterfaceCreation::modifierObjet);
-    connect(m_listeActions->getActionEnregistrer(), &QAction::triggered,this, &InterfaceCreation::enregistrerSoiree);
-    connect(m_listeActions->getActionAjouterPlanete(), &QAction::triggered,this, &InterfaceCreation::fenetrePlanete);
-    connect(m_listeActions->getActionInfoSoiree(), &QAction::triggered,this, &InterfaceCreation::infosSoiree);
+    connect(m_listeActions->getActionDescendreObjet(), &QAction::triggered, this, &InterfaceCreation::descendreObjet);
+    connect(m_listeActions->getActionChangerDureeObjet(), &QAction::triggered, this, &InterfaceCreation::modifierObjet);
+    connect(m_listeActions->getActionEnregistrer(), &QAction::triggered, this, &InterfaceCreation::enregistrerSoiree);
+    connect(m_listeActions->getActionAjouterPlanete(), &QAction::triggered, this, &InterfaceCreation::fenetrePlanete);
+    connect(m_listeActions->getActionInfoSoiree(), &QAction::triggered, this, &InterfaceCreation::infosSoiree);
     connect(m_vue, &QTableView::doubleClicked, this, &InterfaceCreation::afficherInfosObjet);
     connect(m_vue, &QTableView::clicked, this, &InterfaceCreation::griserActions);
     connect(m_vueRecherche, &QListView::clicked, this, &InterfaceCreation::griserActions);
-    connect(barre_recherche, &QLineEdit::textChanged, this,  &InterfaceCreation::nouvelleRecherche);
+    connect(barre_recherche, &QLineEdit::textChanged, this, &InterfaceCreation::nouvelleRecherche);
 
     // ETAPE 4 : On remplit les infos
 
-    QVector<QString> villePays(Calculastro::trouverVillePays(latitude,longitude)); // on trouve la ville et le pays en fonction de la latitude
+    QVector<QString> villePays(Calculastro::trouverVillePays(latitude, longitude)); // on trouve la ville et le pays en fonction de la latitude
     m_soiree->setDebut(heureDebut);
-    m_soiree->setFin(heureDebut.addSecs(DUREE_SOIREE_MAX*3600));
+    m_soiree->setFin(heureDebut.addSecs(DUREE_SOIREE_MAX * 3600));
     m_soiree->setLat(latitude);
     m_soiree->setLongi(longitude);
     m_soiree->setDiametre(diametre);
@@ -122,37 +121,32 @@ InterfaceCreation::InterfaceCreation(double latitude, double longitude, QDateTim
 }
 void InterfaceCreation::nouvelleRecherche(QString texte)
 {
-    if(m_active)
-    {
+    if (m_active) {
         m_vueRecherche->setModel(rechercheToModele(texte));
         griserActions();
     }
 }
-QStandardItemModel* InterfaceCreation::rechercheToModele(QString recherche, bool ok)
+QStandardItemModel *InterfaceCreation::rechercheToModele(QString recherche, bool ok)
 {
-    if(m_active)
-    {
+    if (m_active) {
         m_modeleRecherche = new QStandardItemModel;
 
         QString reqplus;
-        if(ok || recherche == "")
+        if (ok || recherche == "")
             reqplus = " interet = 4 AND";
 
-        QSqlQuery *requete = new QSqlQuery("SELECT nom, reference, messier FROM ngcic WHERE"+reqplus+" (nom LIKE '%"+recherche+"%' OR reference LIKE '%"+recherche+"%' OR messier LIKE '%"+recherche+"%')");
+        QSqlQuery *requete = new QSqlQuery("SELECT nom, reference, messier FROM ngcic WHERE" + reqplus + " (nom LIKE '%" + recherche + "%' OR reference LIKE '%" + recherche + "%' OR messier LIKE '%" + recherche + "%')");
         QString nom;
 
-        while(requete->next())
-        {
-            if(requete->value(0).toString() != "")
-            {
+        while (requete->next()) {
+            if (requete->value(0).toString() != "") {
                 nom = requete->value(0).toString() + " (";
-                if(requete->value(2).toString() != "0")
-                    nom += requete->value(2).toString()+", "+requete->value(1).toString()+")";
+                if (requete->value(2).toString() != "0")
+                    nom += requete->value(2).toString() + ", " + requete->value(1).toString() + ")";
                 else
-                    nom += requete->value(1).toString()+")";
-            }
-            else if(requete->value(2).toString() != "0")
-                nom = requete->value(2).toString()+" ("+requete->value(1).toString()+")";
+                    nom += requete->value(1).toString() + ")";
+            } else if (requete->value(2).toString() != "0")
+                nom = requete->value(2).toString() + " (" + requete->value(1).toString() + ")";
             else
                 nom = requete->value(1).toString();
 
@@ -165,55 +159,44 @@ QStandardItemModel* InterfaceCreation::rechercheToModele(QString recherche, bool
 }
 void InterfaceCreation::ajoutObjet()
 {
-    if(m_active)
-    {
-        if(m_vueRecherche->currentIndex().isValid())
-        {
+    if (m_active) {
+        if (m_vueRecherche->currentIndex().isValid()) {
             QItemSelectionModel *selection = m_vueRecherche->selectionModel();
-            QModelIndex indexElementSelectionne = m_modeleRecherche->index(0,0,selection->currentIndex());
+            QModelIndex indexElementSelectionne = m_modeleRecherche->index(0, 0, selection->currentIndex());
             QVariant elementSelectionne = m_modeleRecherche->data(indexElementSelectionne, Qt::DisplayRole);
 
             QString ref = elementSelectionne.toString();
 
             // verifier si la date est valide
-            if(champDate->dateTime().isValid())
-            {
+            if (champDate->dateTime().isValid()) {
                 // verfier si l'objet n'est pas déjà dans la soirée
-                if(m_soiree->indexFromRef(ref) == -1)
-                {
-                    if(!tempsEstPris(champDate->dateTime(),champDureeObjet->value()))
-                    {
-                        ObjetCPObs *objet = new ObjetCPObs(ref,champDate->dateTime(),champDate->dateTime().addSecs(champDureeObjet->value()*60));
-                        if(objet->isValid())
-                        {
+                if (m_soiree->indexFromRef(ref) == -1) {
+                    if (!tempsEstPris(champDate->dateTime(), champDureeObjet->value())) {
+                        ObjetCPObs *objet = new ObjetCPObs(ref, champDate->dateTime(), champDate->dateTime().addSecs(champDureeObjet->value() * 60));
+                        if (objet->isValid()) {
                             m_soiree->ajouterObjet(objet);
                             emit afficher(tr("L'objet a été ajouté"));
                             raffraichirListeObjet();
                         }
-                    }
-                    else
-                        QMessageBox::critical(this,tr("Objet implaçable"),tr("Vous ne pouvez pas placer un objet à cet endroit, il y en a déjà un."));
-                }
-                else
-                    QMessageBox::critical(this,tr("Objet présent"),tr("L'objet demandé est déjà présent dans la soirée."));
-            }
-            else
-                QMessageBox::critical(this,tr("Date invalide"),tr("La date que vous demandez est invalide. Veuillez réesayer."));
+                    } else
+                        QMessageBox::critical(this, tr("Objet implaçable"), tr("Vous ne pouvez pas placer un objet à cet endroit, il y en a déjà un."));
+                } else
+                    QMessageBox::critical(this, tr("Objet présent"), tr("L'objet demandé est déjà présent dans la soirée."));
+            } else
+                QMessageBox::critical(this, tr("Date invalide"), tr("La date que vous demandez est invalide. Veuillez réesayer."));
         }
     }
 }
 void InterfaceCreation::getDate()
 {
-    if(m_active)
-    {
-        if(m_vueRecherche->currentIndex().isValid())
-        {
+    if (m_active) {
+        if (m_vueRecherche->currentIndex().isValid()) {
             QDialog *fenetreDemandeDate = new QDialog;
             QPushButton *boutonValider = new QPushButton(tr("Valider"));
             QPushButton *boutonAnnuler = new QPushButton(tr("Annuler"));
             QFormLayout *layoutGrille = new QFormLayout;
-            layoutGrille->addRow(tr("Date"),champDate);
-            layoutGrille->addRow(tr("Durée d'observation"),champDureeObjet);
+            layoutGrille->addRow(tr("Date"), champDate);
+            layoutGrille->addRow(tr("Durée d'observation"), champDureeObjet);
             QHBoxLayout *layoutBoutons = new QHBoxLayout;
             layoutBoutons->addWidget(boutonValider);
             layoutBoutons->addWidget(boutonAnnuler);
@@ -232,13 +215,11 @@ void InterfaceCreation::getDate()
 }
 void InterfaceCreation::raffraichirListeObjet()
 {
-    if(m_active)
-    {
-        QSettings user(NOM_EQUIPE,NOM_PROGRAMME);
+    if (m_active) {
+        QSettings user(NOM_EQUIPE, NOM_PROGRAMME);
         m_modele = new QStandardItemModel;
         QStandardItem *reference(nullptr), *reference2(nullptr), *reference3(nullptr), *reference4(nullptr), *reference5(nullptr), *reference6(nullptr), *reference9(nullptr);
-        for(int i(0);i < m_soiree->getPlanning().count(); i++)
-        {
+        for (int i(0); i < m_soiree->getPlanning().count(); i++) {
             reference = new QStandardItem(m_soiree->getPlanning().at(i)->nomComplet());
             reference2 = new QStandardItem(m_soiree->getPlanning().at(i)->ref());
             reference3 = new QStandardItem(m_soiree->getPlanning().at(i)->ascdr());
@@ -247,16 +228,16 @@ void InterfaceCreation::raffraichirListeObjet()
             reference6 = new QStandardItem(Calculastro::abreviationToNom(m_soiree->getPlanning().at(i)->constellation()));
             reference9 = new QStandardItem(m_soiree->getPlanning().at(i)->getDebut().time().toString("hh:mm") + " à " + m_soiree->getPlanning().at(i)->getFin().time().toString("hh:mm"));
 
-            m_modele->setItem(i,0,reference);
-            m_modele->setItem(i,1,reference2);
-            m_modele->setItem(i,2,reference3);
-            m_modele->setItem(i,3,reference4);
-            m_modele->setItem(i,4,reference5);
-            m_modele->setItem(i,5,reference6);
-            m_modele->setItem(i,6,reference9);
+            m_modele->setItem(i, 0, reference);
+            m_modele->setItem(i, 1, reference2);
+            m_modele->setItem(i, 2, reference3);
+            m_modele->setItem(i, 3, reference4);
+            m_modele->setItem(i, 4, reference5);
+            m_modele->setItem(i, 5, reference6);
+            m_modele->setItem(i, 6, reference9);
 
-            if(i+1 == m_soiree->getPlanning().count()) // On met le champ de date à jour avec l'objet le plus loin dans la soirée
-                champDate->setDateTime(m_soiree->getPlanning().at(i)->getFin().addSecs(user.value("generateur/pauseMin",TEMPS_ESPACE).toInt()*60));
+            if (i + 1 == m_soiree->getPlanning().count()) // On met le champ de date à jour avec l'objet le plus loin dans la soirée
+                champDate->setDateTime(m_soiree->getPlanning().at(i)->getFin().addSecs(user.value("generateur/pauseMin", TEMPS_ESPACE).toInt() * 60));
         }
         m_modele->setHeaderData(0, Qt::Horizontal, tr("Nom"));
         m_modele->setHeaderData(1, Qt::Horizontal, tr("Référence"));
@@ -273,13 +254,10 @@ void InterfaceCreation::raffraichirListeObjet()
 }
 void InterfaceCreation::enleveObjet()
 {
-    if(m_active)
-    {
-        if(m_vue->currentIndex().isValid())
-        {
+    if (m_active) {
+        if (m_vue->currentIndex().isValid()) {
             int reponse = QMessageBox::question(nullptr, tr("Confirmer"), tr("Voulez-vous vraiment enlever l'objet de la soirée ?"), QMessageBox ::Yes | QMessageBox::No);
-            if(reponse == QMessageBox::Yes)
-            {
+            if (reponse == QMessageBox::Yes) {
                 int index = m_vue->currentIndex().row();
                 m_soiree->supprimerObjet(index);
                 emit afficher(tr("L'objet a été enlevé"));
@@ -290,11 +268,10 @@ void InterfaceCreation::enleveObjet()
 }
 bool InterfaceCreation::tempsEstPris(QDateTime temps, int duree) const
 {
-    for(int i(0);i<m_soiree->getPlanning().count();i++)
-    {
-        if(temps >= m_soiree->getPlanning().at(i)->getDebut() && temps <= m_soiree->getPlanning().at(i)->getFin())
+    for (int i(0); i < m_soiree->getPlanning().count(); i++) {
+        if (temps >= m_soiree->getPlanning().at(i)->getDebut() && temps <= m_soiree->getPlanning().at(i)->getFin())
             return true;
-        else if(temps.addSecs(duree*60) >= m_soiree->getPlanning().at(i)->getDebut() && temps.addSecs(duree*60) <= m_soiree->getPlanning().at(i)->getFin())
+        else if (temps.addSecs(duree * 60) >= m_soiree->getPlanning().at(i)->getDebut() && temps.addSecs(duree * 60) <= m_soiree->getPlanning().at(i)->getFin())
             return true;
     }
     return false;
@@ -303,20 +280,16 @@ bool InterfaceCreation::tempsEstPris(QDateTime temps, int duree) const
 }
 void InterfaceCreation::monterObjet()
 {
-    if(m_active)
-    {
-        if(m_vue->currentIndex().isValid())
-        {
-            int reponse = QMessageBox::question(nullptr, tr("Confirmer"), tr("Voulez-vous vraiment monter l'objet ?"), QMessageBox::Yes|QMessageBox::No);
-            if(reponse == QMessageBox::Yes)
-            {
+    if (m_active) {
+        if (m_vue->currentIndex().isValid()) {
+            int reponse = QMessageBox::question(nullptr, tr("Confirmer"), tr("Voulez-vous vraiment monter l'objet ?"), QMessageBox::Yes | QMessageBox::No);
+            if (reponse == QMessageBox::Yes) {
                 int ligne = m_vue->currentIndex().row();
-                QString ref = m_modele->item(ligne,1)->text();
+                QString ref = m_modele->item(ligne, 1)->text();
 
                 int index = m_soiree->indexFromRef(ref);
 
-                if(index >= 0)
-                {
+                if (index >= 0) {
                     m_soiree->monterObjet(index);
                     raffraichirListeObjet();
                     emit afficher(tr("L'objet a été monté"));
@@ -327,20 +300,16 @@ void InterfaceCreation::monterObjet()
 }
 void InterfaceCreation::descendreObjet()
 {
-    if(m_active)
-    {
-        if(m_vue->currentIndex().isValid())
-        {
-            int reponse = QMessageBox::question(nullptr, tr("Confirmer"), tr("Voulez-vous vraiment descendre l'objet ?"), QMessageBox::Yes|QMessageBox::No);
-            if(reponse == QMessageBox::Yes)
-            {
+    if (m_active) {
+        if (m_vue->currentIndex().isValid()) {
+            int reponse = QMessageBox::question(nullptr, tr("Confirmer"), tr("Voulez-vous vraiment descendre l'objet ?"), QMessageBox::Yes | QMessageBox::No);
+            if (reponse == QMessageBox::Yes) {
                 int ligne = m_vue->currentIndex().row();
-                QString ref = m_modele->item(ligne,1)->text();
+                QString ref = m_modele->item(ligne, 1)->text();
 
                 int index = m_soiree->indexFromRef(ref);
 
-                if(index >= 0)
-                {
+                if (index >= 0) {
                     m_soiree->descendreObjet(index);
                     raffraichirListeObjet();
                     emit afficher(tr("L'objet a été descendu"));
@@ -351,8 +320,7 @@ void InterfaceCreation::descendreObjet()
 }
 void InterfaceCreation::fenetrePlanete()
 {
-    if(m_active)
-    {
+    if (m_active) {
         QDialog *fenetreAjouterPlanete = new QDialog(this);
         fenetreAjouterPlanete->setWindowTitle(tr("Ajouter une planète"));
         QPushButton *boutonOkPlanete = new QPushButton(tr("Ajouter"));
@@ -385,7 +353,7 @@ void InterfaceCreation::fenetrePlanete()
 
         QFormLayout *layout = new QFormLayout;
         layout->addRow(m_vuePlanete);
-        layout->addRow(tr("Heure d'observation"),champDate);
+        layout->addRow(tr("Heure d'observation"), champDate);
         layout->addRow(tr("Durée d'observation"), champDureeObjet);
         QHBoxLayout *layoutH = new QHBoxLayout;
         layoutH->addWidget(boutonOkPlanete);
@@ -395,64 +363,51 @@ void InterfaceCreation::fenetrePlanete()
 
         connect(boutonKoPlanete, &QPushButton::clicked, fenetreAjouterPlanete, &QDialog::close);
         connect(boutonOkPlanete, &QPushButton::clicked, fenetreAjouterPlanete, &QDialog::close);
-        connect(boutonOkPlanete,  &QPushButton::clicked, this, &InterfaceCreation::ajouterPlanete);
+        connect(boutonOkPlanete, &QPushButton::clicked, this, &InterfaceCreation::ajouterPlanete);
 
         fenetreAjouterPlanete->exec();
     }
 }
 void InterfaceCreation::ajouterPlanete()
 {
-    if(m_active)
-    {
-        if(m_vuePlanete->currentIndex().isValid())
-        {
-            if(champDate->dateTime().isValid())
-            {
+    if (m_active) {
+        if (m_vuePlanete->currentIndex().isValid()) {
+            if (champDate->dateTime().isValid()) {
                 QItemSelectionModel *selection = m_vuePlanete->selectionModel();
-                QModelIndex indexElementSelectionne = m_modelePlanete->index(0,0,selection->currentIndex());
+                QModelIndex indexElementSelectionne = m_modelePlanete->index(0, 0, selection->currentIndex());
                 QVariant elementSelectionne = m_modelePlanete->data(indexElementSelectionne, Qt::DisplayRole);
 
                 QString ref(elementSelectionne.toString());
 
-                if(m_soiree->indexFromRef(ref) == -1)
-                {
-                    if(!tempsEstPris(champDate->dateTime(),champDureeObjet->value()))
-                    {
-                        ObjetPlaneteObs *planete = new ObjetPlaneteObs(ref,champDate->dateTime(),champDate->dateTime().addSecs(champDureeObjet->value()*60));
+                if (m_soiree->indexFromRef(ref) == -1) {
+                    if (!tempsEstPris(champDate->dateTime(), champDureeObjet->value())) {
+                        ObjetPlaneteObs *planete = new ObjetPlaneteObs(ref, champDate->dateTime(), champDate->dateTime().addSecs(champDureeObjet->value() * 60));
                         m_soiree->ajouterObjet(planete);
                         emit afficher(tr("La planète a bien été ajoutée"));
                         raffraichirListeObjet();
-                    }
-                    else
-                        QMessageBox::critical(this,tr("Ajout impossible"),tr("Ajout de l'objet impossible à cet endroit."));
-                }
-                else
-                    QMessageBox::critical(this,tr("Objet présent"),tr("L'objet demandé est déjà présent dans la soirée."));
-            }
-            else
-                QMessageBox::critical(this,tr("Date invalide"),tr("La date rentrée est invalide."));
-        }
-        else
-            QMessageBox::critical(this,tr("Aucune planète"),tr("Aucune planète sélectionnée."));
+                    } else
+                        QMessageBox::critical(this, tr("Ajout impossible"), tr("Ajout de l'objet impossible à cet endroit."));
+                } else
+                    QMessageBox::critical(this, tr("Objet présent"), tr("L'objet demandé est déjà présent dans la soirée."));
+            } else
+                QMessageBox::critical(this, tr("Date invalide"), tr("La date rentrée est invalide."));
+        } else
+            QMessageBox::critical(this, tr("Aucune planète"), tr("Aucune planète sélectionnée."));
     }
 }
 void InterfaceCreation::modifierObjet()
 {
-    if(m_active)
-    {
-        if(m_vue->currentIndex().isValid())
-        {
-            bool* ok = new bool;
-            int reponse = QInputDialog::getInt(nullptr,tr("Modifier la durée"),tr("Quelle est la nouvelle durée ?"),5,DUREE_OBJET_MIN,DUREE_OBJET_MAX,1,ok);
-            if(*ok == true)
-            {
+    if (m_active) {
+        if (m_vue->currentIndex().isValid()) {
+            bool *ok = new bool;
+            int reponse = QInputDialog::getInt(nullptr, tr("Modifier la durée"), tr("Quelle est la nouvelle durée ?"), 5, DUREE_OBJET_MIN, DUREE_OBJET_MAX, 1, ok);
+            if (*ok == true) {
                 int ligne = m_vue->currentIndex().row();
-                QString ref = m_modele->item(ligne,1)->text();
+                QString ref = m_modele->item(ligne, 1)->text();
                 int index = m_soiree->indexFromRef(ref);
 
-                if(index > -1)
-                {
-                    m_soiree->modifierDuree(index,reponse);
+                if (index > -1) {
+                    m_soiree->modifierDuree(index, reponse);
                     raffraichirListeObjet();
                     emit afficher(tr("L'objet a bien été modifié"));
                 }
@@ -462,9 +417,8 @@ void InterfaceCreation::modifierObjet()
 }
 void InterfaceCreation::afficherInfosObjet(QModelIndex cells)
 {
-    if(m_active)
-    {
-        QString ref = m_modele->item(cells.row(),1)->text();
+    if (m_active) {
+        QString ref = m_modele->item(cells.row(), 1)->text();
         int index = m_soiree->indexFromRef(ref);
 
         ObjetObs *objet = m_soiree->getPlanning().at(index);
@@ -475,21 +429,21 @@ void InterfaceCreation::afficherInfosObjet(QModelIndex cells)
 
         QLabel *image = new QLabel;
 
-        if(QFile::exists("icones/"+objet->ref()+".jpg"))
-            image->setPixmap(QPixmap("icones/"+objet->ref()+".jpg"));
+        if (QFile::exists("icones/" + objet->ref() + ".jpg"))
+            image->setPixmap(QPixmap("icones/" + objet->ref() + ".jpg"));
         else
             image->setPixmap(QPixmap("icones/default.png"));
 
         layout->addWidget(image);
         QVBoxLayout *layoutV = new QVBoxLayout;
-        QLabel *l_ascdr = new QLabel(tr("<strong>Ascension droite</strong> : ")+objet->ascdr());
-        QLabel *l_dec = new QLabel(tr("<strong>Déclinaison</strong> : ")+objet->declinaison());
-        QLabel *l_type = new QLabel(tr("<strong>Type</strong> : ")+objet->type());
-        QLabel *l_mag = new QLabel(tr("<strong>Magnitude</strong> : ")+QString::number(objet->magnitude()));
-        QLabel *l_cons = new QLabel(tr("<strong>Constellation</strong> : ")+Calculastro::abreviationToNom(objet->constellation()));
-        QLabel *l_taille = new QLabel(tr("<strong>Taille</strong> : ")+QString::number(objet->taille())+"'");
-        QLabel *l_hauteur = new QLabel(tr("<strong>Hauteur</strong> : ")+Calculastro::degreeToDms(m_soiree->hauteurAzimutObjet(index).at(0)));
-        QLabel *l_azimut = new QLabel(tr("<strong>Azimut</strong> : ")+Calculastro::degreeToDms(m_soiree->hauteurAzimutObjet(index).at(1)));
+        QLabel *l_ascdr = new QLabel(tr("<strong>Ascension droite</strong> : ") + objet->ascdr());
+        QLabel *l_dec = new QLabel(tr("<strong>Déclinaison</strong> : ") + objet->declinaison());
+        QLabel *l_type = new QLabel(tr("<strong>Type</strong> : ") + objet->type());
+        QLabel *l_mag = new QLabel(tr("<strong>Magnitude</strong> : ") + QString::number(objet->magnitude()));
+        QLabel *l_cons = new QLabel(tr("<strong>Constellation</strong> : ") + Calculastro::abreviationToNom(objet->constellation()));
+        QLabel *l_taille = new QLabel(tr("<strong>Taille</strong> : ") + QString::number(objet->taille()) + "'");
+        QLabel *l_hauteur = new QLabel(tr("<strong>Hauteur</strong> : ") + Calculastro::degreeToDms(m_soiree->hauteurAzimutObjet(index).at(0)));
+        QLabel *l_azimut = new QLabel(tr("<strong>Azimut</strong> : ") + Calculastro::degreeToDms(m_soiree->hauteurAzimutObjet(index).at(1)));
 
         layoutV->addWidget(l_ascdr);
         layoutV->addWidget(l_dec);
@@ -507,29 +461,27 @@ void InterfaceCreation::afficherInfosObjet(QModelIndex cells)
 }
 void InterfaceCreation::enregistrerSoiree()
 {
-    if(m_active)
-    {
+    if (m_active) {
         emit afficher(tr("Enregistrement de la soirée en cours..."));
-        if(m_soiree->shouldBeSaved()) // Si on doit réellement l'enregistrer
+        if (m_soiree->shouldBeSaved()) // Si on doit réellement l'enregistrer
         {
             m_soiree->enregistrerSoiree(); // On l'enregistre
-            QMessageBox::information(this,"Succès","Enregistrement réussi.");
+            QMessageBox::information(this, "Succès", "Enregistrement réussi.");
             griserActions();
         }
     }
 }
 void InterfaceCreation::infosSoiree()
 {
-    if(m_active)
-    {
+    if (m_active) {
         QDialog fenetreInfos;
-        QLabel *ville = new QLabel(tr("<strong>Ville</strong> : ")+m_soiree->getVille());
-        QLabel *pays = new QLabel(tr("<strong>Pays</strong> : ")+m_soiree->getPays());
-        QLabel *latitude = new QLabel(tr("<strong>Latitude</strong> : ")+Calculastro::degreeToDms(m_soiree->getLat()));
-        QLabel *longitude = new QLabel(tr("<strong>Longitude</strong> : ")+Calculastro::degreeToDms(m_soiree->getLongi()));
-        QLabel *debut = new QLabel(tr("<strong>Début</strong> : ")+m_soiree->getDebut().toString("dd/MM/yyyy hh:mm"));
-        QLabel *fin = new QLabel(tr("<strong>Fin</strong> : ")+m_soiree->getFin().toString("dd/MM/yyyy hh:mm"));
-        QLabel *nbObjets = new QLabel(tr("<strong>Nombre d'objets</strong> : ")+QString::number(m_soiree->getPlanning().count()));
+        QLabel *ville = new QLabel(tr("<strong>Ville</strong> : ") + m_soiree->getVille());
+        QLabel *pays = new QLabel(tr("<strong>Pays</strong> : ") + m_soiree->getPays());
+        QLabel *latitude = new QLabel(tr("<strong>Latitude</strong> : ") + Calculastro::degreeToDms(m_soiree->getLat()));
+        QLabel *longitude = new QLabel(tr("<strong>Longitude</strong> : ") + Calculastro::degreeToDms(m_soiree->getLongi()));
+        QLabel *debut = new QLabel(tr("<strong>Début</strong> : ") + m_soiree->getDebut().toString("dd/MM/yyyy hh:mm"));
+        QLabel *fin = new QLabel(tr("<strong>Fin</strong> : ") + m_soiree->getFin().toString("dd/MM/yyyy hh:mm"));
+        QLabel *nbObjets = new QLabel(tr("<strong>Nombre d'objets</strong> : ") + QString::number(m_soiree->getPlanning().count()));
 
         QVBoxLayout *layout = new QVBoxLayout;
         layout->addWidget(pays);
@@ -548,37 +500,32 @@ void InterfaceCreation::infosSoiree()
 }
 void InterfaceCreation::griserActions()
 {
-    if(m_active)
-    {
+    if (m_active) {
         // BOUTON AJOUT D'OBJET
-        if(m_vueRecherche->currentIndex().isValid()) // Si on est sur un index valide
+        if (m_vueRecherche->currentIndex().isValid()) // Si on est sur un index valide
             ajouterObjet->setDisabled(false); // On montre l'action
         else
             ajouterObjet->setDisabled(true); // Sinon on la grise
 
         // BOUTON D'ACTIONS
-        if(m_vue->currentIndex().isValid())
-        {
-            if(m_soiree->getPlanning().count() > 1) { // Si il y a plus d'un objet, on peut afficher
+        if (m_vue->currentIndex().isValid()) {
+            if (m_soiree->getPlanning().count() > 1) { // Si il y a plus d'un objet, on peut afficher
                 m_listeActions->griserActionMonterObjet(false);
                 m_listeActions->griserActionDescendreObjet(false);
-            }
-            else { // Sinon, on ne peut pas les afficher, on grise
+            } else { // Sinon, on ne peut pas les afficher, on grise
                 m_listeActions->griserActionMonterObjet(true);
                 m_listeActions->griserActionDescendreObjet(true);
             }
 
-            if(m_vue->currentIndex().row()+1 == m_soiree->getPlanning().count()) // Si on est au dernier item
+            if (m_vue->currentIndex().row() + 1 == m_soiree->getPlanning().count()) // Si on est au dernier item
                 m_listeActions->griserActionDescendreObjet(true);
-            else if(m_vue->currentIndex().row() == 0) // Si on est au premier item, on ne peut pas monter
+            else if (m_vue->currentIndex().row() == 0) // Si on est au premier item, on ne peut pas monter
                 m_listeActions->griserActionMonterObjet(true);
 
             m_listeActions->griserActionChangerDureeObjet(false);
             m_listeActions->griserActionAjouterPlanete(false);
             enleverObjet->setDisabled(false);
-        }
-        else
-        {
+        } else {
             m_listeActions->griserActionMonterObjet(true);
             m_listeActions->griserActionDescendreObjet(true);
             m_listeActions->griserActionChangerDureeObjet(true);
@@ -601,10 +548,9 @@ void InterfaceCreation::griserActions()
         m_listeActions->griserCarteCouleurFond(true);
         m_listeActions->griserCarteCouleurLegende(true);
         m_listeActions->griserCarteCouleurObjet(true);
-
     }
 }
-Soiree* InterfaceCreation::getSoiree()
+Soiree *InterfaceCreation::getSoiree()
 {
     return m_soiree;
 }

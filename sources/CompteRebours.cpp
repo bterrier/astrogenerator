@@ -11,7 +11,7 @@ CompteRebours::CompteRebours()
     m_lcd->display(0);
     m_lcd->setSegmentStyle(QLCDNumber::Filled);
     QPalette palette = m_lcd->palette();
-    palette.setColor(QPalette::Light,QColor(255,255,255));
+    palette.setColor(QPalette::Light, QColor(255, 255, 255));
     m_lcd->setPalette(palette);
     timer = new QTimer;
 
@@ -26,7 +26,7 @@ void CompteRebours::enlever()
 {
     secondeRestant--;
     m_lcd->display(secToMinSec(secondeRestant));
-    if(secondeRestant==0)
+    if (secondeRestant == 0)
         emit fin();
 }
 void CompteRebours::commencer(int secondes)
@@ -37,20 +37,20 @@ void CompteRebours::commencer(int secondes)
 }
 QString CompteRebours::secToMinSec(int sec) const
 {
-    int minute = int(floor(sec/60));
-    int secNew = sec - minute*60;
+    int minute = int(floor(sec / 60));
+    int secNew = sec - minute * 60;
 
     QString resultat;
 
-    if(minute < 10)
-        resultat = "0"+QString::number(minute);
+    if (minute < 10)
+        resultat = "0" + QString::number(minute);
     else
         resultat = QString::number(minute);
 
     resultat += ":";
 
-    if(secNew < 10)
-        resultat += "0"+QString::number(secNew);
+    if (secNew < 10)
+        resultat += "0" + QString::number(secNew);
     else
         resultat += QString::number(secNew);
 

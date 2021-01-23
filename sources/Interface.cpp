@@ -1,6 +1,7 @@
 #include "Interface.h"
 
-Interface::Interface(ActionsFenetre *listeActions, QWidget *parent) : QWidget(parent)
+Interface::Interface(ActionsFenetre *listeActions, QWidget *parent) :
+    QWidget(parent)
 {
     m_listeActions = listeActions;
 }
@@ -11,7 +12,7 @@ void Interface::slotFermer()
 void Interface::setActive(bool active)
 {
     m_active = active;
-    if(active) // Si l'interface devient active, on actualise les actions
+    if (active) // Si l'interface devient active, on actualise les actions
         griserActions();
 }
 bool Interface::isActive()
