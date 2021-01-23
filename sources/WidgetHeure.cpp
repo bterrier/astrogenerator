@@ -1,20 +1,18 @@
 #include "WidgetHeure.h"
 
-WidgetHeure::WidgetHeure()
+WidgetHeure::WidgetHeure(QWidget *parent) :
+    QLCDNumber(parent),
+    m_timer(this)
 {
     setDigitCount(5);
-    tempsActuel = QTime::currentTime();
-    QString texte = tempsActuel.toString("hh:mm");
-    display(texte);
+    refresh();
 
-
-    timer = new QTimer;
-    connect(timer, &QTimer::timeout, this, &WidgetHeure::ajouterMin);
-    timer->start(60000);
+    connect(&m_timer, &QTimer::timeout, this, &WidgetHeure::refresh);
+    m_timer.start(10'000);
 }
-void WidgetHeure::ajouterMin()
+void WidgetHeure::refresh()
 {
-    tempsActuel = tempsActuel.addSecs(60);
-    QString texte = tempsActuel.toString("hh:mm");
-    display(texte);
+    const QTime time = QTime::currentTime();
+    const QString text = time.toString("hh:mm");
+    display(text);
 }
