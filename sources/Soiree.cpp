@@ -12,7 +12,6 @@
 #include <QMessageBox>
 
 #include <QtXml>
-#include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QGraphicsView>
 #include <QFileDialog>
@@ -170,14 +169,7 @@ void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime 
     else if(constellation.length() == 3)
         sql = " AND constellation = '"+constellation+"'";
 
-    // mettre un else ici pour gérer le cas des constellations multiples
-
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setHostName("localhost");
-    db.setDatabaseName("dbastrogenerator");
-    db.setUserName("univers2");
-    db.setPassword("iwxldmkdgpf");
-    db.open();
+    // mettre un else ici pour gÃ©rer le cas des constellations multiples
 
     QMap<double,QString> objets_visibles1;
     ObjetCP *objet(nullptr);

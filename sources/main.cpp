@@ -3,6 +3,9 @@
 #include <QLibraryInfo>
 #include <QLocale>
 #include <QMessageBox>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QStringBuilder>
 #include <QTranslator>
 
 #include "Calculastro.h"
@@ -11,6 +14,31 @@
 #include "FenPrincipal.h"
 #include "Objet.h"
 #include "Soiree.h"
+
+
+static void initDatabase()
+{
+    const QString dbPath = QCoreApplication::applicationDirPath() % "/dbastrogenerator";
+    const QFileInfo fi{ dbPath };
+    if (!fi.isReadable()) {
+        QMessageBox::critical(nullptr, QObject::tr("Error"),
+                              QObject::tr("Missing database: %1").arg(QDir::toNativeSeparators(dbPath)));
+        qFatal("Database file does not exist!");
+    }
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setHostName("localhost");
+    db.setDatabaseName(dbPath);
+    db.setUserName("univers2");
+    db.setPassword("iwxldmkdgpf");
+
+    if (!db.open()) {
+        QMessageBox::critical(nullptr, QObject::tr("Error"),
+                              QObject::tr("Failed to open database: %1\n"
+                                          "Error: %2").arg(db.lastError().text(), QDir::toNativeSeparators(db.databaseName())));
+        qFatal("Failed to open database!");
+    }
+}
 
 int main(int argc, char *argv[])
 {
@@ -31,6 +59,8 @@ int main(int argc, char *argv[])
     if(!translator.load(QString("qt_")+locale, "translations"))
         QMessageBox::critical(nullptr,QObject::tr("Traduction"),QObject::tr("L'application ne fonctionnera pas correctement car le fichier : translations/qt_")+locale+QObject::tr(".qm est introuvable."));
     app.installTranslator(&translator);
+
+    initDatabase();
 
     FenPrincipal fenetre;
     fenetre.show();

@@ -17,7 +17,6 @@
 #include <QCloseEvent>
 #include <QMessageBox>
 #include <QDesktopServices>
-#include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QStandardPaths>
@@ -38,17 +37,6 @@ FenPrincipal::FenPrincipal()
     if(!QDir::setCurrent(QCoreApplication::applicationDirPath()+"/"))
     {
         QMessageBox::critical(this,tr("Résolution des liens"),tr("Problème lors de la résolution des liens, le programme ne peut pas fonctionner correctement."));
-        qApp->quit();
-    }
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setHostName("localhost");
-    db.setDatabaseName("dbastrogenerator");
-    db.setUserName("univers2");
-    db.setPassword("iwxldmkdgpf");
-    bool ok = db.open();
-    if(!ok)
-    {
-        QMessageBox::critical(this,tr("Erreur"),tr("Base de données impossible à ouvrir :")+ db.lastError().text());
         qApp->quit();
     }
 
