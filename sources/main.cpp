@@ -1,17 +1,23 @@
 #include <QApplication>
 #include <QDir>
+#include <QLibraryInfo>
+#include <QLocale>
 #include <QMessageBox>
 #include <QTranslator>
-#include <QLocale>
-#include <QLibraryInfo>
-#include "FenPrincipal.h"
+
 #include "Calculastro.h"
 #include "Carteciel.h"
+#include "Constantes.h"
+#include "FenPrincipal.h"
 #include "Objet.h"
 #include "Soiree.h"
 
 int main(int argc, char *argv[])
 {
+    QCoreApplication::setApplicationName(NOM_PROGRAMME);
+    QCoreApplication::setApplicationVersion(VERSION_STRING);
+    QCoreApplication::setOrganizationName(NOM_EQUIPE);
+
     QApplication app(argc, argv);
 
     if(!QDir::setCurrent(QCoreApplication::applicationDirPath()+"/"))
