@@ -24,7 +24,6 @@ public:
     static double julianDay(QDate date, QTime heure); // OK
     static double julianDay2000(QDate date, QTime heure); // OK
     static double partieDecimal(double val); // OK
-    static double partieEntiere(double val); // OK
     static double heureSiderale(QDate date, QTime heure, bool apparent = false); // OK
     static double toAngleHoraireDegree(QDate date, QTime heure, double ra, double longi); // OK
     static QVector<double> hauteurAzimutDegree(QDate const &date, QTime const &heure, double ra, double dec, double lat, double longi);

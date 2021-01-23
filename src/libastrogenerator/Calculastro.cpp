@@ -148,14 +148,14 @@ double Calculastro::julianDay(QDate date, QTime heure) // OK
         y -= 1;
         m += 12;
     }
-    A = partieEntiere(y / 100);
-    B = 2 - A + partieEntiere(A / 4);
+    A = std::trunc(y / 100);
+    B = 2 - A + std::trunc(A / 4);
     T = h / 24.0 + min / 1440.0 + s / 86400.0;
 
     if (y < 1582) // Si on est encore dans le calendrier Julien
         B = 0;
 
-    jd = partieEntiere(365.25 * (y + 4716)) + partieEntiere(30.6001 * (m + 1)) + d + T + B - 1524.5;
+    jd = std::trunc(365.25 * (y + 4716)) + std::trunc(30.6001 * (m + 1)) + d + T + B - 1524.5;
     return jd;
 }
 double Calculastro::julianDay2000(QDate date, QTime heure)
@@ -172,13 +172,7 @@ double Calculastro::partieDecimal(double val)
     else
         return val - floor(val);
 }
-double Calculastro::partieEntiere(double val)
-{
-    if (val < 0)
-        return ceil(val);
-    else
-        return floor(val);
-}
+
 double Calculastro::heureSiderale(QDate date, QTime heure, bool apparent)
 { // La méthode de calcul présentée ici est celle de l'exemple 11.b p.85
     double T(0), JD(0), Oo(0), HSH(0);
