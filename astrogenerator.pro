@@ -26,7 +26,6 @@ HEADERS += sources/ActionsFenetre.h \
            sources/Constantes.h \
            sources/Diaporama.h \
            sources/FenCreerSoiree.h \
-           sources/Fenetre.h \
            sources/FenetreBDD.h \
            sources/FenInfosCreation.h \
            sources/FenPersonaliser.h \
@@ -50,7 +49,6 @@ SOURCES += sources/ActionsFenetre.cpp \
            sources/CompteRebours.cpp \
            sources/Diaporama.cpp \
            sources/FenCreerSoiree.cpp \
-           sources/Fenetre.cpp \
            sources/FenetreBDD.cpp \
            sources/FenInfosCreation.cpp \
            sources/FenPersonaliser.cpp \
