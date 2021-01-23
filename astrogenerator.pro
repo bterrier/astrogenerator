@@ -43,8 +43,7 @@ HEADERS += sources/ActionsFenetre.h \
            sources/ObjetPlaneteObs.h \
            sources/Onglet.h \
            sources/Soiree.h \
-           sources/WidgetHeure.h \
-           sources/WidgetOnglet.h
+           sources/WidgetHeure.h
 SOURCES += sources/ActionsFenetre.cpp \
            sources/Calculastro.cpp \
            sources/Carteciel.cpp \
@@ -69,8 +68,7 @@ SOURCES += sources/ActionsFenetre.cpp \
            sources/ObjetPlaneteObs.cpp \
            sources/Onglet.cpp \
            sources/Soiree.cpp \
-           sources/WidgetHeure.cpp \
-           sources/WidgetOnglet.cpp
+           sources/WidgetHeure.cpp
 TRANSLATIONS += sources/astroGenerator_en.ts
 
 RC_ICONS = logoastrogenerator.ico
