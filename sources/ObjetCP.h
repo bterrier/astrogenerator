@@ -5,13 +5,15 @@
 
 class ObjetCP : public Objet
 {
+    Q_OBJECT
+
 public:
     ObjetCP();
     explicit ObjetCP(QString ref);
     int ngc() const;
     int messier() const;
     QString ref() const;
-    QString nomComplet() const;
+    QString nomComplet(bool) const override;
 
 protected:
     int m_ngc;

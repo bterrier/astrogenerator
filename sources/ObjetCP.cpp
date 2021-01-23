@@ -71,7 +71,7 @@ int ObjetCP::messier() const
 {
     return m_messier;
 }
-QString ObjetCP::nomComplet() const
+QString ObjetCP::nomComplet(bool) const
 {
     QString retour;
 

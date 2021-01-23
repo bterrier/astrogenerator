@@ -26,7 +26,8 @@ public:
     static double dmsToDegree(QString val);
     static double hmsToDegree(QString val);
     bool isValid() const;
-    virtual QString nomComplet(bool abrege = false) const;
+    virtual QString nomComplet(bool abrege) const;
+    QString nomComplet() const { return nomComplet(false); }
     QString ref() const;
 
 protected:
