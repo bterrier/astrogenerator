@@ -288,20 +288,7 @@ std::vector<double> Calculastro::RaDecPrecession(int year, double ra, double dec
     RaDec.push_back(dec);
     return RaDec;
 }
-QString Calculastro::monthNumToName(int i)
-{
-    if(i<=12 && i >= 1)
-    {
-        QStringList mois;
-        mois << QObject::tr("Janvier") << QObject::tr("Février") << QObject::tr("Mars") << QObject::tr("Avril") << QObject::tr("Mai") << QObject::tr("Juin") << QObject::tr("Juillet") << QObject::tr("Août") << QObject::tr("Septembre") << QObject::tr("Octobre") << QObject::tr("Novembre") << QObject::tr("Décembre");
-        return mois.at(i-1);
-    }
-    else
-    {
-        QMessageBox::information(nullptr,QObject::tr("Mois introuvable"),QObject::tr("Une erreur avec la reconnaissance du mois s'est produite."));
-        return "Janvier";
-    }
-}
+
 QString Calculastro::abreviationToNom(QString abreviation, bool inverse)
 {
     QMap<QString,QString> constellations;

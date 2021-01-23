@@ -30,7 +30,6 @@ public:
     static double toAngleHoraireDegree(QDate date, QTime heure, double ra, double longi); // OK
     static QVector<double> hauteurAzimutDegree(QDate const& date, QTime const& heure, double ra, double dec, double lat, double longi);
     static std::vector<double> RaDecPrecession(int year, double ra, double dec);
-    static QString monthNumToName(int i);
     static QString abreviationToNom(QString abreviation, bool inverse = false);
     static QVector<double> nutationObliquity(double j2000); // OK
     static QVector<double> coordonneesPlanetes(QDate date, QTime heure, QString planete);

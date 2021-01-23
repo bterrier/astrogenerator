@@ -945,7 +945,7 @@ bool Soiree::paintPdf(QPrinter *printer)
             font.setWeight(QFont::Bold);
             painter.setFont(font);
             // On écrit le titre de la soirée
-            painter.drawText(QRectF(52.1*k-mG*k,132.5*k-mT*k,105*k,20*k),Qt::AlignCenter,tr("Soirée d'observation\n")+m_debut.toLocalTime().toString("d")+" "+Calculastro::monthNumToName(m_debut.toLocalTime().toString("M").toInt())+" "+m_debut.toLocalTime().toString("yyyy"));
+            painter.drawText(QRectF(52.1*k-mG*k,132.5*k-mT*k,105*k,20*k),Qt::AlignCenter,tr("Soirée d'observation\n")+m_debut.toLocalTime().toString("d")+" "+QLocale().monthName(m_debut.toLocalTime().date().month())+" "+m_debut.toLocalTime().toString("yyyy"));
             // On écrit l'horaire
             font.setWeight(QFont::Normal);
             font.setPointSize(3*k);
