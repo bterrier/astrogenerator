@@ -20,12 +20,12 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
     setMinimumWidth(600);
 
     QHBoxLayout *layoutPrincipal = new QHBoxLayout;
-//        layoutPrincipal->setAlignment(Qt::AlignLeft);
+    //        layoutPrincipal->setAlignment(Qt::AlignLeft);
 
     m_menu = new QListWidget;
-        m_menu->setMaximumWidth(150);
-        m_menu->setMinimumWidth(150);
-        m_menu->setSelectionRectVisible(false);
+    m_menu->setMaximumWidth(150);
+    m_menu->setMinimumWidth(150);
+    m_menu->setSelectionRectVisible(false);
 
     QStringList listeMenu;
     listeMenu << tr("Localisation") << tr("Télescope") << tr("Oculaires") << tr("Générateur") << tr("Carte du ciel");
@@ -36,364 +36,364 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
 
     // On crée toutes les pages
 
-        // PAGE LOCALISATION
+    // PAGE LOCALISATION
 
-        QGroupBox *groupBoxLocalisation = new QGroupBox(tr("Localisation"));
-        QGroupBox *groupBoxCoordonnees = new QGroupBox(tr("Coordonnées"));
+    QGroupBox *groupBoxLocalisation = new QGroupBox(tr("Localisation"));
+    QGroupBox *groupBoxCoordonnees = new QGroupBox(tr("Coordonnées"));
 
-        QFormLayout *layoutFormLocalisation  = new QFormLayout;
-        QFormLayout *layoutFormCoordonnees  = new QFormLayout;
+    QFormLayout *layoutFormLocalisation  = new QFormLayout;
+    QFormLayout *layoutFormCoordonnees  = new QFormLayout;
 
-        m_listePays = new QComboBox;
+    m_listePays = new QComboBox;
 
-        QSqlQuery *requete = new QSqlQuery;
-        requete->exec("SELECT pays FROM villes_monde GROUP BY pays ORDER BY pays");
-        while(requete->next())
-            m_listePays->addItem(requete->value(0).toString());
+    QSqlQuery *requete = new QSqlQuery;
+    requete->exec("SELECT pays FROM villes_monde GROUP BY pays ORDER BY pays");
+    while(requete->next())
+        m_listePays->addItem(requete->value(0).toString());
 
-        layoutFormLocalisation->addRow("&Pays",m_listePays);
+    layoutFormLocalisation->addRow("&Pays",m_listePays);
 
 
-        m_listeDept = new QSpinBox;
-            m_listeDept->setMinimum(1);
-            m_listeDept->setMaximum(95);
+    m_listeDept = new QSpinBox;
+    m_listeDept->setMinimum(1);
+    m_listeDept->setMaximum(95);
 
-        m_listeVilles = new QComboBox;
+    m_listeVilles = new QComboBox;
 
-        layoutFormLocalisation->addRow(tr("&Département"),m_listeDept);
-        layoutFormLocalisation->addRow(tr("&Ville"),m_listeVilles);
+    layoutFormLocalisation->addRow(tr("&Département"),m_listeDept);
+    layoutFormLocalisation->addRow(tr("&Ville"),m_listeVilles);
 
-        connect(m_listePays, qOverload<const QString &>(&QComboBox::currentIndexChanged), this, &FenPreferences::changerVilles);
-        connect(m_listeDept, qOverload<int>(&QSpinBox::valueChanged), this, [this](){ changerVilles(); });
-        connect(m_listeVilles, qOverload<const QString &>(&QComboBox::currentIndexChanged), this, &FenPreferences::changerCoordonnees);
-
-        groupBoxLocalisation->setLayout(layoutFormLocalisation);
+    connect(m_listePays, qOverload<const QString &>(&QComboBox::currentIndexChanged), this, &FenPreferences::changerVilles);
+    connect(m_listeDept, qOverload<int>(&QSpinBox::valueChanged), this, [this](){ changerVilles(); });
+    connect(m_listeVilles, qOverload<const QString &>(&QComboBox::currentIndexChanged), this, &FenPreferences::changerCoordonnees);
+
+    groupBoxLocalisation->setLayout(layoutFormLocalisation);
 
-        m_latitude = new QDoubleSpinBox;
-            m_latitude->setDecimals(3);
-            m_latitude->setMaximum(90);
-            m_latitude->setMinimum(-90);
-        m_longitude = new QDoubleSpinBox;
-            m_longitude->setDecimals(3);
-            m_longitude->setMaximum(180);
-            m_longitude->setMinimum(-180);
-
-        layoutFormCoordonnees->addRow(tr("L&atitude"),m_latitude);
-        layoutFormCoordonnees->addRow(tr("L&ongitude"),m_longitude);
-
-        groupBoxCoordonnees->setLayout(layoutFormCoordonnees);
-
-        QWidget *page_localisation = new QWidget;
-        page_localisation->setFixedWidth(350);
-        QVBoxLayout *layoutLocalisation = new QVBoxLayout;
-            layoutLocalisation->addWidget(groupBoxLocalisation);
-            layoutLocalisation->addWidget(groupBoxCoordonnees);
-        page_localisation->setLayout(layoutLocalisation);
-
-        m_listePages.push_back(page_localisation);
-
-        layoutPrincipal->addWidget(page_localisation);
-
-
-        // PAGE TELESCOPE
-        QGroupBox *groupBoxTelescopeListe = new QGroupBox(tr("Liste des télescopes"));
-        QGroupBox *groupBoxTelescopeAdd = new QGroupBox(tr("Ajouter des télescopes"));
-
-        QFormLayout *layoutFormTelescopeListe = new QFormLayout;
-        QFormLayout *layoutFormTelescopeAdd = new QFormLayout;
-
-        m_listeTelescope = new QComboBox;
-        requete->exec("SELECT nom FROM telescope ORDER BY nom");
-        while(requete->next())
-            m_listeTelescope->addItem(requete->value(0).toString());
-
-        m_diametre = new QSpinBox;
-            m_diametre->setMaximum(DIAMETRE_MAXIMUM);
-            m_diametre->setValue(DIAMETRE_DEFAULT);
-            m_diametre->setMinimum(DIAMETRE_MINIMUM);
-        m_focale = new QSpinBox;
-            m_focale->setMinimum(FOCALE_MINIMUM);
-            m_focale->setValue(FOCALE_DEFAULT);
-            m_focale->setMaximum(FOCALE_MAXIMUM);
-
-        m_nomTelescope = new QLineEdit;
-        m_boutonAjouterTelescope = new QPushButton(tr("Ajouter le télescope"));
-        connect(m_boutonAjouterTelescope, &QPushButton::clicked, this, &FenPreferences::ajouterTelescope);
-
-        m_marque = new QComboBox;
-        QStringList listeMarque;
-        requete->exec("SELECT marque FROM telescope GROUP BY marque ORDER BY marque");
-        while(requete->next())
-            listeMarque << requete->value(0).toString();
-        m_marque->addItems(listeMarque);
-
-        layoutFormTelescopeListe->addRow(tr("Liste des &télescopes"),m_listeTelescope);
-        groupBoxTelescopeListe->setLayout(layoutFormTelescopeListe);
-
-        layoutFormTelescopeAdd->addRow(tr("Nom du télescope (unique)"),m_nomTelescope);
-        layoutFormTelescopeAdd->addRow(tr("Diamètre (mm)"),m_diametre);
-        layoutFormTelescopeAdd->addRow(tr("Focale (mm)"),m_focale);
-        layoutFormTelescopeAdd->addRow(tr("Marque"),m_marque);
-        layoutFormTelescopeAdd->addWidget(m_boutonAjouterTelescope);
-        groupBoxTelescopeAdd->setLayout(layoutFormTelescopeAdd);
-
-        QVBoxLayout *layoutTelescope = new QVBoxLayout;
-            layoutTelescope->addWidget(groupBoxTelescopeListe);
-            layoutTelescope->addWidget(groupBoxTelescopeAdd);
-
-        QWidget *page_telescope = new QWidget;
-        page_telescope->setFixedWidth(350);
-        page_telescope->setLayout(layoutTelescope);
-        page_telescope->setVisible(false);
-        m_listePages.push_back(page_telescope);
-        layoutPrincipal->addWidget(page_telescope);
-
-
-        // PAGE OCULAIRES
-        QGroupBox *groupBoxOculaireListe = new QGroupBox(tr("Liste des oculaires"));
-        QHBoxLayout *layoutOculaires = new QHBoxLayout;
-            QVBoxLayout *layoutV1 = new QVBoxLayout;
-            QVBoxLayout *layoutV2 = new QVBoxLayout;
-            QVBoxLayout *layoutV3 = new QVBoxLayout;
-
-            for(int i(0); i < 24; i++)
-            {
-                QCheckBox *b = new QCheckBox(QString::number(i+6)+tr(" mm","Symbole des millimètres (laisser l'espace avant)"));
-                m_listeOculaires.push_back(b);
-
-                if(i < 8)
-                    layoutV1->addWidget(b);
-                else if(i < 16)
-                    layoutV2->addWidget(b);
-                else
-                    layoutV3->addWidget(b);
-
-            }
-            layoutOculaires->addLayout(layoutV1);
-            layoutOculaires->addLayout(layoutV2);
-            layoutOculaires->addLayout(layoutV3);
-
-            QHBoxLayout *layoutObligatoire = new QHBoxLayout;
-            groupBoxOculaireListe->setLayout(layoutOculaires);
-            layoutObligatoire->addWidget(groupBoxOculaireListe);
-
-        QWidget* page_oculaires = new QWidget;
-        page_oculaires->setFixedWidth(350);
-        page_oculaires->setLayout(layoutObligatoire);
-        page_oculaires->setVisible(false);
-        m_listePages.push_back(page_oculaires);
-        layoutPrincipal->addWidget(page_oculaires);
-
-        // PAGE GENERATEUR
-
-        QGroupBox *groupBoxGenerateurParam = new QGroupBox(tr("Paramètres d'observation des objets"));
-        QGroupBox *groupBoxGenerateurPriorite = new QGroupBox(tr("Priorité des objets"));
-
-        QFormLayout *layoutGenerateurParam = new QFormLayout;
-        QFormLayout *layoutGenerateurPriorite = new QFormLayout;
-
-        QHBoxLayout *layoutHauteurMinimum = new QHBoxLayout;
-        QHBoxLayout *layoutPauseMinimum = new QHBoxLayout;
-        QHBoxLayout *layoutNoteAmasGlobulaire = new QHBoxLayout;
-        QHBoxLayout *layoutNoteAmasNebuleuse = new QHBoxLayout;
-        QHBoxLayout *layoutNoteAmasOuvert = new QHBoxLayout;
-        QHBoxLayout *layoutNoteNebuleusePlanetaire = new QHBoxLayout;
-        QHBoxLayout *layoutNoteNebuleuseReflection = new QHBoxLayout;
-        QHBoxLayout *layoutNoteEtoileDouble = new QHBoxLayout;
-        QHBoxLayout *layoutNoteEtoileTriple = new QHBoxLayout;
-        QHBoxLayout *layoutNoteGalaxie = new QHBoxLayout;
-
-        m_labelHauteurMinimum = new QLabel;
-        m_labelPauseMinimum = new QLabel;
-        m_labelNoteAmasGlobulaire = new QLabel;
-        m_labelNoteAmasNebuleuse = new QLabel;
-        m_labelNoteNebuleusePlanetaire = new QLabel;
-        m_labelNoteNebuleuseReflection = new QLabel;
-        m_labelNoteEtoileDouble = new QLabel;
-        m_labelNoteEtoileTriple = new QLabel;
-        m_labelNoteGalaxie = new QLabel;
-        m_labelNoteAmasOuvert = new QLabel;
-
-        m_pauseMinimum = new QSlider(Qt::Horizontal);
-            m_pauseMinimum->setMinimum(PAUSE_MINIMUM_OBJET);
-            m_pauseMinimum->setMaximum(PAUSE_MAXIMUM_OBJET);
-        m_hauteurMinimum = new QSlider(Qt::Horizontal);
-            m_hauteurMinimum->setMinimum(0);
-            m_hauteurMinimum->setMaximum(70);
-        m_noteAmasGlobulaire = new QSlider(Qt::Horizontal);
-            m_noteAmasGlobulaire->setMinimum(0);
-            m_noteAmasGlobulaire->setMaximum(15);
-        m_noteAmasNebuleuse = new QSlider(Qt::Horizontal);
-            m_noteAmasNebuleuse->setMinimum(0);
-            m_noteAmasNebuleuse->setMaximum(15);
-        m_noteNebuleusePlanetaire = new QSlider(Qt::Horizontal);
-            m_noteNebuleusePlanetaire->setMinimum(0);
-            m_noteNebuleusePlanetaire->setMaximum(15);
-        m_noteNebuleuseReflection = new QSlider(Qt::Horizontal);
-            m_noteNebuleuseReflection->setMinimum(0);
-            m_noteNebuleuseReflection->setMaximum(15);
-        m_noteEtoileDouble = new QSlider(Qt::Horizontal);
-            m_noteEtoileDouble->setMinimum(0);
-            m_noteEtoileDouble->setMaximum(15);
-        m_noteEtoileTriple = new QSlider(Qt::Horizontal);
-            m_noteEtoileTriple->setMinimum(0);
-            m_noteEtoileTriple->setMaximum(15);
-        m_noteGalaxie = new QSlider(Qt::Horizontal);
-            m_noteGalaxie->setMinimum(0);
-            m_noteGalaxie->setMaximum(15);
-        m_noteAmasOuvert = new QSlider(Qt::Horizontal);
-            m_noteAmasOuvert->setMinimum(0);
-            m_noteAmasOuvert->setMaximum(15);
-
-        connect(m_hauteurMinimum, &QSlider::valueChanged, m_labelHauteurMinimum, qOverload<int>(&QLabel::setNum));
-        connect(m_pauseMinimum, &QSlider::valueChanged, m_labelPauseMinimum, qOverload<int>(&QLabel::setNum));
-        connect(m_noteAmasGlobulaire, &QSlider::valueChanged, m_labelNoteAmasGlobulaire, qOverload<int>(&QLabel::setNum));
-        connect(m_noteAmasNebuleuse, &QSlider::valueChanged, m_labelNoteAmasNebuleuse, qOverload<int>(&QLabel::setNum));
-        connect(m_noteNebuleuseReflection, &QSlider::valueChanged, m_labelNoteNebuleuseReflection, qOverload<int>(&QLabel::setNum));
-        connect(m_noteNebuleusePlanetaire, &QSlider::valueChanged, m_labelNoteNebuleusePlanetaire, qOverload<int>(&QLabel::setNum));
-        connect(m_noteEtoileDouble, &QSlider::valueChanged, m_labelNoteEtoileDouble, qOverload<int>(&QLabel::setNum));
-        connect(m_noteEtoileTriple, &QSlider::valueChanged, m_labelNoteEtoileTriple, qOverload<int>(&QLabel::setNum));
-        connect(m_noteAmasOuvert, &QSlider::valueChanged, m_labelNoteAmasOuvert, qOverload<int>(&QLabel::setNum));
-        connect(m_noteGalaxie, &QSlider::valueChanged, m_labelNoteGalaxie, qOverload<int>(&QLabel::setNum));
-
-        layoutHauteurMinimum->addWidget(m_hauteurMinimum);
-        layoutHauteurMinimum->addWidget(m_labelHauteurMinimum);
-        layoutHauteurMinimum->setAlignment(Qt::AlignLeft);
-
-        layoutPauseMinimum->addWidget(m_pauseMinimum);
-        layoutPauseMinimum->addWidget(m_labelPauseMinimum);
-        layoutPauseMinimum->setAlignment(Qt::AlignLeft);
-
-        layoutNoteAmasGlobulaire->addWidget(m_noteAmasGlobulaire);
-        layoutNoteAmasGlobulaire->addWidget(m_labelNoteAmasGlobulaire);
-        layoutNoteAmasGlobulaire->setAlignment(Qt::AlignLeft);
-
-        layoutNoteAmasNebuleuse->addWidget(m_noteAmasNebuleuse);
-        layoutNoteAmasNebuleuse->addWidget(m_labelNoteAmasNebuleuse);
-        layoutNoteAmasNebuleuse->setAlignment(Qt::AlignLeft);
-
-        layoutNoteAmasOuvert->addWidget(m_noteAmasOuvert);
-        layoutNoteAmasOuvert->addWidget(m_labelNoteAmasOuvert);
-        layoutNoteAmasOuvert->setAlignment(Qt::AlignLeft);
-
-        layoutNoteNebuleusePlanetaire->addWidget(m_noteNebuleusePlanetaire);
-        layoutNoteNebuleusePlanetaire->addWidget(m_labelNoteNebuleusePlanetaire);
-        layoutNoteNebuleusePlanetaire->setAlignment(Qt::AlignLeft);
-
-        layoutNoteNebuleuseReflection->addWidget(m_noteNebuleuseReflection);
-        layoutNoteNebuleuseReflection->addWidget(m_labelNoteNebuleuseReflection);
-        layoutNoteNebuleuseReflection->setAlignment(Qt::AlignLeft);
-
-        layoutNoteEtoileDouble->addWidget(m_noteEtoileDouble);
-        layoutNoteEtoileDouble->addWidget(m_labelNoteEtoileDouble);
-        layoutNoteEtoileDouble->setAlignment(Qt::AlignLeft);
-
-        layoutNoteEtoileTriple->addWidget(m_noteEtoileTriple);
-        layoutNoteEtoileTriple->addWidget(m_labelNoteEtoileTriple);
-        layoutNoteEtoileTriple->setAlignment(Qt::AlignLeft);
-
-        layoutNoteGalaxie->addWidget(m_noteGalaxie);
-        layoutNoteGalaxie->addWidget(m_labelNoteGalaxie);
-        layoutNoteGalaxie->setAlignment(Qt::AlignLeft);
-
-        layoutGenerateurParam->addRow(tr("Hauteur minimum (en °)"),layoutHauteurMinimum);
-        layoutGenerateurParam->addRow(tr("Pause minimum entre 2 objets (min)"),layoutPauseMinimum);
-
-        layoutGenerateurPriorite->addRow(tr("Amas Globulaire"),layoutNoteAmasGlobulaire);
-        layoutGenerateurPriorite->addRow(tr("Amas+Nébuleuse"),layoutNoteAmasNebuleuse);
-        layoutGenerateurPriorite->addRow(tr("Amas ouvert"),layoutNoteAmasOuvert);
-        layoutGenerateurPriorite->addRow(tr("Nébuleuse planétaire"),layoutNoteNebuleusePlanetaire);
-        layoutGenerateurPriorite->addRow(tr("Nébuleuse en réflection"),layoutNoteNebuleuseReflection);
-        layoutGenerateurPriorite->addRow(tr("Etoile double"),layoutNoteEtoileDouble);
-        layoutGenerateurPriorite->addRow(tr("Etoile triple"),layoutNoteEtoileTriple);
-        layoutGenerateurPriorite->addRow(tr("Galaxie"),layoutNoteGalaxie);
-
-        groupBoxGenerateurParam->setLayout(layoutGenerateurParam);
-        groupBoxGenerateurPriorite->setLayout(layoutGenerateurPriorite);
-
-        QVBoxLayout *layoutGenerateur = new QVBoxLayout;
-            layoutGenerateur->addWidget(groupBoxGenerateurParam);
-            layoutGenerateur->addWidget(groupBoxGenerateurPriorite);
-
-        QWidget *page_generateur = new QWidget;
-        page_generateur->setFixedWidth(350);
-        page_generateur->setLayout(layoutGenerateur);
-        page_generateur->setVisible(false);
-        m_listePages.push_back(page_generateur);
-        layoutPrincipal->addWidget(page_generateur);
-
-        // PAGE CARTE CIEL
-
-        QGroupBox *groupBoxCouleurCarte = new QGroupBox(tr("Couleurs par défaut de la carte du ciel"));
-        QFormLayout *layoutFormCouleurCarte = new QFormLayout;
-
-        m_boutonCouleurFond = new QPushButton(tr("Changer"));
-        m_boutonCouleurLegende = new QPushButton(tr("Changer"));
-        m_boutonCouleurObjet = new QPushButton(tr("Changer"));
-        m_boutonCouleurEtoile = new QPushButton(tr("Changer"));
-        m_boutonCouleurConstellation = new QPushButton(tr("Changer"));
-
-        connect(m_boutonCouleurFond, &QPushButton::clicked, this, &FenPreferences::changerCouleurFond);
-        connect(m_boutonCouleurLegende, &QPushButton::clicked, this, &FenPreferences::changerCouleurLegende);
-        connect(m_boutonCouleurObjet, &QPushButton::clicked, this, &FenPreferences::changerCouleurObjet);
-        connect(m_boutonCouleurEtoile, &QPushButton::clicked, this, &FenPreferences::changerCouleurEtoile);
-        connect(m_boutonCouleurConstellation, &QPushButton::clicked, this, &FenPreferences::changerCouleurConstellation);
-
-        m_labelCouleurFond = new QLabel;
-        m_labelCouleurLegende = new QLabel;
-        m_labelCouleurObjet = new QLabel;
-        m_labelCouleurEtoile = new QLabel;
-        m_labelCouleurConstellation = new QLabel;
-
-        QHBoxLayout *layoutCouleurFond = new QHBoxLayout;
-            layoutCouleurFond->addWidget(m_boutonCouleurFond);
-            layoutCouleurFond->addWidget(m_labelCouleurFond);
-        QHBoxLayout *layoutCouleurLegende = new QHBoxLayout;
-            layoutCouleurLegende->addWidget(m_boutonCouleurLegende);
-            layoutCouleurLegende->addWidget(m_labelCouleurLegende);
-        QHBoxLayout *layoutCouleurObjet = new QHBoxLayout;
-            layoutCouleurObjet->addWidget(m_boutonCouleurObjet);
-            layoutCouleurObjet->addWidget(m_labelCouleurObjet);
-        QHBoxLayout *layoutCouleurConstellation = new QHBoxLayout;
-            layoutCouleurConstellation->addWidget(m_boutonCouleurConstellation);
-            layoutCouleurConstellation->addWidget(m_labelCouleurConstellation);
-        QHBoxLayout *layoutCouleurEtoile = new QHBoxLayout;
-            layoutCouleurEtoile->addWidget(m_boutonCouleurEtoile);
-            layoutCouleurEtoile->addWidget(m_labelCouleurEtoile);
-
-        layoutFormCouleurCarte->addRow(tr("Couleur du fond"),layoutCouleurFond);
-        layoutFormCouleurCarte->addRow(tr("Couleur des légendes"),layoutCouleurLegende);
-        layoutFormCouleurCarte->addRow(tr("Couleur des objets"),layoutCouleurObjet);
-        layoutFormCouleurCarte->addRow(tr("Couleur des constellations"),layoutCouleurConstellation);
-        layoutFormCouleurCarte->addRow(tr("Couleur des étoiles"),layoutCouleurEtoile);
-
-        groupBoxCouleurCarte->setLayout(layoutFormCouleurCarte);
-        QVBoxLayout *layoutOk = new QVBoxLayout;
-        layoutOk->addWidget(groupBoxCouleurCarte);
-
-        QWidget *page_carteciel = new QWidget;
-        page_carteciel->setFixedWidth(350);
-        page_carteciel->setLayout(layoutOk);
-        page_carteciel->setVisible(false);
-        m_listePages.push_back(page_carteciel);
-        layoutPrincipal->addWidget(page_carteciel);
-
-        // LAYOUT DES BOUTONS
-        QVBoxLayout *layoutPrincipalBoutons = new QVBoxLayout;
-            layoutPrincipalBoutons->setAlignment(Qt::AlignTop);
-        m_boutonAnnuler = new QPushButton(tr("Annuler"));
-        m_boutonValider = new QPushButton(tr("Valider"));
-        m_boutonReinitialiser = new QPushButton(tr("Réinitialiser"));
-
-        layoutPrincipalBoutons->addWidget(m_boutonValider);
-        layoutPrincipalBoutons->addWidget(m_boutonAnnuler);
-        layoutPrincipalBoutons->addWidget(m_boutonReinitialiser);
-
-        layoutPrincipal->addLayout(layoutPrincipalBoutons);
-
-        connect(m_boutonValider, &QPushButton::clicked, this, &FenPreferences::valider);
-        connect(m_boutonAnnuler, &QPushButton::clicked, this, &FenPreferences::fermer);
-        connect(m_boutonReinitialiser, &QPushButton::clicked, this, &FenPreferences::reinitialiser);
+    m_latitude = new QDoubleSpinBox;
+    m_latitude->setDecimals(3);
+    m_latitude->setMaximum(90);
+    m_latitude->setMinimum(-90);
+    m_longitude = new QDoubleSpinBox;
+    m_longitude->setDecimals(3);
+    m_longitude->setMaximum(180);
+    m_longitude->setMinimum(-180);
+
+    layoutFormCoordonnees->addRow(tr("L&atitude"),m_latitude);
+    layoutFormCoordonnees->addRow(tr("L&ongitude"),m_longitude);
+
+    groupBoxCoordonnees->setLayout(layoutFormCoordonnees);
+
+    QWidget *page_localisation = new QWidget;
+    page_localisation->setFixedWidth(350);
+    QVBoxLayout *layoutLocalisation = new QVBoxLayout;
+    layoutLocalisation->addWidget(groupBoxLocalisation);
+    layoutLocalisation->addWidget(groupBoxCoordonnees);
+    page_localisation->setLayout(layoutLocalisation);
+
+    m_listePages.push_back(page_localisation);
+
+    layoutPrincipal->addWidget(page_localisation);
+
+
+    // PAGE TELESCOPE
+    QGroupBox *groupBoxTelescopeListe = new QGroupBox(tr("Liste des télescopes"));
+    QGroupBox *groupBoxTelescopeAdd = new QGroupBox(tr("Ajouter des télescopes"));
+
+    QFormLayout *layoutFormTelescopeListe = new QFormLayout;
+    QFormLayout *layoutFormTelescopeAdd = new QFormLayout;
+
+    m_listeTelescope = new QComboBox;
+    requete->exec("SELECT nom FROM telescope ORDER BY nom");
+    while(requete->next())
+        m_listeTelescope->addItem(requete->value(0).toString());
+
+    m_diametre = new QSpinBox;
+    m_diametre->setMaximum(DIAMETRE_MAXIMUM);
+    m_diametre->setValue(DIAMETRE_DEFAULT);
+    m_diametre->setMinimum(DIAMETRE_MINIMUM);
+    m_focale = new QSpinBox;
+    m_focale->setMinimum(FOCALE_MINIMUM);
+    m_focale->setValue(FOCALE_DEFAULT);
+    m_focale->setMaximum(FOCALE_MAXIMUM);
+
+    m_nomTelescope = new QLineEdit;
+    m_boutonAjouterTelescope = new QPushButton(tr("Ajouter le télescope"));
+    connect(m_boutonAjouterTelescope, &QPushButton::clicked, this, &FenPreferences::ajouterTelescope);
+
+    m_marque = new QComboBox;
+    QStringList listeMarque;
+    requete->exec("SELECT marque FROM telescope GROUP BY marque ORDER BY marque");
+    while(requete->next())
+        listeMarque << requete->value(0).toString();
+    m_marque->addItems(listeMarque);
+
+    layoutFormTelescopeListe->addRow(tr("Liste des &télescopes"),m_listeTelescope);
+    groupBoxTelescopeListe->setLayout(layoutFormTelescopeListe);
+
+    layoutFormTelescopeAdd->addRow(tr("Nom du télescope (unique)"),m_nomTelescope);
+    layoutFormTelescopeAdd->addRow(tr("Diamètre (mm)"),m_diametre);
+    layoutFormTelescopeAdd->addRow(tr("Focale (mm)"),m_focale);
+    layoutFormTelescopeAdd->addRow(tr("Marque"),m_marque);
+    layoutFormTelescopeAdd->addWidget(m_boutonAjouterTelescope);
+    groupBoxTelescopeAdd->setLayout(layoutFormTelescopeAdd);
+
+    QVBoxLayout *layoutTelescope = new QVBoxLayout;
+    layoutTelescope->addWidget(groupBoxTelescopeListe);
+    layoutTelescope->addWidget(groupBoxTelescopeAdd);
+
+    QWidget *page_telescope = new QWidget;
+    page_telescope->setFixedWidth(350);
+    page_telescope->setLayout(layoutTelescope);
+    page_telescope->setVisible(false);
+    m_listePages.push_back(page_telescope);
+    layoutPrincipal->addWidget(page_telescope);
+
+
+    // PAGE OCULAIRES
+    QGroupBox *groupBoxOculaireListe = new QGroupBox(tr("Liste des oculaires"));
+    QHBoxLayout *layoutOculaires = new QHBoxLayout;
+    QVBoxLayout *layoutV1 = new QVBoxLayout;
+    QVBoxLayout *layoutV2 = new QVBoxLayout;
+    QVBoxLayout *layoutV3 = new QVBoxLayout;
+
+    for(int i(0); i < 24; i++)
+    {
+        QCheckBox *b = new QCheckBox(QString::number(i+6)+tr(" mm","Symbole des millimètres (laisser l'espace avant)"));
+        m_listeOculaires.push_back(b);
+
+        if(i < 8)
+            layoutV1->addWidget(b);
+        else if(i < 16)
+            layoutV2->addWidget(b);
+        else
+            layoutV3->addWidget(b);
+
+    }
+    layoutOculaires->addLayout(layoutV1);
+    layoutOculaires->addLayout(layoutV2);
+    layoutOculaires->addLayout(layoutV3);
+
+    QHBoxLayout *layoutObligatoire = new QHBoxLayout;
+    groupBoxOculaireListe->setLayout(layoutOculaires);
+    layoutObligatoire->addWidget(groupBoxOculaireListe);
+
+    QWidget* page_oculaires = new QWidget;
+    page_oculaires->setFixedWidth(350);
+    page_oculaires->setLayout(layoutObligatoire);
+    page_oculaires->setVisible(false);
+    m_listePages.push_back(page_oculaires);
+    layoutPrincipal->addWidget(page_oculaires);
+
+    // PAGE GENERATEUR
+
+    QGroupBox *groupBoxGenerateurParam = new QGroupBox(tr("Paramètres d'observation des objets"));
+    QGroupBox *groupBoxGenerateurPriorite = new QGroupBox(tr("Priorité des objets"));
+
+    QFormLayout *layoutGenerateurParam = new QFormLayout;
+    QFormLayout *layoutGenerateurPriorite = new QFormLayout;
+
+    QHBoxLayout *layoutHauteurMinimum = new QHBoxLayout;
+    QHBoxLayout *layoutPauseMinimum = new QHBoxLayout;
+    QHBoxLayout *layoutNoteAmasGlobulaire = new QHBoxLayout;
+    QHBoxLayout *layoutNoteAmasNebuleuse = new QHBoxLayout;
+    QHBoxLayout *layoutNoteAmasOuvert = new QHBoxLayout;
+    QHBoxLayout *layoutNoteNebuleusePlanetaire = new QHBoxLayout;
+    QHBoxLayout *layoutNoteNebuleuseReflection = new QHBoxLayout;
+    QHBoxLayout *layoutNoteEtoileDouble = new QHBoxLayout;
+    QHBoxLayout *layoutNoteEtoileTriple = new QHBoxLayout;
+    QHBoxLayout *layoutNoteGalaxie = new QHBoxLayout;
+
+    m_labelHauteurMinimum = new QLabel;
+    m_labelPauseMinimum = new QLabel;
+    m_labelNoteAmasGlobulaire = new QLabel;
+    m_labelNoteAmasNebuleuse = new QLabel;
+    m_labelNoteNebuleusePlanetaire = new QLabel;
+    m_labelNoteNebuleuseReflection = new QLabel;
+    m_labelNoteEtoileDouble = new QLabel;
+    m_labelNoteEtoileTriple = new QLabel;
+    m_labelNoteGalaxie = new QLabel;
+    m_labelNoteAmasOuvert = new QLabel;
+
+    m_pauseMinimum = new QSlider(Qt::Horizontal);
+    m_pauseMinimum->setMinimum(PAUSE_MINIMUM_OBJET);
+    m_pauseMinimum->setMaximum(PAUSE_MAXIMUM_OBJET);
+    m_hauteurMinimum = new QSlider(Qt::Horizontal);
+    m_hauteurMinimum->setMinimum(0);
+    m_hauteurMinimum->setMaximum(70);
+    m_noteAmasGlobulaire = new QSlider(Qt::Horizontal);
+    m_noteAmasGlobulaire->setMinimum(0);
+    m_noteAmasGlobulaire->setMaximum(15);
+    m_noteAmasNebuleuse = new QSlider(Qt::Horizontal);
+    m_noteAmasNebuleuse->setMinimum(0);
+    m_noteAmasNebuleuse->setMaximum(15);
+    m_noteNebuleusePlanetaire = new QSlider(Qt::Horizontal);
+    m_noteNebuleusePlanetaire->setMinimum(0);
+    m_noteNebuleusePlanetaire->setMaximum(15);
+    m_noteNebuleuseReflection = new QSlider(Qt::Horizontal);
+    m_noteNebuleuseReflection->setMinimum(0);
+    m_noteNebuleuseReflection->setMaximum(15);
+    m_noteEtoileDouble = new QSlider(Qt::Horizontal);
+    m_noteEtoileDouble->setMinimum(0);
+    m_noteEtoileDouble->setMaximum(15);
+    m_noteEtoileTriple = new QSlider(Qt::Horizontal);
+    m_noteEtoileTriple->setMinimum(0);
+    m_noteEtoileTriple->setMaximum(15);
+    m_noteGalaxie = new QSlider(Qt::Horizontal);
+    m_noteGalaxie->setMinimum(0);
+    m_noteGalaxie->setMaximum(15);
+    m_noteAmasOuvert = new QSlider(Qt::Horizontal);
+    m_noteAmasOuvert->setMinimum(0);
+    m_noteAmasOuvert->setMaximum(15);
+
+    connect(m_hauteurMinimum, &QSlider::valueChanged, m_labelHauteurMinimum, qOverload<int>(&QLabel::setNum));
+    connect(m_pauseMinimum, &QSlider::valueChanged, m_labelPauseMinimum, qOverload<int>(&QLabel::setNum));
+    connect(m_noteAmasGlobulaire, &QSlider::valueChanged, m_labelNoteAmasGlobulaire, qOverload<int>(&QLabel::setNum));
+    connect(m_noteAmasNebuleuse, &QSlider::valueChanged, m_labelNoteAmasNebuleuse, qOverload<int>(&QLabel::setNum));
+    connect(m_noteNebuleuseReflection, &QSlider::valueChanged, m_labelNoteNebuleuseReflection, qOverload<int>(&QLabel::setNum));
+    connect(m_noteNebuleusePlanetaire, &QSlider::valueChanged, m_labelNoteNebuleusePlanetaire, qOverload<int>(&QLabel::setNum));
+    connect(m_noteEtoileDouble, &QSlider::valueChanged, m_labelNoteEtoileDouble, qOverload<int>(&QLabel::setNum));
+    connect(m_noteEtoileTriple, &QSlider::valueChanged, m_labelNoteEtoileTriple, qOverload<int>(&QLabel::setNum));
+    connect(m_noteAmasOuvert, &QSlider::valueChanged, m_labelNoteAmasOuvert, qOverload<int>(&QLabel::setNum));
+    connect(m_noteGalaxie, &QSlider::valueChanged, m_labelNoteGalaxie, qOverload<int>(&QLabel::setNum));
+
+    layoutHauteurMinimum->addWidget(m_hauteurMinimum);
+    layoutHauteurMinimum->addWidget(m_labelHauteurMinimum);
+    layoutHauteurMinimum->setAlignment(Qt::AlignLeft);
+
+    layoutPauseMinimum->addWidget(m_pauseMinimum);
+    layoutPauseMinimum->addWidget(m_labelPauseMinimum);
+    layoutPauseMinimum->setAlignment(Qt::AlignLeft);
+
+    layoutNoteAmasGlobulaire->addWidget(m_noteAmasGlobulaire);
+    layoutNoteAmasGlobulaire->addWidget(m_labelNoteAmasGlobulaire);
+    layoutNoteAmasGlobulaire->setAlignment(Qt::AlignLeft);
+
+    layoutNoteAmasNebuleuse->addWidget(m_noteAmasNebuleuse);
+    layoutNoteAmasNebuleuse->addWidget(m_labelNoteAmasNebuleuse);
+    layoutNoteAmasNebuleuse->setAlignment(Qt::AlignLeft);
+
+    layoutNoteAmasOuvert->addWidget(m_noteAmasOuvert);
+    layoutNoteAmasOuvert->addWidget(m_labelNoteAmasOuvert);
+    layoutNoteAmasOuvert->setAlignment(Qt::AlignLeft);
+
+    layoutNoteNebuleusePlanetaire->addWidget(m_noteNebuleusePlanetaire);
+    layoutNoteNebuleusePlanetaire->addWidget(m_labelNoteNebuleusePlanetaire);
+    layoutNoteNebuleusePlanetaire->setAlignment(Qt::AlignLeft);
+
+    layoutNoteNebuleuseReflection->addWidget(m_noteNebuleuseReflection);
+    layoutNoteNebuleuseReflection->addWidget(m_labelNoteNebuleuseReflection);
+    layoutNoteNebuleuseReflection->setAlignment(Qt::AlignLeft);
+
+    layoutNoteEtoileDouble->addWidget(m_noteEtoileDouble);
+    layoutNoteEtoileDouble->addWidget(m_labelNoteEtoileDouble);
+    layoutNoteEtoileDouble->setAlignment(Qt::AlignLeft);
+
+    layoutNoteEtoileTriple->addWidget(m_noteEtoileTriple);
+    layoutNoteEtoileTriple->addWidget(m_labelNoteEtoileTriple);
+    layoutNoteEtoileTriple->setAlignment(Qt::AlignLeft);
+
+    layoutNoteGalaxie->addWidget(m_noteGalaxie);
+    layoutNoteGalaxie->addWidget(m_labelNoteGalaxie);
+    layoutNoteGalaxie->setAlignment(Qt::AlignLeft);
+
+    layoutGenerateurParam->addRow(tr("Hauteur minimum (en °)"),layoutHauteurMinimum);
+    layoutGenerateurParam->addRow(tr("Pause minimum entre 2 objets (min)"),layoutPauseMinimum);
+
+    layoutGenerateurPriorite->addRow(tr("Amas Globulaire"),layoutNoteAmasGlobulaire);
+    layoutGenerateurPriorite->addRow(tr("Amas+Nébuleuse"),layoutNoteAmasNebuleuse);
+    layoutGenerateurPriorite->addRow(tr("Amas ouvert"),layoutNoteAmasOuvert);
+    layoutGenerateurPriorite->addRow(tr("Nébuleuse planétaire"),layoutNoteNebuleusePlanetaire);
+    layoutGenerateurPriorite->addRow(tr("Nébuleuse en réflection"),layoutNoteNebuleuseReflection);
+    layoutGenerateurPriorite->addRow(tr("Etoile double"),layoutNoteEtoileDouble);
+    layoutGenerateurPriorite->addRow(tr("Etoile triple"),layoutNoteEtoileTriple);
+    layoutGenerateurPriorite->addRow(tr("Galaxie"),layoutNoteGalaxie);
+
+    groupBoxGenerateurParam->setLayout(layoutGenerateurParam);
+    groupBoxGenerateurPriorite->setLayout(layoutGenerateurPriorite);
+
+    QVBoxLayout *layoutGenerateur = new QVBoxLayout;
+    layoutGenerateur->addWidget(groupBoxGenerateurParam);
+    layoutGenerateur->addWidget(groupBoxGenerateurPriorite);
+
+    QWidget *page_generateur = new QWidget;
+    page_generateur->setFixedWidth(350);
+    page_generateur->setLayout(layoutGenerateur);
+    page_generateur->setVisible(false);
+    m_listePages.push_back(page_generateur);
+    layoutPrincipal->addWidget(page_generateur);
+
+    // PAGE CARTE CIEL
+
+    QGroupBox *groupBoxCouleurCarte = new QGroupBox(tr("Couleurs par défaut de la carte du ciel"));
+    QFormLayout *layoutFormCouleurCarte = new QFormLayout;
+
+    m_boutonCouleurFond = new QPushButton(tr("Changer"));
+    m_boutonCouleurLegende = new QPushButton(tr("Changer"));
+    m_boutonCouleurObjet = new QPushButton(tr("Changer"));
+    m_boutonCouleurEtoile = new QPushButton(tr("Changer"));
+    m_boutonCouleurConstellation = new QPushButton(tr("Changer"));
+
+    connect(m_boutonCouleurFond, &QPushButton::clicked, this, &FenPreferences::changerCouleurFond);
+    connect(m_boutonCouleurLegende, &QPushButton::clicked, this, &FenPreferences::changerCouleurLegende);
+    connect(m_boutonCouleurObjet, &QPushButton::clicked, this, &FenPreferences::changerCouleurObjet);
+    connect(m_boutonCouleurEtoile, &QPushButton::clicked, this, &FenPreferences::changerCouleurEtoile);
+    connect(m_boutonCouleurConstellation, &QPushButton::clicked, this, &FenPreferences::changerCouleurConstellation);
+
+    m_labelCouleurFond = new QLabel;
+    m_labelCouleurLegende = new QLabel;
+    m_labelCouleurObjet = new QLabel;
+    m_labelCouleurEtoile = new QLabel;
+    m_labelCouleurConstellation = new QLabel;
+
+    QHBoxLayout *layoutCouleurFond = new QHBoxLayout;
+    layoutCouleurFond->addWidget(m_boutonCouleurFond);
+    layoutCouleurFond->addWidget(m_labelCouleurFond);
+    QHBoxLayout *layoutCouleurLegende = new QHBoxLayout;
+    layoutCouleurLegende->addWidget(m_boutonCouleurLegende);
+    layoutCouleurLegende->addWidget(m_labelCouleurLegende);
+    QHBoxLayout *layoutCouleurObjet = new QHBoxLayout;
+    layoutCouleurObjet->addWidget(m_boutonCouleurObjet);
+    layoutCouleurObjet->addWidget(m_labelCouleurObjet);
+    QHBoxLayout *layoutCouleurConstellation = new QHBoxLayout;
+    layoutCouleurConstellation->addWidget(m_boutonCouleurConstellation);
+    layoutCouleurConstellation->addWidget(m_labelCouleurConstellation);
+    QHBoxLayout *layoutCouleurEtoile = new QHBoxLayout;
+    layoutCouleurEtoile->addWidget(m_boutonCouleurEtoile);
+    layoutCouleurEtoile->addWidget(m_labelCouleurEtoile);
+
+    layoutFormCouleurCarte->addRow(tr("Couleur du fond"),layoutCouleurFond);
+    layoutFormCouleurCarte->addRow(tr("Couleur des légendes"),layoutCouleurLegende);
+    layoutFormCouleurCarte->addRow(tr("Couleur des objets"),layoutCouleurObjet);
+    layoutFormCouleurCarte->addRow(tr("Couleur des constellations"),layoutCouleurConstellation);
+    layoutFormCouleurCarte->addRow(tr("Couleur des étoiles"),layoutCouleurEtoile);
+
+    groupBoxCouleurCarte->setLayout(layoutFormCouleurCarte);
+    QVBoxLayout *layoutOk = new QVBoxLayout;
+    layoutOk->addWidget(groupBoxCouleurCarte);
+
+    QWidget *page_carteciel = new QWidget;
+    page_carteciel->setFixedWidth(350);
+    page_carteciel->setLayout(layoutOk);
+    page_carteciel->setVisible(false);
+    m_listePages.push_back(page_carteciel);
+    layoutPrincipal->addWidget(page_carteciel);
+
+    // LAYOUT DES BOUTONS
+    QVBoxLayout *layoutPrincipalBoutons = new QVBoxLayout;
+    layoutPrincipalBoutons->setAlignment(Qt::AlignTop);
+    m_boutonAnnuler = new QPushButton(tr("Annuler"));
+    m_boutonValider = new QPushButton(tr("Valider"));
+    m_boutonReinitialiser = new QPushButton(tr("Réinitialiser"));
+
+    layoutPrincipalBoutons->addWidget(m_boutonValider);
+    layoutPrincipalBoutons->addWidget(m_boutonAnnuler);
+    layoutPrincipalBoutons->addWidget(m_boutonReinitialiser);
+
+    layoutPrincipal->addLayout(layoutPrincipalBoutons);
+
+    connect(m_boutonValider, &QPushButton::clicked, this, &FenPreferences::valider);
+    connect(m_boutonAnnuler, &QPushButton::clicked, this, &FenPreferences::fermer);
+    connect(m_boutonReinitialiser, &QPushButton::clicked, this, &FenPreferences::reinitialiser);
 
     initialiserValeur(); // Initialise tout
     setLayout(layoutPrincipal);
@@ -625,8 +625,8 @@ void FenPreferences::initialiserValeur()
         requete->exec();
         requete->next();
 
-            m_latitude->setValue(requete->value(0).toDouble());
-            m_longitude->setValue(requete->value(1).toDouble());
+        m_latitude->setValue(requete->value(0).toDouble());
+        m_longitude->setValue(requete->value(1).toDouble());
     }
     else
     {
@@ -635,8 +635,8 @@ void FenPreferences::initialiserValeur()
         requete->bindValue(":nom",m_listeVilles->currentText());
         requete->exec();
         requete->next();
-            m_latitude->setValue(requete->value(0).toDouble());
-            m_longitude->setValue(requete->value(1).toDouble());
+        m_latitude->setValue(requete->value(0).toDouble());
+        m_longitude->setValue(requete->value(1).toDouble());
     }
 
     // PAGE TELESCOPE
@@ -693,15 +693,15 @@ void FenPreferences::initialiserValeur()
     cEtoile = m_parent->getUser()->value("couleurCarte/etoile",COULEUR_ETOILE).toString();
 
     m_labelCouleurFond->setText(cFond.toUpper());
-        m_labelCouleurFond->setStyleSheet("color:"+cFond);
+    m_labelCouleurFond->setStyleSheet("color:"+cFond);
     m_labelCouleurLegende->setText(cLegende.toUpper());
-        m_labelCouleurLegende->setStyleSheet("color:"+cLegende);
+    m_labelCouleurLegende->setStyleSheet("color:"+cLegende);
     m_labelCouleurObjet->setText(cObjet.toUpper());
-        m_labelCouleurObjet->setStyleSheet("color:"+cObjet);
+    m_labelCouleurObjet->setStyleSheet("color:"+cObjet);
     m_labelCouleurEtoile->setText(cEtoile.toUpper());
-        m_labelCouleurEtoile->setStyleSheet("color:"+cEtoile);
+    m_labelCouleurEtoile->setStyleSheet("color:"+cEtoile);
     m_labelCouleurConstellation->setText(cConstellation.toUpper());
-        m_labelCouleurConstellation->setStyleSheet("color:"+cConstellation);
+    m_labelCouleurConstellation->setStyleSheet("color:"+cConstellation);
 
 }
 void FenPreferences::fermer()
@@ -812,15 +812,15 @@ void FenPreferences::reinitialiser()
     cEtoile = COULEUR_ETOILE;
 
     m_labelCouleurFond->setText(cFond.toUpper());
-        m_labelCouleurFond->setStyleSheet("color:"+cFond);
+    m_labelCouleurFond->setStyleSheet("color:"+cFond);
     m_labelCouleurLegende->setText(cLegende.toUpper());
-        m_labelCouleurLegende->setStyleSheet("color:"+cLegende);
+    m_labelCouleurLegende->setStyleSheet("color:"+cLegende);
     m_labelCouleurObjet->setText(cObjet.toUpper());
-        m_labelCouleurObjet->setStyleSheet("color:"+cObjet);
+    m_labelCouleurObjet->setStyleSheet("color:"+cObjet);
     m_labelCouleurEtoile->setText(cEtoile.toUpper());
-        m_labelCouleurEtoile->setStyleSheet("color:"+cEtoile);
+    m_labelCouleurEtoile->setStyleSheet("color:"+cEtoile);
     m_labelCouleurConstellation->setText(cConstellation.toUpper());
-        m_labelCouleurConstellation->setStyleSheet("color:"+cConstellation);
+    m_labelCouleurConstellation->setStyleSheet("color:"+cConstellation);
 }
 void FenPreferences::ouvrir(int page)
 {

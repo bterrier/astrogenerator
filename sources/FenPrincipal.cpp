@@ -59,7 +59,7 @@ FenPrincipal::FenPrincipal()
     actionSoireesRecentes();
 
     // On crée la barre d'outils
-        QToolBar *toolBar = addToolBar(tr("Toolbar","Peu important, nom d'un widget"));
+    QToolBar *toolBar = addToolBar(tr("Toolbar","Peu important, nom d'un widget"));
     toolBar->addAction(listeActions->getActionCreerSoiree());
     toolBar->addAction(listeActions->getActionFabriquerSoiree());
     toolBar->addAction(listeActions->getActionOuvrirSoiree());
@@ -79,68 +79,68 @@ FenPrincipal::FenPrincipal()
     QGridLayout *layoutGrille = new QGridLayout;
 
     QPushButton *groupeGenererSoiree = new QPushButton;
-        groupeGenererSoiree->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL,HAUTEUR_BLOC_PAGE_ACCUEIL);
-        QLabel *imageGenerer = new QLabel(groupeGenererSoiree);
-        imageGenerer->setPixmap(QPixmap("images/generate.png"));
-        imageGenerer->setAlignment(Qt::AlignCenter);
-        QLabel *texteGenerer = new QLabel(tr("Générer une soirée"),groupeGenererSoiree);
-            texteGenerer->setFont(QFont("Verdana",15));
-            texteGenerer->setAlignment(Qt::AlignCenter);
-        QLabel *descGenerer = new QLabel(tr("Rentrez plusieurs informations telles que votre latitude, longitude, niveau en astronomie ainsi que l'heure et la date d'observation et notre générateur vous créera automatiquement une liste d'objets à observer pour la soirée."),groupeGenererSoiree);
-            descGenerer->setWordWrap(true);
-            descGenerer->setAlignment(Qt::AlignJustify);
-        QVBoxLayout *layoutGenerer = new QVBoxLayout(groupeGenererSoiree);
-        layoutGenerer->addWidget(texteGenerer);
-        layoutGenerer->addWidget(imageGenerer);
-        layoutGenerer->addWidget(descGenerer);
+    groupeGenererSoiree->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL,HAUTEUR_BLOC_PAGE_ACCUEIL);
+    QLabel *imageGenerer = new QLabel(groupeGenererSoiree);
+    imageGenerer->setPixmap(QPixmap("images/generate.png"));
+    imageGenerer->setAlignment(Qt::AlignCenter);
+    QLabel *texteGenerer = new QLabel(tr("Générer une soirée"),groupeGenererSoiree);
+    texteGenerer->setFont(QFont("Verdana",15));
+    texteGenerer->setAlignment(Qt::AlignCenter);
+    QLabel *descGenerer = new QLabel(tr("Rentrez plusieurs informations telles que votre latitude, longitude, niveau en astronomie ainsi que l'heure et la date d'observation et notre générateur vous créera automatiquement une liste d'objets à observer pour la soirée."),groupeGenererSoiree);
+    descGenerer->setWordWrap(true);
+    descGenerer->setAlignment(Qt::AlignJustify);
+    QVBoxLayout *layoutGenerer = new QVBoxLayout(groupeGenererSoiree);
+    layoutGenerer->addWidget(texteGenerer);
+    layoutGenerer->addWidget(imageGenerer);
+    layoutGenerer->addWidget(descGenerer);
 
     QPushButton *groupeCreerSoiree = new QPushButton;
-        groupeCreerSoiree->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL,HAUTEUR_BLOC_PAGE_ACCUEIL);
-        QLabel *imageCreer = new QLabel(groupeCreerSoiree);
-        imageCreer->setPixmap(QPixmap("images/creer-soiree.png"));
-        imageCreer->setAlignment(Qt::AlignCenter);
-        QLabel *texteCreer = new QLabel(tr("Créer une soirée"),groupeCreerSoiree);
-            texteCreer->setFont(QFont("Verdana",15));
-            texteCreer->setAlignment(Qt::AlignCenter);
-        QLabel *descCreer = new QLabel(tr("Créez facilement votre soirée de toute pièce sans la générer. Les objets qu'il est possible d'observer sont accessibles grâce à une grande base de données. Outil réservé aux astronomes confirmés."),groupeCreerSoiree);
-            descCreer->setWordWrap(true);
-            descCreer->setAlignment(Qt::AlignJustify);
-        QVBoxLayout *layoutCreer = new QVBoxLayout(groupeCreerSoiree);
-        layoutCreer->addWidget(texteCreer);
-        layoutCreer->addWidget(imageCreer);
-        layoutCreer->addWidget(descCreer);
+    groupeCreerSoiree->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL,HAUTEUR_BLOC_PAGE_ACCUEIL);
+    QLabel *imageCreer = new QLabel(groupeCreerSoiree);
+    imageCreer->setPixmap(QPixmap("images/creer-soiree.png"));
+    imageCreer->setAlignment(Qt::AlignCenter);
+    QLabel *texteCreer = new QLabel(tr("Créer une soirée"),groupeCreerSoiree);
+    texteCreer->setFont(QFont("Verdana",15));
+    texteCreer->setAlignment(Qt::AlignCenter);
+    QLabel *descCreer = new QLabel(tr("Créez facilement votre soirée de toute pièce sans la générer. Les objets qu'il est possible d'observer sont accessibles grâce à une grande base de données. Outil réservé aux astronomes confirmés."),groupeCreerSoiree);
+    descCreer->setWordWrap(true);
+    descCreer->setAlignment(Qt::AlignJustify);
+    QVBoxLayout *layoutCreer = new QVBoxLayout(groupeCreerSoiree);
+    layoutCreer->addWidget(texteCreer);
+    layoutCreer->addWidget(imageCreer);
+    layoutCreer->addWidget(descCreer);
 
     QPushButton *groupeOuvrirSoiree = new QPushButton;
-        groupeOuvrirSoiree->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL,HAUTEUR_BLOC_PAGE_ACCUEIL);
-        QLabel *imageOuvrir = new QLabel(groupeOuvrirSoiree);
-        imageOuvrir->setPixmap(QPixmap("images/ouvrir.png"));
-        imageOuvrir->setAlignment(Qt::AlignCenter);
-        QLabel *texteOuvrir = new QLabel(tr("Ouvrir une soirée"),groupeOuvrirSoiree);
-            texteOuvrir->setFont(QFont("Verdana",15));
-            texteOuvrir->setAlignment(Qt::AlignCenter);
-        QLabel *descOuvrir = new QLabel(tr("Ouvrez un fichier de soirée. Les fichiers de soirée sont de type SOA (Soiree Observation Astronomie). Vous pouvez les trouver en générant votre soirée en ligne ou en enregistrant votre soirée."),groupeOuvrirSoiree);
-            descOuvrir->setWordWrap(true);
-            descOuvrir->setAlignment(Qt::AlignJustify);
-        QVBoxLayout *layoutOuvrir = new QVBoxLayout(groupeOuvrirSoiree);
-        layoutOuvrir->addWidget(texteOuvrir);
-        layoutOuvrir->addWidget(imageOuvrir);
-        layoutOuvrir->addWidget(descOuvrir);
+    groupeOuvrirSoiree->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL,HAUTEUR_BLOC_PAGE_ACCUEIL);
+    QLabel *imageOuvrir = new QLabel(groupeOuvrirSoiree);
+    imageOuvrir->setPixmap(QPixmap("images/ouvrir.png"));
+    imageOuvrir->setAlignment(Qt::AlignCenter);
+    QLabel *texteOuvrir = new QLabel(tr("Ouvrir une soirée"),groupeOuvrirSoiree);
+    texteOuvrir->setFont(QFont("Verdana",15));
+    texteOuvrir->setAlignment(Qt::AlignCenter);
+    QLabel *descOuvrir = new QLabel(tr("Ouvrez un fichier de soirée. Les fichiers de soirée sont de type SOA (Soiree Observation Astronomie). Vous pouvez les trouver en générant votre soirée en ligne ou en enregistrant votre soirée."),groupeOuvrirSoiree);
+    descOuvrir->setWordWrap(true);
+    descOuvrir->setAlignment(Qt::AlignJustify);
+    QVBoxLayout *layoutOuvrir = new QVBoxLayout(groupeOuvrirSoiree);
+    layoutOuvrir->addWidget(texteOuvrir);
+    layoutOuvrir->addWidget(imageOuvrir);
+    layoutOuvrir->addWidget(descOuvrir);
 
     QPushButton *groupePreferenceGenerateur = new QPushButton;
-        groupePreferenceGenerateur->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL,HAUTEUR_BLOC_PAGE_ACCUEIL);
-        QLabel *imagePreferences = new QLabel(groupePreferenceGenerateur);
-        imagePreferences->setPixmap(QPixmap("images/preferences.png"));
-        imagePreferences->setAlignment(Qt::AlignCenter);
-        QLabel *textePreferences = new QLabel(tr("Personnaliser"),groupePreferenceGenerateur);
-            textePreferences->setFont(QFont("Verdana",15));
-            textePreferences->setAlignment(Qt::AlignCenter);
-        QLabel *descPreferences = new QLabel(tr("Vous pouvez personnaliser le générateur pour que les résultats qu'il vous fournit soient plus proches de vos attentes."),groupePreferenceGenerateur);
-            descPreferences->setWordWrap(true);
-            descPreferences->setAlignment(Qt::AlignJustify);
-        QVBoxLayout *layoutPreferences = new QVBoxLayout(groupePreferenceGenerateur);
-        layoutPreferences->addWidget(textePreferences);
-        layoutPreferences->addWidget(imagePreferences);
-        layoutPreferences->addWidget(descPreferences);
+    groupePreferenceGenerateur->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL,HAUTEUR_BLOC_PAGE_ACCUEIL);
+    QLabel *imagePreferences = new QLabel(groupePreferenceGenerateur);
+    imagePreferences->setPixmap(QPixmap("images/preferences.png"));
+    imagePreferences->setAlignment(Qt::AlignCenter);
+    QLabel *textePreferences = new QLabel(tr("Personnaliser"),groupePreferenceGenerateur);
+    textePreferences->setFont(QFont("Verdana",15));
+    textePreferences->setAlignment(Qt::AlignCenter);
+    QLabel *descPreferences = new QLabel(tr("Vous pouvez personnaliser le générateur pour que les résultats qu'il vous fournit soient plus proches de vos attentes."),groupePreferenceGenerateur);
+    descPreferences->setWordWrap(true);
+    descPreferences->setAlignment(Qt::AlignJustify);
+    QVBoxLayout *layoutPreferences = new QVBoxLayout(groupePreferenceGenerateur);
+    layoutPreferences->addWidget(textePreferences);
+    layoutPreferences->addWidget(imagePreferences);
+    layoutPreferences->addWidget(descPreferences);
 
     layoutGrille->addWidget(groupeGenererSoiree,0,0);
     layoutGrille->addWidget(groupeCreerSoiree,0,1);
@@ -149,10 +149,10 @@ FenPrincipal::FenPrincipal()
     widgetAccueil->setLayout(layoutGrille);
 
     QWidget *widgetCentral = new QWidget;
-        QHBoxLayout *layoutCentral = new QHBoxLayout;
-        layoutCentral->addWidget(tabOnglets);
-        layoutCentral->addWidget(widgetAccueil);
-        widgetCentral->setLayout(layoutCentral);
+    QHBoxLayout *layoutCentral = new QHBoxLayout;
+    layoutCentral->addWidget(tabOnglets);
+    layoutCentral->addWidget(widgetAccueil);
+    widgetCentral->setLayout(layoutCentral);
     setCentralWidget(widgetCentral);
 
     m_user = new QSettings(NOM_EQUIPE,NOM_PROGRAMME);
@@ -213,8 +213,8 @@ FenPrincipal::FenPrincipal()
     // La barre de statut
     barreStatut = statusBar();
     QLabel *label_copyright = new QLabel(tr("Copyright © 2010-2013 <a href=\"http://wwww.univers-astronomie.fr/\">Univers-Astronomie.fr</a>, All rights reserved"));
-        label_copyright->setFont(QFont("Verdana",8));
-        label_copyright->setOpenExternalLinks(true);
+    label_copyright->setFont(QFont("Verdana",8));
+    label_copyright->setOpenExternalLinks(true);
     barreStatut->addPermanentWidget(label_copyright);
     connect(listeActions->getActionBarreStatut(), &QAction::toggled, barreStatut, &QStatusBar::setVisible);
     listeActions->getActionBarreStatut()->setChecked(false);
@@ -231,17 +231,17 @@ FenPrincipal::FenPrincipal()
     listeActions->griserActionToutFermer(true);
     listeActions->griserActionFermer(true);
     listeActions->griserActionCarteCiel(true);
-        listeActions->griserCarteCouleurFond(true);
-        listeActions->griserCarteCouleurEtoiles(true);
-        listeActions->griserCarteCouleurLegende(true);
-        listeActions->griserCarteCouleurConstellation(true);
-        listeActions->griserCarteCouleurObjet(true);
-   listeActions->griserActionImprimer(true);
-   listeActions->griserActionExporterXML(true);
-   listeActions->griserActionExporterPDF(true);
-   listeActions->griserActionExporterJSON(true);
-   listeActions->griserActionDiaporama(true);
-   listeActions->griserActionPartager(true);
+    listeActions->griserCarteCouleurFond(true);
+    listeActions->griserCarteCouleurEtoiles(true);
+    listeActions->griserCarteCouleurLegende(true);
+    listeActions->griserCarteCouleurConstellation(true);
+    listeActions->griserCarteCouleurObjet(true);
+    listeActions->griserActionImprimer(true);
+    listeActions->griserActionExporterXML(true);
+    listeActions->griserActionExporterPDF(true);
+    listeActions->griserActionExporterJSON(true);
+    listeActions->griserActionDiaporama(true);
+    listeActions->griserActionPartager(true);
 
     // Si on demande à ouvrir un ou plusieurs fichiers à l'ouverture du programme
     QStringList liste = QCoreApplication::arguments();
@@ -262,62 +262,62 @@ void FenPrincipal::creerMenu()
 {
     // MENU PRINCIPAL DU LOGICIEL
     QMenu *menuFichier = menuBar()->addMenu(tr("&Fichier"));
-        menuFichier->addAction(listeActions->getActionCreerSoiree());
-        menuFichier->addAction(listeActions->getActionFabriquerSoiree());
-        menuFichier->addAction(listeActions->getActionOuvrirSoiree());
-        menuFichier->addAction(listeActions->getActionEnregistrer());
-        menuFichier->addSeparator();
-        menuSoireesRecentes = menuFichier->addMenu(tr("Soirées récentes")); // Est rempli dans la fonction actionSoireesRecentes()
-        menuFichier->addSeparator();
-        menuFichier->addAction(listeActions->getActionImprimer());
-        menuFichier->addSeparator();
-        menuFichier->addAction(listeActions->getActionFermer());
-        menuFichier->addAction(listeActions->getActionToutFermer());
-        menuFichier->addAction(listeActions->getActionQuitter());
+    menuFichier->addAction(listeActions->getActionCreerSoiree());
+    menuFichier->addAction(listeActions->getActionFabriquerSoiree());
+    menuFichier->addAction(listeActions->getActionOuvrirSoiree());
+    menuFichier->addAction(listeActions->getActionEnregistrer());
+    menuFichier->addSeparator();
+    menuSoireesRecentes = menuFichier->addMenu(tr("Soirées récentes")); // Est rempli dans la fonction actionSoireesRecentes()
+    menuFichier->addSeparator();
+    menuFichier->addAction(listeActions->getActionImprimer());
+    menuFichier->addSeparator();
+    menuFichier->addAction(listeActions->getActionFermer());
+    menuFichier->addAction(listeActions->getActionToutFermer());
+    menuFichier->addAction(listeActions->getActionQuitter());
 
     QMenu *menuEdition = menuBar()->addMenu(tr("&Edition"));
-        menuEdition->addAction(listeActions->getActionMonterObjet());
-        menuEdition->addAction(listeActions->getActionDescendreObjet());
-        menuEdition->addAction(listeActions->getActionSupprimerObjet());
-        menuEdition->addAction(listeActions->getActionChangerDureeObjet());
-        menuEdition->addAction(listeActions->getActionAjouterObjet());
-        menuEdition->addAction(listeActions->getActionAjouterPlanete());
-        menuEdition->addSeparator();
-        QMenu *exporter = menuEdition->addMenu(tr("Exporter la soirée"));
-            exporter->addAction(listeActions->getActionExporterXML());
-            exporter->addAction(listeActions->getActionExporterPDF());
-            //exporter->addAction(listeActions->getActionExporterJSON());
-        //menuEdition->addAction(listeActions->getActionPartager());
+    menuEdition->addAction(listeActions->getActionMonterObjet());
+    menuEdition->addAction(listeActions->getActionDescendreObjet());
+    menuEdition->addAction(listeActions->getActionSupprimerObjet());
+    menuEdition->addAction(listeActions->getActionChangerDureeObjet());
+    menuEdition->addAction(listeActions->getActionAjouterObjet());
+    menuEdition->addAction(listeActions->getActionAjouterPlanete());
+    menuEdition->addSeparator();
+    QMenu *exporter = menuEdition->addMenu(tr("Exporter la soirée"));
+    exporter->addAction(listeActions->getActionExporterXML());
+    exporter->addAction(listeActions->getActionExporterPDF());
+    //exporter->addAction(listeActions->getActionExporterJSON());
+    //menuEdition->addAction(listeActions->getActionPartager());
 
     QMenu *menuAffichage = menuBar()->addMenu(tr("&Affichage"));
-        menuAffichage->addAction(listeActions->getActionDiaporama());
-        menuAffichage->addAction(listeActions->getActionBarreStatut());
-        QMenu *carteCielMenu = menuAffichage->addMenu(tr("Carte du ciel"));
-            carteCielMenu->addAction(listeActions->getActionCarteCiel());
-            carteCielMenu->addAction(listeActions->getCarteCouleurFond());
-            carteCielMenu->addAction(listeActions->getCarteCouleurEtoiles());
-            carteCielMenu->addAction(listeActions->getCarteCouleurLegende());
-            carteCielMenu->addAction(listeActions->getCarteCouleurConstellation());
-            carteCielMenu->addAction(listeActions->getCarteCouleurObjet());
+    menuAffichage->addAction(listeActions->getActionDiaporama());
+    menuAffichage->addAction(listeActions->getActionBarreStatut());
+    QMenu *carteCielMenu = menuAffichage->addMenu(tr("Carte du ciel"));
+    carteCielMenu->addAction(listeActions->getActionCarteCiel());
+    carteCielMenu->addAction(listeActions->getCarteCouleurFond());
+    carteCielMenu->addAction(listeActions->getCarteCouleurEtoiles());
+    carteCielMenu->addAction(listeActions->getCarteCouleurLegende());
+    carteCielMenu->addAction(listeActions->getCarteCouleurConstellation());
+    carteCielMenu->addAction(listeActions->getCarteCouleurObjet());
 
     QMenu *menuPreferences = menuBar()->addMenu(tr("&Préférences"));
-        menuPreferences->addAction(listeActions->getActionPreferencesLocalisation());
-        menuPreferences->addAction(listeActions->getActionPreferencesTelescope());
-        menuPreferences->addAction(listeActions->getActionPreferencesOculaires());
-        menuPreferences->addAction(listeActions->getActionPersonaliserGenerateur());
-        menuPreferences->addAction(listeActions->getActionPreferencesCarteCiel());
+    menuPreferences->addAction(listeActions->getActionPreferencesLocalisation());
+    menuPreferences->addAction(listeActions->getActionPreferencesTelescope());
+    menuPreferences->addAction(listeActions->getActionPreferencesOculaires());
+    menuPreferences->addAction(listeActions->getActionPersonaliserGenerateur());
+    menuPreferences->addAction(listeActions->getActionPreferencesCarteCiel());
 
     QMenu *menuObjets = menuBar()->addMenu(tr("&Objets"));
-        menuObjets->addAction(listeActions->getActionBDD());
-        menuObjets->addAction(listeActions->getActionCDS());
-        menuObjets->addAction(listeActions->getActionObjetsRemarquables());
+    menuObjets->addAction(listeActions->getActionBDD());
+    menuObjets->addAction(listeActions->getActionCDS());
+    menuObjets->addAction(listeActions->getActionObjetsRemarquables());
 
     QMenu *menuAide = menuBar()->addMenu(tr("Aide"));
-        menuAide->addAction(listeActions->getActionAPropos());
-        //menuAide->addAction(listeActions->getActionAProposGenerateur());
-        menuAide->addAction(listeActions->getActionUpdate());
-        menuAide->addAction(listeActions->getActionAide());
-        menuAide->addAction(listeActions->getActionSiteUniversAstronomie());
+    menuAide->addAction(listeActions->getActionAPropos());
+    //menuAide->addAction(listeActions->getActionAProposGenerateur());
+    menuAide->addAction(listeActions->getActionUpdate());
+    menuAide->addAction(listeActions->getActionAide());
+    menuAide->addAction(listeActions->getActionSiteUniversAstronomie());
 }
 void FenPrincipal::nouvelOngletSoiree(Soiree& soiree)
 {
@@ -354,19 +354,19 @@ void FenPrincipal::nouvelOngletSoiree(Soiree& soiree)
     listeActions->griserActionToutFermer(false);
     listeActions->griserActionFermer(false);
     listeActions->griserActionCarteCiel(false);
-        listeActions->griserCarteCouleurFond(false);
-        listeActions->griserCarteCouleurEtoiles(false);
-        listeActions->griserCarteCouleurLegende(false);
-        listeActions->griserCarteCouleurConstellation(false);
-        listeActions->griserCarteCouleurObjet(false);
-   listeActions->griserActionImprimer(false);
-   listeActions->griserActionExporterXML(false);
-   listeActions->griserActionExporterPDF(false);
-   listeActions->griserActionExporterJSON(false);
-   listeActions->griserActionDiaporama(false);
-   listeActions->griserActionPartager(false);
+    listeActions->griserCarteCouleurFond(false);
+    listeActions->griserCarteCouleurEtoiles(false);
+    listeActions->griserCarteCouleurLegende(false);
+    listeActions->griserCarteCouleurConstellation(false);
+    listeActions->griserCarteCouleurObjet(false);
+    listeActions->griserActionImprimer(false);
+    listeActions->griserActionExporterXML(false);
+    listeActions->griserActionExporterPDF(false);
+    listeActions->griserActionExporterJSON(false);
+    listeActions->griserActionDiaporama(false);
+    listeActions->griserActionPartager(false);
 
-   QApplication::restoreOverrideCursor(); // restaurer le curseur
+    QApplication::restoreOverrideCursor(); // restaurer le curseur
 }
 bool FenPrincipal::fermerOnglet(int index)
 {
@@ -385,18 +385,18 @@ bool FenPrincipal::fermerOnglet(int index)
 
             switch(ret)
             {
-                case QMessageBox::Save:
-                    continuer = m_listeInterface.at(index)->getSoiree()->enregistrerSoiree();
-                    break;
-                case QMessageBox::Discard:
-                    continuer = true;
-                    break;
-                case QMessageBox::Cancel:
-                    continuer = false;
-                    break;
-                default:
-                    continuer = false; // Ne devrait jamais être éxécuté
-                    break;
+            case QMessageBox::Save:
+                continuer = m_listeInterface.at(index)->getSoiree()->enregistrerSoiree();
+                break;
+            case QMessageBox::Discard:
+                continuer = true;
+                break;
+            case QMessageBox::Cancel:
+                continuer = false;
+                break;
+            default:
+                continuer = false; // Ne devrait jamais être éxécuté
+                break;
             }
         }
         if(continuer)
@@ -425,19 +425,19 @@ bool FenPrincipal::fermerOnglet(int index)
                 listeActions->griserActionToutFermer(true);
                 listeActions->griserActionFermer(true);
                 listeActions->griserActionCarteCiel(true);
-                    listeActions->griserCarteCouleurFond(true);
-                    listeActions->griserCarteCouleurEtoiles(true);
-                    listeActions->griserCarteCouleurLegende(true);
-                    listeActions->griserCarteCouleurConstellation(true);
-                    listeActions->griserCarteCouleurObjet(true);
-               listeActions->griserActionImprimer(true);
-               listeActions->griserActionExporterXML(true);
-               listeActions->griserActionExporterPDF(true);
-               listeActions->griserActionExporterJSON(true);
-               listeActions->griserActionDiaporama(true);
-               listeActions->griserActionPartager(true);
-           }
-           return true;
+                listeActions->griserCarteCouleurFond(true);
+                listeActions->griserCarteCouleurEtoiles(true);
+                listeActions->griserCarteCouleurLegende(true);
+                listeActions->griserCarteCouleurConstellation(true);
+                listeActions->griserCarteCouleurObjet(true);
+                listeActions->griserActionImprimer(true);
+                listeActions->griserActionExporterXML(true);
+                listeActions->griserActionExporterPDF(true);
+                listeActions->griserActionExporterJSON(true);
+                listeActions->griserActionDiaporama(true);
+                listeActions->griserActionPartager(true);
+            }
+            return true;
         }
     }
     return false;

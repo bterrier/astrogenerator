@@ -25,32 +25,32 @@ InterfaceCreation::InterfaceCreation(double latitude, double longitude, QDateTim
     // ETAPE 1 : On initialise toutes les variables
 
     m_modeleRecherche = new QStandardItemModel;
-        m_modeleRecherche = rechercheToModele("",true); // On met a true car par défaut on affiche que les interet = 4
+    m_modeleRecherche = rechercheToModele("",true); // On met a true car par défaut on affiche que les interet = 4
     m_soiree = new Soiree;
     champDate = new QDateTimeEdit;
-        champDate->setDisplayFormat(tr("dd/MM/yyyy hh:mm","Format de la date et l'heure"));
+    champDate->setDisplayFormat(tr("dd/MM/yyyy hh:mm","Format de la date et l'heure"));
     champDureeObjet = new QSpinBox;
-        champDureeObjet->setMinimum(DUREE_OBJET_MIN);
-        champDureeObjet->setMaximum(DUREE_OBJET_MAX);
-        champDureeObjet->setSuffix(tr(" min","Unité (minutes), laisser l'espace avant"));
+    champDureeObjet->setMinimum(DUREE_OBJET_MIN);
+    champDureeObjet->setMaximum(DUREE_OBJET_MAX);
+    champDureeObjet->setSuffix(tr(" min","Unité (minutes), laisser l'espace avant"));
 
     m_modele = new QStandardItemModel;
     m_vue = new QTableView;
     m_vuePlanete = new QListView;
-        m_vuePlanete->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_vuePlanete->setEditTriggers(QAbstractItemView::NoEditTriggers);
     m_modelePlanete = new QStandardItemModel;
 
     ajouterObjet = new QAction(tr("Ajouter l'objet"),this);
-        ajouterObjet->setIcon(QIcon("images/arrow-right.png"));
+    ajouterObjet->setIcon(QIcon("images/arrow-right.png"));
     enleverObjet = new QAction(tr("Enlever l'objet"),this);
-        enleverObjet->setIcon(QIcon("images/arrow-left.png"));
+    enleverObjet->setIcon(QIcon("images/arrow-left.png"));
 
     m_vueRecherche = new QListView;
-        m_vueRecherche->setModel(m_modeleRecherche);
-        m_vueRecherche->setMaximumWidth(LARGEUR_LISTE_OBJET_FENETRE_CREATION);
-        m_vueRecherche->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_vueRecherche->setModel(m_modeleRecherche);
+    m_vueRecherche->setMaximumWidth(LARGEUR_LISTE_OBJET_FENETRE_CREATION);
+    m_vueRecherche->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-        connect(m_vueRecherche, &QListView::doubleClicked, this, &InterfaceCreation::getDate);
+    connect(m_vueRecherche, &QListView::doubleClicked, this, &InterfaceCreation::getDate);
 
     // ON CREE LA PAGE POUR L'AJOUT D'OBJET
 
@@ -60,22 +60,22 @@ InterfaceCreation::InterfaceCreation(double latitude, double longitude, QDateTim
     QHBoxLayout *layoutPrincipal = new QHBoxLayout;
 
     QLineEdit *barre_recherche = new QLineEdit;
-        barre_recherche->setMaximumWidth(LARGEUR_LISTE_OBJET_FENETRE_CREATION);
-        barre_recherche->setPlaceholderText(tr("Rechercher un objet"));
+    barre_recherche->setMaximumWidth(LARGEUR_LISTE_OBJET_FENETRE_CREATION);
+    barre_recherche->setPlaceholderText(tr("Rechercher un objet"));
 
     QVBoxLayout *layoutGauche = new QVBoxLayout;
-        layoutGauche->addWidget(barre_recherche);
-        layoutGauche->addWidget(m_vueRecherche);
+    layoutGauche->addWidget(barre_recherche);
+    layoutGauche->addWidget(m_vueRecherche);
 
     QToolBar *barActions = new QToolBar;
-        barActions->addAction(ajouterObjet);
-        barActions->addAction(enleverObjet);
-        barActions->addAction(m_listeActions->getActionMonterObjet());
-        barActions->addAction(m_listeActions->getActionDescendreObjet());
-        barActions->addAction(m_listeActions->getActionChangerDureeObjet());
-        barActions->addAction(m_listeActions->getActionAjouterPlanete());
-        barActions->addAction(m_listeActions->getActionInfoSoiree());
-        barActions->setOrientation(Qt::Vertical);
+    barActions->addAction(ajouterObjet);
+    barActions->addAction(enleverObjet);
+    barActions->addAction(m_listeActions->getActionMonterObjet());
+    barActions->addAction(m_listeActions->getActionDescendreObjet());
+    barActions->addAction(m_listeActions->getActionChangerDureeObjet());
+    barActions->addAction(m_listeActions->getActionAjouterPlanete());
+    barActions->addAction(m_listeActions->getActionInfoSoiree());
+    barActions->setOrientation(Qt::Vertical);
 
     m_vue->resizeColumnsToContents(); // Adapte la largeur des colonnes en fonction de leur contenu
     m_vue->setCornerButtonEnabled(false);
@@ -107,15 +107,15 @@ InterfaceCreation::InterfaceCreation(double latitude, double longitude, QDateTim
     // ETAPE 4 : On remplit les infos
 
     QVector<QString> villePays(Calculastro::trouverVillePays(latitude,longitude)); // on trouve la ville et le pays en fonction de la latitude
-        m_soiree->setDebut(heureDebut);
-        m_soiree->setFin(heureDebut.addSecs(DUREE_SOIREE_MAX*3600));
-        m_soiree->setLat(latitude);
-        m_soiree->setLongi(longitude);
-        m_soiree->setDiametre(diametre);
-        m_soiree->setFocale(focale);
-        m_soiree->setBoolPlanete(true);
-        m_soiree->setPays(villePays.at(1));
-        m_soiree->setVille(villePays.at(0));
+    m_soiree->setDebut(heureDebut);
+    m_soiree->setFin(heureDebut.addSecs(DUREE_SOIREE_MAX*3600));
+    m_soiree->setLat(latitude);
+    m_soiree->setLongi(longitude);
+    m_soiree->setDiametre(diametre);
+    m_soiree->setFocale(focale);
+    m_soiree->setBoolPlanete(true);
+    m_soiree->setPays(villePays.at(1));
+    m_soiree->setVille(villePays.at(0));
 
     champDate->setDate(heureDebut.date());
     champDate->setTime(heureDebut.time());
@@ -198,7 +198,7 @@ void InterfaceCreation::ajoutObjet()
                     QMessageBox::critical(this,tr("Objet présent"),tr("L'objet demandé est déjà présent dans la soirée."));
             }
             else
-              QMessageBox::critical(this,tr("Date invalide"),tr("La date que vous demandez est invalide. Veuillez réesayer."));
+                QMessageBox::critical(this,tr("Date invalide"),tr("La date que vous demandez est invalide. Veuillez réesayer."));
         }
     }
 }
@@ -209,26 +209,26 @@ void InterfaceCreation::getDate()
         if(m_vueRecherche->currentIndex().isValid())
         {
             QDialog *fenetreDemandeDate = new QDialog;
-                QPushButton *boutonValider = new QPushButton(tr("Valider"));
-                QPushButton *boutonAnnuler = new QPushButton(tr("Annuler"));
-                QFormLayout *layoutGrille = new QFormLayout;
-                    layoutGrille->addRow(tr("Date"),champDate);
-                    layoutGrille->addRow(tr("Durée d'observation"),champDureeObjet);
-                    QHBoxLayout *layoutBoutons = new QHBoxLayout;
-                    layoutBoutons->addWidget(boutonValider);
-                    layoutBoutons->addWidget(boutonAnnuler);
-                    layoutGrille->addRow(layoutBoutons);
-                fenetreDemandeDate->setLayout(layoutGrille);
+            QPushButton *boutonValider = new QPushButton(tr("Valider"));
+            QPushButton *boutonAnnuler = new QPushButton(tr("Annuler"));
+            QFormLayout *layoutGrille = new QFormLayout;
+            layoutGrille->addRow(tr("Date"),champDate);
+            layoutGrille->addRow(tr("Durée d'observation"),champDureeObjet);
+            QHBoxLayout *layoutBoutons = new QHBoxLayout;
+            layoutBoutons->addWidget(boutonValider);
+            layoutBoutons->addWidget(boutonAnnuler);
+            layoutGrille->addRow(layoutBoutons);
+            fenetreDemandeDate->setLayout(layoutGrille);
 
-                //  Les deux boutons ferment la fenêtre
-                connect(boutonAnnuler, &QPushButton::clicked, fenetreDemandeDate, &QDialog::close);
-                connect(boutonValider, &QPushButton::clicked, fenetreDemandeDate, &QDialog::close);
-                // Si on valide, alors on apelle le slot d'ajout
-                connect(boutonValider, &QPushButton::clicked, this, &InterfaceCreation::ajoutObjet);
+            //  Les deux boutons ferment la fenêtre
+            connect(boutonAnnuler, &QPushButton::clicked, fenetreDemandeDate, &QDialog::close);
+            connect(boutonValider, &QPushButton::clicked, fenetreDemandeDate, &QDialog::close);
+            // Si on valide, alors on apelle le slot d'ajout
+            connect(boutonValider, &QPushButton::clicked, this, &InterfaceCreation::ajoutObjet);
 
-                fenetreDemandeDate->exec();
+            fenetreDemandeDate->exec();
         }
-     }
+    }
 }
 void InterfaceCreation::raffraichirListeObjet()
 {
@@ -269,7 +269,7 @@ void InterfaceCreation::raffraichirListeObjet()
         m_vue->setModel(m_modele);
         m_vue->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
         griserActions();
-     }
+    }
 }
 void InterfaceCreation::enleveObjet()
 {
@@ -358,39 +358,39 @@ void InterfaceCreation::fenetrePlanete()
         QPushButton *boutonOkPlanete = new QPushButton(tr("Ajouter"));
         QPushButton *boutonKoPlanete = new QPushButton(tr("Annuler"));
 
-            QStandardItem *p1 = new QStandardItem(tr("Mercure"));
-                p1->appendRow(new QStandardItem("P1"));
-            QStandardItem *p2 = new QStandardItem(tr("Vénus"));
-                p2->appendRow(new QStandardItem("P2"));
-            QStandardItem *p3 = new QStandardItem(tr("Mars"));
-                p3->appendRow(new QStandardItem("P3"));
-            QStandardItem *p4 = new QStandardItem(tr("Jupiter"));
-                p4->appendRow(new QStandardItem("P4"));
-            QStandardItem *p5 = new QStandardItem(tr("Saturne"));
-                p5->appendRow(new QStandardItem("P5"));
-            QStandardItem *p6 = new QStandardItem(tr("Uranus"));
-                p6->appendRow(new QStandardItem("P6"));
-            QStandardItem *p7 = new QStandardItem(tr("Neptune"));
-                p7->appendRow(new QStandardItem("P7"));
-            m_modelePlanete->clear();
-            m_modelePlanete->appendRow(p1);
-            m_modelePlanete->appendRow(p2);
-            m_modelePlanete->appendRow(p3);
-            m_modelePlanete->appendRow(p4);
-            m_modelePlanete->appendRow(p5);
-            m_modelePlanete->appendRow(p6);
-            m_modelePlanete->appendRow(p7);
+        QStandardItem *p1 = new QStandardItem(tr("Mercure"));
+        p1->appendRow(new QStandardItem("P1"));
+        QStandardItem *p2 = new QStandardItem(tr("Vénus"));
+        p2->appendRow(new QStandardItem("P2"));
+        QStandardItem *p3 = new QStandardItem(tr("Mars"));
+        p3->appendRow(new QStandardItem("P3"));
+        QStandardItem *p4 = new QStandardItem(tr("Jupiter"));
+        p4->appendRow(new QStandardItem("P4"));
+        QStandardItem *p5 = new QStandardItem(tr("Saturne"));
+        p5->appendRow(new QStandardItem("P5"));
+        QStandardItem *p6 = new QStandardItem(tr("Uranus"));
+        p6->appendRow(new QStandardItem("P6"));
+        QStandardItem *p7 = new QStandardItem(tr("Neptune"));
+        p7->appendRow(new QStandardItem("P7"));
+        m_modelePlanete->clear();
+        m_modelePlanete->appendRow(p1);
+        m_modelePlanete->appendRow(p2);
+        m_modelePlanete->appendRow(p3);
+        m_modelePlanete->appendRow(p4);
+        m_modelePlanete->appendRow(p5);
+        m_modelePlanete->appendRow(p6);
+        m_modelePlanete->appendRow(p7);
 
         m_vuePlanete->setModel(m_modelePlanete);
 
         QFormLayout *layout = new QFormLayout;
-            layout->addRow(m_vuePlanete);
-            layout->addRow(tr("Heure d'observation"),champDate);
-            layout->addRow(tr("Durée d'observation"), champDureeObjet);
-            QHBoxLayout *layoutH = new QHBoxLayout;
-                layoutH->addWidget(boutonOkPlanete);
-                layoutH->addWidget(boutonKoPlanete);
-            layout->addRow(layoutH);
+        layout->addRow(m_vuePlanete);
+        layout->addRow(tr("Heure d'observation"),champDate);
+        layout->addRow(tr("Durée d'observation"), champDureeObjet);
+        QHBoxLayout *layoutH = new QHBoxLayout;
+        layoutH->addWidget(boutonOkPlanete);
+        layoutH->addWidget(boutonKoPlanete);
+        layout->addRow(layoutH);
         fenetreAjouterPlanete->setLayout(layout);
 
         connect(boutonKoPlanete, &QPushButton::clicked, fenetreAjouterPlanete, &QDialog::close);
@@ -452,12 +452,12 @@ void InterfaceCreation::modifierObjet()
 
                 if(index > -1)
                 {
-                   m_soiree->modifierDuree(index,reponse);
-                   raffraichirListeObjet();
-                   emit afficher(tr("L'objet a bien été modifié"));
+                    m_soiree->modifierDuree(index,reponse);
+                    raffraichirListeObjet();
+                    emit afficher(tr("L'objet a bien été modifié"));
                 }
             }
-         }
+        }
     }
 }
 void InterfaceCreation::afficherInfosObjet(QModelIndex cells)
@@ -470,38 +470,38 @@ void InterfaceCreation::afficherInfosObjet(QModelIndex cells)
         ObjetObs *objet = m_soiree->getPlanning().at(index);
 
         QDialog fenetreInfos;
-            fenetreInfos.setWindowTitle(objet->nomComplet());
-            QHBoxLayout *layout = new QHBoxLayout;
+        fenetreInfos.setWindowTitle(objet->nomComplet());
+        QHBoxLayout *layout = new QHBoxLayout;
 
-                QLabel *image = new QLabel;
+        QLabel *image = new QLabel;
 
-                if(QFile::exists("icones/"+objet->ref()+".jpg"))
-                    image->setPixmap(QPixmap("icones/"+objet->ref()+".jpg"));
-                else
-                    image->setPixmap(QPixmap("icones/default.png"));
+        if(QFile::exists("icones/"+objet->ref()+".jpg"))
+            image->setPixmap(QPixmap("icones/"+objet->ref()+".jpg"));
+        else
+            image->setPixmap(QPixmap("icones/default.png"));
 
-                layout->addWidget(image);
-                QVBoxLayout *layoutV = new QVBoxLayout;
-                QLabel *l_ascdr = new QLabel(tr("<strong>Ascension droite</strong> : ")+objet->ascdr());
-                QLabel *l_dec = new QLabel(tr("<strong>Déclinaison</strong> : ")+objet->declinaison());
-                QLabel *l_type = new QLabel(tr("<strong>Type</strong> : ")+objet->type());
-                QLabel *l_mag = new QLabel(tr("<strong>Magnitude</strong> : ")+QString::number(objet->magnitude()));
-                QLabel *l_cons = new QLabel(tr("<strong>Constellation</strong> : ")+Calculastro::abreviationToNom(objet->constellation()));
-                QLabel *l_taille = new QLabel(tr("<strong>Taille</strong> : ")+QString::number(objet->taille())+"'");
-                QLabel *l_hauteur = new QLabel(tr("<strong>Hauteur</strong> : ")+Calculastro::degreeToDms(m_soiree->hauteurAzimutObjet(index).at(0)));
-                QLabel *l_azimut = new QLabel(tr("<strong>Azimut</strong> : ")+Calculastro::degreeToDms(m_soiree->hauteurAzimutObjet(index).at(1)));
+        layout->addWidget(image);
+        QVBoxLayout *layoutV = new QVBoxLayout;
+        QLabel *l_ascdr = new QLabel(tr("<strong>Ascension droite</strong> : ")+objet->ascdr());
+        QLabel *l_dec = new QLabel(tr("<strong>Déclinaison</strong> : ")+objet->declinaison());
+        QLabel *l_type = new QLabel(tr("<strong>Type</strong> : ")+objet->type());
+        QLabel *l_mag = new QLabel(tr("<strong>Magnitude</strong> : ")+QString::number(objet->magnitude()));
+        QLabel *l_cons = new QLabel(tr("<strong>Constellation</strong> : ")+Calculastro::abreviationToNom(objet->constellation()));
+        QLabel *l_taille = new QLabel(tr("<strong>Taille</strong> : ")+QString::number(objet->taille())+"'");
+        QLabel *l_hauteur = new QLabel(tr("<strong>Hauteur</strong> : ")+Calculastro::degreeToDms(m_soiree->hauteurAzimutObjet(index).at(0)));
+        QLabel *l_azimut = new QLabel(tr("<strong>Azimut</strong> : ")+Calculastro::degreeToDms(m_soiree->hauteurAzimutObjet(index).at(1)));
 
-                layoutV->addWidget(l_ascdr);
-                layoutV->addWidget(l_dec);
-                layoutV->addWidget(l_type);
-                layoutV->addWidget(l_mag);
-                layoutV->addWidget(l_cons);
-                layoutV->addWidget(l_taille);
-                layoutV->addWidget(l_hauteur);
-                layoutV->addWidget(l_azimut);
-                layout->addLayout(layoutV);
+        layoutV->addWidget(l_ascdr);
+        layoutV->addWidget(l_dec);
+        layoutV->addWidget(l_type);
+        layoutV->addWidget(l_mag);
+        layoutV->addWidget(l_cons);
+        layoutV->addWidget(l_taille);
+        layoutV->addWidget(l_hauteur);
+        layoutV->addWidget(l_azimut);
+        layout->addLayout(layoutV);
 
-            fenetreInfos.setLayout(layout);
+        fenetreInfos.setLayout(layout);
         fenetreInfos.exec();
     }
 }
@@ -596,11 +596,11 @@ void InterfaceCreation::griserActions()
         m_listeActions->griserActionExporterXML(true);
         m_listeActions->griserActionDiaporama(true);
         m_listeActions->griserActionCarteCiel(true);
-            m_listeActions->griserCarteCouleurConstellation(true);
-            m_listeActions->griserCarteCouleurEtoiles(true);
-            m_listeActions->griserCarteCouleurFond(true);
-            m_listeActions->griserCarteCouleurLegende(true);
-            m_listeActions->griserCarteCouleurObjet(true);
+        m_listeActions->griserCarteCouleurConstellation(true);
+        m_listeActions->griserCarteCouleurEtoiles(true);
+        m_listeActions->griserCarteCouleurFond(true);
+        m_listeActions->griserCarteCouleurLegende(true);
+        m_listeActions->griserCarteCouleurObjet(true);
 
     }
 }

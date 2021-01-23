@@ -17,25 +17,25 @@ FenInfosCreation::FenInfosCreation(FenPrincipal *parent) :
 
     m_pays = new QComboBox;
     QStringList pays;
-        QSqlQuery *requetePays = new QSqlQuery("SELECT pays FROM villes_monde GROUP BY pays ORDER BY pays");
-        while(requetePays->next())
-            pays << requetePays->value(0).toString();
-        m_pays->addItems(pays);
-        m_pays->setCurrentIndex(m_pays->findText(paysD));
+    QSqlQuery *requetePays = new QSqlQuery("SELECT pays FROM villes_monde GROUP BY pays ORDER BY pays");
+    while(requetePays->next())
+        pays << requetePays->value(0).toString();
+    m_pays->addItems(pays);
+    m_pays->setCurrentIndex(m_pays->findText(paysD));
 
     m_departement = new QSpinBox;
-        m_departement->setMinimum(1);
-        m_departement->setMaximum(95);
+    m_departement->setMinimum(1);
+    m_departement->setMaximum(95);
 
     m_villes = new QComboBox;
     m_latitude = new QDoubleSpinBox;
-        m_latitude->setMaximum(90.0);
-        m_latitude->setMinimum(-90.0);
-        m_latitude->setDecimals(3);
+    m_latitude->setMaximum(90.0);
+    m_latitude->setMinimum(-90.0);
+    m_latitude->setDecimals(3);
     m_longitude = new QDoubleSpinBox;
-        m_longitude->setMinimum(-180);
-        m_longitude->setMaximum(180);
-        m_longitude->setDecimals(3);
+    m_longitude->setMinimum(-180);
+    m_longitude->setMaximum(180);
+    m_longitude->setDecimals(3);
     QSqlQuery requeteD;
     if(paysD=="France")
     {
@@ -82,10 +82,10 @@ FenInfosCreation::FenInfosCreation(FenPrincipal *parent) :
     }
 
     m_date = new QDateEdit;
-        m_date->setDate(QDate::currentDate());
+    m_date->setDate(QDate::currentDate());
     m_heure = new QTimeEdit;
-        m_heure->setTime(QTime(20,0));
-        m_heure->setDisplayFormat("hh:mm");
+    m_heure->setTime(QTime(20,0));
+    m_heure->setDisplayFormat("hh:mm");
 
     QStringList listTelescope;
     m_telescope = new QComboBox;
@@ -101,18 +101,18 @@ FenInfosCreation::FenInfosCreation(FenPrincipal *parent) :
     m_close = new QPushButton(tr("Annuler"));
 
     layoutForm = new QFormLayout;
-        layoutForm->addRow(tr("&Pays"),m_pays);
-        layoutForm->addRow(tr("&Département"),m_departement);
-        layoutForm->addRow(tr("&Ville"),m_villes);
-        layoutForm->addRow(tr("&Latitude"),m_latitude);
-        layoutForm->addRow(tr("&Longitude"),m_longitude);
-        layoutForm->addRow(tr("D&ate de début"),m_date);
-        layoutForm->addRow(tr("&Heure de début"),m_heure);
-        layoutForm->addRow(tr("&Télescope"),m_telescope);
-            QHBoxLayout *layout = new QHBoxLayout;
-            layout->addWidget(m_submit);
-            layout->addWidget(m_close);
-        layoutForm->addRow(layout);
+    layoutForm->addRow(tr("&Pays"),m_pays);
+    layoutForm->addRow(tr("&Département"),m_departement);
+    layoutForm->addRow(tr("&Ville"),m_villes);
+    layoutForm->addRow(tr("&Latitude"),m_latitude);
+    layoutForm->addRow(tr("&Longitude"),m_longitude);
+    layoutForm->addRow(tr("D&ate de début"),m_date);
+    layoutForm->addRow(tr("&Heure de début"),m_heure);
+    layoutForm->addRow(tr("&Télescope"),m_telescope);
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(m_submit);
+    layout->addWidget(m_close);
+    layoutForm->addRow(layout);
 
     connect(m_submit, &QPushButton::clicked, this, &FenInfosCreation::creer);
     connect(m_close, &QPushButton::clicked, this, &FenInfosCreation::close);

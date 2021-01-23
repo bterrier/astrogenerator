@@ -17,13 +17,13 @@ FenetreBDD::FenetreBDD(QWidget *parent) :
 {
     m_modele = new QStandardItemModel;
     m_vue = new QTableView;
-        m_vue->setCornerButtonEnabled(false);
-        m_vue->setSelectionBehavior(QAbstractItemView::SelectRows);
-        m_vue->setSelectionMode(QAbstractItemView::SingleSelection);
-        m_vue->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        m_vue->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-        m_vue->horizontalHeader()->hide();
-        m_vue->verticalHeader()->hide();
+    m_vue->setCornerButtonEnabled(false);
+    m_vue->setSelectionBehavior(QAbstractItemView::SelectRows);
+    m_vue->setSelectionMode(QAbstractItemView::SingleSelection);
+    m_vue->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_vue->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    m_vue->horizontalHeader()->hide();
+    m_vue->verticalHeader()->hide();
 
     m_vue->setModel(m_modele);
 
@@ -31,121 +31,121 @@ FenetreBDD::FenetreBDD(QWidget *parent) :
     QVBoxLayout *layoutVertical = new QVBoxLayout;
     QHBoxLayout *layoutHorizontal = new QHBoxLayout;
 
-        // CHAMP DE RECHERCHE
-        QFormLayout *layoutRecherche = new QFormLayout;
-            champRecherche = new QLineEdit;
-        layoutRecherche->addRow("&Rechercher", champRecherche);
+    // CHAMP DE RECHERCHE
+    QFormLayout *layoutRecherche = new QFormLayout;
+    champRecherche = new QLineEdit;
+    layoutRecherche->addRow("&Rechercher", champRecherche);
 
-        // GROUPBOX DES TYPES D'OBJETS
-        QGroupBox *groupeBoxType = new QGroupBox(tr("Types d'objets"));
-            QVBoxLayout *layoutType = new QVBoxLayout;
-                typeGalaxie = new QCheckBox(tr("Galaxie"));
-                    typeGalaxie->setChecked(true);
-                typeAmasG = new QCheckBox(tr("Amas Globulaires"));
-                    typeAmasG->setChecked(true);
-                typeNebuleuseR = new QCheckBox(tr("Nébuleuse en réflection"));
-                    typeNebuleuseR->setChecked(true);
-                typeNebuleuseP = new QCheckBox(tr("Nébuleuse planétaire"));
-                    typeNebuleuseP->setChecked(true);
-                typeAmasNebuleuse = new QCheckBox(tr("Amas + Nébuleuse"));
-                    typeAmasNebuleuse->setChecked(true);
-                typeAmasOuvert = new QCheckBox(tr("Amas ouvert"));
-                    typeAmasOuvert->setChecked(true);
+    // GROUPBOX DES TYPES D'OBJETS
+    QGroupBox *groupeBoxType = new QGroupBox(tr("Types d'objets"));
+    QVBoxLayout *layoutType = new QVBoxLayout;
+    typeGalaxie = new QCheckBox(tr("Galaxie"));
+    typeGalaxie->setChecked(true);
+    typeAmasG = new QCheckBox(tr("Amas Globulaires"));
+    typeAmasG->setChecked(true);
+    typeNebuleuseR = new QCheckBox(tr("Nébuleuse en réflection"));
+    typeNebuleuseR->setChecked(true);
+    typeNebuleuseP = new QCheckBox(tr("Nébuleuse planétaire"));
+    typeNebuleuseP->setChecked(true);
+    typeAmasNebuleuse = new QCheckBox(tr("Amas + Nébuleuse"));
+    typeAmasNebuleuse->setChecked(true);
+    typeAmasOuvert = new QCheckBox(tr("Amas ouvert"));
+    typeAmasOuvert->setChecked(true);
 
-                layoutType->addWidget(typeGalaxie);
-                layoutType->addWidget(typeAmasG);
-                layoutType->addWidget(typeNebuleuseR);
-                layoutType->addWidget(typeNebuleuseP);
-                layoutType->addWidget(typeAmasNebuleuse);
-                layoutType->addWidget(typeAmasOuvert);
+    layoutType->addWidget(typeGalaxie);
+    layoutType->addWidget(typeAmasG);
+    layoutType->addWidget(typeNebuleuseR);
+    layoutType->addWidget(typeNebuleuseP);
+    layoutType->addWidget(typeAmasNebuleuse);
+    layoutType->addWidget(typeAmasOuvert);
 
-           groupeBoxType->setLayout(layoutType);
+    groupeBoxType->setLayout(layoutType);
 
-       // GROUPBOX DE DIFFICULTE
-       QGroupBox *groupeBoxDifficulte = new QGroupBox(tr("Difficulté d'observation"));
-            QVBoxLayout *layoutDifficulte = new QVBoxLayout;
-                difficulte1 = new QCheckBox(tr("Très facile"));
-                    difficulte1->setChecked(true);
-                difficulte2 = new QCheckBox(tr("Facile"));
-                    difficulte2->setChecked(true);
-                difficulte3 = new QCheckBox(tr("Moyen"));
-                    difficulte3->setChecked(true);
-                difficulte4 = new QCheckBox(tr("Difficile"));
-                    difficulte4->setChecked(true);
-                difficulte0 = new QCheckBox(tr("Inconnue"));
+    // GROUPBOX DE DIFFICULTE
+    QGroupBox *groupeBoxDifficulte = new QGroupBox(tr("Difficulté d'observation"));
+    QVBoxLayout *layoutDifficulte = new QVBoxLayout;
+    difficulte1 = new QCheckBox(tr("Très facile"));
+    difficulte1->setChecked(true);
+    difficulte2 = new QCheckBox(tr("Facile"));
+    difficulte2->setChecked(true);
+    difficulte3 = new QCheckBox(tr("Moyen"));
+    difficulte3->setChecked(true);
+    difficulte4 = new QCheckBox(tr("Difficile"));
+    difficulte4->setChecked(true);
+    difficulte0 = new QCheckBox(tr("Inconnue"));
 
-                layoutDifficulte->addWidget(difficulte1);
-                layoutDifficulte->addWidget(difficulte2);
-                layoutDifficulte->addWidget(difficulte3);
-                layoutDifficulte->addWidget(difficulte4);
-                layoutDifficulte->addWidget(difficulte0);
+    layoutDifficulte->addWidget(difficulte1);
+    layoutDifficulte->addWidget(difficulte2);
+    layoutDifficulte->addWidget(difficulte3);
+    layoutDifficulte->addWidget(difficulte4);
+    layoutDifficulte->addWidget(difficulte0);
 
-            groupeBoxDifficulte->setLayout(layoutDifficulte);
+    groupeBoxDifficulte->setLayout(layoutDifficulte);
 
-       // GROUPBOX DES INTERETS
-        QGroupBox *groupeBoxInteret = new QGroupBox(tr("Interêt de l'observation en visuel"));
-             QVBoxLayout *layoutInteret = new QVBoxLayout;
-                 interet1 = new QCheckBox(tr("Sans interêt"));
-                    interet1->setChecked(true);
-                 interet2 = new QCheckBox(tr("Peu interessant"));
-                    interet2->setChecked(true);
-                 interet3 = new QCheckBox(tr("Intéressant"));
-                    interet3->setChecked(true);
-                 interet4 = new QCheckBox(tr("Remarquable"));
-                    interet4->setChecked(true);
+    // GROUPBOX DES INTERETS
+    QGroupBox *groupeBoxInteret = new QGroupBox(tr("Interêt de l'observation en visuel"));
+    QVBoxLayout *layoutInteret = new QVBoxLayout;
+    interet1 = new QCheckBox(tr("Sans interêt"));
+    interet1->setChecked(true);
+    interet2 = new QCheckBox(tr("Peu interessant"));
+    interet2->setChecked(true);
+    interet3 = new QCheckBox(tr("Intéressant"));
+    interet3->setChecked(true);
+    interet4 = new QCheckBox(tr("Remarquable"));
+    interet4->setChecked(true);
 
-                 layoutInteret->addWidget(interet1);
-                 layoutInteret->addWidget(interet2);
-                 layoutInteret->addWidget(interet3);
-                 layoutInteret->addWidget(interet4);
+    layoutInteret->addWidget(interet1);
+    layoutInteret->addWidget(interet2);
+    layoutInteret->addWidget(interet3);
+    layoutInteret->addWidget(interet4);
 
-             groupeBoxInteret->setLayout(layoutInteret);
+    groupeBoxInteret->setLayout(layoutInteret);
 
-       // GROUPBOX DES PARAMETRES RESTANTS
-       QGroupBox *groupeBoxAutres = new QGroupBox(tr("Autres critères de tri"));
-            QFormLayout *layoutAutres = new QFormLayout;
-                champMagnitude = new QSpinBox;
-                    champMagnitude->setMaximum(15);
-                    champMagnitude->setMinimum(0);
-                    champMagnitude->setValue(8);
-                layoutAutres->addRow(tr("Magnitude maximum"),champMagnitude);
-            groupeBoxAutres->setLayout(layoutAutres);
+    // GROUPBOX DES PARAMETRES RESTANTS
+    QGroupBox *groupeBoxAutres = new QGroupBox(tr("Autres critères de tri"));
+    QFormLayout *layoutAutres = new QFormLayout;
+    champMagnitude = new QSpinBox;
+    champMagnitude->setMaximum(15);
+    champMagnitude->setMinimum(0);
+    champMagnitude->setValue(8);
+    layoutAutres->addRow(tr("Magnitude maximum"),champMagnitude);
+    groupeBoxAutres->setLayout(layoutAutres);
 
-        nombreResultat = new QLabel;
-        nombreResultat->setAlignment(Qt::AlignCenter);
+    nombreResultat = new QLabel;
+    nombreResultat->setAlignment(Qt::AlignCenter);
 
-        connect(champRecherche, &QLineEdit::returnPressed, this, &FenetreBDD::actualiserVue);
-        connect(typeGalaxie, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
-        connect(typeAmasG, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
-        connect(typeNebuleuseR, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
-        connect(typeNebuleuseP, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
-        connect(typeAmasNebuleuse, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
-        connect(typeAmasOuvert, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+    connect(champRecherche, &QLineEdit::returnPressed, this, &FenetreBDD::actualiserVue);
+    connect(typeGalaxie, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+    connect(typeAmasG, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+    connect(typeNebuleuseR, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+    connect(typeNebuleuseP, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+    connect(typeAmasNebuleuse, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+    connect(typeAmasOuvert, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
 
-        connect(interet1, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
-        connect(interet2, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
-        connect(interet3, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
-        connect(interet4, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+    connect(interet1, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+    connect(interet2, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+    connect(interet3, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+    connect(interet4, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
 
-        connect(difficulte0, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
-        connect(difficulte1, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
-        connect(difficulte2, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
-        connect(difficulte3, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
-        connect(difficulte4, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+    connect(difficulte0, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+    connect(difficulte1, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+    connect(difficulte2, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+    connect(difficulte3, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
+    connect(difficulte4, &QCheckBox::clicked,this, &FenetreBDD::actualiserVue);
 
-        connect(champMagnitude, qOverload<int>(&QSpinBox::valueChanged),this, &FenetreBDD::actualiserVue);
+    connect(champMagnitude, qOverload<int>(&QSpinBox::valueChanged),this, &FenetreBDD::actualiserVue);
 
-        connect(m_vue, &QTableView::doubleClicked, this, &FenetreBDD::afficherObjet);
+    connect(m_vue, &QTableView::doubleClicked, this, &FenetreBDD::afficherObjet);
 
-        layoutVertical->addLayout(layoutRecherche);
-        layoutVertical->addWidget(groupeBoxType);
-        layoutVertical->addWidget(groupeBoxDifficulte);
-        layoutVertical->addWidget(groupeBoxInteret);
-        layoutVertical->addWidget(groupeBoxAutres);
-        layoutVertical->addWidget(nombreResultat);
+    layoutVertical->addLayout(layoutRecherche);
+    layoutVertical->addWidget(groupeBoxType);
+    layoutVertical->addWidget(groupeBoxDifficulte);
+    layoutVertical->addWidget(groupeBoxInteret);
+    layoutVertical->addWidget(groupeBoxAutres);
+    layoutVertical->addWidget(nombreResultat);
 
-        layoutHorizontal->addLayout(layoutVertical);
-        layoutHorizontal->addWidget(m_vue,4);
+    layoutHorizontal->addLayout(layoutVertical);
+    layoutHorizontal->addWidget(m_vue,4);
 
     setLayout(layoutHorizontal);
 
@@ -177,7 +177,7 @@ void FenetreBDD::actualiserVue()
             nom = requete->value(1).toString();
 
         QStandardItem *ligne = new QStandardItem(nom);
-            ligne->appendRow(new QStandardItem(requete->value(1).toString()));
+        ligne->appendRow(new QStandardItem(requete->value(1).toString()));
         m_modele->appendRow(ligne);
     }
     if(i>1) s="s";
@@ -261,37 +261,37 @@ void FenetreBDD::afficherObjet(QModelIndex index) const
     if(objet->isValid())
     {
         QDialog fenetreInfos;
-            fenetreInfos.setWindowTitle(objet->nomComplet());
+        fenetreInfos.setWindowTitle(objet->nomComplet());
 
-                QLabel *image = new QLabel;
-                image->setPixmap(QPixmap("icones/"+objet->ref()+".jpg"));
-                QVBoxLayout *layoutV = new QVBoxLayout;
-                QLabel *l_type = new QLabel(tr("<strong>Type</strong> : ")+objet->type());
-                QLabel *l_ascdr = new QLabel(tr("<strong>Ascension droite</strong> : ")+objet->ascdr());
-                QLabel *l_dec = new QLabel(tr("<strong>Déclinaison</strong> : ")+objet->declinaison());
-                QLabel *l_mag = new QLabel(tr("<strong>Magnitude</strong> : ")+QString::number(objet->magnitude()));
-                QLabel *l_interet = new QLabel(tr("<strong>Interêt</strong> : ")+objet->interet(true));
-                QLabel *l_difficulte = new QLabel(tr("<strong>Difficulté</strong> : ")+objet->difficulte(true));
-                QLabel *l_cons = new QLabel(tr("<strong>Constellation</strong> : ")+Calculastro::abreviationToNom(objet->constellation()));
-                QLabel *l_taille = new QLabel(tr("<strong>Taille</strong> : ")+QString::number(objet->taille())+"'");
-                QPushButton *boutonInfos = new QPushButton(tr("Plus d'infos sur ","Cette chaîne est suivie de la référence de l'objet (lien vers un site)")+ref);
-                layoutV->addWidget(image,0,Qt::AlignCenter);
-                layoutV->addWidget(l_type);
-                layoutV->addWidget(l_ascdr);
-                layoutV->addWidget(l_dec);
-                layoutV->addWidget(l_mag);
-                layoutV->addWidget(l_interet);
-                layoutV->addWidget(l_difficulte);
-                layoutV->addWidget(l_cons);
-                layoutV->addWidget(l_taille);
+        QLabel *image = new QLabel;
+        image->setPixmap(QPixmap("icones/"+objet->ref()+".jpg"));
+        QVBoxLayout *layoutV = new QVBoxLayout;
+        QLabel *l_type = new QLabel(tr("<strong>Type</strong> : ")+objet->type());
+        QLabel *l_ascdr = new QLabel(tr("<strong>Ascension droite</strong> : ")+objet->ascdr());
+        QLabel *l_dec = new QLabel(tr("<strong>Déclinaison</strong> : ")+objet->declinaison());
+        QLabel *l_mag = new QLabel(tr("<strong>Magnitude</strong> : ")+QString::number(objet->magnitude()));
+        QLabel *l_interet = new QLabel(tr("<strong>Interêt</strong> : ")+objet->interet(true));
+        QLabel *l_difficulte = new QLabel(tr("<strong>Difficulté</strong> : ")+objet->difficulte(true));
+        QLabel *l_cons = new QLabel(tr("<strong>Constellation</strong> : ")+Calculastro::abreviationToNom(objet->constellation()));
+        QLabel *l_taille = new QLabel(tr("<strong>Taille</strong> : ")+QString::number(objet->taille())+"'");
+        QPushButton *boutonInfos = new QPushButton(tr("Plus d'infos sur ","Cette chaîne est suivie de la référence de l'objet (lien vers un site)")+ref);
+        layoutV->addWidget(image,0,Qt::AlignCenter);
+        layoutV->addWidget(l_type);
+        layoutV->addWidget(l_ascdr);
+        layoutV->addWidget(l_dec);
+        layoutV->addWidget(l_mag);
+        layoutV->addWidget(l_interet);
+        layoutV->addWidget(l_difficulte);
+        layoutV->addWidget(l_cons);
+        layoutV->addWidget(l_taille);
 
-                QVBoxLayout *layoutVertical = new QVBoxLayout;
-                    layoutVertical->addLayout(layoutV);
-                    layoutVertical->addWidget(boutonInfos);
+        QVBoxLayout *layoutVertical = new QVBoxLayout;
+        layoutVertical->addLayout(layoutV);
+        layoutVertical->addWidget(boutonInfos);
 
-                connect(boutonInfos, &QPushButton::clicked, this, &FenetreBDD::ouvrirCDS);
+        connect(boutonInfos, &QPushButton::clicked, this, &FenetreBDD::ouvrirCDS);
 
-            fenetreInfos.setLayout(layoutVertical);
+        fenetreInfos.setLayout(layoutVertical);
         fenetreInfos.exec();
     }
     else

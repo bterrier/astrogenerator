@@ -17,25 +17,25 @@ FenCreerSoiree::FenCreerSoiree(FenPrincipal *parent) : QDialog()
 
     m_pays = new QComboBox;
     QStringList pays;
-        QSqlQuery *requetePays = new QSqlQuery("SELECT pays FROM villes_monde GROUP BY pays ORDER BY pays");
-        while(requetePays->next())
-            pays << requetePays->value(0).toString();
-        m_pays->addItems(pays);
-        m_pays->setCurrentIndex(m_pays->findText(paysD));
+    QSqlQuery *requetePays = new QSqlQuery("SELECT pays FROM villes_monde GROUP BY pays ORDER BY pays");
+    while(requetePays->next())
+        pays << requetePays->value(0).toString();
+    m_pays->addItems(pays);
+    m_pays->setCurrentIndex(m_pays->findText(paysD));
 
     m_departement = new QSpinBox;
-        m_departement->setMinimum(1);
-        m_departement->setMaximum(95);
+    m_departement->setMinimum(1);
+    m_departement->setMaximum(95);
 
     m_villes = new QComboBox;
     m_latitude = new QDoubleSpinBox;
-        m_latitude->setMaximum(90.0);
-        m_latitude->setMinimum(-90.0);
-        m_latitude->setDecimals(3);
+    m_latitude->setMaximum(90.0);
+    m_latitude->setMinimum(-90.0);
+    m_latitude->setDecimals(3);
     m_longitude = new QDoubleSpinBox;
-        m_longitude->setMinimum(-180);
-        m_longitude->setMaximum(180);
-        m_longitude->setDecimals(3);
+    m_longitude->setMinimum(-180);
+    m_longitude->setMaximum(180);
+    m_longitude->setDecimals(3);
     QSqlQuery requeteD;
     if(paysD=="France")
     {
@@ -82,7 +82,7 @@ FenCreerSoiree::FenCreerSoiree(FenPrincipal *parent) : QDialog()
     }
     m_date = new QDateEdit;
     m_heure = new QTimeEdit;
-        m_heure->setDisplayFormat("hh:mm");
+    m_heure->setDisplayFormat("hh:mm");
     m_duree = new QSpinBox;
     m_dureeObjet = new QSpinBox;
     m_niveau = new QComboBox;
@@ -124,12 +124,12 @@ FenCreerSoiree::FenCreerSoiree(FenPrincipal *parent) : QDialog()
     m_fenetreConstellation = new QDialog;
     m_fenetreConstellation->setWindowTitle(tr("Choisissez une ou plusieurs constellations"));
     QHBoxLayout *layoutConst = new QHBoxLayout;
-        QVBoxLayout *layoutConstV1 = new QVBoxLayout;
-        QVBoxLayout *layoutConstV2 = new QVBoxLayout;
-        QVBoxLayout *layoutConstV3 = new QVBoxLayout;
-        QVBoxLayout *layoutConstV4 = new QVBoxLayout;
-        QVBoxLayout *layoutConstV5 = new QVBoxLayout;
-            layoutConstV5->setAlignment(Qt::AlignTop);
+    QVBoxLayout *layoutConstV1 = new QVBoxLayout;
+    QVBoxLayout *layoutConstV2 = new QVBoxLayout;
+    QVBoxLayout *layoutConstV3 = new QVBoxLayout;
+    QVBoxLayout *layoutConstV4 = new QVBoxLayout;
+    QVBoxLayout *layoutConstV5 = new QVBoxLayout;
+    layoutConstV5->setAlignment(Qt::AlignTop);
     QCheckBox *checkBox(0);
     QSqlQuery *requeteConst = new QSqlQuery("SELECT constellation FROM ngcic GROUP BY constellation");
     QStringList listeConstellation;
@@ -189,16 +189,16 @@ FenCreerSoiree::FenCreerSoiree(FenPrincipal *parent) : QDialog()
     layoutForm->addRow(tr("Durée de la &soirée"), m_duree);
     layoutForm->addRow(tr("Durée d'observation par objet"), m_dureeObjet);
     layoutForm->addRow(tr("&Niveau astro'"),m_niveau);
-        QHBoxLayout *layoutFormConstellation = new QHBoxLayout;
-        layoutFormConstellation->addWidget(boutonConst);
-        m_texteConstellation = new QLabel(creerTexteConstellation());
-        layoutFormConstellation->addWidget(m_texteConstellation);
+    QHBoxLayout *layoutFormConstellation = new QHBoxLayout;
+    layoutFormConstellation->addWidget(boutonConst);
+    m_texteConstellation = new QLabel(creerTexteConstellation());
+    layoutFormConstellation->addWidget(m_texteConstellation);
     layoutForm->addRow(tr("Constellation"),layoutFormConstellation);
     layoutForm->addRow(tr("Planètes"),m_planetes);
     layoutForm->addRow(tr("Télescopes"), m_telescope);
-        QHBoxLayout *layoutBouton = new QHBoxLayout;
-        layoutBouton->addWidget(m_submit);
-        layoutBouton->addWidget(m_close);
+    QHBoxLayout *layoutBouton = new QHBoxLayout;
+    layoutBouton->addWidget(m_submit);
+    layoutBouton->addWidget(m_close);
     layoutForm->addRow(layoutBouton);
     layoutForm->addRow(m_progress);
 
@@ -243,16 +243,16 @@ void FenCreerSoiree::genererSoiree()
 
     switch(m_niveau->currentIndex())
     {
-        case 0 : niveau = "debutant"; break;
-        case 1 : niveau = "amateur"; break;
-        case 2 : niveau = "amateurc"; break;
-        case 3 : niveau = "expert"; break;
-        default : niveau = "debutant"; break;
+    case 0 : niveau = "debutant"; break;
+    case 1 : niveau = "amateur"; break;
+    case 2 : niveau = "amateurc"; break;
+    case 3 : niveau = "expert"; break;
+    default : niveau = "debutant"; break;
     }
 
     // TELESCOPE
     QSqlQuery *requeteTelescope = new QSqlQuery();
-            requeteTelescope->prepare("SELECT diametre, focale FROM telescope WHERE nom = :nom");
+    requeteTelescope->prepare("SELECT diametre, focale FROM telescope WHERE nom = :nom");
     requeteTelescope->bindValue(":nom",m_telescope->currentText());
     if(requeteTelescope->exec())
     {

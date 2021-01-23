@@ -77,11 +77,11 @@ QString Objet::interet(bool explicite)
     {
         switch(m_interet.toInt())
         {
-            case 1 : return tr("Sans interêt"); break;
-            case 2 : return tr("Peu interessant"); break;
-            case 3 : return tr("Interessant"); break;
-            case 4 : return tr("Remarquable"); break;
-            default: return tr("Inconnu"); break;
+        case 1 : return tr("Sans interêt"); break;
+        case 2 : return tr("Peu interessant"); break;
+        case 3 : return tr("Interessant"); break;
+        case 4 : return tr("Remarquable"); break;
+        default: return tr("Inconnu"); break;
         }
     }
 }
@@ -93,12 +93,12 @@ QString Objet::difficulte(bool explicite)
     {
         switch(m_difficulte.toInt())
         {
-            case 1 : return tr("Très facile"); break;
-            case 2 : return tr("Facile"); break;
-            case 3 : return tr("Moyen"); break;
-            case 4 : return tr("Difficile"); break;
-            case 0 : return tr("Inconnue"); break;
-            default: return tr("Inconnue"); break;
+        case 1 : return tr("Très facile"); break;
+        case 2 : return tr("Facile"); break;
+        case 3 : return tr("Moyen"); break;
+        case 4 : return tr("Difficile"); break;
+        case 0 : return tr("Inconnue"); break;
+        default: return tr("Inconnue"); break;
         }
     }
 }

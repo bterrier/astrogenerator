@@ -97,7 +97,7 @@ void Carteciel::dessinerCarte()
     QSqlQuery etoiles("SELECT ascdr, declinaison, magnitude, nom FROM etoiles WHERE magnitude < 6");
     while(etoiles.next())
     {
-         // Afficher les étoiles ici : voir code PHP toradian.php
+        // Afficher les étoiles ici : voir code PHP toradian.php
         raDecimal = hmsToDegree(etoiles.value(0).toString());
         declinaisonDecimal = dmsToDegree(etoiles.value(1).toString());
 
@@ -327,11 +327,11 @@ void Carteciel::afficherQDialog()
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(new QGraphicsView(new Carteciel(*this)));
     QHBoxLayout *layoutH = new QHBoxLayout;
-        layoutH->setAlignment(Qt::AlignRight);
-        QPushButton *boutonEnregistrer = new QPushButton("Enregistrer la carte");
-        QPushButton *boutonFermer = new QPushButton("Fermer");
-        layoutH->addWidget(boutonEnregistrer);
-        layoutH->addWidget(boutonFermer);
+    layoutH->setAlignment(Qt::AlignRight);
+    QPushButton *boutonEnregistrer = new QPushButton("Enregistrer la carte");
+    QPushButton *boutonFermer = new QPushButton("Fermer");
+    layoutH->addWidget(boutonEnregistrer);
+    layoutH->addWidget(boutonFermer);
     layout->addLayout(layoutH);
     secondeFenetre.setLayout(layout);
 
@@ -345,7 +345,7 @@ void Carteciel::sauverImage()
     QString fichier = QFileDialog::getSaveFileName(0, "Enregistrer la carte", QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)+"/carte.png", "Images (*.png *.gif *.jpg *.jpeg)");
 
     if(fichier != "")
-    {        
+    {
         QGraphicsView *vue = new QGraphicsView(new Carteciel(*this));
         vue->setBackgroundBrush(QColor(255,255,255));
         vue->setFixedSize(800,800);

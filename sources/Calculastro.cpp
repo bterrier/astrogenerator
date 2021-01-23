@@ -648,7 +648,7 @@ QString Calculastro::degreeToHms(double val)
 }
 double Calculastro::round(double n, unsigned d)
 {
-      return floor(n * pow(10., d) + .5) / pow(10., d);
+    return floor(n * pow(10., d) + .5) / pow(10., d);
 }
 QString Calculastro::referencePlaneteToNom(QString ref, bool read)
 {
@@ -815,10 +815,10 @@ double Calculastro::noterObjetVisible(QString type, int interet, double magnitud
     // ON NOTE SUR L'INTERET
     switch(interet)
     {
-        case 4 : note += 20; break;
-        case 3 : note += 10; break;
-        case 2 : note += 5; break;
-        case 1 : note += 0; break;
+    case 4 : note += 20; break;
+    case 3 : note += 10; break;
+    case 2 : note += 5; break;
+    case 1 : note += 0; break;
     }
 
     // ON NOTE SUR LA HAUTEUR MAX

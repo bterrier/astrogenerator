@@ -8,11 +8,11 @@
 CompteRebours::CompteRebours()
 {
     m_lcd = new QLCDNumber;
-        m_lcd->display(0);
-        m_lcd->setSegmentStyle(QLCDNumber::Filled);
-        QPalette palette = m_lcd->palette();
-        palette.setColor(QPalette::Light,QColor(255,255,255));
-        m_lcd->setPalette(palette);
+    m_lcd->display(0);
+    m_lcd->setSegmentStyle(QLCDNumber::Filled);
+    QPalette palette = m_lcd->palette();
+    palette.setColor(QPalette::Light,QColor(255,255,255));
+    m_lcd->setPalette(palette);
     timer = new QTimer;
 
     connect(timer, &QTimer::timeout, this, &CompteRebours::enlever);

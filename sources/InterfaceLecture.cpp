@@ -27,28 +27,28 @@ InterfaceLecture::InterfaceLecture(Soiree *soiree, ActionsFenetre *listeActionsP
     m_modele = soiree->toModele();
     m_carte = new Carteciel(soiree);
     m_vue = new QTableView;
-        m_vue->setModel(m_modele);
-        m_vue->resizeColumnsToContents(); // Adapte la largeur des colonnes en fonction de leur contenu
-        m_vue->setCornerButtonEnabled(false);
-        m_vue->setSelectionBehavior(QAbstractItemView::SelectRows);
-        m_vue->setSelectionMode(QAbstractItemView::SingleSelection);
-        m_vue->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        m_vue->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    m_vue->setModel(m_modele);
+    m_vue->resizeColumnsToContents(); // Adapte la largeur des colonnes en fonction de leur contenu
+    m_vue->setCornerButtonEnabled(false);
+    m_vue->setSelectionBehavior(QAbstractItemView::SelectRows);
+    m_vue->setSelectionMode(QAbstractItemView::SingleSelection);
+    m_vue->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_vue->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     QHBoxLayout *layoutPrincipal = new QHBoxLayout;
 
     QToolBar *outilsOnglets = new QToolBar;
-        outilsOnglets->addAction(m_listeActions->getActionAjouterObjet());
-        outilsOnglets->addAction(m_listeActions->getActionSupprimerObjet());
-        outilsOnglets->addAction(m_listeActions->getActionMonterObjet());
-        outilsOnglets->addAction(m_listeActions->getActionDescendreObjet());
-        outilsOnglets->addAction(m_listeActions->getActionChangerDureeObjet());
-        outilsOnglets->addAction(m_listeActions->getActionAjouterPlanete());
-        outilsOnglets->addAction(m_listeActions->getActionCarteCiel());
-        outilsOnglets->addAction(m_listeActions->getActionDiaporama());
-        outilsOnglets->addAction(m_listeActions->getActionExporterPDF());
-        outilsOnglets->addAction(m_listeActions->getActionInfoSoiree());
-        outilsOnglets->setOrientation(Qt::Vertical);
+    outilsOnglets->addAction(m_listeActions->getActionAjouterObjet());
+    outilsOnglets->addAction(m_listeActions->getActionSupprimerObjet());
+    outilsOnglets->addAction(m_listeActions->getActionMonterObjet());
+    outilsOnglets->addAction(m_listeActions->getActionDescendreObjet());
+    outilsOnglets->addAction(m_listeActions->getActionChangerDureeObjet());
+    outilsOnglets->addAction(m_listeActions->getActionAjouterPlanete());
+    outilsOnglets->addAction(m_listeActions->getActionCarteCiel());
+    outilsOnglets->addAction(m_listeActions->getActionDiaporama());
+    outilsOnglets->addAction(m_listeActions->getActionExporterPDF());
+    outilsOnglets->addAction(m_listeActions->getActionInfoSoiree());
+    outilsOnglets->setOrientation(Qt::Vertical);
     layoutPrincipal->addWidget(outilsOnglets);
 
     QVBoxLayout *layoutDroiteContenu = new QVBoxLayout;
@@ -90,42 +90,42 @@ void InterfaceLecture::afficherInfosObjet(QModelIndex cells)
         ObjetObs *objet = m_soiree->getPlanning().at(index);
 
         QDialog fenetreInfos;
-            fenetreInfos.setWindowTitle(objet->nomComplet());
-            QHBoxLayout *layout = new QHBoxLayout;
+        fenetreInfos.setWindowTitle(objet->nomComplet());
+        QHBoxLayout *layout = new QHBoxLayout;
 
-                QLabel *image = new QLabel;
+        QLabel *image = new QLabel;
 
-                if(QFile::exists("icones/"+objet->ref()+".jpg"))
-                    image->setPixmap(QPixmap("icones/"+objet->ref()+".jpg"));
-                else
-                    image->setPixmap(QPixmap("icones/default.png"));
+        if(QFile::exists("icones/"+objet->ref()+".jpg"))
+            image->setPixmap(QPixmap("icones/"+objet->ref()+".jpg"));
+        else
+            image->setPixmap(QPixmap("icones/default.png"));
 
-                //QMessageBox::information(this,"Lien absolu",QDir::currentPath());
+        //QMessageBox::information(this,"Lien absolu",QDir::currentPath());
 
-                layout->addWidget(image);
-                QVBoxLayout *layoutV = new QVBoxLayout;
-                QLabel *l_ascdr = new QLabel(tr("<strong>Ascension droite</strong> : ")+objet->ascdr());
-                QLabel *l_dec = new QLabel(tr("<strong>Déclinaison</strong> : ")+objet->declinaison());
-                QLabel *l_type = new QLabel(tr("<strong>Type</strong> : ")+objet->type());
-                QLabel *l_mag = new QLabel(tr("<strong>Magnitude</strong> : ")+QString::number(objet->magnitude()));
-                QLabel *l_cons = new QLabel(tr("<strong>Constellation</strong> : ")+Calculastro::abreviationToNom(objet->constellation()));
-                QLabel *l_taille = new QLabel(tr("<strong>Taille</strong> : ")+QString::number(objet->taille())+"'");
-                QLabel *l_hauteur = new QLabel(tr("<strong>Hauteur</strong> : ")+Calculastro::degreeToDms(m_soiree->hauteurAzimutObjet(index).at(0)));
-                QLabel *l_azimut = new QLabel(tr("<strong>Azimut</strong> : ")+Calculastro::degreeToDms(m_soiree->hauteurAzimutObjet(index).at(1)));
+        layout->addWidget(image);
+        QVBoxLayout *layoutV = new QVBoxLayout;
+        QLabel *l_ascdr = new QLabel(tr("<strong>Ascension droite</strong> : ")+objet->ascdr());
+        QLabel *l_dec = new QLabel(tr("<strong>Déclinaison</strong> : ")+objet->declinaison());
+        QLabel *l_type = new QLabel(tr("<strong>Type</strong> : ")+objet->type());
+        QLabel *l_mag = new QLabel(tr("<strong>Magnitude</strong> : ")+QString::number(objet->magnitude()));
+        QLabel *l_cons = new QLabel(tr("<strong>Constellation</strong> : ")+Calculastro::abreviationToNom(objet->constellation()));
+        QLabel *l_taille = new QLabel(tr("<strong>Taille</strong> : ")+QString::number(objet->taille())+"'");
+        QLabel *l_hauteur = new QLabel(tr("<strong>Hauteur</strong> : ")+Calculastro::degreeToDms(m_soiree->hauteurAzimutObjet(index).at(0)));
+        QLabel *l_azimut = new QLabel(tr("<strong>Azimut</strong> : ")+Calculastro::degreeToDms(m_soiree->hauteurAzimutObjet(index).at(1)));
 
-                layoutV->addWidget(l_ascdr);
-                layoutV->addWidget(l_dec);
-                layoutV->addWidget(l_type);
-                layoutV->addWidget(l_mag);
-                layoutV->addWidget(l_cons);
-                layoutV->addWidget(l_taille);
-                layoutV->addWidget(l_hauteur);
-                layoutV->addWidget(l_azimut);
-                layout->addLayout(layoutV);
+        layoutV->addWidget(l_ascdr);
+        layoutV->addWidget(l_dec);
+        layoutV->addWidget(l_type);
+        layoutV->addWidget(l_mag);
+        layoutV->addWidget(l_cons);
+        layoutV->addWidget(l_taille);
+        layoutV->addWidget(l_hauteur);
+        layoutV->addWidget(l_azimut);
+        layout->addLayout(layoutV);
 
-            fenetreInfos.setLayout(layout);
+        fenetreInfos.setLayout(layout);
         fenetreInfos.exec();
-     }
+    }
 }
 void InterfaceLecture::monterObjet()
 {
@@ -226,7 +226,7 @@ void InterfaceLecture::modifierObjet()
                     emit afficher(tr("L'objet a été modifié"));
                 }
             }
-         }
+        }
     }
 }
 void InterfaceLecture::ajouterPlanete()
@@ -387,7 +387,7 @@ void InterfaceLecture::diaporama()
 }
 void InterfaceLecture::toXML()
 {
-   if(m_active)
+    if(m_active)
         m_soiree->toXML();
 }
 void InterfaceLecture::toPDF()

@@ -56,11 +56,11 @@ void Diaporama::suivant()
         // On vérifie si il y a une pause
         if(diapoCurrent+1 < widgets.size())
         {
-           int tempsPause = m_soiree->getPlanning().at(diapoCurrent+1)->getDebut().toTime_t() - m_soiree->getPlanning().at(diapoCurrent)->getFin().toTime_t();
-           if(tempsPause > 0)
-               pause(tempsPause); // On fait une pause de x secondes
-           else
-               suivant(); // Sinon on passe au suivant
+            int tempsPause = m_soiree->getPlanning().at(diapoCurrent+1)->getDebut().toTime_t() - m_soiree->getPlanning().at(diapoCurrent)->getFin().toTime_t();
+            if(tempsPause > 0)
+                pause(tempsPause); // On fait une pause de x secondes
+            else
+                suivant(); // Sinon on passe au suivant
         }
     }
 }
@@ -123,12 +123,12 @@ void Diaporama::demarrer()
     {
         // On crée le nom de l'objet
         QLabel *nom = new QLabel("<font color=\"#FFF\">"+m_soiree->getPlanning().at(i)->nomComplet()+"</font>");
-            nom->setFont(QFont("Verdana",30,30));
-            nom->setAlignment(Qt::AlignCenter);
+        nom->setFont(QFont("Verdana",30,30));
+        nom->setAlignment(Qt::AlignCenter);
 
         // On crée le compte à rebours
         CompteRebours *lcd = new CompteRebours;
-            lcd->setFixedSize(LARGEUR_COMPTE_REBOURS_DIAPO,HAUTEUR_COMPTE_REBOURS_DIAPO);
+        lcd->setFixedSize(LARGEUR_COMPTE_REBOURS_DIAPO,HAUTEUR_COMPTE_REBOURS_DIAPO);
 
         // On crée l'image d'icone
         QLabel *icone = new QLabel;
@@ -136,48 +136,48 @@ void Diaporama::demarrer()
 
         // On crée le widget de l'heure
         WidgetHeure *heure = new WidgetHeure;
-            heure->setFixedSize(LARGEUR_COMPTE_REBOURS_DIAPO,HAUTEUR_COMPTE_REBOURS_DIAPO);
+        heure->setFixedSize(LARGEUR_COMPTE_REBOURS_DIAPO,HAUTEUR_COMPTE_REBOURS_DIAPO);
 
         // On crée le widget d'infos
         QWidget *widgetInfos = new QWidget;
-            QVBoxLayout *layoutInfos = new QVBoxLayout;
-            QLabel *infoAscdr = new QLabel(tr("<font color=\"#FFF\">Ascension droite : ") + m_soiree->getPlanning().at(i)->ascdr()+"</font>");
-                infoAscdr->setFont(QFont("Verdana",15));
-            QLabel *infoDec = new QLabel(tr("<font color=\"#FFF\">Déclinaison : ") + m_soiree->getPlanning().at(i)->declinaison());
-                infoDec->setFont(QFont("Verdana",15));
-            QLabel *infoHauteur = new QLabel(tr("<font color=\"#FFF\">Hauteur : ") + Calculastro::degreeToDms(m_soiree->hauteurAzimutObjet(i).at(0))+"</font>");
-                infoHauteur->setFont(QFont("Verdana",15));
-            QLabel *infoAzimut = new QLabel(tr("<font color=\"#FFF\">Azimut : ") + Calculastro::degreeToDms(m_soiree->hauteurAzimutObjet(i).at(1))+"</font>");
-                infoAzimut->setFont(QFont("Verdana",15));
-            QLabel *infoCons = new QLabel(tr("<font color=\"#FFF\">Constellation : ") + Calculastro::abreviationToNom(m_soiree->getPlanning().at(i)->constellation())+"</font>");
-                infoCons->setFont(QFont("Verdana",15));
-            QLabel *infoOculaire = new QLabel(tr("<font color=\"#FFF\">Oculaire : ") + Calculastro::getOculaire(m_soiree->getPlanning().at(i),m_soiree->getDiametre(),m_soiree->getFocale(),oculairesInt));
-                infoOculaire->setFont(QFont("Verdana",15));
-            layoutInfos->addWidget(infoAscdr);
-            layoutInfos->addWidget(infoDec);
-            layoutInfos->addWidget(infoHauteur);
-            layoutInfos->addWidget(infoAzimut);
-            layoutInfos->addWidget(infoCons);
-            layoutInfos->addWidget(infoOculaire);
-            widgetInfos->setLayout(layoutInfos);
+        QVBoxLayout *layoutInfos = new QVBoxLayout;
+        QLabel *infoAscdr = new QLabel(tr("<font color=\"#FFF\">Ascension droite : ") + m_soiree->getPlanning().at(i)->ascdr()+"</font>");
+        infoAscdr->setFont(QFont("Verdana",15));
+        QLabel *infoDec = new QLabel(tr("<font color=\"#FFF\">Déclinaison : ") + m_soiree->getPlanning().at(i)->declinaison());
+        infoDec->setFont(QFont("Verdana",15));
+        QLabel *infoHauteur = new QLabel(tr("<font color=\"#FFF\">Hauteur : ") + Calculastro::degreeToDms(m_soiree->hauteurAzimutObjet(i).at(0))+"</font>");
+        infoHauteur->setFont(QFont("Verdana",15));
+        QLabel *infoAzimut = new QLabel(tr("<font color=\"#FFF\">Azimut : ") + Calculastro::degreeToDms(m_soiree->hauteurAzimutObjet(i).at(1))+"</font>");
+        infoAzimut->setFont(QFont("Verdana",15));
+        QLabel *infoCons = new QLabel(tr("<font color=\"#FFF\">Constellation : ") + Calculastro::abreviationToNom(m_soiree->getPlanning().at(i)->constellation())+"</font>");
+        infoCons->setFont(QFont("Verdana",15));
+        QLabel *infoOculaire = new QLabel(tr("<font color=\"#FFF\">Oculaire : ") + Calculastro::getOculaire(m_soiree->getPlanning().at(i),m_soiree->getDiametre(),m_soiree->getFocale(),oculairesInt));
+        infoOculaire->setFont(QFont("Verdana",15));
+        layoutInfos->addWidget(infoAscdr);
+        layoutInfos->addWidget(infoDec);
+        layoutInfos->addWidget(infoHauteur);
+        layoutInfos->addWidget(infoAzimut);
+        layoutInfos->addWidget(infoCons);
+        layoutInfos->addWidget(infoOculaire);
+        widgetInfos->setLayout(layoutInfos);
 
         QHBoxLayout *layoutTop = new QHBoxLayout;
-            layoutTop->addWidget(icone,0,Qt::AlignLeft);
-            layoutTop->addWidget(heure,0,Qt::AlignRight);
+        layoutTop->addWidget(icone,0,Qt::AlignLeft);
+        layoutTop->addWidget(heure,0,Qt::AlignRight);
         QHBoxLayout *layoutBottom = new QHBoxLayout;
-            layoutBottom->addWidget(widgetInfos,0,Qt::AlignLeft);
-            layoutBottom->addWidget(lcd,0,Qt::AlignRight);
+        layoutBottom->addWidget(widgetInfos,0,Qt::AlignLeft);
+        layoutBottom->addWidget(lcd,0,Qt::AlignRight);
 
         QVBoxLayout *layoutTotal = new QVBoxLayout;
-            layoutTotal->addLayout(layoutTop);
-            layoutTotal->addWidget(nom);
-            layoutTotal->addLayout(layoutBottom);
+        layoutTotal->addLayout(layoutTop);
+        layoutTotal->addWidget(nom);
+        layoutTotal->addLayout(layoutBottom);
 
         QWidget *widget = new QWidget;
-            QPalette palette = widget->palette();
-            palette.setColor(QPalette::Window, QColor(0,0,0));
-            widget->setPalette(palette);
-            widget->setAutoFillBackground(true);
+        QPalette palette = widget->palette();
+        palette.setColor(QPalette::Window, QColor(0,0,0));
+        widget->setPalette(palette);
+        widget->setAutoFillBackground(true);
 
         widget->setLayout(layoutTotal);
 
@@ -188,22 +188,22 @@ void Diaporama::demarrer()
 
         widgets.push_back(widget);
 
-       layoutPrincipal->addWidget(widget);
+        layoutPrincipal->addWidget(widget);
     }
 
     // On ajoute le widget de pause
-        QPalette palette = widgetPause->palette();
-        palette.setColor(QPalette::Window, QColor(0,0,0));
-        widgetPause->setPalette(palette);
-        widgetPause->setAutoFillBackground(true);
+    QPalette palette = widgetPause->palette();
+    palette.setColor(QPalette::Window, QColor(0,0,0));
+    widgetPause->setPalette(palette);
+    widgetPause->setAutoFillBackground(true);
     QVBoxLayout *layout = new QVBoxLayout;
-        QLabel *label_pause = new QLabel("<font color=\"#FFF\">Pause</font>");
-            label_pause->setFont(QFont("Verdana",60,30));
-            label_pause->setAlignment(Qt::AlignHCenter);
-        layout->addWidget(label_pause);
-            lcd_pause->setFixedSize(LARGEUR_COMPTE_REBOURS_DIAPO,HAUTEUR_COMPTE_REBOURS_DIAPO);
-        layout->addWidget(lcd_pause,0,Qt::AlignHCenter);
-        layout->setAlignment(Qt::AlignHCenter);
+    QLabel *label_pause = new QLabel("<font color=\"#FFF\">Pause</font>");
+    label_pause->setFont(QFont("Verdana",60,30));
+    label_pause->setAlignment(Qt::AlignHCenter);
+    layout->addWidget(label_pause);
+    lcd_pause->setFixedSize(LARGEUR_COMPTE_REBOURS_DIAPO,HAUTEUR_COMPTE_REBOURS_DIAPO);
+    layout->addWidget(lcd_pause,0,Qt::AlignHCenter);
+    layout->setAlignment(Qt::AlignHCenter);
     widgetPause->setLayout(layout);
     widgetPause->setVisible(false);
     layoutPrincipal->addWidget(widgetPause);

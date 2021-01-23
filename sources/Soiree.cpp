@@ -44,166 +44,166 @@ void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime 
     QDateTime dateTime;
     dateTime.setTime_t(moyTime);
 
-     if(boolPlanete) // Si on veut ajouter les planètes
-     {
-         for(int i(0); i < planetes.size(); i++)
-         {
-             emit generation(i+1);
-             valeur = planetes.at(i);
+    if(boolPlanete) // Si on veut ajouter les planètes
+    {
+        for(int i(0); i < planetes.size(); i++)
+        {
+            emit generation(i+1);
+            valeur = planetes.at(i);
 
-             infosPlanete = Calculastro::coordonneesPlanetes(dateTime.date(),dateTime.time(),Calculastro::referencePlaneteToNom(valeur));
-             if(infosPlanete[2] <= magMax) // On vérifie qu'on peut l'observer
-             {
-                    HauteurMaxTemps hauteurMaxPla = Calculastro::hauteurMaxObjet(Calculastro::referencePlaneteToNom(valeur),debut,fin,lat,longi);
-                    obsPla[0] = hauteurMaxPla.temps().addSecs(-duree_une/2);
-                    obsPla[1] = hauteurMaxPla.temps().addSecs(duree_une/2);
+            infosPlanete = Calculastro::coordonneesPlanetes(dateTime.date(),dateTime.time(),Calculastro::referencePlaneteToNom(valeur));
+            if(infosPlanete[2] <= magMax) // On vérifie qu'on peut l'observer
+            {
+                HauteurMaxTemps hauteurMaxPla = Calculastro::hauteurMaxObjet(Calculastro::referencePlaneteToNom(valeur),debut,fin,lat,longi);
+                obsPla[0] = hauteurMaxPla.temps().addSecs(-duree_une/2);
+                obsPla[1] = hauteurMaxPla.temps().addSecs(duree_une/2);
 
-                    // ON COMPENSE LES TEMPS QUI DEPASSENT DE LA DUREE DE LA SOIREE
-                    if(hauteurMaxPla.temps().addSecs(-duree_une/2) < debut)
-                    { // Si on est au début
-                        int compenser(0);
-                        compenser = debut.toTime_t() - hauteurMaxPla.temps().addSecs(-duree_une/2).toTime_t();
-                        obsPla[0] = obsPla[0].addSecs(compenser);
-                        obsPla[1] = obsPla[1].addSecs(compenser);
+                // ON COMPENSE LES TEMPS QUI DEPASSENT DE LA DUREE DE LA SOIREE
+                if(hauteurMaxPla.temps().addSecs(-duree_une/2) < debut)
+                { // Si on est au début
+                    int compenser(0);
+                    compenser = debut.toTime_t() - hauteurMaxPla.temps().addSecs(-duree_une/2).toTime_t();
+                    obsPla[0] = obsPla[0].addSecs(compenser);
+                    obsPla[1] = obsPla[1].addSecs(compenser);
+                }
+                else if(hauteurMaxPla.temps().addSecs(duree_une/2) > fin)
+                { // Si on est au début
+                    int compenser(0);
+                    compenser = fin.toTime_t() - hauteurMaxPla.temps().addSecs(duree_une/2).toTime_t();
+                    obsPla[0] = obsPla[0].addSecs(compenser);
+                    obsPla[1] = obsPla[1].addSecs(compenser);
+                }
+
+                if(Calculastro::verifDisponibilite(liste_observation,obsPla[0],obsPla[1],espaceMin))
+                {
+                    if(hauteurMaxPla.hauteurMax() >= user->value("generateur/hauteurMin",HAUTEUR_MIN_OBJET).toInt()) {
+                        liste_observation.push_back(new ObjetPlaneteObs(valeur,obsPla[0],obsPla[1]));
                     }
-                    else if(hauteurMaxPla.temps().addSecs(duree_une/2) > fin)
-                    { // Si on est au début
-                        int compenser(0);
-                        compenser = fin.toTime_t() - hauteurMaxPla.temps().addSecs(duree_une/2).toTime_t();
-                        obsPla[0] = obsPla[0].addSecs(compenser);
-                        obsPla[1] = obsPla[1].addSecs(compenser);
-                    }
+                }
+                else
+                {
+                    int j(0);
+                    double hau1(0), hau2(0);
+                    QDateTime tempsPlus[2], tempsMoins[2], tempsPlace1[2], tempsPlace2[2];
+                    tempsPlus[0] = obsPla[0].addSecs(60);
+                    tempsPlus[1] = obsPla[1].addSecs(60);
+                    tempsMoins[0] = obsPla[0].addSecs(-60);
+                    tempsMoins[1] = obsPla[1].addSecs(-60);
+                    bool tryV;
 
-                    if(Calculastro::verifDisponibilite(liste_observation,obsPla[0],obsPla[1],espaceMin))
+                    QVector<double> altazPlus, altazMoins;
+
+                    while(j<719)
                     {
-                        if(hauteurMaxPla.hauteurMax() >= user->value("generateur/hauteurMin",HAUTEUR_MIN_OBJET).toInt()) {
-                            liste_observation.push_back(new ObjetPlaneteObs(valeur,obsPla[0],obsPla[1]));
+                        tryV = true;
+
+                        altazPlus = Calculastro::hauteurAzimutDegree(tempsPlus[0].date(), tempsPlus[0].time(), infosPlanete[0], infosPlanete[1], lat, longi);
+                        altazMoins = Calculastro::hauteurAzimutDegree(tempsMoins[0].date(), tempsMoins[0].time(), infosPlanete[0], infosPlanete[1], lat, longi);
+
+                        if(altazPlus[0] > altazMoins[0])
+                        { // On regarde à quel endroit doit être placé l'objet pour qu'il soit le plus haut
+                            tempsPlace1[0] = tempsPlus[0];
+                            tempsPlace1[1] = tempsPlus[1];
+
+                            tempsPlace2[0] = tempsMoins[0];
+                            tempsPlace2[1] = tempsMoins[1];
+
+                            hau1 = altazPlus[0];
+                            hau2 = altazMoins[0];
                         }
-                    }
-                    else
-                    {
-                        int j(0);
-                        double hau1(0), hau2(0);
-                        QDateTime tempsPlus[2], tempsMoins[2], tempsPlace1[2], tempsPlace2[2];
-                        tempsPlus[0] = obsPla[0].addSecs(60);
-                        tempsPlus[1] = obsPla[1].addSecs(60);
-                        tempsMoins[0] = obsPla[0].addSecs(-60);
-                        tempsMoins[1] = obsPla[1].addSecs(-60);
-                        bool tryV;
-
-                        QVector<double> altazPlus, altazMoins;
-
-                        while(j<719)
+                        else
                         {
-                            tryV = true;
+                            tempsPlace1[0] = tempsMoins[0];
+                            tempsPlace1[1] = tempsMoins[1];
 
-                            altazPlus = Calculastro::hauteurAzimutDegree(tempsPlus[0].date(), tempsPlus[0].time(), infosPlanete[0], infosPlanete[1], lat, longi);
-                            altazMoins = Calculastro::hauteurAzimutDegree(tempsMoins[0].date(), tempsMoins[0].time(), infosPlanete[0], infosPlanete[1], lat, longi);
+                            tempsPlace2[0] = tempsPlus[0];
+                            tempsPlace2[1] = tempsPlus[1];
 
-                            if(altazPlus[0] > altazMoins[0])
-                            { // On regarde à quel endroit doit être placé l'objet pour qu'il soit le plus haut
-                                tempsPlace1[0] = tempsPlus[0];
-                                tempsPlace1[1] = tempsPlus[1];
-
-                                tempsPlace2[0] = tempsMoins[0];
-                                tempsPlace2[1] = tempsMoins[1];
-
-                                hau1 = altazPlus[0];
-                                hau2 = altazMoins[0];
-                            }
-                            else
+                            hau1 = altazMoins[0];
+                            hau2 = altazPlus[0];
+                        }
+                        if(Calculastro::verifDisponibilite(liste_observation,tempsPlace1[0],tempsPlace1[1],espaceMin))
+                        {
+                            if(hau1 > user->value("generateur/hauteurMin",HAUTEUR_MIN_OBJET).toInt()) // Si on dépasse 10°
                             {
-                                tempsPlace1[0] = tempsMoins[0];
-                                tempsPlace1[1] = tempsMoins[1];
-
-                                tempsPlace2[0] = tempsPlus[0];
-                                tempsPlace2[1] = tempsPlus[1];
-
-                                hau1 = altazMoins[0];
-                                hau2 = altazPlus[0];
-                            }
-                            if(Calculastro::verifDisponibilite(liste_observation,tempsPlace1[0],tempsPlace1[1],espaceMin))
-                            {
-                                if(hau1 > user->value("generateur/hauteurMin",HAUTEUR_MIN_OBJET).toInt()) // Si on dépasse 10°
+                                if(tempsPlace1[0] >= debut && tempsPlace1[0] <= fin && tempsPlace1[1] >= debut && tempsPlace1[1] <= fin)
                                 {
-                                    if(tempsPlace1[0] >= debut && tempsPlace1[0] <= fin && tempsPlace1[1] >= debut && tempsPlace1[1] <= fin)
-                                    {
-                                        liste_observation.push_back(new ObjetPlaneteObs(valeur,tempsPlace1[0],tempsPlace1[1]));
-                                        break;
-                                    }
-                                    else
-                                        tryV = false;
+                                    liste_observation.push_back(new ObjetPlaneteObs(valeur,tempsPlace1[0],tempsPlace1[1]));
+                                    break;
                                 }
                                 else
                                     tryV = false;
                             }
                             else
                                 tryV = false;
+                        }
+                        else
+                            tryV = false;
 
-                         if(!tryV && Calculastro::verifDisponibilite(liste_observation,tempsPlace2[0],tempsPlace2[1],espaceMin))
-                         {
-                             if(hau2 > user->value("generateur/hauteurMin",HAUTEUR_MIN_OBJET).toInt())
-                             {
-                                 if(tempsPlace2[0] >= debut && tempsPlace2[0] <= fin && tempsPlace2[1] >= debut && tempsPlace2[1] <= fin)
-                                 {
-                                     liste_observation.push_back(new ObjetPlaneteObs(valeur,tempsPlace2[0],tempsPlace2[1]));
-                                     break;
-                                 }
-                             }
-                         }
+                        if(!tryV && Calculastro::verifDisponibilite(liste_observation,tempsPlace2[0],tempsPlace2[1],espaceMin))
+                        {
+                            if(hau2 > user->value("generateur/hauteurMin",HAUTEUR_MIN_OBJET).toInt())
+                            {
+                                if(tempsPlace2[0] >= debut && tempsPlace2[0] <= fin && tempsPlace2[1] >= debut && tempsPlace2[1] <= fin)
+                                {
+                                    liste_observation.push_back(new ObjetPlaneteObs(valeur,tempsPlace2[0],tempsPlace2[1]));
+                                    break;
+                                }
+                            }
+                        }
 
-                         tempsPlus[0] = tempsPlus[0].addSecs(60);
-                         tempsPlus[1] = tempsPlus[1].addSecs(60);
-                         tempsMoins[0] = tempsMoins[0].addSecs(-60);
-                         tempsMoins[1] = tempsMoins[1].addSecs(-60);
-                         j++;
-                     }
-                 }
-             }
-         }
-     }
+                        tempsPlus[0] = tempsPlus[0].addSecs(60);
+                        tempsPlus[1] = tempsPlus[1].addSecs(60);
+                        tempsMoins[0] = tempsMoins[0].addSecs(-60);
+                        tempsMoins[1] = tempsMoins[1].addSecs(-60);
+                        j++;
+                    }
+                }
+            }
+        }
+    }
     QString sql;
-     if(constellation == "toutes")
-         sql = "";
-     else if(constellation.length() > 3)
-         sql = " AND (constellation = '"+constellation.replace('|',"' OR constellation = '")+"')";
-     else if(constellation.length() == 3)
-         sql = " AND constellation = '"+constellation+"'";
+    if(constellation == "toutes")
+        sql = "";
+    else if(constellation.length() > 3)
+        sql = " AND (constellation = '"+constellation.replace('|',"' OR constellation = '")+"')";
+    else if(constellation.length() == 3)
+        sql = " AND constellation = '"+constellation+"'";
 
-     // mettre un else ici pour gérer le cas des constellations multiples
+    // mettre un else ici pour gérer le cas des constellations multiples
 
-     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-     db.setHostName("localhost");
-     db.setDatabaseName("dbastrogenerator");
-     db.setUserName("univers2");
-     db.setPassword("iwxldmkdgpf");
-     db.open();
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setHostName("localhost");
+    db.setDatabaseName("dbastrogenerator");
+    db.setUserName("univers2");
+    db.setPassword("iwxldmkdgpf");
+    db.open();
 
-     QMap<double,QString> objets_visibles1;
-     ObjetCP *objet(0);
+    QMap<double,QString> objets_visibles1;
+    ObjetCP *objet(0);
 
-     HauteurMaxTemps hauteurMax2;
+    HauteurMaxTemps hauteurMax2;
 
-     QSqlQuery requeteCount("SELECT COUNT(*) as nbr FROM ngcic WHERE type <> '' AND magnitude <> 0 AND taille > 0 AND interet > 2"+sql);
-     requeteCount.next();
-     int nbResult(0);
-     nbResult = requeteCount.value(0).toInt();
+    QSqlQuery requeteCount("SELECT COUNT(*) as nbr FROM ngcic WHERE type <> '' AND magnitude <> 0 AND taille > 0 AND interet > 2"+sql);
+    requeteCount.next();
+    int nbResult(0);
+    nbResult = requeteCount.value(0).toInt();
 
-     QSqlQuery requete("SELECT nom, reference, type, ascdr, declinaison, constellation, magnitude, messier, interet, taille, difficulte FROM ngcic WHERE type <> '' AND magnitude <> 0 AND taille > 0 AND interet > 2"+sql+" ORDER BY reference");
+    QSqlQuery requete("SELECT nom, reference, type, ascdr, declinaison, constellation, magnitude, messier, interet, taille, difficulte FROM ngcic WHERE type <> '' AND magnitude <> 0 AND taille > 0 AND interet > 2"+sql+" ORDER BY reference");
 
-     while(requete.next())
-     {
-         emit generation(7 + requete.at()*25/nbResult);
+    while(requete.next())
+    {
+        emit generation(7 + requete.at()*25/nbResult);
 
-         objet = new ObjetCP(requete.value(1).toString());
-         hauteurMax2 = Calculastro::hauteurMaxObjet(objet, debut, fin, lat, longi);
+        objet = new ObjetCP(requete.value(1).toString());
+        hauteurMax2 = Calculastro::hauteurMaxObjet(objet, debut, fin, lat, longi);
 
-         if(hauteurMax2.hauteurMax() > hauteurMin)
-         {
+        if(hauteurMax2.hauteurMax() > hauteurMin)
+        {
             note = Calculastro::noterObjetVisible(requete.value(2).toString(), requete.value(8).toInt(), requete.value(6).toDouble(), diametre, niveau, hauteurMax2.hauteurMax(), requete.value(10).toInt(), user); // on calcule sa note
             objets_visibles1.insert(note,requete.value(1).toString());
-         }
-     }
+        }
+    }
 
     QMapIterator<double,QString> iterateur(objets_visibles1);
 
@@ -751,11 +751,11 @@ Soiree* Soiree::soaToSoiree(QString const& fileName)
 
             Soiree *soiree = new Soiree;
             soiree->setBoolPlanete(false);
-                QDateTime debutSoiree;
-                debutSoiree.setTime_t(listInfosSoiree.at(5).toInt());
+            QDateTime debutSoiree;
+            debutSoiree.setTime_t(listInfosSoiree.at(5).toInt());
             soiree->setDebut(debutSoiree);
-                QDateTime finSoiree;
-                finSoiree.setTime_t(listInfosSoiree.at(6).toInt());
+            QDateTime finSoiree;
+            finSoiree.setTime_t(listInfosSoiree.at(6).toInt());
             soiree->setFin(finSoiree);
             soiree->setDiametre(listInfosSoiree.at(7).toInt());
             soiree->setFocale(listInfosSoiree.at(8).toInt());
@@ -850,60 +850,60 @@ void Soiree::toXML() const
 
     QDomElement soiree = doc.createElement("soiree");
     doc.appendChild(soiree);
-        QDomElement date = doc.createElement("date");
-        date.appendChild(doc.createTextNode(locale.toString(m_debut.date(), QLocale::ShortFormat)));
-        soiree.appendChild(date);
+    QDomElement date = doc.createElement("date");
+    date.appendChild(doc.createTextNode(locale.toString(m_debut.date(), QLocale::ShortFormat)));
+    soiree.appendChild(date);
 
-        QDomElement heure = doc.createElement("heure");
-        heure.appendChild(doc.createTextNode("De " + locale.toString(m_debut.time(), QLocale::ShortFormat) + " à " + locale.toString(m_fin.time(), QLocale::ShortFormat)));
-        soiree.appendChild(heure);
+    QDomElement heure = doc.createElement("heure");
+    heure.appendChild(doc.createTextNode("De " + locale.toString(m_debut.time(), QLocale::ShortFormat) + " à " + locale.toString(m_fin.time(), QLocale::ShortFormat)));
+    soiree.appendChild(heure);
 
-        QDomElement listeObjet = doc.createElement("listeObject");
-        for(int i(0); i < m_listeObjets.count(); i++)
-        {
-            QDomElement objet = doc.createElement("objet"+QString::number(i+1));
-                QDomElement nom = doc.createElement("nom");
-                nom.appendChild(doc.createTextNode(m_listeObjets.at(i)->nomComplet()));
-                objet.appendChild(nom);
+    QDomElement listeObjet = doc.createElement("listeObject");
+    for(int i(0); i < m_listeObjets.count(); i++)
+    {
+        QDomElement objet = doc.createElement("objet"+QString::number(i+1));
+        QDomElement nom = doc.createElement("nom");
+        nom.appendChild(doc.createTextNode(m_listeObjets.at(i)->nomComplet()));
+        objet.appendChild(nom);
 
-                QDomElement horaire = doc.createElement("horaire");
-                horaire.appendChild(doc.createTextNode("Entre " + locale.toString(m_listeObjets.at(i)->getDebut().time(), QLocale::ShortFormat) + " et "
+        QDomElement horaire = doc.createElement("horaire");
+        horaire.appendChild(doc.createTextNode("Entre " + locale.toString(m_listeObjets.at(i)->getDebut().time(), QLocale::ShortFormat) + " et "
                                         + locale.toString(m_listeObjets.at(i)->getFin().time(), QLocale::ShortFormat)));
-                objet.appendChild(horaire);
+        objet.appendChild(horaire);
 
-                QDomElement element = doc.createElement("infos");
-                    QDomElement ad = doc.createElement("ad");
-                    ad.appendChild(doc.createTextNode(m_listeObjets.at(i)->ascdr()));
-                    element.appendChild(ad);
+        QDomElement element = doc.createElement("infos");
+        QDomElement ad = doc.createElement("ad");
+        ad.appendChild(doc.createTextNode(m_listeObjets.at(i)->ascdr()));
+        element.appendChild(ad);
 
-                    QDomElement dec = doc.createElement("dec");
-                    dec.appendChild(doc.createTextNode(m_listeObjets.at(i)->declinaison()));
-                    element.appendChild(dec);
+        QDomElement dec = doc.createElement("dec");
+        dec.appendChild(doc.createTextNode(m_listeObjets.at(i)->declinaison()));
+        element.appendChild(dec);
 
-                    QDomElement magnitude = doc.createElement("magnitude");
-                    magnitude.appendChild(doc.createTextNode(QString::number(m_listeObjets.at(i)->magnitude())));
-                    element.appendChild(magnitude);
+        QDomElement magnitude = doc.createElement("magnitude");
+        magnitude.appendChild(doc.createTextNode(QString::number(m_listeObjets.at(i)->magnitude())));
+        element.appendChild(magnitude);
 
-                    QDomElement interet = doc.createElement("interet");
-                    interet.appendChild(doc.createTextNode(m_listeObjets.at(i)->interet(true)));
-                    element.appendChild(interet);
+        QDomElement interet = doc.createElement("interet");
+        interet.appendChild(doc.createTextNode(m_listeObjets.at(i)->interet(true)));
+        element.appendChild(interet);
 
-                    QDomElement taille = doc.createElement("taille");
-                    taille.appendChild(doc.createTextNode(QString::number(m_listeObjets.at(i)->taille())+"'"));
-                    element.appendChild(taille);
+        QDomElement taille = doc.createElement("taille");
+        taille.appendChild(doc.createTextNode(QString::number(m_listeObjets.at(i)->taille())+"'"));
+        element.appendChild(taille);
 
-                    QDomElement type = doc.createElement("type");
-                    type.appendChild(doc.createTextNode(m_listeObjets.at(i)->type()));
-                    element.appendChild(type);
+        QDomElement type = doc.createElement("type");
+        type.appendChild(doc.createTextNode(m_listeObjets.at(i)->type()));
+        element.appendChild(type);
 
-                    QDomElement constellation = doc.createElement("constellation");
-                    constellation.appendChild(doc.createTextNode(Calculastro::abreviationToNom(m_listeObjets.at(i)->constellation())));
-                    element.appendChild(constellation);
-              objet.appendChild(element);
+        QDomElement constellation = doc.createElement("constellation");
+        constellation.appendChild(doc.createTextNode(Calculastro::abreviationToNom(m_listeObjets.at(i)->constellation())));
+        element.appendChild(constellation);
+        objet.appendChild(element);
 
-            listeObjet.appendChild(objet);
-        }
-        soiree.appendChild(listeObjet);
+        listeObjet.appendChild(objet);
+    }
+    soiree.appendChild(listeObjet);
 
     QString nomFichier = QFileDialog::getSaveFileName(0,tr("Sauver la soirée au format XML"),QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)+"/soiree.xml","Extensible Markup Language (*.xml)");
     if(nomFichier != "")
@@ -1032,11 +1032,11 @@ bool Soiree::paintPdf(QPrinter *printer)
             // On écrit le bloc de mise en température
             painter.setPen(QColor(136,136,136));
             rect = QRectF(13*k-mG*k,192*k-mT*k,(210-mD-mG-13)*k,8*k);
-                painter.fillRect(rect,QColor(238,238,238));
-                painter.drawLine(rect.topLeft(),rect.topRight());
-                painter.drawLine(rect.topRight(),rect.bottomRight());
-                painter.drawLine(rect.bottomRight(),rect.bottomLeft());
-                painter.drawLine(rect.bottomLeft(),rect.topLeft());
+            painter.fillRect(rect,QColor(238,238,238));
+            painter.drawLine(rect.topLeft(),rect.topRight());
+            painter.drawLine(rect.topRight(),rect.bottomRight());
+            painter.drawLine(rect.bottomRight(),rect.bottomLeft());
+            painter.drawLine(rect.bottomLeft(),rect.topLeft());
             painter.setPen(QColor(0,0,0));
             painter.drawText(QRectF(13*k-mG*k,192.3*k-mT*k,(210-mD-mG-13)*k,8*k),Qt::AlignCenter,tr("Conseil : Sortez votre télescope vers ") + m_debut.addSecs(-Calculastro::miseEnTemperature(m_diametre)*60).toString("hh'h'mm") + tr(" pour le mettre en température"));
             // On écrit tous les autres blocs dans une boucle
@@ -1063,28 +1063,28 @@ bool Soiree::paintPdf(QPrinter *printer)
                     pause = (int) pause/60;
                     painter.setPen(QColor(136,136,136));
                     rect = QRectF(13*k-mG*k,tL*k-mT*k,(210-mD-mG-13)*k,6*k);
-                        painter.fillRect(rect,QColor(238,238,238));
-                        painter.drawLine(rect.topLeft(),rect.topRight());
-                        painter.drawLine(rect.topRight(),rect.bottomRight());
-                        painter.drawLine(rect.bottomRight(),rect.bottomLeft());
-                        painter.drawLine(rect.bottomLeft(),rect.topLeft());
-                        painter.setPen(QColor(0,0,0));
-                        font.setPointSize(2.2*k);
+                    painter.fillRect(rect,QColor(238,238,238));
+                    painter.drawLine(rect.topLeft(),rect.topRight());
+                    painter.drawLine(rect.topRight(),rect.bottomRight());
+                    painter.drawLine(rect.bottomRight(),rect.bottomLeft());
+                    painter.drawLine(rect.bottomLeft(),rect.topLeft());
+                    painter.setPen(QColor(0,0,0));
+                    font.setPointSize(2.2*k);
+                    painter.setFont(font);
+                    painter.drawText(QRectF(13*k-mG*k,tL*k-mT*k,(210-mD-mG-13)*k,6*k),Qt::AlignCenter,tr("Pause de ")+QString::number(pause)+tr(" min. Conseil : ")+listeConseils.at(QRandomGenerator::global()->bounded(listeConseils.size())));
+                    tL += 10;
+                    if(tL+28 > 285)
+                    {
+                        printer->newPage();
+                        page++;
+
+                        // On écrit le numéro de page
+                        font.setPointSize(2*k);
                         painter.setFont(font);
-                        painter.drawText(QRectF(13*k-mG*k,tL*k-mT*k,(210-mD-mG-13)*k,6*k),Qt::AlignCenter,tr("Pause de ")+QString::number(pause)+tr(" min. Conseil : ")+listeConseils.at(QRandomGenerator::global()->bounded(listeConseils.size())));
-                     tL += 10;
-                     if(tL+28 > 285)
-                     {
-                         printer->newPage();
-                         page++;
+                        painter.drawText(QRectF(0,0,(210-mD-mG)*k,7*k),Qt::AlignRight,QString::number(page));
 
-                         // On écrit le numéro de page
-                         font.setPointSize(2*k);
-                         painter.setFont(font);
-                         painter.drawText(QRectF(0,0,(210-mD-mG)*k,7*k),Qt::AlignRight,QString::number(page));
-
-                         tL = 27;
-                     }
+                        tL = 27;
+                    }
                 }
                 if(QFile::exists("icones/"+m_listeObjets.at(i)->ref()+".jpg"))
                     icone = "icones/"+m_listeObjets.at(i)->ref()+".jpg";
@@ -1100,11 +1100,11 @@ bool Soiree::paintPdf(QPrinter *printer)
                 font.setPointSize(2.8*k);
                 painter.setFont(font);
                 rect = QRectF(45*k-mG*k,(tL+1)*k-mT*k,(210-mD-mG-45)*k,5*k);
-                    painter.fillRect(rect,QColor(238,238,238));
-                    painter.drawLine(rect.topLeft(),rect.topRight());
-                    painter.drawLine(rect.topRight(),rect.bottomRight());
-                    painter.drawLine(rect.bottomRight(),rect.bottomLeft());
-                    painter.drawLine(rect.bottomLeft(),rect.topLeft());
+                painter.fillRect(rect,QColor(238,238,238));
+                painter.drawLine(rect.topLeft(),rect.topRight());
+                painter.drawLine(rect.topRight(),rect.bottomRight());
+                painter.drawLine(rect.bottomRight(),rect.bottomLeft());
+                painter.drawLine(rect.bottomLeft(),rect.topLeft());
                 painter.setPen(QColor(0,0,0));
                 painter.drawText(QRectF(46*k-mG*k,(tL+1.3)*k-mT*k,(210-mD-mG-46)*k,5*k),Qt::AlignLeft,m_listeObjets.at(i)->nomComplet());
                 // Constellation
