@@ -28,22 +28,22 @@ public:
     static double partieEntiere(double val); // OK
     static double heureSiderale(QDate date, QTime heure, bool apparent = false); // OK
     static double toAngleHoraireDegree(QDate date, QTime heure, double ra, double longi); // OK
-    static QVector<double> hauteurAzimutDegree(QDate const& date, QTime const& heure, double ra, double dec, double lat, double longi);
+    static QVector<double> hauteurAzimutDegree(QDate const &date, QTime const &heure, double ra, double dec, double lat, double longi);
     static std::vector<double> RaDecPrecession(int year, double ra, double dec);
     static QString abreviationToNom(QString abreviation, bool inverse = false);
     static QVector<double> nutationObliquity(double j2000); // OK
     static QVector<double> coordonneesPlanetes(QDate date, QTime heure, QString planete);
     static double rad2deg(double rad);
     static double deg2rad(double deg);
-    static QMap<char,double> getLBR(double j2000, QString planete);
+    static QMap<char, double> getLBR(double j2000, QString planete);
     static double toZero360(double deg);
     static QString degreeToDms(double val);
     static QString degreeToHms(double val);
     static double round(double n, unsigned d);
     static QString referencePlaneteToNom(QString ref, bool read = false);
     static HauteurMaxTemps hauteurMaxObjet(Objet *objet, QDateTime debut, QDateTime fin, double latitude, double longitude);
-    static HauteurMaxTemps hauteurMaxObjet(QString const& planete, QDateTime debut, QDateTime fin, double latitude, double longitude);
-    static bool verifDisponibilite(QVector<ObjetObs *> const& liste_observation, QDateTime const& debut, QDateTime const& fin, int espace);
+    static HauteurMaxTemps hauteurMaxObjet(QString const &planete, QDateTime debut, QDateTime fin, double latitude, double longitude);
+    static bool verifDisponibilite(QVector<ObjetObs *> const &liste_observation, QDateTime const &debut, QDateTime const &fin, int espace);
     static double noterObjetVisible(QString type, int interet, double magnitude, int diametre, QString niveau, double hauteurMax, int difficulte, QSettings *user);
     static bool isObjetVisible(Objet *objet, QDateTime temps, double latitude, double longitude);
     static int miseEnTemperature(int diametre);

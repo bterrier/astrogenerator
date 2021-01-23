@@ -18,7 +18,7 @@ public:
 signals:
     void telescopeChange(QString);
     void nouveauTelescope();
-    void villeChange(QString,QString,int);
+    void villeChange(QString, QString, int);
 
 public slots:
     void changerOnglet(int onglet);
@@ -41,7 +41,7 @@ public slots:
 
 private:
     FenPrincipal *m_parent;
-    QVector<QWidget*> m_listePages;
+    QVector<QWidget *> m_listePages;
     QListWidget *m_menu;
 
     // PAGE LOCALISATION
@@ -60,7 +60,7 @@ private:
     QPushButton *m_boutonAjouterTelescope;
 
     // PAGE OCULAIRES
-    QVector<QCheckBox*> m_listeOculaires;
+    QVector<QCheckBox *> m_listeOculaires;
 
     // PAGE GENERATEUR
     QSlider *m_hauteurMinimum;

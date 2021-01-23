@@ -6,10 +6,9 @@
 #include <QSettings>
 #include <QStandardItemModel>
 
-#include "ObjetObs.h"
-#include "ObjetCPObs.h"
 #include "ObjetCP.h"
-
+#include "ObjetCPObs.h"
+#include "ObjetObs.h"
 
 class Soiree : public QObject
 {
@@ -23,7 +22,7 @@ public:
     static Soiree *soaToSoiree(const QString &fileName);
     static bool ajouterSoireeRecentes(const QString &fileName);
 
-    bool soireeToSoa(QString const& fileName);
+    bool soireeToSoa(QString const &fileName);
 
     // Méthodes de la classe
     void ajouterObjet(int index, ObjetCP *objetParam, int duree);
@@ -33,7 +32,7 @@ public:
     void modifierDuree(int index, int duree);
     void descendreObjet(int index);
     void monterObjet(int index);
-    QStandardItemModel* toModele() const;
+    QStandardItemModel *toModele() const;
     QString retourDebut() const;
     QString retourFin() const;
     QString duree() const;
@@ -54,7 +53,6 @@ public:
     void setFile(QString file);
     void setVille(QString ville);
     void setPays(QString pays);
-
 
     QString getPays() const;
     QString getVille() const;
@@ -97,7 +95,6 @@ private:
     int m_focale;
     bool m_boolPlanete;
     QString m_file;
-
 };
 
 #endif // SOIREE_H

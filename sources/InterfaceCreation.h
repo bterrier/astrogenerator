@@ -40,8 +40,7 @@ public slots:
     void enregistrerSoiree();
     void infosSoiree();
     void griserActions();
-    Soiree* getSoiree();
-
+    Soiree *getSoiree();
 
 private:
     Soiree *m_soiree; // liste des objets à observer

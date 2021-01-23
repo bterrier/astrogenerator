@@ -13,7 +13,7 @@ class Diaporama : public QWidget
     Q_OBJECT
 
 public:
-    explicit Diaporama(Soiree* soiree);
+    explicit Diaporama(Soiree *soiree);
     void keyPressEvent(QKeyEvent *event);
 public slots:
     void afficher(int id);
@@ -23,7 +23,7 @@ public slots:
     void demarrer();
 
 private:
-    QVector<QWidget*> widgets;
+    QVector<QWidget *> widgets;
     int diapoCurrent;
     QTimer *timer;
     Soiree *m_soiree;

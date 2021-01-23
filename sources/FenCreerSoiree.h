@@ -22,11 +22,11 @@ public slots:
     void genererSoiree();
     void actualiserVilles(QString pays = "France");
     void changerVille(QString pays, QString ville, int dept);
-    void actualiserCoordonnees(QString const& nom);
+    void actualiserCoordonnees(QString const &nom);
     void toutCocherConstellation();
     void toutDecocherConstellation();
     void updateTexteConstellation();
-    void changerTelescope(QString const& telescope);
+    void changerTelescope(QString const &telescope);
     void actualiserTelescope();
 
 private:
@@ -49,7 +49,7 @@ private:
     QLabel *m_texteConstellation;
 
     QDialog *m_fenetreConstellation;
-    QVector<QCheckBox*> m_checkBoxConstellation;
+    QVector<QCheckBox *> m_checkBoxConstellation;
 
     QLineEdit *nom_telescope;
     QSpinBox *diametre;

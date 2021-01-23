@@ -46,7 +46,6 @@ private:
     QTableView *m_vue;
     Soiree *m_soiree;
     Carteciel *m_carte;
-    
 };
 
 #endif // INTERFACELECTURE_H

@@ -13,7 +13,7 @@ public:
 
     QAction *getActionInfoSoiree();
     QAction *getActionCreerSoiree();
-    QAction* getActionFabriquerSoiree();
+    QAction *getActionFabriquerSoiree();
     QAction *getActionOuvrirSoiree();
     QAction *getActionEnregistrer();
     QAction *getActionSoireesRecentes();

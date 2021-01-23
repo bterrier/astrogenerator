@@ -9,7 +9,6 @@ class FenPersonaliser : public QDialog
 
 public:
     explicit FenPersonaliser(QWidget *parent = 0);
-
 };
 
 #endif // FENPERSONALISER_H

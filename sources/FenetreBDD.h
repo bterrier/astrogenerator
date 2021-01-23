@@ -20,7 +20,7 @@ public slots:
     void actualiserVue();
     void afficherObjet(QModelIndex index) const;
     void ouvrirCDS();
-    
+
 private:
     QStandardItemModel *m_modele;
     QTableView *m_vue;

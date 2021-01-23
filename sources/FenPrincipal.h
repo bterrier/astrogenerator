@@ -21,10 +21,10 @@ public:
 
     QSettings *getUser() const; // renvoit m_user
     void actionSoireesRecentes();
-    void ajouterSoireeRecente(QString const& fichier);
+    void ajouterSoireeRecente(QString const &fichier);
 
 public slots:
-    void nouvelOngletSoiree(Soiree& soiree);
+    void nouvelOngletSoiree(Soiree &soiree);
     void nouvelOngletCreation(double latitude, double longitude, QDateTime heureDebut, uint diametre, uint focale);
     bool fermerOnglet(int index);
     bool fermerOnglet(); // Pareil que effacerOnglet() mais pour l'onglet actif
@@ -45,7 +45,7 @@ public slots:
     void afficherMessage(QString message, int duree = 2000);
 
 protected:
-    void closeEvent(QCloseEvent * event);
+    void closeEvent(QCloseEvent *event);
 
 private:
     // Liste des actions dans une classe (pour être accessible partout
@@ -61,7 +61,6 @@ private:
     QWidget *widgetAccueil;
     QVector<Interface *> m_listeInterface;
     QStatusBar *barreStatut;
-
 };
 
 #endif // FENPRINCIPAL_H

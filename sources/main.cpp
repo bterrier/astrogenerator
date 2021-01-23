@@ -18,7 +18,7 @@
 static void initDatabase()
 {
     const QString dbPath = QCoreApplication::applicationDirPath() % "/dbastrogenerator";
-    const QFileInfo fi{ dbPath };
+    const QFileInfo fi{dbPath};
     if (!fi.isReadable()) {
         QMessageBox::critical(nullptr, QObject::tr("Error"),
                               QObject::tr("Missing database: %1").arg(QDir::toNativeSeparators(dbPath)));
@@ -34,7 +34,8 @@ static void initDatabase()
     if (!db.open()) {
         QMessageBox::critical(nullptr, QObject::tr("Error"),
                               QObject::tr("Failed to open database: %1\n"
-                                          "Error: %2").arg(db.lastError().text(), QDir::toNativeSeparators(db.databaseName())));
+                                          "Error: %2")
+                                  .arg(db.lastError().text(), QDir::toNativeSeparators(db.databaseName())));
         qFatal("Failed to open database!");
     }
 }
@@ -58,13 +59,11 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
-    if(!QDir::setCurrent(QCoreApplication::applicationDirPath()+"/"))
-    {
-        QMessageBox::critical(nullptr,QObject::tr("Résolution des liens"),QObject::tr("Problème lors de la résolution des liens, le programme ne peut pas fonctionner correctement."));
+    if (!QDir::setCurrent(QCoreApplication::applicationDirPath() + "/")) {
+        QMessageBox::critical(nullptr, QObject::tr("Résolution des liens"), QObject::tr("Problème lors de la résolution des liens, le programme ne peut pas fonctionner correctement."));
         app.quit();
     }
 
-    
     initTranslation();
     initDatabase();
 

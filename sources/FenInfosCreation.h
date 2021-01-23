@@ -17,7 +17,6 @@
     Pour lancer cette fenêtre, il faut utiliser son slot exec()
 */
 
-
 class FenInfosCreation : public QDialog
 {
     Q_OBJECT
@@ -29,7 +28,7 @@ public slots:
     void actualiserVilles(QString pays = "France");
     void creer();
 
-private :
+private:
     FenPrincipal *m_parent;
 
     QComboBox *m_pays;
@@ -43,7 +42,6 @@ private :
     QPushButton *m_submit;
     QPushButton *m_close;
     QFormLayout *layoutForm;
-    
 };
 
 #endif // FENINFOSCREATION_H
