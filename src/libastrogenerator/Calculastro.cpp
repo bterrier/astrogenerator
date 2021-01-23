@@ -9,6 +9,8 @@
 #include <QSqlQuery>
 #include <QTextStream>
 
+#include "astrocalc.h"
+
 // ------------------------------------------------------------------------------------
 // NOTE IMPORTANTE
 // Toutes les dates qu'utlisent ces fonctions doivent être données en TEMPS UNIVERSEL
@@ -131,7 +133,7 @@ QVector<QString> Calculastro::trouverVillePays(double latitude, double longitude
 }
 double Calculastro::deg2rad(double deg)
 {
-    return M_PI * deg / 180;
+    return AstroCalc::deg2rad(deg);
 }
 double Calculastro::rad2deg(double rad)
 {

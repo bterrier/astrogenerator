@@ -1,3 +1,8 @@
 TEMPLATE = subdirs
-SUBDIRS += sources
+SUBDIRS += \
+    src \
+    tests
+
+tests.depends += src
+
 OTHER_FILES += .qmake.conf
