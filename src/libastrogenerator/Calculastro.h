@@ -29,7 +29,6 @@ public:
     static QString abreviationToNom(QString abreviation, bool inverse = false);
     static QVector<double> nutationObliquity(double j2000); // OK
     static QVector<double> coordonneesPlanetes(QDate date, QTime heure, QString planete);
-    static double rad2deg(double rad);
     static double deg2rad(double deg);
     static QMap<char, double> getLBR(double j2000, QString planete);
     static QString degreeToDms(double val);

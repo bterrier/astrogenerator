@@ -124,14 +124,6 @@ QVector<QString> Calculastro::trouverVillePays(double latitude, double longitude
     else
         return retour;
 }
-double Calculastro::deg2rad(double deg)
-{
-    return AstroCalc::deg2rad(deg);
-}
-double Calculastro::rad2deg(double rad)
-{
-    return 180 * rad / M_PI;
-}
 
 double Calculastro::partieDecimal(double val)
 {
@@ -162,7 +154,7 @@ double Calculastro::heureSiderale(QDate date, QTime heure, bool apparent)
     if (apparent) // Si on veut temps sidéral APPARENT, il faut corriger la valeur
     {
         QVector<double> nuOb = nutationObliquity(JD - 2451545.0);
-        double correction = (nuOb[0] * cos(deg2rad(nuOb[2]))) / 15; // en secondes
+        double correction = (nuOb[0] * cos(AstroCalc::deg2rad(nuOb[2]))) / 15; // en secondes
         HSH += correction / 3600;
     }
     return HSH; // ATTENTION IL FAUT CORRIGER CETTE VALEUR (voir p.84)
@@ -187,21 +179,21 @@ QVector<double> Calculastro::hauteurAzimutDegree(QDate const &date, QTime const 
 
     angleHoraireDegre = toAngleHoraireDegree(date, heure, ra, longi);
 
-    sinDec = sin(deg2rad(radecCorriger[1]));
-    sinLat = sin(deg2rad(lat));
-    cosDec = cos(deg2rad(radecCorriger[1]));
-    tanDec = tan(deg2rad(radecCorriger[1]));
-    cosLat = cos(deg2rad(lat));
-    cosHA = cos(deg2rad(angleHoraireDegre));
-    sinHA = sin(deg2rad(angleHoraireDegre));
+    sinDec = sin(AstroCalc::deg2rad(radecCorriger[1]));
+    sinLat = sin(AstroCalc::deg2rad(lat));
+    cosDec = cos(AstroCalc::deg2rad(radecCorriger[1]));
+    tanDec = tan(AstroCalc::deg2rad(radecCorriger[1]));
+    cosLat = cos(AstroCalc::deg2rad(lat));
+    cosHA = cos(AstroCalc::deg2rad(angleHoraireDegre));
+    sinHA = sin(AstroCalc::deg2rad(angleHoraireDegre));
 
     sinHauteur = (sinDec * sinLat) + (cosDec * cosLat * cosHA); // Formule (12.6) p.89 Astronomical Algorithms
     hauteur = asin(sinHauteur);
 
     azimuth = atan2(sinHA, (cosHA * sinLat - tanDec * cosLat)); // Formule (12.5) p.89
 
-    hauteur = rad2deg(hauteur);
-    azimuth = rad2deg(azimuth);
+    hauteur = AstroCalc::rad2deg(hauteur);
+    azimuth = AstroCalc::rad2deg(azimuth);
     azimuth = AstroCalc::toZero360(azimuth + 180); // on rajoute 180
 
     QVector<double> altAz;
@@ -220,8 +212,8 @@ std::vector<double> Calculastro::RaDecPrecession(int year, double ra, double dec
     m = 3.075; // en seconde
     n = 20.04; // en seconde degree
 
-    deltaRa = m + n * sin(deg2rad(ra)) * tan(deg2rad(dec));
-    deltaDec = n * cos(deg2rad(ra));
+    deltaRa = m + n * sin(AstroCalc::deg2rad(ra)) * tan(AstroCalc::deg2rad(dec));
+    deltaDec = n * cos(AstroCalc::deg2rad(ra));
 
     ra = ra + (deltaRa * deltaAnnee) / 3600.0;
 
@@ -340,10 +332,10 @@ QVector<double> Calculastro::nutationObliquity(double j2000)
     omega = 125.04452 - 1934.136261 * t + 0.0020708 * pow(t, 2.0) + pow(t, 3.0) / 450000;
     omega = AstroCalc::toZero360(omega);
 
-    omega = deg2rad(omega);
+    omega = AstroCalc::deg2rad(omega);
 
-    L = deg2rad(280.4665 + 36000.7698 * t);
-    LP = deg2rad(218.3165 + 481267.8813 * t);
+    L = AstroCalc::deg2rad(280.4665 + 36000.7698 * t);
+    LP = AstroCalc::deg2rad(218.3165 + 481267.8813 * t);
 
     psi = -17.2 * sin(omega) - 1.32 * sin(2 * L) - 0.23 * sin(2 * LP) + 0.21 * sin(2 * omega);
     dEta = (9.20) * cos(omega) + (0.57) * cos(2 * L) + (0.10) * cos(2 * LP) - (0.09) * cos(2 * omega);
@@ -369,10 +361,10 @@ QVector<double> Calculastro::coordonneesPlanetes(QDate date, QTime heure, QStrin
     O = getLBR(jj, "terre");
     E = getLBR(jj, planete);
 
-    E['L'] = deg2rad(E['L']);
-    E['B'] = deg2rad(E['B']);
-    O['L'] = deg2rad(O['L']);
-    O['B'] = deg2rad(O['B']);
+    E['L'] = AstroCalc::deg2rad(E['L']);
+    E['B'] = AstroCalc::deg2rad(E['B']);
+    O['L'] = AstroCalc::deg2rad(O['L']);
+    O['B'] = AstroCalc::deg2rad(O['B']);
 
     x = E['R'] * cos(E['B']) * cos(E['L']) - O['R'] * cos(O['B']) * cos(O['L']);
     y = E['R'] * cos(E['B']) * sin(E['L']) - O['R'] * cos(O['B']) * sin(O['L']);
@@ -387,16 +379,16 @@ QVector<double> Calculastro::coordonneesPlanetes(QDate date, QTime heure, QStrin
     O = getLBR(jj, "terre");
     E = getLBR(jj, planete);
 
-    E['L'] = deg2rad(E['L']);
-    E['B'] = deg2rad(E['B']);
-    O['L'] = deg2rad(O['L']);
-    O['B'] = deg2rad(O['B']);
+    E['L'] = AstroCalc::deg2rad(E['L']);
+    E['B'] = AstroCalc::deg2rad(E['B']);
+    O['L'] = AstroCalc::deg2rad(O['L']);
+    O['B'] = AstroCalc::deg2rad(O['B']);
 
     x = E['R'] * cos(E['B']) * cos(E['L']) - O['R'] * cos(O['B']) * cos(O['L']); // ok
     y = E['R'] * cos(E['B']) * sin(E['L']) - O['R'] * cos(O['B']) * sin(O['L']); // ok
     z = E['R'] * sin(E['B']) - O['R'] * sin(O['B']); // ok
 
-    lambda = rad2deg(atan(y / x));
+    lambda = AstroCalc::rad2deg(atan(y / x));
     if (x < 0) {
         lambda += 180;
     } // supprime une erreur avec l'arctangeant
@@ -407,19 +399,19 @@ QVector<double> Calculastro::coordonneesPlanetes(QDate date, QTime heure, QStrin
 
     nuOb = nutationObliquity(jj);
     lambda += nuOb[0] / 3600;
-    lambda = deg2rad(lambda);
-    nuOb[2] = deg2rad(nuOb[2]);
+    lambda = AstroCalc::deg2rad(lambda);
+    nuOb[2] = AstroCalc::deg2rad(nuOb[2]);
 
     alpha = atan((sin(lambda) * cos(nuOb[2]) - tan(beta) * sin(nuOb[2])) / cos(lambda)); // Formule (12.3) p.89
     if (cos(lambda) < 0)
         alpha += M_PI; // supprime une erreur avec l'arctangeant
     declinaison = asin(sin(beta) * cos(nuOb[2]) + cos(beta) * sin(nuOb[2]) * sin(lambda)); // Formule (12.4) p.89
 
-    alpha = AstroCalc::toZero360(rad2deg(alpha));
-    declinaison = rad2deg(declinaison);
+    alpha = AstroCalc::toZero360(AstroCalc::rad2deg(alpha));
+    declinaison = AstroCalc::rad2deg(declinaison);
 
     k = (pow(E['R'] + delta, 2.0) - pow(O['R'], 2.0)) / (4 * E['R'] * delta) * 100; // formule (40.2) p.267
-    i = rad2deg(acos((pow(E['R'], 2) + pow(delta, 2) - pow(O['R'], 2)) / (2 * E['R'] * delta))); // formule (40.1) p.267
+    i = AstroCalc::rad2deg(acos((pow(E['R'], 2) + pow(delta, 2) - pow(O['R'], 2)) / (2 * E['R'] * delta))); // formule (40.1) p.267
 
     if (planete == "mercure")
         mag = 1.16 + 5 * log10(E['R'] * delta) + 0.02838 * (i - 50) + 0.0001023 * pow(i - 50, 2.0);
@@ -528,8 +520,8 @@ QMap<char, double> Calculastro::getLBR(double j2000, QString planete)
     B = series["B0"] + series["B1"] * t + series["B2"] * pow(t, 2) + series["B3"] * pow(t, 3) + series["B4"] * pow(t, 4) + series["B5"] * pow(t, 5);
     R = series["R0"] + series["R1"] * t + series["R2"] * pow(t, 2) + series["R3"] * pow(t, 3) + series["R4"] * pow(t, 4) + series["R5"] * pow(t, 5);
 
-    L = AstroCalc::toZero360(rad2deg(L)); // On convertit en degrés
-    B = rad2deg(B); // On convertit en degrés
+    L = AstroCalc::toZero360(AstroCalc::rad2deg(L)); // On convertit en degrés
+    B = AstroCalc::rad2deg(B); // On convertit en degrés
 
     QMap<char, double> retour;
     retour.insert('L', L);
@@ -540,22 +532,7 @@ QMap<char, double> Calculastro::getLBR(double j2000, QString planete)
 
 QString Calculastro::degreeToDms(double val)
 {
-    int d(0), m(0), s(0);
-    QString signe;
-
-    if (val < 0) {
-        signe = "-";
-        val *= -1.0;
-    } else
-        signe = "";
-
-    d = floor(val);
-    m = floor((val - d) * 60);
-    s = floor(((val - d) * 60 - m) * 60);
-
-    QString retour;
-    retour = signe + QString::number(d) + "° " + QString::number(m) + "' " + QString::number(s) + "\"";
-    return retour;
+    return AstroCalc::degreeToDms(val);
 }
 QString Calculastro::degreeToHms(double val)
 {

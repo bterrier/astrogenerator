@@ -11,7 +11,9 @@ public:
     ~tst_AstroCalc();
 
 private slots:
-    void test_case1();
+    void test_dms();
+    void test_deg2rad();
+    void test_rad2deg();
     void test_julian();
     void test_julian2000();
     void test_angleNormalization();
@@ -25,10 +27,30 @@ tst_AstroCalc::~tst_AstroCalc()
 {
 }
 
-void tst_AstroCalc::test_case1()
+void tst_AstroCalc::test_dms()
+{
+    using AstroCalc::DMS;
+
+    QCOMPARE("0° 0' 0\"", DMS::fromDegrees(0).toString());
+    QCOMPARE("0° 30' 0\"", DMS::fromDegrees(0.5).toString());
+    QCOMPARE("-0° 30' 0\"", DMS::fromDegrees(-0.5).toString());
+    QCOMPARE("-42° 30' 0\"", DMS::fromDegrees(-42.5).toString());
+    QCOMPARE("424° 12' 0\"", DMS::fromDegrees(424.2).toString());
+    QCOMPARE("45° 25' 12\"", DMS::fromDegrees(45.42).toString());
+}
+
+void tst_AstroCalc::test_deg2rad()
 {
     QCOMPARE(AstroCalc::deg2rad(0), 0);
     QCOMPARE(AstroCalc::deg2rad(180), M_PI);
+    QCOMPARE(AstroCalc::deg2rad(90), M_PI_2);
+}
+
+void tst_AstroCalc::test_rad2deg()
+{
+    QCOMPARE(AstroCalc::rad2deg(0), 0);
+    QCOMPARE(AstroCalc::rad2deg(M_PI), 180);
+    QCOMPARE(AstroCalc::rad2deg(M_PI_2), 90);
 }
 
 void tst_AstroCalc::test_julian()

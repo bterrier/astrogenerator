@@ -18,6 +18,8 @@
 
 #include <QSqlQuery>
 
+#include "astrocalc.h"
+
 #include <QDebug>
 
 Carteciel::Carteciel(Carteciel const &carteParam) :
@@ -80,10 +82,10 @@ void Carteciel::dessinerCarte()
     QStringList couple;
 
     haPolaire = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), ascdr, dec, m_latitude, m_longitude);
-    decrad = Calculastro::deg2rad(haPolaire[0]);
-    adrad = Calculastro::deg2rad(haPolaire[1]);
-    polaire_dec = Calculastro::deg2rad(90);
-    polaire_ad = Calculastro::deg2rad(0);
+    decrad = AstroCalc::deg2rad(haPolaire[0]);
+    adrad = AstroCalc::deg2rad(haPolaire[1]);
+    polaire_dec = AstroCalc::deg2rad(90);
+    polaire_ad = AstroCalc::deg2rad(0);
 
     Y = (sin(decrad) * cos(polaire_dec) - cos(decrad) * sin(polaire_dec) * cos(adrad - polaire_ad)) / (1 + sin(decrad) * sin(polaire_dec) + cos(decrad) * cos(polaire_dec) * cos(adrad - polaire_ad));
     X = -1 * (cos(decrad) * sin(adrad - polaire_ad)) / (1 + sin(decrad) * sin(polaire_dec) + cos(decrad) * cos(polaire_dec) * cos(adrad - polaire_ad));
@@ -104,8 +106,8 @@ void Carteciel::dessinerCarte()
         declinaisonDecimal = dmsToDegree(etoiles.value(1).toString());
 
         hauteurAzimut = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), raDecimal, declinaisonDecimal, m_latitude, m_longitude);
-        decrad = Calculastro::deg2rad(hauteurAzimut[0]);
-        adrad = Calculastro::deg2rad(hauteurAzimut[1]);
+        decrad = AstroCalc::deg2rad(hauteurAzimut[0]);
+        adrad = AstroCalc::deg2rad(hauteurAzimut[1]);
 
         Y = (sin(decrad) * cos(polaire_dec) - cos(decrad) * sin(polaire_dec) * cos(adrad - polaire_ad)) / (1 + sin(decrad) * sin(polaire_dec) + cos(decrad) * cos(polaire_dec) * cos(adrad - polaire_ad));
         X = -1 * (cos(decrad) * sin(adrad - polaire_ad)) / (1 + sin(decrad) * sin(polaire_dec) + cos(decrad) * cos(polaire_dec) * cos(adrad - polaire_ad));
@@ -128,8 +130,8 @@ void Carteciel::dessinerCarte()
     double magnitude;
     for (int i(0); i < m_planning.size(); i++) {
         hauteurAzimut = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), m_planning[i]->ascdrDouble(), m_planning[i]->decDouble(), m_latitude, m_longitude);
-        decrad = Calculastro::deg2rad(hauteurAzimut[0]);
-        adrad = Calculastro::deg2rad(hauteurAzimut[1]);
+        decrad = AstroCalc::deg2rad(hauteurAzimut[0]);
+        adrad = AstroCalc::deg2rad(hauteurAzimut[1]);
 
         Y = (sin(decrad) * cos(polaire_dec) - cos(decrad) * sin(polaire_dec) * cos(adrad - polaire_ad)) / (1 + sin(decrad) * sin(polaire_dec) + cos(decrad) * cos(polaire_dec) * cos(adrad - polaire_ad));
         X = -1 * (cos(decrad) * sin(adrad - polaire_ad)) / (1 + sin(decrad) * sin(polaire_dec) + cos(decrad) * cos(polaire_dec) * cos(adrad - polaire_ad));
@@ -181,8 +183,8 @@ void Carteciel::dessinerCarte()
             hauteurAzimut = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), raDecimal, declinaisonDecimal, m_latitude, m_longitude);
 
             if (hauteurAzimut[0] >= 0) {
-                decrad = Calculastro::deg2rad(hauteurAzimut[0]);
-                adrad = Calculastro::deg2rad(hauteurAzimut[1]);
+                decrad = AstroCalc::deg2rad(hauteurAzimut[0]);
+                adrad = AstroCalc::deg2rad(hauteurAzimut[1]);
 
                 y1 = (sin(decrad) * cos(polaire_dec) - cos(decrad) * sin(polaire_dec) * cos(adrad - polaire_ad)) / (1 + sin(decrad) * sin(polaire_dec) + cos(decrad) * cos(polaire_dec) * cos(adrad - polaire_ad));
                 x1 = -1 * (cos(decrad) * sin(adrad - polaire_ad)) / (1 + sin(decrad) * sin(polaire_dec) + cos(decrad) * cos(polaire_dec) * cos(adrad - polaire_ad));
@@ -201,8 +203,8 @@ void Carteciel::dessinerCarte()
             hauteurAzimut = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), raDecimal, declinaisonDecimal, m_latitude, m_longitude);
 
             if (hauteurAzimut[0] >= 0) {
-                decrad = Calculastro::deg2rad(hauteurAzimut[0]);
-                adrad = Calculastro::deg2rad(hauteurAzimut[1]);
+                decrad = AstroCalc::deg2rad(hauteurAzimut[0]);
+                adrad = AstroCalc::deg2rad(hauteurAzimut[1]);
 
                 y2 = (sin(decrad) * cos(polaire_dec) - cos(decrad) * sin(polaire_dec) * cos(adrad - polaire_ad)) / (1 + sin(decrad) * sin(polaire_dec) + cos(decrad) * cos(polaire_dec) * cos(adrad - polaire_ad));
                 x2 = -1 * (cos(decrad) * sin(adrad - polaire_ad)) / (1 + sin(decrad) * sin(polaire_dec) + cos(decrad) * cos(polaire_dec) * cos(adrad - polaire_ad));
@@ -237,8 +239,8 @@ void Carteciel::dessinerCarte()
             declinaisonDecimal = dmsToDegree(requeteNoms.value(1).toString());
 
             hauteurAzimut = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), raDecimal, declinaisonDecimal, m_latitude, m_longitude);
-            decrad = Calculastro::deg2rad(hauteurAzimut[0]);
-            adrad = Calculastro::deg2rad(hauteurAzimut[1]);
+            decrad = AstroCalc::deg2rad(hauteurAzimut[0]);
+            adrad = AstroCalc::deg2rad(hauteurAzimut[1]);
 
             Y = (sin(decrad) * cos(polaire_dec) - cos(decrad) * sin(polaire_dec) * cos(adrad - polaire_ad)) / (1 + sin(decrad) * sin(polaire_dec) + cos(decrad) * cos(polaire_dec) * cos(adrad - polaire_ad));
             X = -1 * (cos(decrad) * sin(adrad - polaire_ad)) / (1 + sin(decrad) * sin(polaire_dec) + cos(decrad) * cos(polaire_dec) * cos(adrad - polaire_ad));
