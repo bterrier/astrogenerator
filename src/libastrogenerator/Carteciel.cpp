@@ -272,17 +272,17 @@ double Carteciel::dmsToDegree(QString dms)
 
     // On s'occupe des degrés
     if (list.at(0).count() == 4)
-        d = list.at(0).midRef(1, 2).toDouble();
+        d = QStringView{list.at(0)}.mid(1, 2).toDouble();
     else if (list.at(0).count() == 3)
-        d = list.at(0).midRef(1, 1).toDouble();
+        d = QStringView{list.at(0)}.mid(1, 1).toDouble();
     else
         QMessageBox::critical(nullptr, "Erreur dans dmsToDegree()", "Une erreur s'est produite ...");
 
     // On s'occupe des minutes
-    m = list.at(1).leftRef(list.at(1).count() - 1).toDouble();
+    m = QStringView{list.at(1)}.left(list.at(1).count() - 1).toDouble();
 
     // On s'occupe des secondes
-    s = list.at(2).leftRef(list.at(2).count() - 1).toDouble();
+    s = QStringView{list.at(2)}.left(list.at(2).count() - 1).toDouble();
 
     if (signe == "+")
         return d + m / 60 + s / 3600;
@@ -296,13 +296,13 @@ double Carteciel::hmsToDegree(QString hms)
     list = hms.split(" ");
 
     // On s'occupe des heures
-    h = list.at(0).leftRef(list.at(0).count() - 1).toDouble();
+    h = QStringView{list.at(0)}.left(list.at(0).count() - 1).toDouble();
 
     // On s'occupe des minutes
-    m = list.at(1).leftRef(list.at(1).count() - 3).toDouble();
+    m = QStringView{list.at(1)}.left(list.at(1).count() - 3).toDouble();
 
     // On s'occupe des secondes
-    s = list.at(2).leftRef(list.at(2).count() - 1).toDouble();
+    s = QStringView{list.at(2)}.left(list.at(2).count() - 1).toDouble();
 
     return (h + m / 60 + s / 3600) * 15;
 }

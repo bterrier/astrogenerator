@@ -720,7 +720,6 @@ bool Soiree::soireeToSoa(const QString &fileName)
     QFile soa(fileName);
     if (soa.open(QIODevice::WriteOnly)) {
         QTextStream flux(&soa);
-        flux.setCodec("UTF-8");
         flux << ligne1 << Qt::endl
              << ligne2 << Qt::endl;
 
@@ -821,7 +820,6 @@ void Soiree::toXML() const
         QFile file(nomFichier);
         if (file.open(QIODevice::WriteOnly)) {
             QTextStream flux(&file);
-            flux.setCodec("UTF-8");
             flux << doc.toString();
             file.close();
         } else

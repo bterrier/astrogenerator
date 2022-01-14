@@ -1,5 +1,7 @@
 #include "ActionsFenetre.h"
 
+#include <QWidget>
+
 ActionsFenetre::ActionsFenetre(QWidget *parent)
 {
     actionInfoSoiree = new QAction(tr("Infos sur la soirée"), parent);

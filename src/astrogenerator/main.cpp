@@ -43,12 +43,14 @@ static void initDatabase()
 static void initTranslation()
 {
     QTranslator *translator = new QTranslator(qApp);
-    translator->load(QLocale(), "qt", "_", QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    qApp->installTranslator(translator);
+    if (translator->load(QLocale(), "qt", "_", QLibraryInfo::path(QLibraryInfo::TranslationsPath))) {
+        qApp->installTranslator(translator);
+    }
 
     translator = new QTranslator(qApp);
-    translator->load(QLocale(), "astroGenerator", "_", ":/i18n");
-    qApp->installTranslator(translator);
+    if (translator->load(QLocale(), "astroGenerator", "_", ":/i18n")) {
+        qApp->installTranslator(translator);
+    }
 }
 
 int main(int argc, char *argv[])

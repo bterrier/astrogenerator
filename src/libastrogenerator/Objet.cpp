@@ -1,5 +1,7 @@
 #include "Objet.h"
 
+#include <QStringView>
+
 Objet::Objet()
 {
     m_valid = false;
@@ -131,8 +133,8 @@ double Objet::dmsToDegree(QString val)
 {
     double degree;
 
-    degree = val.midRef(1, 2).toDouble();
-    degree += val.midRef(5, 2).toDouble() / 60;
+    degree = QStringView{val}.mid(1, 2).toDouble();
+    degree += QStringView{val}.mid(5, 2).toDouble() / 60;
 
     if (val.at(0) == '-')
         return degree * (-1.0);
@@ -145,9 +147,9 @@ double Objet::hmsToDegree(QString val)
 
     QStringList list = val.split(' ');
 
-    degree = list.value(0).leftRef(list.value(0).count() - 1).toDouble() * 15;
-    degree += list.value(1).leftRef(list.value(1).count() - 3).toDouble() * 15 / 60;
-    degree += list.value(2).leftRef(list.value(2).count() - 1).toDouble() * 15 / 3600;
+    degree = QStringView{list.value(0)}.left(list.value(0).count() - 1).toDouble() * 15;
+    degree += QStringView{list.value(1)}.left(list.value(1).count() - 3).toDouble() * 15 / 60;
+    degree += QStringView{list.value(2)}.left(list.value(2).count() - 1).toDouble() * 15 / 3600;
 
     return degree;
 }

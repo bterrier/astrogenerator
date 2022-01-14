@@ -433,7 +433,7 @@ void InterfaceLecture::imprimer()
 
     QPrintDialog *dialog = new QPrintDialog(printer, this);
     dialog->setWindowTitle(tr("Imprimer la soirée"));
-    dialog->addEnabledOption(QAbstractPrintDialog::PrintSelection);
+    dialog->setOption(QAbstractPrintDialog::PrintSelection);
 
     if (dialog->exec() != QDialog::Accepted)
         return;
