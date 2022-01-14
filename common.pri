@@ -1,7 +1,8 @@
 CONFIG += \
           lrelease \
           embed_translations \
-          c++17
+          c++17 \
+          warn_on
 
 VERSION = 3.0.0
 DEFINES += VERSION=$${VERSION} \
