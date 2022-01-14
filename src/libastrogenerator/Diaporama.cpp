@@ -33,7 +33,7 @@ void Diaporama::afficher(int id)
 
     timer->stop(); // On arrête le timer précédent
 
-    int temps = m_soiree->getPlanning().at(id)->getFin().toTime_t() - m_soiree->getPlanning().at(id)->getDebut().toTime_t(); // On calcule le temps d'affichage
+    int temps = m_soiree->getPlanning().at(id)->getFin().toSecsSinceEpoch() - m_soiree->getPlanning().at(id)->getDebut().toSecsSinceEpoch(); // On calcule le temps d'affichage
     timer->singleShot(temps * 1000, this, &Diaporama::suivant);
     // Commencer le timer correspondant ici
     CompteRebours *timer = widgets.at(id)->findChild<CompteRebours *>();
@@ -54,7 +54,7 @@ void Diaporama::suivant()
         m_pause = true;
         // On vérifie si il y a une pause
         if (diapoCurrent + 1 < widgets.size()) {
-            int tempsPause = m_soiree->getPlanning().at(diapoCurrent + 1)->getDebut().toTime_t() - m_soiree->getPlanning().at(diapoCurrent)->getFin().toTime_t();
+            int tempsPause = m_soiree->getPlanning().at(diapoCurrent + 1)->getDebut().toSecsSinceEpoch() - m_soiree->getPlanning().at(diapoCurrent)->getFin().toSecsSinceEpoch();
             if (tempsPause > 0)
                 pause(tempsPause); // On fait une pause de x secondes
             else
@@ -73,7 +73,7 @@ void Diaporama::precedent()
     } else {
         m_pause = true;
         if (diapoCurrent > 0) {
-            int tempsPause = m_soiree->getPlanning().at(diapoCurrent)->getDebut().toTime_t() - m_soiree->getPlanning().at(diapoCurrent - 1)->getFin().toTime_t();
+            int tempsPause = m_soiree->getPlanning().at(diapoCurrent)->getDebut().toSecsSinceEpoch() - m_soiree->getPlanning().at(diapoCurrent - 1)->getFin().toSecsSinceEpoch();
             if (tempsPause > 0) {
                 pause(tempsPause);
                 diapoCurrent--;
@@ -109,7 +109,7 @@ void Diaporama::demarrer()
     QStringList oculairesString = user->value("oculaires", OCULAIREES_DEFAUT).toString().split("|");
     for (int l(0); l < oculairesString.size(); l++)
         oculairesInt.push_back(oculairesString.at(l).toInt());
-    premierTemps = m_soiree->getPlanning().at(0)->getFin().toTime_t() - m_soiree->getPlanning().at(0)->getDebut().toTime_t();
+    premierTemps = m_soiree->getPlanning().at(0)->getFin().toSecsSinceEpoch() - m_soiree->getPlanning().at(0)->getDebut().toSecsSinceEpoch();
     // On cherche la différence entre le premier et le deuxième objet pour commencer le timer
 
     for (int i(0); i < m_soiree->getPlanning().count(); i++) {

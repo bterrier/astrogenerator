@@ -336,10 +336,10 @@ void InterfaceLecture::diaporama()
                 diapo->demarrer();
             } else if (reponse.at(0) == '2') // Si on décide de démarrer la soirée à l'heure prévue
             {
-                if (m_soiree->getDebut().toLocalTime().date() == QDate::currentDate() && m_soiree->getDebut().toTime_t() > QDateTime::currentDateTimeUtc().toTime_t()) // Si on est sur une soirée qui commence aujourd'hui et après maintenant
+                if (m_soiree->getDebut().toLocalTime().date() == QDate::currentDate() && m_soiree->getDebut().toSecsSinceEpoch() > QDateTime::currentDateTimeUtc().toSecsSinceEpoch()) // Si on est sur une soirée qui commence aujourd'hui et après maintenant
                 {
                     int secondesRestantes(0);
-                    secondesRestantes = m_soiree->getDebut().toLocalTime().toTime_t() - QDateTime::currentDateTimeUtc().toTime_t();
+                    secondesRestantes = m_soiree->getDebut().toLocalTime().toSecsSinceEpoch() - QDateTime::currentDateTimeUtc().toSecsSinceEpoch();
                     Diaporama *diapo = new Diaporama(m_soiree);
 
                     QTimer::singleShot(secondesRestantes * 1000, diapo, &Diaporama::demarrer);

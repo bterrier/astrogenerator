@@ -62,9 +62,9 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
     layoutFormLocalisation->addRow(tr("&Département"), m_listeDept);
     layoutFormLocalisation->addRow(tr("&Ville"), m_listeVilles);
 
-    connect(m_listePays, qOverload<const QString &>(&QComboBox::currentIndexChanged), this, &FenPreferences::changerVilles);
+    connect(m_listePays, qOverload<int>(&QComboBox::currentIndexChanged), this, [this](){ changerVilles(m_listePays->currentText());});
     connect(m_listeDept, qOverload<int>(&QSpinBox::valueChanged), this, [this]() { changerVilles(); });
-    connect(m_listeVilles, qOverload<const QString &>(&QComboBox::currentIndexChanged), this, &FenPreferences::changerCoordonnees);
+    connect(m_listeVilles, qOverload<int>(&QComboBox::currentIndexChanged), this, [this](){ changerCoordonnees(m_listePays->currentText());});
 
     groupBoxLocalisation->setLayout(layoutFormLocalisation);
 

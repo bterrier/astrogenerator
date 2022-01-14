@@ -31,13 +31,13 @@ void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime 
     espaceMin = user->value("generateur/pauseMin", TEMPS_ESPACE).toInt() * 60; // En secondes, utile pour la fonction verifDisponibilite
 
     duree_une *= 60; // On convertit en secondes
-    nb_objets = (fin.toTime_t() - debut.toTime_t()) / duree_une;
-    rep = (fin.toTime_t() - debut.toTime_t()) / 60;
+    nb_objets = (fin.toSecsSinceEpoch() - debut.toSecsSinceEpoch()) / duree_une;
+    rep = (fin.toSecsSinceEpoch() - debut.toSecsSinceEpoch()) / 60;
 
     magMax = Calculastro::round(2 + 5 * log10(diametre), 1) + 1; //  Loi de Pogson diametre du télescope -> magnitude max;
 
     QVector<ObjetObs *> liste_observation; // Contiendra dans l'ordre les objets avec leur moment d'observation
-    moyTime = floor((debut.toTime_t() + fin.toTime_t()) / 2); // Heure à la moitié de la soirée
+    moyTime = floor((debut.toSecsSinceEpoch() + fin.toSecsSinceEpoch()) / 2); // Heure à la moitié de la soirée
 
     QStringList planetes;
     planetes << "P1"
@@ -49,7 +49,7 @@ void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime 
              << "P7";
 
     QDateTime dateTime;
-    dateTime.setTime_t(moyTime);
+    dateTime.setSecsSinceEpoch(moyTime);
 
     if (boolPlanete) // Si on veut ajouter les planètes
     {
@@ -67,12 +67,12 @@ void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime 
                 // ON COMPENSE LES TEMPS QUI DEPASSENT DE LA DUREE DE LA SOIREE
                 if (hauteurMaxPla.temps().addSecs(-duree_une / 2) < debut) { // Si on est au début
                     int compenser(0);
-                    compenser = debut.toTime_t() - hauteurMaxPla.temps().addSecs(-duree_une / 2).toTime_t();
+                    compenser = debut.toSecsSinceEpoch() - hauteurMaxPla.temps().addSecs(-duree_une / 2).toSecsSinceEpoch();
                     obsPla[0] = obsPla[0].addSecs(compenser);
                     obsPla[1] = obsPla[1].addSecs(compenser);
                 } else if (hauteurMaxPla.temps().addSecs(duree_une / 2) > fin) { // Si on est au début
                     int compenser(0);
-                    compenser = fin.toTime_t() - hauteurMaxPla.temps().addSecs(duree_une / 2).toTime_t();
+                    compenser = fin.toSecsSinceEpoch() - hauteurMaxPla.temps().addSecs(duree_une / 2).toSecsSinceEpoch();
                     obsPla[0] = obsPla[0].addSecs(compenser);
                     obsPla[1] = obsPla[1].addSecs(compenser);
                 }
@@ -210,12 +210,12 @@ void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime 
         // ON COMPENSE LES TEMPS QUI DEPASSENT DE LA DUREE DE LA SOIREE
         if (hauteurMaxD.temps().addSecs(-duree_une / 2) < debut) { // Si on est au début
             int compenser(0);
-            compenser = debut.toTime_t() - hauteurMaxD.temps().addSecs(-duree_une / 2).toTime_t();
+            compenser = debut.toSecsSinceEpoch() - hauteurMaxD.temps().addSecs(-duree_une / 2).toSecsSinceEpoch();
             tempsObs[0] = tempsObs[0].addSecs(compenser);
             tempsObs[1] = tempsObs[1].addSecs(compenser);
         } else if (hauteurMaxD.temps().addSecs(duree_une / 2) > fin) { // Si on est au début
             int compenser(0);
-            compenser = fin.toTime_t() - hauteurMaxD.temps().addSecs(duree_une / 2).toTime_t();
+            compenser = fin.toSecsSinceEpoch() - hauteurMaxD.temps().addSecs(duree_une / 2).toSecsSinceEpoch();
             tempsObs[0] = tempsObs[0].addSecs(compenser);
             tempsObs[1] = tempsObs[1].addSecs(compenser);
         }
@@ -477,8 +477,8 @@ void Soiree::monterObjet(int index)
 
         m_listeObjets[index - 1]->setFin(finF);
         m_listeObjets[index]->setDebut(debutP);
-        m_listeObjets[index]->setFin(debutP.addSecs(finF.toTime_t() - debutF.toTime_t()));
-        m_listeObjets[index - 1]->setDebut(finF.addSecs(-(finP.toTime_t() - debutP.toTime_t())));
+        m_listeObjets[index]->setFin(debutP.addSecs(finF.toSecsSinceEpoch() - debutF.toSecsSinceEpoch()));
+        m_listeObjets[index - 1]->setDebut(finF.addSecs(-(finP.toSecsSinceEpoch() - debutP.toSecsSinceEpoch())));
 
         m_listeObjets = trierPlanning(m_listeObjets);
     } else
@@ -494,7 +494,7 @@ void Soiree::modifierDuree(int index, int duree)
     if (index >= 0 && index < m_listeObjets.size()) {
         if (duree <= DUREE_OBJET_MAX && duree >= DUREE_OBJET_MIN) {
             int dif(0); // En secondes
-            dif = (duree * 60) - (m_listeObjets[index]->getFin().toTime_t() - m_listeObjets[index]->getDebut().toTime_t());
+            dif = (duree * 60) - (m_listeObjets[index]->getFin().toSecsSinceEpoch() - m_listeObjets[index]->getDebut().toSecsSinceEpoch());
             m_listeObjets[index]->setFin(m_listeObjets[index]->getDebut().addSecs(duree * 60));
             for (int i(index + 1); i < m_listeObjets.size(); i++) {
                 m_listeObjets[i]->setDebut(m_listeObjets[i]->getDebut().addSecs(dif));
@@ -658,13 +658,13 @@ Soiree *Soiree::soaToSoiree(QString const &fileName)
                     return new Soiree;
                 }
                 if (listInfosObjet.at(0).at(0) != 'P') {
-                    debut.setTime_t(listInfosObjet.at(1).toInt());
-                    fin.setTime_t(listInfosObjet.at(2).toInt());
+                    debut.setSecsSinceEpoch(listInfosObjet.at(1).toInt());
+                    fin.setSecsSinceEpoch(listInfosObjet.at(2).toInt());
 
                     planning.push_back(new ObjetCPObs(listInfosObjet[0], debut, fin));
                 } else {
-                    debut.setTime_t(listInfosObjet.at(1).toInt());
-                    fin.setTime_t(listInfosObjet.at(2).toInt());
+                    debut.setSecsSinceEpoch(listInfosObjet.at(1).toInt());
+                    fin.setSecsSinceEpoch(listInfosObjet.at(2).toInt());
 
                     planning.push_back(new ObjetPlaneteObs(listInfosObjet[0], debut, fin));
                 }
@@ -673,10 +673,10 @@ Soiree *Soiree::soaToSoiree(QString const &fileName)
             Soiree *soiree = new Soiree;
             soiree->setBoolPlanete(false);
             QDateTime debutSoiree;
-            debutSoiree.setTime_t(listInfosSoiree.at(5).toInt());
+            debutSoiree.setSecsSinceEpoch(listInfosSoiree.at(5).toInt());
             soiree->setDebut(debutSoiree);
             QDateTime finSoiree;
-            finSoiree.setTime_t(listInfosSoiree.at(6).toInt());
+            finSoiree.setSecsSinceEpoch(listInfosSoiree.at(6).toInt());
             soiree->setFin(finSoiree);
             soiree->setDiametre(listInfosSoiree.at(7).toInt());
             soiree->setFocale(listInfosSoiree.at(8).toInt());
@@ -712,7 +712,7 @@ bool Soiree::soireeToSoa(const QString &fileName)
     QStringList oculaires = user->value("oculaires").toString().split("|");
 
     QString ligne1, ligne2;
-    ligne1 = "cle|" + getVille() + "|" + getPays() + "|" + QString::number(m_lat) + "|" + QString::number(m_longi) + "|" + QString::number(m_debut.toTime_t()) + "|" + QString::number(m_fin.toTime_t()) + "|" + QString::number(m_diametre) + "|" + QString::number(m_focale);
+    ligne1 = "cle|" + getVille() + "|" + getPays() + "|" + QString::number(m_lat) + "|" + QString::number(m_longi) + "|" + QString::number(m_debut.toSecsSinceEpoch()) + "|" + QString::number(m_fin.toSecsSinceEpoch()) + "|" + QString::number(m_diametre) + "|" + QString::number(m_focale);
     for (int i(0); i < oculaires.size(); i++) {
         ligne2 += oculaires.at(i) + "|";
     }
@@ -725,7 +725,7 @@ bool Soiree::soireeToSoa(const QString &fileName)
              << ligne2 << Qt::endl;
 
         for (int j(0); j < m_listeObjets.count(); j++) {
-            flux << m_listeObjets.at(j)->ref() << "|" << QString::number(m_listeObjets.at(j)->getDebut().toTime_t()) << "|" << QString::number(m_listeObjets.at(j)->getFin().toTime_t()) << Qt::endl;
+            flux << m_listeObjets.at(j)->ref() << "|" << QString::number(m_listeObjets.at(j)->getDebut().toSecsSinceEpoch()) << "|" << QString::number(m_listeObjets.at(j)->getFin().toSecsSinceEpoch()) << Qt::endl;
         }
         soa.close();
         return true;
@@ -960,9 +960,9 @@ bool Soiree::paintPdf(QPrinter *printer)
                     painter.setFont(font);
                     painter.drawText(QRectF(0, 0, (210 - mD - mG) * k, 7 * k), Qt::AlignRight, QString::number(page));
                 }
-                if (i > 0 && (m_listeObjets.at(i)->getDebut().toTime_t() - m_listeObjets.at(i - 1)->getFin().toTime_t()) > user->value("generateur/pauseMin", TEMPS_ESPACE).toUInt() * 60) {
+                if (i > 0 && (m_listeObjets.at(i)->getDebut().toSecsSinceEpoch() - m_listeObjets.at(i - 1)->getFin().toSecsSinceEpoch()) > user->value("generateur/pauseMin", TEMPS_ESPACE).toUInt() * 60) {
                     // Si on est pas au premier objet et que le temps entre cet objet et celui d'avant est supérieur à TEMPS_ESPACE, alors on affiche une pause
-                    int pause = m_listeObjets.at(i)->getDebut().toTime_t() - m_listeObjets.at(i - 1)->getFin().toTime_t();
+                    int pause = m_listeObjets.at(i)->getDebut().toSecsSinceEpoch() - m_listeObjets.at(i - 1)->getFin().toSecsSinceEpoch();
                     pause = (int)pause / 60;
                     painter.setPen(QColor(136, 136, 136));
                     rect = QRectF(13 * k - mG * k, tL * k - mT * k, (210 - mD - mG - 13) * k, 6 * k);
@@ -1069,7 +1069,7 @@ bool Soiree::paintPdf(QPrinter *printer)
             painter.setFont(font);
             painter.setPen(QColor(0, 0, 0));
             QDateTime moitieObs;
-            moitieObs.setTime_t((m_debut.toTime_t() + m_fin.toTime_t()) / 2);
+            moitieObs.setSecsSinceEpoch((m_debut.toSecsSinceEpoch() + m_fin.toSecsSinceEpoch()) / 2);
             painter.drawText(QRectF(13 * k - mG * k, 25 * k - mT * k, (210 - mD - mG) * k, 10 * k), Qt::AlignLeft, tr("Carte du ciel à la moitié de la soirée d'observation(") + moitieObs.toString("hh'h'mm") + tr("). Seuls les objets de la soirée sont\nplacés."));
             // On dessine l'image
             QGraphicsView *vue = new QGraphicsView(new Carteciel(this));

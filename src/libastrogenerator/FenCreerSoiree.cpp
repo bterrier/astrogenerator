@@ -201,8 +201,8 @@ FenCreerSoiree::FenCreerSoiree(FenPrincipal *parent) :
     connect(m_close, &QPushButton::clicked, this, &FenCreerSoiree::close);
     connect(m_submit, &QPushButton::clicked, this, &FenCreerSoiree::genererSoiree);
     connect(m_departement, qOverload<int>(&QSpinBox::valueChanged), this, [this]() { actualiserVilles(); });
-    connect(m_pays, qOverload<const QString &>(&QComboBox::currentIndexChanged), this, &FenCreerSoiree::actualiserVilles);
-    connect(m_villes, qOverload<const QString &>(&QComboBox::currentIndexChanged), this, &FenCreerSoiree::actualiserCoordonnees);
+    connect(m_pays, qOverload<int>(&QComboBox::currentIndexChanged), this, [this]() { actualiserVilles(m_pays->currentText()); });
+    connect(m_villes, qOverload<int>(&QComboBox::currentIndexChanged), this, [this]() { actualiserCoordonnees(m_pays->currentText()); });
     connect(boutonConst, &QPushButton::clicked, m_fenetreConstellation, &QDialog::exec);
     connect(boutonConstFermer, &QPushButton::clicked, m_fenetreConstellation, &QDialog::close);
     connect(boutonToutCocher, &QPushButton::clicked, this, &FenCreerSoiree::toutCocherConstellation);
