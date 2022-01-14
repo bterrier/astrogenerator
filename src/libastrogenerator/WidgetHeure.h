@@ -2,21 +2,20 @@
 #define WIDGETHEURE_H
 
 #include <QLCDNumber>
-#include <QTime>
 #include <QTimer>
 
 class WidgetHeure : public QLCDNumber
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit WidgetHeure(QWidget *parent = nullptr);
+	explicit WidgetHeure(QWidget *parent = nullptr);
 
 private slots:
-    void refresh();
+	void refresh();
 
 private:
-    QTimer m_timer;
+	QTimer m_timer;
 };
 
 #endif // WIDGETHEURE_H

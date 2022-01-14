@@ -5,10 +5,10 @@
 
 class FenPersonaliser : public QDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit FenPersonaliser(QWidget *parent = 0);
+	explicit FenPersonaliser(QWidget *parent = 0);
 };
 
 #endif // FENPERSONALISER_H

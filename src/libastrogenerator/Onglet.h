@@ -9,20 +9,20 @@
 
 class Onglet : public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    Onglet(Soiree *soiree);
+	Onglet(Soiree *soiree);
 
-    Soiree *soiree() const;
-    QWidget *getWidget(QString ref);
-    QWidget *current() const;
-    Carteciel *carte() const;
+	Soiree *soiree() const;
+	QWidget *getWidget(QString ref);
+	QWidget *current() const;
+	Carteciel *carte() const;
 
 private:
-    Soiree *m_soiree;
-    Carteciel *m_carte;
-    QWidget *m_current;
+	Soiree *m_soiree;
+	Carteciel *m_carte;
+	QWidget *m_current;
 };
 
 #endif // ONGLET_H

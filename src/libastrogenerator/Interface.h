@@ -8,25 +8,25 @@
 
 class Interface : public QWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    explicit Interface(ActionsFenetre *listeActions, QWidget *parent = 0);
-    bool isActive();
-    void setActive(bool active);
+	explicit Interface(ActionsFenetre *listeActions, QWidget *parent = 0);
+	bool isActive();
+	void setActive(bool active);
 
 signals:
-    void fermer(Interface *interface);
-    void afficher(QString);
+	void fermer(Interface *interface);
+	void afficher(QString);
 
 public slots:
-    void slotFermer();
-    virtual void infosSoiree();
-    virtual void griserActions();
-    virtual Soiree *getSoiree() = 0;
+	void slotFermer();
+	virtual void infosSoiree();
+	virtual void griserActions();
+	virtual Soiree *getSoiree() = 0;
 
 protected: // On y aura aussi accès depuis les élements filles
-    ActionsFenetre *m_listeActions;
-    bool m_active;
+	ActionsFenetre *m_listeActions;
+	bool m_active;
 };
 
 #endif // INTERFACE_H

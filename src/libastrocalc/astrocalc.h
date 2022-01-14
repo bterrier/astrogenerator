@@ -8,14 +8,14 @@ namespace AstroCalc
 
 struct DMS {
 public:
-    static DMS fromDegrees(double deg);
-    [[nodiscard]] QString toString() const;
+	static DMS fromDegrees(double deg);
+	[[nodiscard]] QString toString() const;
 
 private:
-    int sign;
-    int d;
-    int minutes;
-    double seconds;
+	int sign;
+	int d;
+	int minutes;
+	double seconds;
 };
 
 QString degreeToDms(double val);
@@ -28,13 +28,13 @@ double toZero360(double deg);
 double julianDay(const QDateTime &datetime);
 inline double julianDay(const QDate &date, const QTime &time)
 {
-    return julianDay(QDateTime(date, time));
+	return julianDay(QDateTime(date, time));
 }
 
 double julianDay2000(const QDateTime &datetime);
 inline double julianDay2000(const QDate &date, const QTime &time)
 {
-    return julianDay2000(QDateTime(date, time));
+	return julianDay2000(QDateTime(date, time));
 }
 
 } // namespace AstroCalc

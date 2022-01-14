@@ -4,434 +4,434 @@
 
 ActionsFenetre::ActionsFenetre(QWidget *parent)
 {
-    actionInfoSoiree = new QAction(tr("Infos sur la soirée"), parent);
-    actionInfoSoiree->setIcon(QIcon(":/icons/info.png"));
-    actionCreerSoiree = new QAction(tr("Générer une soirée"), parent);
-    actionCreerSoiree->setShortcut(QKeySequence(tr("Ctrl+N")));
-    actionCreerSoiree->setIcon(QIcon(":/icons/generate.png"));
-    actionFabriquerSoiree = new QAction(tr("Créer une soirée"), parent);
-    actionFabriquerSoiree->setIcon(QIcon(":/icons/creer-soiree.png"));
-    actionOuvrirSoiree = new QAction(tr("Ouvrir une soirée"), parent);
-    actionOuvrirSoiree->setShortcut(QKeySequence(tr("Ctrl+O")));
-    actionOuvrirSoiree->setIcon(QIcon(":/icons/open.png"));
-    actionEnregistrer = new QAction(tr("Enregistrer"), parent);
-    actionEnregistrer->setShortcut(QKeySequence(tr("Ctrl+S")));
-    actionEnregistrer->setIcon(QIcon(":/icons/save.png"));
-    actionSoireesRecentes = new QAction(tr("Soirées récentes"), parent);
-    actionImprimer = new QAction(tr("Imprimer"), parent);
-    actionImprimer->setShortcut(QKeySequence(tr("Ctrl+P")));
-    actionImprimer->setIcon(QIcon(":/icons/print.png"));
-    actionQuitter = new QAction(tr("Quitter"), parent);
-    actionQuitter->setShortcut(QKeySequence(tr("Alt+F4")));
-    actionFermer = new QAction(tr("Fermer la soirée"), parent);
-    actionFermer->setIcon(QIcon(":/icons/close.png"));
-    actionToutFermer = new QAction(tr("Tout fermer"), parent);
+	actionInfoSoiree = new QAction(tr("Infos sur la soirée"), parent);
+	actionInfoSoiree->setIcon(QIcon(":/icons/info.png"));
+	actionCreerSoiree = new QAction(tr("Générer une soirée"), parent);
+	actionCreerSoiree->setShortcut(QKeySequence(tr("Ctrl+N")));
+	actionCreerSoiree->setIcon(QIcon(":/icons/generate.png"));
+	actionFabriquerSoiree = new QAction(tr("Créer une soirée"), parent);
+	actionFabriquerSoiree->setIcon(QIcon(":/icons/creer-soiree.png"));
+	actionOuvrirSoiree = new QAction(tr("Ouvrir une soirée"), parent);
+	actionOuvrirSoiree->setShortcut(QKeySequence(tr("Ctrl+O")));
+	actionOuvrirSoiree->setIcon(QIcon(":/icons/open.png"));
+	actionEnregistrer = new QAction(tr("Enregistrer"), parent);
+	actionEnregistrer->setShortcut(QKeySequence(tr("Ctrl+S")));
+	actionEnregistrer->setIcon(QIcon(":/icons/save.png"));
+	actionSoireesRecentes = new QAction(tr("Soirées récentes"), parent);
+	actionImprimer = new QAction(tr("Imprimer"), parent);
+	actionImprimer->setShortcut(QKeySequence(tr("Ctrl+P")));
+	actionImprimer->setIcon(QIcon(":/icons/print.png"));
+	actionQuitter = new QAction(tr("Quitter"), parent);
+	actionQuitter->setShortcut(QKeySequence(tr("Alt+F4")));
+	actionFermer = new QAction(tr("Fermer la soirée"), parent);
+	actionFermer->setIcon(QIcon(":/icons/close.png"));
+	actionToutFermer = new QAction(tr("Tout fermer"), parent);
 
-    actionDiaporama = new QAction(tr("Diaporama"), parent);
-    actionDiaporama->setText(tr("Présenter la soirée sous forme de diaporama"));
-    actionDiaporama->setShortcut(QKeySequence(tr("F5")));
-    actionDiaporama->setIcon(QIcon(":/icons/slideshow.png"));
-    actionBarreStatut = new QAction(tr("Barre de statut"), parent);
-    actionBarreStatut->setCheckable(true);
-    actionCarteCiel = new QAction(tr("Carte du ciel"), parent);
-    actionCarteCiel->setIcon(QIcon(":/icons/carteciel.png"));
-    carteCouleurFond = new QAction(tr("Couleur du fond"), parent);
-    carteCouleurEtoiles = new QAction(tr("Couleur des étoiles"), parent);
-    carteCouleurLegende = new QAction(tr("Couleur des légendes"), parent);
-    carteCouleurConstellation = new QAction(tr("Couleur des constellations"), parent);
-    carteCouleurObjet = new QAction(tr("Couleur des objets"), parent);
+	actionDiaporama = new QAction(tr("Diaporama"), parent);
+	actionDiaporama->setText(tr("Présenter la soirée sous forme de diaporama"));
+	actionDiaporama->setShortcut(QKeySequence(tr("F5")));
+	actionDiaporama->setIcon(QIcon(":/icons/slideshow.png"));
+	actionBarreStatut = new QAction(tr("Barre de statut"), parent);
+	actionBarreStatut->setCheckable(true);
+	actionCarteCiel = new QAction(tr("Carte du ciel"), parent);
+	actionCarteCiel->setIcon(QIcon(":/icons/carteciel.png"));
+	carteCouleurFond = new QAction(tr("Couleur du fond"), parent);
+	carteCouleurEtoiles = new QAction(tr("Couleur des étoiles"), parent);
+	carteCouleurLegende = new QAction(tr("Couleur des légendes"), parent);
+	carteCouleurConstellation = new QAction(tr("Couleur des constellations"), parent);
+	carteCouleurObjet = new QAction(tr("Couleur des objets"), parent);
 
-    actionMonterObjet = new QAction(tr("Monter l'objet"), parent);
-    actionMonterObjet->setIcon(QIcon(":/icons/arrow-up.png"));
-    actionDescendreObjet = new QAction(tr("Descendre l'objet"), parent);
-    actionDescendreObjet->setIcon(QIcon(":/icons/arrow-down.png"));
-    actionSupprimerObjet = new QAction(tr("Supprimer l'objet"), parent);
-    actionSupprimerObjet->setIcon(QIcon(":/icons/list-remove2.png"));
-    actionChangerDureeObjet = new QAction(tr("Changer la durée de l'objet"), parent);
-    actionChangerDureeObjet->setIcon(QIcon(":/icons/chronometer.png"));
-    actionExporterXML = new QAction(tr("XML"), parent);
-    actionExporterXML->setIcon(QIcon(":/icons/xml.png"));
-    actionExporterPDF = new QAction(tr("PDF"), parent);
-    actionExporterPDF->setIcon(QIcon(":/icons/pdf.png"));
-    actionExporterJSON = new QAction(tr("JSON"), parent);
-    actionPartager = new QAction(tr("Partager..."), parent);
-    actionAjouterObjet = new QAction(tr("Ajouter un objet"), parent);
-    actionAjouterObjet->setIcon(QIcon(":/icons/add.png"));
-    actionAjouterPlanete = new QAction(tr("Ajouter une planète"), parent);
-    actionAjouterPlanete->setIcon(QIcon(":/icons/planete.png"));
+	actionMonterObjet = new QAction(tr("Monter l'objet"), parent);
+	actionMonterObjet->setIcon(QIcon(":/icons/arrow-up.png"));
+	actionDescendreObjet = new QAction(tr("Descendre l'objet"), parent);
+	actionDescendreObjet->setIcon(QIcon(":/icons/arrow-down.png"));
+	actionSupprimerObjet = new QAction(tr("Supprimer l'objet"), parent);
+	actionSupprimerObjet->setIcon(QIcon(":/icons/list-remove2.png"));
+	actionChangerDureeObjet = new QAction(tr("Changer la durée de l'objet"), parent);
+	actionChangerDureeObjet->setIcon(QIcon(":/icons/chronometer.png"));
+	actionExporterXML = new QAction(tr("XML"), parent);
+	actionExporterXML->setIcon(QIcon(":/icons/xml.png"));
+	actionExporterPDF = new QAction(tr("PDF"), parent);
+	actionExporterPDF->setIcon(QIcon(":/icons/pdf.png"));
+	actionExporterJSON = new QAction(tr("JSON"), parent);
+	actionPartager = new QAction(tr("Partager..."), parent);
+	actionAjouterObjet = new QAction(tr("Ajouter un objet"), parent);
+	actionAjouterObjet->setIcon(QIcon(":/icons/add.png"));
+	actionAjouterPlanete = new QAction(tr("Ajouter une planète"), parent);
+	actionAjouterPlanete->setIcon(QIcon(":/icons/planete.png"));
 
-    actionPreferencesTelescope = new QAction(tr("Télescope"), parent);
-    actionPreferencesOculaires = new QAction(tr("Oculaires"), parent);
-    actionPreferencesLocalisation = new QAction(tr("Localisation"), parent);
-    actionPreferencesCarteCiel = new QAction(tr("Carte du ciel"), parent);
+	actionPreferencesTelescope = new QAction(tr("Télescope"), parent);
+	actionPreferencesOculaires = new QAction(tr("Oculaires"), parent);
+	actionPreferencesLocalisation = new QAction(tr("Localisation"), parent);
+	actionPreferencesCarteCiel = new QAction(tr("Carte du ciel"), parent);
 
-    actionConnexion = new QAction(tr("Se connecter"), parent);
-    actionConnexion->setIcon(QIcon(":/icons/sign-in.png"));
-    actionCalendrier = new QAction(tr("Calendrier"), parent);
-    actionRechercheAstronomes = new QAction(tr("Rechercher des astronomes..."), parent);
-    actionPersonaliserGenerateur = new QAction(tr("Personaliser le générateur..."), parent);
+	actionConnexion = new QAction(tr("Se connecter"), parent);
+	actionConnexion->setIcon(QIcon(":/icons/sign-in.png"));
+	actionCalendrier = new QAction(tr("Calendrier"), parent);
+	actionRechercheAstronomes = new QAction(tr("Rechercher des astronomes..."), parent);
+	actionPersonaliserGenerateur = new QAction(tr("Personaliser le générateur..."), parent);
 
-    actionBDD = new QAction(tr("Accéder à la base de données"), parent);
-    actionCDS = new QAction(tr("CDS - Données astronomiques"), parent);
-    actionObjetsRemarquables = new QAction(tr("Objets remarquables"), parent);
+	actionBDD = new QAction(tr("Accéder à la base de données"), parent);
+	actionCDS = new QAction(tr("CDS - Données astronomiques"), parent);
+	actionObjetsRemarquables = new QAction(tr("Objets remarquables"), parent);
 
-    actionAPropos = new QAction(tr("A propos d'astroGenerator"), parent);
-    actionAProposGenerateur = new QAction(tr("A propos du générateur"), parent);
-    actionUpdate = new QAction(tr("Mise à jour"), parent);
-    actionAide = new QAction(tr("Aide"), parent);
-    actionSiteUniversAstronomie = new QAction(tr("Site de l'éditeur"), parent);
+	actionAPropos = new QAction(tr("A propos d'astroGenerator"), parent);
+	actionAProposGenerateur = new QAction(tr("A propos du générateur"), parent);
+	actionUpdate = new QAction(tr("Mise à jour"), parent);
+	actionAide = new QAction(tr("Aide"), parent);
+	actionSiteUniversAstronomie = new QAction(tr("Site de l'éditeur"), parent);
 }
 
 QAction *ActionsFenetre::getActionInfoSoiree()
 {
-    return actionInfoSoiree;
+	return actionInfoSoiree;
 }
 QAction *ActionsFenetre::getActionCreerSoiree()
 {
-    return actionCreerSoiree;
+	return actionCreerSoiree;
 }
 QAction *ActionsFenetre::getActionFabriquerSoiree()
 {
-    return actionFabriquerSoiree;
+	return actionFabriquerSoiree;
 }
 QAction *ActionsFenetre::getActionOuvrirSoiree()
 {
-    return actionOuvrirSoiree;
+	return actionOuvrirSoiree;
 }
 QAction *ActionsFenetre::getActionEnregistrer()
 {
-    return actionEnregistrer;
+	return actionEnregistrer;
 }
 QAction *ActionsFenetre::getActionSoireesRecentes()
 {
-    return actionSoireesRecentes;
+	return actionSoireesRecentes;
 }
 QAction *ActionsFenetre::getActionImprimer()
 {
-    return actionImprimer;
+	return actionImprimer;
 }
 QAction *ActionsFenetre::getActionQuitter()
 {
-    return actionQuitter;
+	return actionQuitter;
 }
 QAction *ActionsFenetre::getActionFermer()
 {
-    return actionFermer;
+	return actionFermer;
 }
 QAction *ActionsFenetre::getActionToutFermer()
 {
-    return actionToutFermer;
+	return actionToutFermer;
 }
 QAction *ActionsFenetre::getActionDiaporama()
 {
-    return actionDiaporama;
+	return actionDiaporama;
 }
 QAction *ActionsFenetre::getActionBarreStatut()
 {
-    return actionBarreStatut;
+	return actionBarreStatut;
 }
 QAction *ActionsFenetre::getActionCarteCiel()
 {
-    return actionCarteCiel;
+	return actionCarteCiel;
 }
 QAction *ActionsFenetre::getCarteCouleurFond()
 {
-    return carteCouleurFond;
+	return carteCouleurFond;
 }
 QAction *ActionsFenetre::getCarteCouleurEtoiles()
 {
-    return carteCouleurEtoiles;
+	return carteCouleurEtoiles;
 }
 QAction *ActionsFenetre::getCarteCouleurLegende()
 {
-    return carteCouleurLegende;
+	return carteCouleurLegende;
 }
 QAction *ActionsFenetre::getCarteCouleurConstellation()
 {
-    return carteCouleurConstellation;
+	return carteCouleurConstellation;
 }
 QAction *ActionsFenetre::getCarteCouleurObjet()
 {
-    return carteCouleurObjet;
+	return carteCouleurObjet;
 }
 QAction *ActionsFenetre::getActionMonterObjet()
 {
-    return actionMonterObjet;
+	return actionMonterObjet;
 }
 QAction *ActionsFenetre::getActionDescendreObjet()
 {
-    return actionDescendreObjet;
+	return actionDescendreObjet;
 }
 QAction *ActionsFenetre::getActionSupprimerObjet()
 {
-    return actionSupprimerObjet;
+	return actionSupprimerObjet;
 }
 QAction *ActionsFenetre::getActionChangerDureeObjet()
 {
-    return actionChangerDureeObjet;
+	return actionChangerDureeObjet;
 }
 QAction *ActionsFenetre::getActionExporterXML()
 {
-    return actionExporterXML;
+	return actionExporterXML;
 }
 QAction *ActionsFenetre::getActionExporterPDF()
 {
-    return actionExporterPDF;
+	return actionExporterPDF;
 }
 QAction *ActionsFenetre::getActionExporterJSON()
 {
-    return actionExporterJSON;
+	return actionExporterJSON;
 }
 QAction *ActionsFenetre::getActionPartager()
 {
-    return actionPartager;
+	return actionPartager;
 }
 QAction *ActionsFenetre::getActionAjouterObjet()
 {
-    return actionAjouterObjet;
+	return actionAjouterObjet;
 }
 QAction *ActionsFenetre::getActionAjouterPlanete()
 {
-    return actionAjouterPlanete;
+	return actionAjouterPlanete;
 }
 QAction *ActionsFenetre::getActionPreferencesTelescope()
 {
-    return actionPreferencesTelescope;
+	return actionPreferencesTelescope;
 }
 QAction *ActionsFenetre::getActionPreferencesOculaires()
 {
-    return actionPreferencesOculaires;
+	return actionPreferencesOculaires;
 }
 QAction *ActionsFenetre::getActionPreferencesCarteCiel()
 {
-    return actionPreferencesCarteCiel;
+	return actionPreferencesCarteCiel;
 }
 QAction *ActionsFenetre::getActionPreferencesLocalisation()
 {
-    return actionPreferencesLocalisation;
+	return actionPreferencesLocalisation;
 }
 QAction *ActionsFenetre::getActionConnexion()
 {
-    return actionConnexion;
+	return actionConnexion;
 }
 QAction *ActionsFenetre::getActionCalendrier()
 {
-    return actionCalendrier;
+	return actionCalendrier;
 }
 QAction *ActionsFenetre::getActionRechercheAstronomes()
 {
-    return actionRechercheAstronomes;
+	return actionRechercheAstronomes;
 }
 QAction *ActionsFenetre::getActionPersonaliserGenerateur()
 {
-    return actionPersonaliserGenerateur;
+	return actionPersonaliserGenerateur;
 }
 QAction *ActionsFenetre::getActionBDD()
 {
-    return actionBDD;
+	return actionBDD;
 }
 QAction *ActionsFenetre::getActionCDS()
 {
-    return actionCDS;
+	return actionCDS;
 }
 QAction *ActionsFenetre::getActionObjetsRemarquables()
 {
-    return actionObjetsRemarquables;
+	return actionObjetsRemarquables;
 }
 QAction *ActionsFenetre::getActionAPropos()
 {
-    return actionAPropos;
+	return actionAPropos;
 }
 QAction *ActionsFenetre::getActionAProposGenerateur()
 {
-    return actionAProposGenerateur;
+	return actionAProposGenerateur;
 }
 QAction *ActionsFenetre::getActionUpdate()
 {
-    return actionUpdate;
+	return actionUpdate;
 }
 QAction *ActionsFenetre::getActionAide()
 {
-    return actionAide;
+	return actionAide;
 }
 QAction *ActionsFenetre::getActionSiteUniversAstronomie()
 {
-    return actionSiteUniversAstronomie;
+	return actionSiteUniversAstronomie;
 }
 
 void ActionsFenetre::griserActionInfoSoiree(bool ok)
 {
-    actionInfoSoiree->setDisabled(ok);
+	actionInfoSoiree->setDisabled(ok);
 }
 void ActionsFenetre::griserActionCreerSoiree(bool ok)
 {
-    actionCreerSoiree->setDisabled(ok);
+	actionCreerSoiree->setDisabled(ok);
 }
 void ActionsFenetre::griserActionFabriquerSoiree(bool ok)
 {
-    actionFabriquerSoiree->setDisabled(ok);
+	actionFabriquerSoiree->setDisabled(ok);
 }
 void ActionsFenetre::griserActionOuvrirSoiree(bool ok)
 {
-    actionOuvrirSoiree->setDisabled(ok);
+	actionOuvrirSoiree->setDisabled(ok);
 }
 void ActionsFenetre::griserActionEnregistrer(bool ok)
 {
-    actionEnregistrer->setDisabled(ok);
+	actionEnregistrer->setDisabled(ok);
 }
 void ActionsFenetre::griserActionSoireesRecentes(bool ok)
 {
-    actionSoireesRecentes->setDisabled(ok);
+	actionSoireesRecentes->setDisabled(ok);
 }
 void ActionsFenetre::griserActionImprimer(bool ok)
 {
-    actionImprimer->setDisabled(ok);
+	actionImprimer->setDisabled(ok);
 }
 void ActionsFenetre::griserActionQuitter(bool ok)
 {
-    actionQuitter->setDisabled(ok);
+	actionQuitter->setDisabled(ok);
 }
 void ActionsFenetre::griserActionFermer(bool ok)
 {
-    actionFermer->setDisabled(ok);
+	actionFermer->setDisabled(ok);
 }
 void ActionsFenetre::griserActionToutFermer(bool ok)
 {
-    actionToutFermer->setDisabled(ok);
+	actionToutFermer->setDisabled(ok);
 }
 void ActionsFenetre::griserActionDiaporama(bool ok)
 {
-    actionDiaporama->setDisabled(ok);
+	actionDiaporama->setDisabled(ok);
 }
 void ActionsFenetre::griserActionBarreStatut(bool ok)
 {
-    actionBarreStatut->setDisabled(ok);
+	actionBarreStatut->setDisabled(ok);
 }
 void ActionsFenetre::griserActionCarteCiel(bool ok)
 {
-    actionCarteCiel->setDisabled(ok);
+	actionCarteCiel->setDisabled(ok);
 }
 void ActionsFenetre::griserCarteCouleurFond(bool ok)
 {
-    carteCouleurFond->setDisabled(ok);
+	carteCouleurFond->setDisabled(ok);
 }
 void ActionsFenetre::griserCarteCouleurEtoiles(bool ok)
 {
-    carteCouleurEtoiles->setDisabled(ok);
+	carteCouleurEtoiles->setDisabled(ok);
 }
 void ActionsFenetre::griserCarteCouleurLegende(bool ok)
 {
-    carteCouleurLegende->setDisabled(ok);
+	carteCouleurLegende->setDisabled(ok);
 }
 void ActionsFenetre::griserCarteCouleurConstellation(bool ok)
 {
-    carteCouleurConstellation->setDisabled(ok);
+	carteCouleurConstellation->setDisabled(ok);
 }
 void ActionsFenetre::griserCarteCouleurObjet(bool ok)
 {
-    carteCouleurObjet->setDisabled(ok);
+	carteCouleurObjet->setDisabled(ok);
 }
 void ActionsFenetre::griserActionMonterObjet(bool ok)
 {
-    actionMonterObjet->setDisabled(ok);
+	actionMonterObjet->setDisabled(ok);
 }
 void ActionsFenetre::griserActionDescendreObjet(bool ok)
 {
-    actionDescendreObjet->setDisabled(ok);
+	actionDescendreObjet->setDisabled(ok);
 }
 void ActionsFenetre::griserActionSupprimerObjet(bool ok)
 {
-    actionSupprimerObjet->setDisabled(ok);
+	actionSupprimerObjet->setDisabled(ok);
 }
 void ActionsFenetre::griserActionChangerDureeObjet(bool ok)
 {
-    actionChangerDureeObjet->setDisabled(ok);
+	actionChangerDureeObjet->setDisabled(ok);
 }
 void ActionsFenetre::griserActionExporterXML(bool ok)
 {
-    actionExporterXML->setDisabled(ok);
+	actionExporterXML->setDisabled(ok);
 }
 void ActionsFenetre::griserActionExporterPDF(bool ok)
 {
-    actionExporterPDF->setDisabled(ok);
+	actionExporterPDF->setDisabled(ok);
 }
 void ActionsFenetre::griserActionExporterJSON(bool ok)
 {
-    actionExporterJSON->setDisabled(ok);
+	actionExporterJSON->setDisabled(ok);
 }
 void ActionsFenetre::griserActionPartager(bool ok)
 {
-    actionPartager->setDisabled(ok);
+	actionPartager->setDisabled(ok);
 }
 void ActionsFenetre::griserActionAjouterObjet(bool ok)
 {
-    actionAjouterObjet->setDisabled(ok);
+	actionAjouterObjet->setDisabled(ok);
 }
 void ActionsFenetre::griserActionAjouterPlanete(bool ok)
 {
-    actionAjouterPlanete->setDisabled(ok);
+	actionAjouterPlanete->setDisabled(ok);
 }
 void ActionsFenetre::griserActionPreferencesTelescope(bool ok)
 {
-    actionPreferencesTelescope->setDisabled(ok);
+	actionPreferencesTelescope->setDisabled(ok);
 }
 void ActionsFenetre::griserActionPreferencesOculaires(bool ok)
 {
-    actionPreferencesOculaires->setDisabled(ok);
+	actionPreferencesOculaires->setDisabled(ok);
 }
 void ActionsFenetre::griserActionPreferencesCarteCiel(bool ok)
 {
-    actionPreferencesCarteCiel->setDisabled(ok);
+	actionPreferencesCarteCiel->setDisabled(ok);
 }
 void ActionsFenetre::griserActionPreferencesLocalisation(bool ok)
 {
-    actionPreferencesLocalisation->setDisabled(ok);
+	actionPreferencesLocalisation->setDisabled(ok);
 }
 void ActionsFenetre::griserActionConnexion(bool ok)
 {
-    actionConnexion->setDisabled(ok);
+	actionConnexion->setDisabled(ok);
 }
 void ActionsFenetre::griserActionCalendrier(bool ok)
 {
-    actionCalendrier->setDisabled(ok);
+	actionCalendrier->setDisabled(ok);
 }
 void ActionsFenetre::griserActionRechercheAstronomes(bool ok)
 {
-    actionRechercheAstronomes->setDisabled(ok);
+	actionRechercheAstronomes->setDisabled(ok);
 }
 void ActionsFenetre::griserActionPersonaliserGenerateur(bool ok)
 {
-    actionPersonaliserGenerateur->setDisabled(ok);
+	actionPersonaliserGenerateur->setDisabled(ok);
 }
 void ActionsFenetre::griserActionBDD(bool ok)
 {
-    actionBDD->setDisabled(ok);
+	actionBDD->setDisabled(ok);
 }
 void ActionsFenetre::griserActionCDS(bool ok)
 {
-    actionCDS->setDisabled(ok);
+	actionCDS->setDisabled(ok);
 }
 void ActionsFenetre::griserActionObjetsRemarquables(bool ok)
 {
-    actionObjetsRemarquables->setDisabled(ok);
+	actionObjetsRemarquables->setDisabled(ok);
 }
 void ActionsFenetre::griserActionAPropos(bool ok)
 {
-    actionAPropos->setDisabled(ok);
+	actionAPropos->setDisabled(ok);
 }
 void ActionsFenetre::griserActionAProposGenerateur(bool ok)
 {
-    actionAProposGenerateur->setDisabled(ok);
+	actionAProposGenerateur->setDisabled(ok);
 }
 void ActionsFenetre::griserActionUpdate(bool ok)
 {
-    actionUpdate->setDisabled(ok);
+	actionUpdate->setDisabled(ok);
 }
 void ActionsFenetre::griserActionAide(bool ok)
 {
-    actionAide->setDisabled(ok);
+	actionAide->setDisabled(ok);
 }
 void ActionsFenetre::griserActionSiteUniversAstronomie(bool ok)
 {
-    actionSiteUniversAstronomie->setDisabled(ok);
+	actionSiteUniversAstronomie->setDisabled(ok);
 }

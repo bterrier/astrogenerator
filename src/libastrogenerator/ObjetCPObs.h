@@ -6,19 +6,19 @@
 
 class ObjetCPObs : public ObjetObs
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    ObjetCPObs(ObjetCP *objet, QDateTime debut, QDateTime fin);
-    ObjetCPObs(QString ref, QDateTime debut, QDateTime fin);
-    void initialiser(QString ref);
-    int ngc() const;
-    int messier() const;
-    QString nomComplet(bool abrege = false) const;
+	ObjetCPObs(ObjetCP *objet, QDateTime debut, QDateTime fin);
+	ObjetCPObs(QString ref, QDateTime debut, QDateTime fin);
+	void initialiser(QString ref);
+	int ngc() const;
+	int messier() const;
+	QString nomComplet(bool abrege = false) const;
 
 protected:
-    int m_ngc;
-    int m_messier;
+	int m_ngc;
+	int m_messier;
 };
 
 #endif // OBJETCP_HOBS
