@@ -35,7 +35,7 @@ static void initDatabase()
 		QMessageBox::critical(nullptr, QObject::tr("Error"),
 		                      QObject::tr("Failed to open database: %1\n"
 		                                  "Error: %2")
-		                      .arg(db.lastError().text(), QDir::toNativeSeparators(db.databaseName())));
+		                          .arg(db.lastError().text(), QDir::toNativeSeparators(db.databaseName())));
 		qFatal("Failed to open database!");
 	}
 }

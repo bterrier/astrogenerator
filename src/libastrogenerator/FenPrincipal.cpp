@@ -268,8 +268,8 @@ void FenPrincipal::creerMenu()
 	QMenu *exporter = menuEdition->addMenu(tr("Exporter la soirée"));
 	exporter->addAction(listeActions->getActionExporterXML());
 	exporter->addAction(listeActions->getActionExporterPDF());
-	//exporter->addAction(listeActions->getActionExporterJSON());
-	//menuEdition->addAction(listeActions->getActionPartager());
+	// exporter->addAction(listeActions->getActionExporterJSON());
+	// menuEdition->addAction(listeActions->getActionPartager());
 
 	QMenu *menuAffichage = menuBar()->addMenu(tr("&Affichage"));
 	menuAffichage->addAction(listeActions->getActionDiaporama());
@@ -296,7 +296,7 @@ void FenPrincipal::creerMenu()
 
 	QMenu *menuAide = menuBar()->addMenu(tr("Aide"));
 	menuAide->addAction(listeActions->getActionAPropos());
-	//menuAide->addAction(listeActions->getActionAProposGenerateur());
+	// menuAide->addAction(listeActions->getActionAProposGenerateur());
 	menuAide->addAction(listeActions->getActionUpdate());
 	menuAide->addAction(listeActions->getActionAide());
 	menuAide->addAction(listeActions->getActionSiteUniversAstronomie());

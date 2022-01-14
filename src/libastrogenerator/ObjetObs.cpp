@@ -35,8 +35,8 @@ void ObjetObs::setFin(QDateTime const &fin)
 bool ObjetObs::estEgal(const ObjetObs &objet) const
 {
 	if (objet.getDebut() == m_debutObs
-	        && objet.getFin() == m_finObs
-	        && objet.ref() == m_ref) {
+	    && objet.getFin() == m_finObs
+	    && objet.ref() == m_ref) {
 		return true;
 	} else
 		return false;

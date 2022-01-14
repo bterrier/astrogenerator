@@ -992,7 +992,7 @@ bool Soiree::paintPdf(QPrinter *printer)
 					icone = "icones/default.png";
 
 				painter.setPen(QColor(136, 136, 136));
-				//Rectangle principal
+				// Rectangle principal
 				painter.drawRect(QRectF(13 * k - mG * k, tL * k - mT * k, (210 - mD - mG - 13) * k, 28 * k));
 				// Image
 				painter.drawImage(QRectF(13 * k - mG * k, tL * k - mT * k, 28 * k, 28 * k), QImage(icone));

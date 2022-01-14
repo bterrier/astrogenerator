@@ -1,9 +1,7 @@
 #include "Carteciel.h"
-#include "Calculastro.h"
-#include "Constantes.h"
-#include "Soiree.h"
 
 #include <QColorDialog>
+#include <QDebug>
 #include <QDesktopServices>
 #include <QDialog>
 #include <QFile>
@@ -12,15 +10,15 @@
 #include <QGraphicsView>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QSqlQuery>
 #include <QStandardPaths>
 #include <QTextStream>
 #include <QVBoxLayout>
 
-#include <QSqlQuery>
-
+#include "Calculastro.h"
+#include "Constantes.h"
+#include "Soiree.h"
 #include "astrocalc.h"
-
-#include <QDebug>
 
 Carteciel::Carteciel(Carteciel const &carteParam) :
     QGraphicsScene()
@@ -99,13 +97,15 @@ void Carteciel::dessinerCarte()
 	polaris->setPos(xInt + 5, yInt - 5);
 
 	// On place les étoiles
-	QSqlQuery etoiles("SELECT ascdr, declinaison, magnitude, nom FROM etoiles WHERE magnitude < 6");
+	QSqlQuery etoiles("SELECT ascdr, declinaison, magnitude, nom FROM etoiles "
+	                  "WHERE magnitude < 6");
 	while (etoiles.next()) {
 		// Afficher les étoiles ici : voir code PHP toradian.php
 		raDecimal = hmsToDegree(etoiles.value(0).toString());
 		declinaisonDecimal = dmsToDegree(etoiles.value(1).toString());
 
-		hauteurAzimut = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), raDecimal, declinaisonDecimal, m_latitude, m_longitude);
+		hauteurAzimut = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), raDecimal, declinaisonDecimal,
+		                                                 m_latitude, m_longitude);
 		decrad = AstroCalc::deg2rad(hauteurAzimut[0]);
 		adrad = AstroCalc::deg2rad(hauteurAzimut[1]);
 
@@ -129,7 +129,8 @@ void Carteciel::dessinerCarte()
 	QString nomPlace;
 	double magnitude;
 	for (int i(0); i < m_planning.size(); i++) {
-		hauteurAzimut = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), m_planning[i]->ascdrDouble(), m_planning[i]->decDouble(), m_latitude, m_longitude);
+		hauteurAzimut = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), m_planning[i]->ascdrDouble(),
+		                                                 m_planning[i]->decDouble(), m_latitude, m_longitude);
 		decrad = AstroCalc::deg2rad(hauteurAzimut[0]);
 		adrad = AstroCalc::deg2rad(hauteurAzimut[1]);
 
@@ -148,7 +149,8 @@ void Carteciel::dessinerCarte()
 
 			if (m_planning.at(i)->type() == "Planète") {
 				nomObjetSoiree->setDefaultTextColor(planeteToColor(m_planning.at(i)->ref()));
-				addEllipse(xInt, yInt, taille, taille, planeteToColor(m_planning.at(i)->ref()), planeteToColor(m_planning.at(i)->ref()));
+				addEllipse(xInt, yInt, taille, taille, planeteToColor(m_planning.at(i)->ref()),
+				           planeteToColor(m_planning.at(i)->ref()));
 			} else {
 				nomObjetSoiree->setDefaultTextColor(m_couleurObjet);
 				addEllipse(xInt, yInt, taille + 2, taille, m_couleurObjet, m_couleurFond);
@@ -180,7 +182,8 @@ void Carteciel::dessinerCarte()
 			raDecimal = hmsToDegree(requeteDessin.value(0).toString());
 			declinaisonDecimal = dmsToDegree(requeteDessin.value(1).toString());
 
-			hauteurAzimut = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), raDecimal, declinaisonDecimal, m_latitude, m_longitude);
+			hauteurAzimut = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), raDecimal,
+			                                                 declinaisonDecimal, m_latitude, m_longitude);
 
 			if (hauteurAzimut[0] >= 0) {
 				decrad = AstroCalc::deg2rad(hauteurAzimut[0]);
@@ -200,7 +203,8 @@ void Carteciel::dessinerCarte()
 			raDecimal = hmsToDegree(requeteDessin.value(0).toString());
 			declinaisonDecimal = dmsToDegree(requeteDessin.value(1).toString());
 
-			hauteurAzimut = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), raDecimal, declinaisonDecimal, m_latitude, m_longitude);
+			hauteurAzimut = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), raDecimal,
+			                                                 declinaisonDecimal, m_latitude, m_longitude);
 
 			if (hauteurAzimut[0] >= 0) {
 				decrad = AstroCalc::deg2rad(hauteurAzimut[0]);
@@ -238,7 +242,8 @@ void Carteciel::dessinerCarte()
 			raDecimal = hmsToDegree(requeteNoms.value(0).toString());
 			declinaisonDecimal = dmsToDegree(requeteNoms.value(1).toString());
 
-			hauteurAzimut = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), raDecimal, declinaisonDecimal, m_latitude, m_longitude);
+			hauteurAzimut = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), raDecimal,
+			                                                 declinaisonDecimal, m_latitude, m_longitude);
 			decrad = AstroCalc::deg2rad(hauteurAzimut[0]);
 			adrad = AstroCalc::deg2rad(hauteurAzimut[1]);
 
@@ -329,7 +334,9 @@ void Carteciel::afficherQDialog()
 }
 void Carteciel::sauverImage()
 {
-	QString fichier = QFileDialog::getSaveFileName(nullptr, "Enregistrer la carte", QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + "/carte.png", "Images (*.png *.gif *.jpg *.jpeg)");
+	QString fichier = QFileDialog::getSaveFileName(nullptr, "Enregistrer la carte",
+	                                               QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + "/carte.png",
+	                                               "Images (*.png *.gif *.jpg *.jpeg)");
 
 	if (fichier != "") {
 		QGraphicsView *vue = new QGraphicsView(new Carteciel(*this));
@@ -378,9 +385,9 @@ QColor Carteciel::planeteToColor(QString planeteRef)
 {
 	if (planeteRef == "P1") // Mercure
 		return QColor(154, 154, 154);
-	else if (planeteRef == "P2")
+	else if (planeteRef == "P2") {
 		return QColor(210, 165, 81);
-	else if (planeteRef == "P3")
+	} else if (planeteRef == "P3")
 		return QColor(221, 100, 52);
 	else if (planeteRef == "P4")
 		return QColor(172, 125, 77);

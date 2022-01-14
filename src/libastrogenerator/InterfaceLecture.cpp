@@ -99,7 +99,7 @@ void InterfaceLecture::afficherInfosObjet(QModelIndex cells)
 		else
 			image->setPixmap(QPixmap("icones/default.png"));
 
-		//QMessageBox::information(this,"Lien absolu",QDir::currentPath());
+		// QMessageBox::information(this,"Lien absolu",QDir::currentPath());
 
 		layout->addWidget(image);
 		QVBoxLayout *layoutV = new QVBoxLayout;

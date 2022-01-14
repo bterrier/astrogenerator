@@ -110,11 +110,11 @@ FenInfosCreation::FenInfosCreation(FenPrincipal *parent) :
 
 	connect(m_submit, &QPushButton::clicked, this, &FenInfosCreation::creer);
 	connect(m_close, &QPushButton::clicked, this, &FenInfosCreation::close);
-	connect(m_pays, qOverload<int>(&QComboBox::currentIndexChanged), this, [this](){
+	connect(m_pays, qOverload<int>(&QComboBox::currentIndexChanged), this, [this]() {
 		FenInfosCreation::actualiserVilles(m_pays->currentText());
 	});
 	connect(m_departement, qOverload<int>(&QSpinBox::valueChanged), this, [this]() { actualiserVilles(); });
-	connect(m_villes, qOverload<int>(&QComboBox::currentIndexChanged), this, [this](){
+	connect(m_villes, qOverload<int>(&QComboBox::currentIndexChanged), this, [this]() {
 		actualiserCoordonnees(m_villes->currentText());
 	});
 

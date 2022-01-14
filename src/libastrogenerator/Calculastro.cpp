@@ -502,7 +502,7 @@ QMap<char, double> Calculastro::getLBR(double j2000, QString planete)
 
 	while (!flux.atEnd()) {
 		ligne = flux.readLine();
-		//traitement de la ligne
+		// traitement de la ligne
 		liste = ligne.split("|", Qt::SkipEmptyParts);
 		if (liste[0] != "VSOP87") {
 			num = liste.count();
