@@ -106,6 +106,18 @@ FenPrincipal::FenPrincipal() :
 	connect(listeActions->getActionOuvrirSoiree(), &QAction::triggered, this, [this]() { ouvrirSoa(); });
 	connect(tabOnglets, &QTabWidget::tabCloseRequested, this, qOverload<int>(&FenPrincipal::fermerOnglet));
 	connect(listeActions->getActionFermer(), &QAction::triggered, this, qOverload<>(&FenPrincipal::fermerOnglet));
+	connect(listeActions->getActionToutFermer(), &QAction::triggered, this, [this]() {
+		QList<Interface *> list;
+		for (int i = 0; i < tabOnglets->count(); ++i) {
+			auto interface = qobject_cast<Interface *>(tabOnglets->widget(i));
+			if (interface)
+				list.append(interface);
+		}
+
+		for (auto interface : list) {
+			fermerOnglet(interface);
+		}
+	});
 
 	connect(listeActions->getActionQuitter(), &QAction::triggered, this, &FenPrincipal::quitterApplication);
 	connect(listeActions->getActionObjetsRemarquables(), &QAction::triggered, this, &FenPrincipal::ouvrirObjetsRemarquables);
@@ -275,6 +287,7 @@ bool FenPrincipal::fermerOnglet(int index)
 			msgBox.setInformativeText(tr("Voulez-vous sauver les changements ?"));
 			msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
 			msgBox.setDefaultButton(QMessageBox::Save);
+			tabOnglets->setCurrentIndex(index);
 			int ret = msgBox.exec();
 
 			switch (ret) {
