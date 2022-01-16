@@ -2,7 +2,7 @@
 #include "Calculastro.h"
 #include "Carteciel.h"
 #include "Constantes.h"
-#include "WidgetHeure.h"
+#include "clockwidget.h"
 
 #include <QHBoxLayout>
 #include <QKeyEvent>
@@ -126,7 +126,7 @@ void Diaporama::demarrer()
 		icone->setPixmap(QPixmap("icones/" + m_soiree->getPlanning().at(i)->ref() + ".jpg"));
 
 		// On crée le widget de l'heure
-		WidgetHeure *heure = new WidgetHeure;
+		ClockWidget *heure = new ClockWidget;
 		heure->setFixedSize(LARGEUR_COMPTE_REBOURS_DIAPO, HAUTEUR_COMPTE_REBOURS_DIAPO);
 
 		// On crée le widget d'infos

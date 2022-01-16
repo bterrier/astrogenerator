@@ -29,7 +29,6 @@ HEADERS += ActionsFenetre.h \
            ObjetPlaneteObs.h \
            Onglet.h \
            Soiree.h \
-           WidgetHeure.h \
            aboutdialog.h \
            homewidget.h \
            skymapdialog.h
@@ -55,7 +54,6 @@ SOURCES += ActionsFenetre.cpp \
            ObjetPlaneteObs.cpp \
            Onglet.cpp \
            Soiree.cpp \
-           WidgetHeure.cpp \
            aboutdialog.cpp \
            homewidget.cpp \
            skymapdialog.cpp
