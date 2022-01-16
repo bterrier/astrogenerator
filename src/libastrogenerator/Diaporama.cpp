@@ -8,14 +8,14 @@
 #include <QKeyEvent>
 #include <QLabel>
 
-Diaporama::Diaporama(Soiree *soiree)
+Diaporama::Diaporama(Soiree *soiree) :
+    lcd_pause(new TimerWidget(this))
 {
 	// Initialisation des attributs
 	diapoCurrent = 0;
 	m_pause = false; // Indique si on est en pause
 	m_soiree = soiree;
 	widgetPause = new QWidget;
-	lcd_pause = new CompteRebours;
 	timer = new QTimer;
 
 	// On modifie la palette du widget Diaporama
@@ -35,8 +35,8 @@ void Diaporama::afficher(int id)
 	int temps = m_soiree->getPlanning().at(id)->getFin().toSecsSinceEpoch() - m_soiree->getPlanning().at(id)->getDebut().toSecsSinceEpoch(); // On calcule le temps d'affichage
 	timer->singleShot(temps * 1000, this, &Diaporama::suivant);
 	// Commencer le timer correspondant ici
-	CompteRebours *timer = widgets.at(id)->findChild<CompteRebours *>();
-	timer->commencer(temps);
+	TimerWidget *timer = widgets.at(id)->findChild<TimerWidget *>();
+	timer->start(temps);
 }
 void Diaporama::suivant()
 {
@@ -95,7 +95,7 @@ void Diaporama::pause(int secondes)
 	widgets.at(diapoCurrent)->setVisible(false);
 
 	widgetPause->setVisible(true);
-	lcd_pause->commencer(secondes);
+	lcd_pause->start(secondes);
 	timer->singleShot(secondes * 1000, this, &Diaporama::suivant);
 }
 
@@ -118,7 +118,7 @@ void Diaporama::demarrer()
 		nom->setAlignment(Qt::AlignCenter);
 
 		// On crée le compte à rebours
-		CompteRebours *lcd = new CompteRebours;
+		TimerWidget *lcd = new TimerWidget;
 		lcd->setFixedSize(LARGEUR_COMPTE_REBOURS_DIAPO, HAUTEUR_COMPTE_REBOURS_DIAPO);
 
 		// On crée l'image d'icone
@@ -203,7 +203,7 @@ void Diaporama::demarrer()
 	setLayout(layoutPrincipal);
 
 	timer->singleShot(premierTemps * 1000, this, &Diaporama::suivant);
-	widgets.at(0)->findChild<CompteRebours *>()->commencer(premierTemps);
+	widgets.at(0)->findChild<TimerWidget *>()->start(premierTemps);
 
 	showFullScreen();
 }

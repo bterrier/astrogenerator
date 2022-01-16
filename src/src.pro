@@ -1,6 +1,7 @@
 TEMPLATE = subdirs
 SUBDIRS += \
     astrogenerator \
+    genericwidgets \
     libastrogenerator \
     libastrocalc
     

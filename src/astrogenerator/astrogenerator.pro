@@ -47,3 +47,16 @@ DEPENDPATH += $$top_srcdir/src/libastrocalc
 
 win32:!win32-g++: PRE_TARGETDEPS += $$top_builddir/lib/libastrocalc.lib
 else:unix|win32-g++: PRE_TARGETDEPS += $$top_builddir/lib/liblibastrocalc.a
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../genericwidgets/release/ -lgenericwidgets
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../genericwidgets/debug/ -lgenericwidgets
+else:unix: LIBS += -L$$OUT_PWD/../genericwidgets/ -lgenericwidgets
+
+INCLUDEPATH += $$PWD/../genericwidgets
+DEPENDPATH += $$PWD/../genericwidgets
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../genericwidgets/release/libgenericwidgets.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../genericwidgets/debug/libgenericwidgets.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../genericwidgets/release/genericwidgets.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../genericwidgets/debug/genericwidgets.lib
+else:unix: PRE_TARGETDEPS += $$OUT_PWD/../genericwidgets/libgenericwidgets.a

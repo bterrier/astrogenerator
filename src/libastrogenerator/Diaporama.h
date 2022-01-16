@@ -5,7 +5,8 @@
 #include <QVector>
 #include <QWidget>
 
-#include "CompteRebours.h"
+#include "timerwidget.h"
+
 #include "Soiree.h"
 
 class Diaporama : public QWidget
@@ -29,7 +30,7 @@ private:
 	Soiree *m_soiree;
 
 	QWidget *widgetPause;
-	CompteRebours *lcd_pause;
+	TimerWidget *lcd_pause;
 
 	bool m_pause;
 };
