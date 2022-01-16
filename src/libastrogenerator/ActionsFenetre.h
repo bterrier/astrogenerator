@@ -22,7 +22,6 @@ public:
 	QAction *getActionFermer();
 	QAction *getActionToutFermer();
 	QAction *getActionDiaporama();
-	QAction *getActionBarreStatut();
 	QAction *getActionCarteCiel();
 	QAction *getCarteCouleurFond();
 	QAction *getCarteCouleurEtoiles();
@@ -64,7 +63,6 @@ public:
 	void griserActionFermer(bool ok);
 	void griserActionToutFermer(bool ok);
 	void griserActionDiaporama(bool ok);
-	void griserActionBarreStatut(bool ok);
 	void griserActionCarteCiel(bool ok);
 	void griserCarteCouleurFond(bool ok);
 	void griserCarteCouleurEtoiles(bool ok);
@@ -107,7 +105,6 @@ private:
 	QAction *actionFermer;
 	QAction *actionToutFermer;
 	QAction *actionDiaporama;
-	QAction *actionBarreStatut;
 	QAction *actionCarteCiel;
 	QAction *carteCouleurFond;
 	QAction *carteCouleurEtoiles;

@@ -31,8 +31,7 @@ ActionsFenetre::ActionsFenetre(QWidget *parent)
 	actionDiaporama->setText(tr("Présenter la soirée sous forme de diaporama"));
 	actionDiaporama->setShortcut(QKeySequence(tr("F5")));
 	actionDiaporama->setIcon(QIcon(":/icons/slideshow.png"));
-	actionBarreStatut = new QAction(tr("Barre de statut"), parent);
-	actionBarreStatut->setCheckable(true);
+
 	actionCarteCiel = new QAction(tr("Carte du ciel"), parent);
 	actionCarteCiel->setIcon(QIcon(":/icons/carteciel.png"));
 	carteCouleurFond = new QAction(tr("Couleur du fond"), parent);
@@ -123,10 +122,7 @@ QAction *ActionsFenetre::getActionDiaporama()
 {
 	return actionDiaporama;
 }
-QAction *ActionsFenetre::getActionBarreStatut()
-{
-	return actionBarreStatut;
-}
+
 QAction *ActionsFenetre::getActionCarteCiel()
 {
 	return actionCarteCiel;
@@ -290,10 +286,7 @@ void ActionsFenetre::griserActionDiaporama(bool ok)
 {
 	actionDiaporama->setDisabled(ok);
 }
-void ActionsFenetre::griserActionBarreStatut(bool ok)
-{
-	actionBarreStatut->setDisabled(ok);
-}
+
 void ActionsFenetre::griserActionCarteCiel(bool ok)
 {
 	actionCarteCiel->setDisabled(ok);

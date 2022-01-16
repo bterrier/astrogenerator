@@ -193,16 +193,6 @@ FenPrincipal::FenPrincipal()
 	setMinimumWidth(LARGEUR_MIN_FENETRE);
 	setWindowIcon(QIcon(":/icons/logo-astrogenerator.png"));
 
-	// La barre de statut
-	barreStatut = statusBar();
-	QLabel *label_copyright = new QLabel(tr("Copyright © 2010-2013 <a href=\"http://wwww.univers-astronomie.fr/\">Univers-Astronomie.fr</a>, All rights reserved"));
-	label_copyright->setFont(QFont("Verdana", 8));
-	label_copyright->setOpenExternalLinks(true);
-	barreStatut->addPermanentWidget(label_copyright);
-	connect(listeActions->getActionBarreStatut(), &QAction::toggled, barreStatut, &QStatusBar::setVisible);
-	listeActions->getActionBarreStatut()->setChecked(false);
-	barreStatut->setVisible(false);
-
 	// On grise les actions qu'on ne peut pas faire à l'ouverture du programme
 	listeActions->griserActionMonterObjet(true);
 	listeActions->griserActionDescendreObjet(true);
@@ -272,7 +262,7 @@ void FenPrincipal::creerMenu()
 
 	QMenu *menuAffichage = menuBar()->addMenu(tr("&Affichage"));
 	menuAffichage->addAction(listeActions->getActionDiaporama());
-	menuAffichage->addAction(listeActions->getActionBarreStatut());
+
 	QMenu *carteCielMenu = menuAffichage->addMenu(tr("Carte du ciel"));
 	carteCielMenu->addAction(listeActions->getActionCarteCiel());
 	carteCielMenu->addAction(listeActions->getCarteCouleurFond());
