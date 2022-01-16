@@ -24,7 +24,7 @@ QString Calculastro::enumQtToPays(QString ref)
 	if (file.open(QIODevice::ReadOnly)) {
 
 		while (!file.atEnd()) {
-			const QString line = QString::fromUtf8(file.readLine());
+			const QString line = QString::fromUtf8(file.readLine()).trimmed();
 			const QStringList infos = line.split('|');
 
 			if (infos.at(0) == ref) {
@@ -51,7 +51,7 @@ QString Calculastro::paysToEnumQt(QString ref)
 
 	if (file.open(QIODevice::ReadOnly)) {
 		while (!file.atEnd()) {
-			const QString line = QString::fromUtf8(file.readLine());
+			const QString line = QString::fromUtf8(file.readLine()).trimmed();
 			const QStringList infos = line.split('|');
 
 			if (infos.at(1) == ref) {
