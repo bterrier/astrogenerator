@@ -7,6 +7,7 @@
 #include <QFile>
 #include <QMessageBox>
 #include <QSqlQuery>
+#include <QStringBuilder>
 #include <QTextStream>
 
 #include "astrocalc.h"
@@ -18,57 +19,48 @@
 
 QString Calculastro::enumQtToPays(QString ref)
 {
-	QFile fichier("qlocale-pays.txt");
-	QString retour;
-	if (fichier.open(QIODevice::ReadOnly)) {
-		QTextStream flux(&fichier);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-		flux.setCodec("UTF-8");
-#endif
-		QString ligne;
-		QStringList infos;
-		while (!flux.atEnd()) {
-			ligne = flux.readLine();
-			infos = ligne.split("|");
+	QFile file(QCoreApplication::applicationDirPath() % "/qlocale-pays.txt");
+
+	if (file.open(QIODevice::ReadOnly)) {
+
+		while (!file.atEnd()) {
+			const QString line = QString::fromUtf8(file.readLine());
+			const QStringList infos = line.split('|');
 
 			if (infos.at(0) == ref) {
 				if (infos.at(1) != "--")
-					retour = infos.at(1);
-
-				return retour;
+					return infos.at(1);
+				else
+					return QString{};
 			}
 		}
-		return retour;
 	}
-	return retour;
+	return QString{};
 }
 QString Calculastro::enumQtToPays(QLocale::Country country)
 {
 	return enumQtToPays(QLocale::countryToString(country));
 }
+
 QString Calculastro::paysToEnumQt(QString ref)
 {
-	QFile fichier("qlocale-pays.txt");
-	QString retour;
-	if (fichier.open(QIODevice::ReadOnly) && ref != "--") {
-		QTextStream flux(&fichier);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-		flux.setCodec("UTF-8");
-#endif
-		QString ligne;
-		QStringList infos;
-		while (!flux.atEnd()) {
-			ligne = flux.readLine();
-			infos = ligne.split("|");
+	if (ref == "--")
+		return QString{};
+
+	QFile file(QCoreApplication::applicationDirPath() % "/qlocale-pays.txt");
+
+	if (file.open(QIODevice::ReadOnly)) {
+		while (!file.atEnd()) {
+			const QString line = QString::fromUtf8(file.readLine());
+			const QStringList infos = line.split('|');
 
 			if (infos.at(1) == ref) {
-				retour = infos.at(0);
-				return retour;
+				return infos.at(0);
 			}
 		}
-		return retour;
 	}
-	return retour;
+
+	return QString{};
 }
 QVector<QString> Calculastro::trouverVillePays(double latitude, double longitude)
 {

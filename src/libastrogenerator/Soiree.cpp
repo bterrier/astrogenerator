@@ -1,4 +1,17 @@
 #include "Soiree.h"
+
+#include <cmath>
+
+#include <QDesktopServices>
+#include <QMessageBox>
+#include <QTextStream>
+
+#include <QApplication>
+#include <QFileDialog>
+#include <QGraphicsView>
+#include <QSqlQuery>
+#include <QtXml>
+
 #include "Calculastro.h"
 #include "Carteciel.h"
 #include "Constantes.h"
@@ -7,17 +20,6 @@
 #include "ObjetCPObs.h"
 #include "ObjetObs.h"
 #include "ObjetPlaneteObs.h"
-
-#include <cmath>
-
-#include <QDesktopServices>
-#include <QMessageBox>
-
-#include <QApplication>
-#include <QFileDialog>
-#include <QGraphicsView>
-#include <QSqlQuery>
-#include <QtXml>
 
 Soiree::Soiree() {}
 void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime fin, int duree_une, QString constellation, QString niveau, unsigned int diametre, unsigned int focale, QSettings *user, bool boolPlanete)
@@ -821,18 +823,16 @@ void Soiree::toXML() const
 	}
 	soiree.appendChild(listeObjet);
 
-	QString nomFichier = QFileDialog::getSaveFileName(nullptr, tr("Sauver la soirée au format XML"), QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/soiree.xml", "Extensible Markup Language (*.xml)");
-	if (nomFichier != "") {
-		QFile file(nomFichier);
+	QString filename = QFileDialog::getSaveFileName(nullptr, tr("Sauver la soirée au format XML"), QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/soiree.xml", "Extensible Markup Language (*.xml)");
+	if (!filename.isEmpty()) {
+		QFile file(filename);
 		if (file.open(QIODevice::WriteOnly)) {
-			QTextStream flux(&file);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-			flux.setCodec("UTF-8");
-#endif
-			flux << doc.toString();
+			file.write(doc.toByteArray());
 			file.close();
-		} else
-			file.close();
+		} else {
+			QMessageBox::critical(nullptr, tr("ERROR: Failed to save file!"),
+			                      tr("Could not open file.\n") % file.errorString());
+		}
 	}
 }
 bool Soiree::paintPdf(QPrinter *printer)

@@ -172,7 +172,7 @@ void Carteciel::dessinerCarte()
 
 		while (!flux.atEnd()) {
 			line = flux.readLine();
-			couple = line.split(" ");
+			couple = line.split(' ');
 			dessine = true;
 
 			QSqlQuery requeteDessin("SELECT ascdr, declinaison FROM etoiles WHERE hr = " + couple.at(1) + " OR hr = " + couple.at(2));
@@ -240,7 +240,7 @@ void Carteciel::dessinerCarte()
 		QRectF positions;
 		while (!flux2.atEnd()) {
 			line = flux2.readLine();
-			couple = line.split("|");
+			couple = line.split('|');
 
 			QSqlQuery requeteNoms("SELECT ascdr, declinaison FROM etoiles WHERE hr = " + couple.at(1));
 			requeteNoms.next();
