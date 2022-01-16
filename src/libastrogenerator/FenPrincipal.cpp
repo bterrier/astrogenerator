@@ -29,7 +29,10 @@
 #include <QStatusBar>
 #include <QToolBar>
 
-FenPrincipal::FenPrincipal()
+#include "homewidget.h"
+
+FenPrincipal::FenPrincipal() :
+    m_homeWidget(new HomeWidget(this))
 {
 	resize(1024, 768);
 	if (!QDir::setCurrent(QCoreApplication::applicationDirPath() + "/")) {
@@ -59,84 +62,10 @@ FenPrincipal::FenPrincipal()
 	tabOnglets->setTabsClosable(true);
 	tabOnglets->setVisible(false);
 
-	// On crée le widget de la page d'accueil
-	widgetAccueil = new QWidget;
-	QGridLayout *layoutGrille = new QGridLayout;
-
-	QPushButton *groupeGenererSoiree = new QPushButton;
-	groupeGenererSoiree->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL, HAUTEUR_BLOC_PAGE_ACCUEIL);
-	QLabel *imageGenerer = new QLabel(groupeGenererSoiree);
-	imageGenerer->setPixmap(QPixmap(":/icons/generate.png"));
-	imageGenerer->setAlignment(Qt::AlignCenter);
-	QLabel *texteGenerer = new QLabel(tr("Générer une soirée"), groupeGenererSoiree);
-	texteGenerer->setFont(QFont("Verdana", 15));
-	texteGenerer->setAlignment(Qt::AlignCenter);
-	QLabel *descGenerer = new QLabel(tr("Rentrez plusieurs informations telles que votre latitude, longitude, niveau en astronomie ainsi que l'heure et la date d'observation et notre générateur vous créera automatiquement une liste d'objets à observer pour la soirée."), groupeGenererSoiree);
-	descGenerer->setWordWrap(true);
-	descGenerer->setAlignment(Qt::AlignJustify);
-	QVBoxLayout *layoutGenerer = new QVBoxLayout(groupeGenererSoiree);
-	layoutGenerer->addWidget(texteGenerer);
-	layoutGenerer->addWidget(imageGenerer);
-	layoutGenerer->addWidget(descGenerer);
-
-	QPushButton *groupeCreerSoiree = new QPushButton;
-	groupeCreerSoiree->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL, HAUTEUR_BLOC_PAGE_ACCUEIL);
-	QLabel *imageCreer = new QLabel(groupeCreerSoiree);
-	imageCreer->setPixmap(QPixmap(":/icons/creer-soiree.png"));
-	imageCreer->setAlignment(Qt::AlignCenter);
-	QLabel *texteCreer = new QLabel(tr("Créer une soirée"), groupeCreerSoiree);
-	texteCreer->setFont(QFont("Verdana", 15));
-	texteCreer->setAlignment(Qt::AlignCenter);
-	QLabel *descCreer = new QLabel(tr("Créez facilement votre soirée de toute pièce sans la générer. Les objets qu'il est possible d'observer sont accessibles grâce à une grande base de données. Outil réservé aux astronomes confirmés."), groupeCreerSoiree);
-	descCreer->setWordWrap(true);
-	descCreer->setAlignment(Qt::AlignJustify);
-	QVBoxLayout *layoutCreer = new QVBoxLayout(groupeCreerSoiree);
-	layoutCreer->addWidget(texteCreer);
-	layoutCreer->addWidget(imageCreer);
-	layoutCreer->addWidget(descCreer);
-
-	QPushButton *groupeOuvrirSoiree = new QPushButton;
-	groupeOuvrirSoiree->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL, HAUTEUR_BLOC_PAGE_ACCUEIL);
-	QLabel *imageOuvrir = new QLabel(groupeOuvrirSoiree);
-	imageOuvrir->setPixmap(QPixmap(":/icons/ouvrir.png"));
-	imageOuvrir->setAlignment(Qt::AlignCenter);
-	QLabel *texteOuvrir = new QLabel(tr("Ouvrir une soirée"), groupeOuvrirSoiree);
-	texteOuvrir->setFont(QFont("Verdana", 15));
-	texteOuvrir->setAlignment(Qt::AlignCenter);
-	QLabel *descOuvrir = new QLabel(tr("Ouvrez un fichier de soirée. Les fichiers de soirée sont de type SOA (Soiree Observation Astronomie). Vous pouvez les trouver en générant votre soirée en ligne ou en enregistrant votre soirée."), groupeOuvrirSoiree);
-	descOuvrir->setWordWrap(true);
-	descOuvrir->setAlignment(Qt::AlignJustify);
-	QVBoxLayout *layoutOuvrir = new QVBoxLayout(groupeOuvrirSoiree);
-	layoutOuvrir->addWidget(texteOuvrir);
-	layoutOuvrir->addWidget(imageOuvrir);
-	layoutOuvrir->addWidget(descOuvrir);
-
-	QPushButton *groupePreferenceGenerateur = new QPushButton;
-	groupePreferenceGenerateur->setFixedSize(LARGEUR_BLOC_PAGE_ACCUEIL, HAUTEUR_BLOC_PAGE_ACCUEIL);
-	QLabel *imagePreferences = new QLabel(groupePreferenceGenerateur);
-	imagePreferences->setPixmap(QPixmap(":/icons/preferences.png"));
-	imagePreferences->setAlignment(Qt::AlignCenter);
-	QLabel *textePreferences = new QLabel(tr("Personnaliser"), groupePreferenceGenerateur);
-	textePreferences->setFont(QFont("Verdana", 15));
-	textePreferences->setAlignment(Qt::AlignCenter);
-	QLabel *descPreferences = new QLabel(tr("Vous pouvez personnaliser le générateur pour que les résultats qu'il vous fournit soient plus proches de vos attentes."), groupePreferenceGenerateur);
-	descPreferences->setWordWrap(true);
-	descPreferences->setAlignment(Qt::AlignJustify);
-	QVBoxLayout *layoutPreferences = new QVBoxLayout(groupePreferenceGenerateur);
-	layoutPreferences->addWidget(textePreferences);
-	layoutPreferences->addWidget(imagePreferences);
-	layoutPreferences->addWidget(descPreferences);
-
-	layoutGrille->addWidget(groupeGenererSoiree, 0, 0);
-	layoutGrille->addWidget(groupeCreerSoiree, 0, 1);
-	layoutGrille->addWidget(groupeOuvrirSoiree, 1, 0);
-	layoutGrille->addWidget(groupePreferenceGenerateur, 1, 1);
-	widgetAccueil->setLayout(layoutGrille);
-
 	QWidget *widgetCentral = new QWidget;
 	QHBoxLayout *layoutCentral = new QHBoxLayout;
 	layoutCentral->addWidget(tabOnglets);
-	layoutCentral->addWidget(widgetAccueil);
+	layoutCentral->addWidget(m_homeWidget);
 	widgetCentral->setLayout(layoutCentral);
 	setCentralWidget(widgetCentral);
 
@@ -148,10 +77,10 @@ FenPrincipal::FenPrincipal()
 	FenPreferences *fenPreferences = new FenPreferences(this);
 
 	// on fait les différentes connexions
-	connect(groupeOuvrirSoiree, &QPushButton::clicked, this, [this]() { ouvrirSoa(); });
-	connect(groupeGenererSoiree, &QPushButton::clicked, fenCreation, &FenCreerSoiree::exec);
-	connect(groupeCreerSoiree, &QPushButton::clicked, fenInfos, &FenInfosCreation::exec);
-	connect(groupePreferenceGenerateur, &QPushButton::clicked, fenPreferences, &FenPreferences::exec);
+	connect(m_homeWidget, &HomeWidget::openClicked, this, [this]() { ouvrirSoa(); });
+	connect(m_homeWidget, &HomeWidget::generateClicked, fenCreation, &FenCreerSoiree::exec);
+	connect(m_homeWidget, &HomeWidget::createClicked, fenInfos, &FenInfosCreation::exec);
+	connect(m_homeWidget, &HomeWidget::settingsClicked, fenPreferences, &FenPreferences::exec);
 
 	connect(fenPreferences, &FenPreferences::telescopeChange, fenCreation, &FenCreerSoiree::changerTelescope);
 	connect(fenPreferences, &FenPreferences::nouveauTelescope, fenCreation, &FenCreerSoiree::actualiserTelescope);
@@ -292,7 +221,7 @@ void FenPrincipal::nouvelOngletSoiree(Soiree &soiree)
 	QApplication::setOverrideCursor(Qt::WaitCursor); // changer de curseur
 	if (!tabOnglets->isVisible()) {
 		tabOnglets->setVisible(true);
-		widgetAccueil->setVisible(false);
+		m_homeWidget->setVisible(false);
 	} // Essayer de remplacer ça par une fonction
 
 	// On crée un objet de type InterfaceLecture
@@ -377,7 +306,7 @@ bool FenPrincipal::fermerOnglet(int index)
 			if (tabOnglets->count() == 0) // On regarde le nombre d'onglets
 			{
 				tabOnglets->setVisible(false);
-				widgetAccueil->setVisible(true);
+				m_homeWidget->setVisible(true);
 
 				listeActions->griserActionMonterObjet(true);
 				listeActions->griserActionDescendreObjet(true);
@@ -461,7 +390,7 @@ void FenPrincipal::nouvelOngletCreation(double latitude, double longitude, QDate
 {
 	if (!tabOnglets->isVisible()) {
 		tabOnglets->setVisible(true);
-		widgetAccueil->setVisible(false);
+		m_homeWidget->setVisible(false);
 	}
 
 	InterfaceCreation *interface = new InterfaceCreation(latitude, longitude, heureDebut, diametre, focale, listeActions, this);

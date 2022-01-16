@@ -30,7 +30,8 @@ HEADERS += ActionsFenetre.h \
            ObjetPlaneteObs.h \
            Onglet.h \
            Soiree.h \
-           WidgetHeure.h
+           WidgetHeure.h \
+           homewidget.h
 
 SOURCES += ActionsFenetre.cpp \
            Calculastro.cpp \
@@ -54,7 +55,8 @@ SOURCES += ActionsFenetre.cpp \
            ObjetPlaneteObs.cpp \
            Onglet.cpp \
            Soiree.cpp \
-           WidgetHeure.cpp
+           WidgetHeure.cpp \
+           homewidget.cpp
 
 TRANSLATIONS += \
     astroGenerator_en.ts \
@@ -67,3 +69,6 @@ DEPENDPATH += $$top_srcdir/src/libastrocalc
 
 win32:!win32-g++: PRE_TARGETDEPS += $$top_builddir/lib/libastrocalc.lib
 else:unix|win32-g++: PRE_TARGETDEPS += $$top_builddir/lib/liblibastrocalc.a
+
+FORMS += \
+    homewidget.ui

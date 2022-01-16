@@ -10,6 +10,8 @@
 #include "InterfaceLecture.h"
 #include "Soiree.h"
 
+class HomeWidget;
+
 class FenPrincipal : public QMainWindow
 {
 	Q_OBJECT
@@ -55,7 +57,7 @@ private:
 	QMenu *menuSoireesRecentes;
 
 	QTabWidget *tabOnglets;
-	QWidget *widgetAccueil;
+	HomeWidget *m_homeWidget = nullptr;
 	QVector<Interface *> m_listeInterface;
 	QStatusBar *barreStatut;
 };
