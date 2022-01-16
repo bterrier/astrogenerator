@@ -3,17 +3,10 @@
 #include <QColorDialog>
 #include <QDebug>
 #include <QDesktopServices>
-#include <QDialog>
 #include <QFile>
-#include <QFileDialog>
 #include <QGraphicsTextItem>
-#include <QGraphicsView>
-#include <QMessageBox>
-#include <QPushButton>
 #include <QSqlQuery>
-#include <QStandardPaths>
 #include <QTextStream>
-#include <QVBoxLayout>
 
 #include "Calculastro.h"
 #include "Constantes.h"
@@ -269,8 +262,10 @@ double Carteciel::dmsToDegree(QString dms)
 		d = QStringView{list.at(0)}.mid(1, 2).toDouble();
 	else if (list.at(0).count() == 3)
 		d = QStringView{list.at(0)}.mid(1, 1).toDouble();
-	else
-		QMessageBox::critical(nullptr, "Erreur dans dmsToDegree()", "Une erreur s'est produite ...");
+	else {
+		qFatal("Erreur dans dmsToDegree()");
+		// QMessageBox::critical(nullptr, "Erreur dans dmsToDegree()", "Une erreur s'est produite ...");
+	}
 
 	// On s'occupe des minutes
 	m = QStringView{list.at(1)}.left(list.at(1).count() - 1).toDouble();
