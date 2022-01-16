@@ -12,11 +12,9 @@ class Carteciel : public QGraphicsScene
 
 public:
 	explicit Carteciel(Soiree *soiree);
-	explicit Carteciel(Carteciel const &carte);
 	static double hmsToDegree(QString hms);
 	static double dmsToDegree(QString dms);
 
-	void afficherQDialog();
 	void dessinerCarte();
 	QColor planeteToColor(QString planeteRef);
 
@@ -32,12 +30,13 @@ public slots:
 	void setCouleurObjet();
 	void setCouleurEtoile();
 	void setCouleurConstellation();
-	void sauverImage();
 
 signals:
 	void majCarte();
 
 private:
+	Q_DISABLE_COPY(Carteciel)
+
 	QSettings *m_user;
 	QColor m_couleurFond;
 	QColor m_couleurLegende;

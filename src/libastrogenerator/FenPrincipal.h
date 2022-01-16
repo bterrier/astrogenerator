@@ -59,7 +59,6 @@ private:
 	QTabWidget *tabOnglets;
 	HomeWidget *m_homeWidget = nullptr;
 	QVector<Interface *> m_listeInterface;
-	QStatusBar *barreStatut;
 };
 
 #endif // FENPRINCIPAL_H

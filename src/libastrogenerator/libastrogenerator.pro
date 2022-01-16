@@ -32,7 +32,8 @@ HEADERS += ActionsFenetre.h \
            Soiree.h \
            WidgetHeure.h \
            aboutdialog.h \
-           homewidget.h
+           homewidget.h \
+           skymapdialog.h
 
 SOURCES += ActionsFenetre.cpp \
            Calculastro.cpp \
@@ -58,7 +59,8 @@ SOURCES += ActionsFenetre.cpp \
            Soiree.cpp \
            WidgetHeure.cpp \
            aboutdialog.cpp \
-           homewidget.cpp
+           homewidget.cpp \
+           skymapdialog.cpp
 
 TRANSLATIONS += \
     astroGenerator_en.ts \
@@ -74,4 +76,5 @@ else:unix|win32-g++: PRE_TARGETDEPS += $$top_builddir/lib/liblibastrocalc.a
 
 FORMS += \
     aboutdialog.ui \
-    homewidget.ui
+    homewidget.ui \
+    skymapdialog.ui

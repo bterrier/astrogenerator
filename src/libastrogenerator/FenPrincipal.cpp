@@ -233,8 +233,6 @@ void FenPrincipal::nouvelOngletSoiree(Soiree &soiree)
 	int newIndex = tabOnglets->addTab(interface, tr("Soirée du ", "Cette chaîne est suivie de la date de la soirée") + interface->getSoiree()->getDebut().toString(tr("dd/MM/yyyy", "Format de la date")));
 	tabOnglets->setCurrentIndex(newIndex);
 
-	barreStatut->showMessage(tr("Nouvel onglet de soirée ajouté avec succès"), 2000);
-
 	initialiserOngletActif();
 
 	connect(interface, &InterfaceLecture::fermer, this, qOverload<Interface *>(&FenPrincipal::fermerOnglet));
@@ -299,8 +297,6 @@ bool FenPrincipal::fermerOnglet(int index)
 			Interface *interface = m_listeInterface.at(index);
 			m_listeInterface.remove(index);
 			delete interface;
-
-			barreStatut->showMessage(tr("Onglet fermé avec succès"), 2000);
 
 			initialiserOngletActif();
 
@@ -399,8 +395,6 @@ void FenPrincipal::nouvelOngletCreation(double latitude, double longitude, QDate
 	int newIndex = tabOnglets->addTab(interface, tr("Créer une soirée", "Titre d'un onglet de création de soirée"));
 	tabOnglets->setCurrentIndex(newIndex);
 
-	barreStatut->showMessage(tr("Nouvel onglet de création de soirée ajouté"), 2000);
-
 	initialiserOngletActif();
 
 	connect(interface, &InterfaceCreation::fermer, this, qOverload<Interface *>(&FenPrincipal::fermerOnglet));
@@ -430,7 +424,6 @@ QSettings *FenPrincipal::getUser() const
 }
 void FenPrincipal::afficherMessage(QString message, int duree)
 {
-	barreStatut->showMessage(message, duree);
 }
 void FenPrincipal::actionSoireesRecentes()
 { // Initialise au début toutes les soirées de la BDD et les affiche dans le menu avec ajouterSoireeRecente()

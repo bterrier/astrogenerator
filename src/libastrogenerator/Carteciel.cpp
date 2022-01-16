@@ -20,23 +20,6 @@
 #include "Soiree.h"
 #include "astrocalc.h"
 
-Carteciel::Carteciel(Carteciel const &carteParam) :
-    QGraphicsScene()
-{
-	m_user = new QSettings(NOM_EQUIPE, NOM_PROGRAMME);
-
-	m_temps = carteParam.m_temps;
-	m_latitude = carteParam.m_latitude;
-	m_longitude = carteParam.m_longitude;
-	m_planning = carteParam.m_planning;
-	m_couleurFond = carteParam.m_couleurFond;
-	m_couleurLegende = carteParam.m_couleurLegende;
-	m_couleurObjet = carteParam.m_couleurObjet;
-	m_couleurEtoile = carteParam.m_couleurEtoile;
-	m_couleurConstellation = carteParam.m_couleurConstellation;
-
-	dessinerCarte();
-}
 Carteciel::Carteciel(Soiree *soireeParam) :
     QGraphicsScene()
 {
@@ -317,51 +300,7 @@ double Carteciel::hmsToDegree(QString hms)
 
 	return (h + m / 60 + s / 3600) * 15;
 }
-void Carteciel::afficherQDialog()
-{
-	QDialog secondeFenetre;
-	secondeFenetre.setGeometry(200, 50, 900, 900);
-	secondeFenetre.setModal(true);
-	QVBoxLayout *layout = new QVBoxLayout;
-	layout->addWidget(new QGraphicsView(new Carteciel(*this)));
-	QHBoxLayout *layoutH = new QHBoxLayout;
-	layoutH->setAlignment(Qt::AlignRight);
-	QPushButton *boutonEnregistrer = new QPushButton("Enregistrer la carte");
-	QPushButton *boutonFermer = new QPushButton("Fermer");
-	layoutH->addWidget(boutonEnregistrer);
-	layoutH->addWidget(boutonFermer);
-	layout->addLayout(layoutH);
-	secondeFenetre.setLayout(layout);
 
-	connect(boutonFermer, &QPushButton::clicked, &secondeFenetre, &QDialog::close);
-	connect(boutonEnregistrer, &QPushButton::clicked, this, &Carteciel::sauverImage);
-
-	secondeFenetre.exec();
-}
-void Carteciel::sauverImage()
-{
-	QString fichier = QFileDialog::getSaveFileName(nullptr, "Enregistrer la carte",
-	                                               QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + "/carte.png",
-	                                               "Images (*.png *.gif *.jpg *.jpeg)");
-
-	if (fichier != "") {
-		QGraphicsView *vue = new QGraphicsView(new Carteciel(*this));
-		vue->setBackgroundBrush(QColor(255, 255, 255));
-		vue->setFixedSize(800, 800);
-
-		QPixmap *pixmap = new QPixmap(800, 800);
-		QPainter *painter = new QPainter(pixmap);
-
-		painter->setRenderHint(QPainter::Antialiasing);
-		vue->render(painter, QRectF(0, 0, 800, 800), QRect(0, 0, 800, 800));
-		painter->end();
-
-		if (pixmap->save(fichier))
-			QMessageBox::information(nullptr, "Enregistrement réussi", "La carte du ciel a bien été enregistrée");
-		else
-			QMessageBox::critical(nullptr, "Erreur d'enregistrement", "L'enregistrement de l'image a échoué");
-	}
-}
 void Carteciel::setCouleurConstellation()
 {
 	QColor color = QColorDialog::getColor(m_couleurConstellation);

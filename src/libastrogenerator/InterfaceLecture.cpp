@@ -17,6 +17,8 @@
 #include <QPrintDialog>
 #include <QToolBar>
 
+#include "skymapdialog.h"
+
 #include <QDebug>
 
 InterfaceLecture::InterfaceLecture(Soiree *soiree, ActionsFenetre *listeActionsParam, QWidget *parent) :
@@ -318,7 +320,8 @@ void InterfaceLecture::carteCiel()
 {
 	if (m_active) {
 		emit afficher(tr("Création de la carte du ciel..."));
-		m_carte->afficherQDialog();
+		SkyMapDialog dialog(m_carte, this);
+		dialog.exec();
 	}
 }
 void InterfaceLecture::diaporama()
