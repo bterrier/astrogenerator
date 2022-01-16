@@ -31,6 +31,7 @@ HEADERS += ActionsFenetre.h \
            Onglet.h \
            Soiree.h \
            WidgetHeure.h \
+           aboutdialog.h \
            homewidget.h
 
 SOURCES += ActionsFenetre.cpp \
@@ -56,6 +57,7 @@ SOURCES += ActionsFenetre.cpp \
            Onglet.cpp \
            Soiree.cpp \
            WidgetHeure.cpp \
+           aboutdialog.cpp \
            homewidget.cpp
 
 TRANSLATIONS += \
@@ -71,4 +73,5 @@ win32:!win32-g++: PRE_TARGETDEPS += $$top_builddir/lib/libastrocalc.lib
 else:unix|win32-g++: PRE_TARGETDEPS += $$top_builddir/lib/liblibastrocalc.a
 
 FORMS += \
+    aboutdialog.ui \
     homewidget.ui

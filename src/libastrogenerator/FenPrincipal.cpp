@@ -29,6 +29,7 @@
 #include <QStatusBar>
 #include <QToolBar>
 
+#include "aboutdialog.h"
 #include "homewidget.h"
 
 FenPrincipal::FenPrincipal() :
@@ -470,29 +471,9 @@ void FenPrincipal::ajouterSoireeRecente(const QString &fichier)
 }
 void FenPrincipal::aPropos()
 {
-	QString about;
-	about = "<strong>Version : </strong>" VERSION_STRING "<br />";
-	about += "Copyright © 2011-2013 - Univers-Astronomie.fr - Gallouedec Valentin<br />";
-	about += "Copyright © 2021-2022 Terrier Benjamin<br />";
-	about += tr("<strong>Sources&nbsp;: </strong><a href='%1'>%1</a><br />").arg(URL_GITHUB);
-	about += "<strong>Site web : </strong><a href='" URL_UNIVERS_ASTRONOMIE "'>" URL_UNIVERS_ASTRONOMIE "</a><br />";
-	about += "<strong>Outil en ligne : </strong><a href='" URL_GENERATEUR "'> " URL_GENERATEUR "</a><br />";
-	about += "<strong>Langue ordinateur : </strong>" + QLocale::system().name();
-	about += R"(
-<p>astroGenerator is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version. </p>
-
-<p>astroGenerator is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.</p>
-
-<p>You should have received a copy of the GNU General Public License
-along with astroGenerator.  If not, see <a href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>.</p>
-)";
-	QMessageBox::information(this, "A propos d'Astrogenerator", about);
+	AboutDialog *dialog = new AboutDialog(this);
+	dialog->setAttribute(Qt::WA_DeleteOnClose);
+	dialog->show();
 }
 
 void FenPrincipal::aide()
