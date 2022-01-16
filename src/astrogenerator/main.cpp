@@ -43,7 +43,14 @@ static void initDatabase()
 static void initTranslation()
 {
 	QTranslator *translator = new QTranslator(qApp);
-	if (translator->load(QLocale(), "qt", "_", QLibraryInfo::path(QLibraryInfo::TranslationsPath))) {
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+	const QString path = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+#else
+	const QString path = QLibraryInfo::path(QLibraryInfo::TranslationsPath);
+#endif
+
+	if (translator->load(QLocale(), "qt", "_", path)) {
 		qApp->installTranslator(translator);
 	}
 

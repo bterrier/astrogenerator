@@ -633,6 +633,9 @@ Soiree *Soiree::soaToSoiree(QString const &fileName)
 	QFile soa(fileName);
 	if (soa.open(QIODevice::ReadOnly)) {
 		QTextStream flux(&soa);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+		flux.setCodec("UTF-8");
+#endif
 		QVector<ObjetObs *> planning;
 		QVector<double> oculairesVector;
 		QString infosSoiree, ligne, oculaires;
@@ -720,6 +723,9 @@ bool Soiree::soireeToSoa(const QString &fileName)
 	QFile soa(fileName);
 	if (soa.open(QIODevice::WriteOnly)) {
 		QTextStream flux(&soa);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+		flux.setCodec("UTF-8");
+#endif
 		flux << ligne1 << Qt::endl
 		     << ligne2 << Qt::endl;
 
@@ -820,6 +826,9 @@ void Soiree::toXML() const
 		QFile file(nomFichier);
 		if (file.open(QIODevice::WriteOnly)) {
 			QTextStream flux(&file);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+			flux.setCodec("UTF-8");
+#endif
 			flux << doc.toString();
 			file.close();
 		} else

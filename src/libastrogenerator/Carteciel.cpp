@@ -163,6 +163,9 @@ void Carteciel::dessinerCarte()
 	QFile dessins("dessin-constellation.txt");
 	if (dessins.open(QIODevice::ReadOnly)) {
 		QTextStream flux(&dessins);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+		flux.setCodec("UTF-8");
+#endif
 		bool dessine(false);
 		int X1(0), X2(0), Y1(0), Y2(0);
 		double x1(0), x2(0), y1(0), y2(0);
@@ -231,6 +234,9 @@ void Carteciel::dessinerCarte()
 	if (noms.open(QIODevice::ReadOnly)) {
 		// setPen(QColor(156, 227, 254));
 		QTextStream flux2(&noms);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+		flux2.setCodec("UTF-8");
+#endif
 		QRectF positions;
 		while (!flux2.atEnd()) {
 			line = flux2.readLine();

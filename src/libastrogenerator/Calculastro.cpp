@@ -22,6 +22,9 @@ QString Calculastro::enumQtToPays(QString ref)
 	QString retour;
 	if (fichier.open(QIODevice::ReadOnly)) {
 		QTextStream flux(&fichier);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+		flux.setCodec("UTF-8");
+#endif
 		QString ligne;
 		QStringList infos;
 		while (!flux.atEnd()) {
@@ -49,6 +52,9 @@ QString Calculastro::paysToEnumQt(QString ref)
 	QString retour;
 	if (fichier.open(QIODevice::ReadOnly) && ref != "--") {
 		QTextStream flux(&fichier);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+		flux.setCodec("UTF-8");
+#endif
 		QString ligne;
 		QStringList infos;
 		while (!flux.atEnd()) {
@@ -470,6 +476,9 @@ QMap<char, double> Calculastro::getLBR(double j2000, QString planete)
 	if (!fichier.open(QIODevice::ReadOnly | QIODevice::Text))
 		QMessageBox::critical(nullptr, QObject::tr("Erreur d'ouverture", "N'arrive pas à ouvrir un fichier"), "Le fichier VSOP87/VSOP87B." + ext + " est impossible à ouvrir. Réésayer.");
 	QTextStream flux(&fichier);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+	flux.setCodec("UTF-8");
+#endif
 	QString ligne;
 
 	QString lettres[3];
