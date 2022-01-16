@@ -12,6 +12,7 @@
 #include "ObjetCPObs.h"
 #include "ObjetObs.h"
 #include "eyepiece.h"
+#include "settings.h"
 
 // Si "OK" après une fonction, elle a été vérifiée et fonctionne parfaitement
 
@@ -39,7 +40,7 @@ public:
 	static HauteurMaxTemps hauteurMaxObjet(Objet *objet, QDateTime debut, QDateTime fin, double latitude, double longitude);
 	static HauteurMaxTemps hauteurMaxObjet(QString const &planete, QDateTime debut, QDateTime fin, double latitude, double longitude);
 	static bool verifDisponibilite(QVector<ObjetObs *> const &liste_observation, QDateTime const &debut, QDateTime const &fin, int espace);
-	static double noterObjetVisible(QString type, int interet, double magnitude, int diametre, QString niveau, double hauteurMax, int difficulte, QSettings *user);
+	static double noterObjetVisible(QString type, int interet, double magnitude, int diametre, QString niveau, double hauteurMax, int difficulte, const Notes &notes);
 	static bool isObjetVisible(Objet *objet, QDateTime temps, double latitude, double longitude);
 	static int miseEnTemperature(int diametre);
 	static QString getOculaire(Objet *objet, int diametre, int focale, const QList<Eyepiece> &eyepieces);

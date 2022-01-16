@@ -7,14 +7,14 @@
 #include <QPushButton>
 #include <QSqlQuery>
 
-FenCreerSoiree::FenCreerSoiree(FenPrincipal *parent) :
-    QDialog()
-{
-	m_parent = parent;
+#include "settings.h"
 
+FenCreerSoiree::FenCreerSoiree(QWidget *parent) :
+    QDialog(parent)
+{
 	QString villeD, paysD;
-	paysD = m_parent->getUser()->value("localisation/pays", PAYS_DEFAUT).toString();
-	villeD = m_parent->getUser()->value("localisation/ville", VILLE_DEFAUT).toString();
+	paysD = Settings::instance().country();
+	villeD = Settings::instance().city();
 
 	m_pays = new QComboBox;
 	QStringList pays;
@@ -105,7 +105,7 @@ FenCreerSoiree::FenCreerSoiree(FenPrincipal *parent) :
 	QStringList listNiveau;
 	listNiveau << tr("Débutant") << tr("Amateur") << tr("Amateur confirmé") << tr("Expert");
 	m_niveau->addItems(listNiveau);
-	m_niveau->setCurrentIndex(m_parent->getUser()->value("niveau", 0).toInt());
+	m_niveau->setCurrentIndex(Settings::instance().difficulty());
 
 	QStringList listTelescope;
 	QSqlQuery requete("SELECT nom FROM telescope ORDER BY nom");
@@ -113,7 +113,7 @@ FenCreerSoiree::FenCreerSoiree(FenPrincipal *parent) :
 		listTelescope << requete.value(0).toString();
 	}
 	m_telescope->addItems(listTelescope);
-	m_telescope->setCurrentIndex(m_telescope->findText(m_parent->getUser()->value("telescope/nom", TELESCOPE_DEFAUT).toString()));
+	m_telescope->setCurrentIndex(m_telescope->findText(Settings::instance().telescopName()));
 
 	// On crée la fenetre pour les constellations
 	m_fenetreConstellation = new QDialog;
@@ -281,7 +281,11 @@ void FenCreerSoiree::genererSoiree()
 	m_close->setDisabled(true);
 	connect(soiree, &Soiree::generation, m_progress, &QProgressBar::setValue);
 
-	soiree->genererSoiree(m_latitude->value(), m_longitude->value(), debut, fin, m_dureeObjet->value(), constList, niveau, requeteTelescope->value(0).toUInt(), requeteTelescope->value(1).toUInt(), m_parent->getUser(), m_planetes->isChecked());
+	soiree->genererSoiree(m_latitude->value(),
+	                      m_longitude->value(),
+	                      debut, fin,
+	                      m_dureeObjet->value(), constList, niveau, requeteTelescope->value(0).toUInt(), requeteTelescope->value(1).toUInt(),
+	                      0, 0, Settings::instance().notes(), m_planetes->isChecked());
 
 	soiree->setVille(m_villes->currentText());
 	soiree->setPays(m_pays->currentText());
@@ -291,11 +295,11 @@ void FenCreerSoiree::genererSoiree()
 	m_close->setDisabled(false);
 
 	// On change les informations de base
-	m_parent->getUser()->setValue("latitude", m_latitude->value());
-	m_parent->getUser()->setValue("longitude", m_longitude->value());
-	m_parent->getUser()->setValue("niveau", m_niveau->currentIndex());
+	Settings::instance().setLatitude(m_latitude->value());
+	Settings::instance().setLongitude(m_longitude->value());
+	Settings::instance().setDifficulty(m_niveau->currentIndex());
 
-	m_parent->nouvelOngletSoiree(*soiree);
+	emit nouvelOngletSoiree(soiree);
 	this->close();
 }
 void FenCreerSoiree::actualiserVilles(QString pays)

@@ -26,7 +26,7 @@ public:
 	void ajouterSoireeRecente(QString const &fichier);
 
 public slots:
-	void nouvelOngletSoiree(Soiree &soiree);
+	void nouvelOngletSoiree(Soiree *soiree);
 	void nouvelOngletCreation(double latitude, double longitude, QDateTime heureDebut, uint diametre, uint focale);
 	bool fermerOnglet(int index);
 	bool fermerOnglet(); // Pareil que effacerOnglet() mais pour l'onglet actif

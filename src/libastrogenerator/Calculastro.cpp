@@ -690,28 +690,28 @@ bool Calculastro::verifDisponibilite(QVector<ObjetObs *> const &liste_observatio
 	}
 	return true;
 }
-double Calculastro::noterObjetVisible(QString type, int interet, double magnitude, int diametre, QString niveau, double hauteurMax, int difficulte, QSettings *user)
+double Calculastro::noterObjetVisible(QString type, int interet, double magnitude, int diametre, QString niveau, double hauteurMax, int difficulte, const Notes &notes)
 {
 	int nd(0), numNiveau(0);
 	double note(0), magNiveau(0), magMax(0), ecart(0), noteVariable(0);
 
 	// ON NOTE SUR LE TYPE
 	if (type == "Amas Globulaire")
-		note += user->value("generateur/amasGlobulaire", NOTE_AMAS_GLOBULAIRE).toInt();
+		note += notes.amasGlobulaire;
 	else if (type == "Amas+Nébuleuse")
-		note += user->value("generateur/amasNebuleuse", NOTE_AMAS_NEBULEUSE).toInt();
+		note += notes.amasNebuleuse;
 	else if (type == "Nébuleuse planétaire")
-		note += user->value("generateur/nebuleusePlanetaire", NOTE_NEBULEUSE_PLANETAIRE).toInt();
+		note += notes.nebuleusePlanetaire;
 	else if (type == "Nébuleuse en réflection")
-		note += user->value("generateur/nebuleuseReflection", NOTE_NEBULEUSE_REFLECTION).toInt();
+		note += notes.nebuleuseReflection;
 	else if (type == "Etoile triple")
-		note += user->value("generateur/etoileTriple", NOTE_ETOILE_TRIPLE).toInt();
+		note += notes.etoiletripe;
 	else if (type == "Etoile double")
-		note += user->value("generateur/etoileDouble", NOTE_ETOILE_DOUBLE).toInt();
+		note += notes.etoiledouble;
 	else if (type == "Galaxie")
-		note += user->value("generateur/galaxie", NOTE_GALAXIE).toInt();
+		note += notes.galaxy;
 	else if (type == "Amas ouverts")
-		note += user->value("generateur/amasOuvert", NOTE_AMAS_OUVERT).toInt();
+		note += notes.amasOuvert;
 
 	// ON NOTE SUR L'INTERET
 	switch (interet) {

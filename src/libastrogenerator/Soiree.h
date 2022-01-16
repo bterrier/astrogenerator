@@ -9,6 +9,7 @@
 #include "ObjetCP.h"
 #include "ObjetCPObs.h"
 #include "ObjetObs.h"
+#include "settings.h"
 
 class Soiree : public QObject
 {
@@ -16,7 +17,9 @@ class Soiree : public QObject
 
 public:
 	Soiree();
-	void genererSoiree(double lat, double longi, QDateTime debut, QDateTime fin, int duree_une, QString constellation, QString niveau, unsigned int diametre, unsigned int focale, QSettings *user, bool boolPlanete = true);
+	void genererSoiree(double lat, double longi, QDateTime debut, QDateTime fin,
+	                   int duree_une, QString constellation, QString niveau,
+	                   unsigned int diametre, unsigned int focale, int hauteurMin, int pauseMin, const Notes &notes, bool boolPlanete = true);
 	static QVector<ObjetObs *> trierPlanning(QVector<ObjetObs *> planning);
 	static int trouverPlusPetit(const QVector<ObjetObs *> &planning);
 	static Soiree *soaToSoiree(const QString &fileName);

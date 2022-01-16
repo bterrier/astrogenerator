@@ -23,15 +23,18 @@
 #include "settings.h"
 
 Soiree::Soiree() {}
-void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime fin, int duree_une, QString constellation, QString niveau, unsigned int diametre, unsigned int focale, QSettings *user, bool boolPlanete)
+void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime fin, int duree_une, QString constellation, QString niveau, unsigned int diametre, unsigned int focale,
+                           int hauteurMin,
+                           int pauseMin,
+                           const Notes &notes, bool boolPlanete)
 {
-	int nb_objets(0), moyTime(0), hauteurMin(30), rep(0), espaceMin(0);
+	int nb_objets(0), moyTime(0), hMin(30), rep(0), espaceMin(0);
 	QDateTime obsPla[2];
 	QVector<double> infosPlanete;
 	QString valeur;
 	double magMax(0), raDecimal(0), declinaisonDecimal(0), note(0);
 
-	espaceMin = user->value("generateur/pauseMin", TEMPS_ESPACE).toInt() * 60; // En secondes, utile pour la fonction verifDisponibilite
+	espaceMin = pauseMin * 60; // En secondes, utile pour la fonction verifDisponibilite
 
 	duree_une *= 60; // On convertit en secondes
 	nb_objets = (fin.toSecsSinceEpoch() - debut.toSecsSinceEpoch()) / duree_une;
@@ -81,7 +84,7 @@ void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime 
 				}
 
 				if (Calculastro::verifDisponibilite(liste_observation, obsPla[0], obsPla[1], espaceMin)) {
-					if (hauteurMaxPla.hauteurMax() >= user->value("generateur/hauteurMin", HAUTEUR_MIN_OBJET).toInt()) {
+					if (hauteurMaxPla.hauteurMax() >= hauteurMin) {
 						liste_observation.push_back(new ObjetPlaneteObs(valeur, obsPla[0], obsPla[1]));
 					}
 				} else {
@@ -122,7 +125,7 @@ void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime 
 							hau2 = altazPlus[0];
 						}
 						if (Calculastro::verifDisponibilite(liste_observation, tempsPlace1[0], tempsPlace1[1], espaceMin)) {
-							if (hau1 > user->value("generateur/hauteurMin", HAUTEUR_MIN_OBJET).toInt()) // Si on dépasse 10°
+							if (hau1 > hauteurMin) // Si on dépasse 10°
 							{
 								if (tempsPlace1[0] >= debut && tempsPlace1[0] <= fin && tempsPlace1[1] >= debut && tempsPlace1[1] <= fin) {
 									liste_observation.push_back(new ObjetPlaneteObs(valeur, tempsPlace1[0], tempsPlace1[1]));
@@ -135,7 +138,7 @@ void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime 
 							tryV = false;
 
 						if (!tryV && Calculastro::verifDisponibilite(liste_observation, tempsPlace2[0], tempsPlace2[1], espaceMin)) {
-							if (hau2 > user->value("generateur/hauteurMin", HAUTEUR_MIN_OBJET).toInt()) {
+							if (hau2 > hauteurMin) {
 								if (tempsPlace2[0] >= debut && tempsPlace2[0] <= fin && tempsPlace2[1] >= debut && tempsPlace2[1] <= fin) {
 									liste_observation.push_back(new ObjetPlaneteObs(valeur, tempsPlace2[0], tempsPlace2[1]));
 									break;
@@ -181,8 +184,8 @@ void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime 
 		objet = new ObjetCP(requete.value(1).toString());
 		hauteurMax2 = Calculastro::hauteurMaxObjet(objet, debut, fin, lat, longi);
 
-		if (hauteurMax2.hauteurMax() > hauteurMin) {
-			note = Calculastro::noterObjetVisible(requete.value(2).toString(), requete.value(8).toInt(), requete.value(6).toDouble(), diametre, niveau, hauteurMax2.hauteurMax(), requete.value(10).toInt(), user); // on calcule sa note
+		if (hauteurMax2.hauteurMax() > hMin) {
+			note = Calculastro::noterObjetVisible(requete.value(2).toString(), requete.value(8).toInt(), requete.value(6).toDouble(), diametre, niveau, hauteurMax2.hauteurMax(), requete.value(10).toInt(), notes); // on calcule sa note
 			objets_visibles1.insert(note, requete.value(1).toString());
 		}
 	}
@@ -263,7 +266,7 @@ void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime 
 					hau2 = altazPlus[0];
 				}
 				if (Calculastro::verifDisponibilite(liste_observation, tempsPlace1[0], tempsPlace1[1], espaceMin)) {
-					if (hau1 > hauteurMin) // Si on dépasse $hauteurMin°
+					if (hau1 > hMin) // Si on dépasse $hauteurMin°
 					{
 						if (tempsPlace1[0] >= debut && tempsPlace1[0] <= fin && tempsPlace1[1] >= debut && tempsPlace1[1] <= fin) {
 							liste_observation.push_back(new ObjetCPObs(objet, tempsPlace1[0], tempsPlace1[1]));
@@ -275,7 +278,7 @@ void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime 
 				} else
 					tryVar = false;
 				if (!tryVar && Calculastro::verifDisponibilite(liste_observation, tempsPlace2[0], tempsPlace2[1], espaceMin)) {
-					if (hau2 > hauteurMin) {
+					if (hau2 > hMin) {
 						if (tempsPlace2[0] >= debut && tempsPlace2[0] <= fin && tempsPlace2[1] >= debut && tempsPlace2[1] <= fin) {
 							liste_observation.push_back(new ObjetCPObs(objet, tempsPlace2[0], tempsPlace2[1]));
 							break;

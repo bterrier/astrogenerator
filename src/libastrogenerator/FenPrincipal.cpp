@@ -73,6 +73,7 @@ FenPrincipal::FenPrincipal() :
 	m_user = new QSettings(NOM_EQUIPE, NOM_PROGRAMME);
 
 	FenCreerSoiree *fenCreation = new FenCreerSoiree(this);
+	connect(fenCreation, &FenCreerSoiree::nouvelOngletSoiree, this, &FenPrincipal::nouvelOngletSoiree);
 	FenetreBDD *fenBDD = new FenetreBDD(this);
 	FenInfosCreation *fenInfos = new FenInfosCreation(this);
 	FenPreferences *fenPreferences = new FenPreferences(this);
@@ -229,7 +230,7 @@ void FenPrincipal::creerMenu()
 	menuAide->addAction(listeActions->getActionAPropos());
 	menuAide->addAction(listeActions->getActionAide());
 }
-void FenPrincipal::nouvelOngletSoiree(Soiree &soiree)
+void FenPrincipal::nouvelOngletSoiree(Soiree *soiree)
 {
 	QApplication::setOverrideCursor(Qt::WaitCursor); // changer de curseur
 	if (!tabOnglets->isVisible()) {
@@ -238,7 +239,7 @@ void FenPrincipal::nouvelOngletSoiree(Soiree &soiree)
 	} // Essayer de remplacer ça par une fonction
 
 	// On crée un objet de type InterfaceLecture
-	InterfaceLecture *interface = new InterfaceLecture(&soiree, listeActions, this);
+	InterfaceLecture *interface = new InterfaceLecture(soiree, listeActions, this);
 
 	// On l'ajoute à la liste des onglets et on crée un nouvel onglet
 	m_listeInterface.push_back(interface);
@@ -364,7 +365,7 @@ void FenPrincipal::ouvrirSoa(QString fileSoa)
 
 	if (fileSoa != "") {
 		Soiree *soiree = Soiree::soaToSoiree(fileSoa);
-		nouvelOngletSoiree(*soiree);
+		nouvelOngletSoiree(soiree);
 	}
 }
 bool FenPrincipal::quitterApplication()

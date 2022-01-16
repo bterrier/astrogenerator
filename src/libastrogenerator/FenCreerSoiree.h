@@ -15,8 +15,11 @@ class FenCreerSoiree : public QDialog
 	Q_OBJECT
 
 public:
-	explicit FenCreerSoiree(FenPrincipal *parent);
+	explicit FenCreerSoiree(QWidget *parent = nullptr);
 	QString creerTexteConstellation(); // Crée un texte en fonction des constellations selectionnées
+
+signals:
+	void nouvelOngletSoiree(Soiree *soiree);
 
 public slots:
 	void genererSoiree();
@@ -55,8 +58,6 @@ private:
 	QSpinBox *diametre;
 	QSpinBox *focale;
 	QComboBox *marquesList;
-
-	FenPrincipal *m_parent;
 };
 
 #endif // FENCREERSOIREE_H
