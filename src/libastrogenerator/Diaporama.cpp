@@ -8,6 +8,8 @@
 #include <QKeyEvent>
 #include <QLabel>
 
+#include "settings.h"
+
 Diaporama::Diaporama(Soiree *soiree) :
     lcd_pause(new TimerWidget(this))
 {
@@ -103,11 +105,7 @@ void Diaporama::demarrer()
 {
 	QHBoxLayout *layoutPrincipal = new QHBoxLayout;
 	int premierTemps;
-	QSettings *user = new QSettings(NOM_EQUIPE, NOM_PROGRAMME);
-	QVector<int> oculairesInt;
-	QStringList oculairesString = user->value("oculaires", OCULAIREES_DEFAUT).toString().split("|");
-	for (int l(0); l < oculairesString.size(); l++)
-		oculairesInt.push_back(oculairesString.at(l).toInt());
+
 	premierTemps = m_soiree->getPlanning().at(0)->getFin().toSecsSinceEpoch() - m_soiree->getPlanning().at(0)->getDebut().toSecsSinceEpoch();
 	// On cherche la différence entre le premier et le deuxième objet pour commencer le timer
 
@@ -142,7 +140,7 @@ void Diaporama::demarrer()
 		infoAzimut->setFont(QFont("Verdana", 15));
 		QLabel *infoCons = new QLabel(tr("<font color=\"#FFF\">Constellation : ") + Calculastro::abreviationToNom(m_soiree->getPlanning().at(i)->constellation()) + "</font>");
 		infoCons->setFont(QFont("Verdana", 15));
-		QLabel *infoOculaire = new QLabel(tr("<font color=\"#FFF\">Oculaire : ") + Calculastro::getOculaire(m_soiree->getPlanning().at(i), m_soiree->getDiametre(), m_soiree->getFocale(), oculairesInt));
+		QLabel *infoOculaire = new QLabel(tr("<font color=\"#FFF\">Oculaire : ") + Calculastro::getOculaire(m_soiree->getPlanning().at(i), m_soiree->getDiametre(), m_soiree->getFocale(), Settings::instance().eyepieces()));
 		infoOculaire->setFont(QFont("Verdana", 15));
 		layoutInfos->addWidget(infoAscdr);
 		layoutInfos->addWidget(infoDec);

@@ -11,6 +11,7 @@
 #include "HauteurMaxTemps.h"
 #include "ObjetCPObs.h"
 #include "ObjetObs.h"
+#include "eyepiece.h"
 
 // Si "OK" après une fonction, elle a été vérifiée et fonctionne parfaitement
 
@@ -41,7 +42,7 @@ public:
 	static double noterObjetVisible(QString type, int interet, double magnitude, int diametre, QString niveau, double hauteurMax, int difficulte, QSettings *user);
 	static bool isObjetVisible(Objet *objet, QDateTime temps, double latitude, double longitude);
 	static int miseEnTemperature(int diametre);
-	static QString getOculaire(Objet *objet, int diametre, int focale, QVector<int> oculaires);
+	static QString getOculaire(Objet *objet, int diametre, int focale, const QList<Eyepiece> &eyepieces);
 };
 
 #endif // CALCULASTRO_H

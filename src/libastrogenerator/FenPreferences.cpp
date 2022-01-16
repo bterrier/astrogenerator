@@ -10,6 +10,9 @@
 #include <QPushButton>
 #include <QSqlQuery>
 
+#include "eyepiecesettingwidget.h"
+#include "settings.h"
+
 FenPreferences::FenPreferences(FenPrincipal *parent) :
     QDialog(parent)
 {
@@ -147,37 +150,9 @@ FenPreferences::FenPreferences(FenPrincipal *parent) :
 	layoutPrincipal->addWidget(page_telescope);
 
 	// PAGE OCULAIRES
-	QGroupBox *groupBoxOculaireListe = new QGroupBox(tr("Liste des oculaires"));
-	QHBoxLayout *layoutOculaires = new QHBoxLayout;
-	QVBoxLayout *layoutV1 = new QVBoxLayout;
-	QVBoxLayout *layoutV2 = new QVBoxLayout;
-	QVBoxLayout *layoutV3 = new QVBoxLayout;
-
-	for (int i(0); i < 24; i++) {
-		QCheckBox *b = new QCheckBox(QString::number(i + 6) + tr(" mm", "Symbole des millimètres (laisser l'espace avant)"));
-		m_listeOculaires.push_back(b);
-
-		if (i < 8)
-			layoutV1->addWidget(b);
-		else if (i < 16)
-			layoutV2->addWidget(b);
-		else
-			layoutV3->addWidget(b);
-	}
-	layoutOculaires->addLayout(layoutV1);
-	layoutOculaires->addLayout(layoutV2);
-	layoutOculaires->addLayout(layoutV3);
-
-	QHBoxLayout *layoutObligatoire = new QHBoxLayout;
-	groupBoxOculaireListe->setLayout(layoutOculaires);
-	layoutObligatoire->addWidget(groupBoxOculaireListe);
-
-	QWidget *page_oculaires = new QWidget;
-	page_oculaires->setFixedWidth(350);
-	page_oculaires->setLayout(layoutObligatoire);
-	page_oculaires->setVisible(false);
-	m_listePages.push_back(page_oculaires);
-	layoutPrincipal->addWidget(page_oculaires);
+	m_eyepiecePage = new EyepieceSettingWidget(this);
+	m_listePages.push_back(m_eyepiecePage);
+	layoutPrincipal->addWidget(m_eyepiecePage);
 
 	// PAGE GENERATEUR
 
@@ -522,15 +497,7 @@ void FenPreferences::valider()
 
 	emit telescopeChange(requete.value(2).toString());
 
-	QString taille, oculaires;
-	for (int i(0); i < m_listeOculaires.count(); i++) {
-		if (m_listeOculaires.at(i)->isChecked()) {
-			taille = m_listeOculaires.at(i)->text().left(m_listeOculaires.at(i)->text().count() - 3);
-			oculaires += "|" + taille;
-		}
-	}
-	oculaires = oculaires.right(oculaires.count() - 1);
-	s->setValue("oculaires", oculaires);
+	s->setValue("oculaires", m_eyepiecePage->settingString());
 
 	s->setValue("couleurCarte/fond", m_labelCouleurFond->text());
 	s->setValue("couleurCarte/etoile", m_labelCouleurEtoile->text());
@@ -618,12 +585,9 @@ void FenPreferences::initialiserValeur()
 	m_listeTelescope->setCurrentIndex(m_listeTelescope->findText(m_parent->getUser()->value("telescope/nom", TELESCOPE_DEFAUT).toString()));
 
 	// PAGE OCULAIRES
-	QStringList oculaires = m_parent->getUser()->value("oculaires", OCULAIREES_DEFAUT).toString().split("|");
-	for (int i(0); i < m_listeOculaires.count(); i++) {
-		if (oculaires.indexOf(QString::number(i + 6)) != -1)
-			m_listeOculaires.at(i)->setChecked(true);
-		else
-			m_listeOculaires.at(i)->setChecked(false);
+	const auto oculaires = Settings::instance().eyepieces();
+	for (const auto &eyepiece : oculaires) {
+		m_eyepiecePage->add(eyepiece.focalLength());
 	}
 
 	// PAGE GENERATEUR
@@ -729,13 +693,12 @@ void FenPreferences::reinitialiser()
 	m_listeTelescope->setCurrentIndex(m_listeTelescope->findText(TELESCOPE_DEFAUT));
 
 	// PAGE OCULAIRES
+	m_eyepiecePage->clear();
 	QString oculairesParse(OCULAIREES_DEFAUT);
-	QStringList oculaires = oculairesParse.split("|");
-	for (int i(0); i < m_listeOculaires.count(); i++) {
-		if (oculaires.indexOf(QString::number(i + 6)) != -1)
-			m_listeOculaires.at(i)->setChecked(true);
-		else
-			m_listeOculaires.at(i)->setChecked(false);
+	const QStringList oculaires = oculairesParse.split("|");
+	for (const auto &eyepiece : oculaires) {
+		int value = eyepiece.toInt();
+		m_eyepiecePage->add(value);
 	}
 
 	// PAGE GENERATEUR

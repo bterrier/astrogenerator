@@ -20,6 +20,7 @@
 #include "ObjetCPObs.h"
 #include "ObjetObs.h"
 #include "ObjetPlaneteObs.h"
+#include "settings.h"
 
 Soiree::Soiree() {}
 void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime fin, int duree_une, QString constellation, QString niveau, unsigned int diametre, unsigned int focale, QSettings *user, bool boolPlanete)
@@ -713,13 +714,12 @@ Soiree *Soiree::soaToSoiree(QString const &fileName)
 }
 bool Soiree::soireeToSoa(const QString &fileName)
 {
-	QSettings *user = new QSettings(NOM_EQUIPE, NOM_PROGRAMME);
-	QStringList oculaires = user->value("oculaires").toString().split("|");
+	const auto oculaires = Settings::instance().eyepieces();
 
 	QString ligne1, ligne2;
 	ligne1 = "cle|" + getVille() + "|" + getPays() + "|" + QString::number(m_lat) + "|" + QString::number(m_longi) + "|" + QString::number(m_debut.toSecsSinceEpoch()) + "|" + QString::number(m_fin.toSecsSinceEpoch()) + "|" + QString::number(m_diametre) + "|" + QString::number(m_focale);
-	for (int i(0); i < oculaires.size(); i++) {
-		ligne2 += oculaires.at(i) + "|";
+	for (const auto &eyepiece : oculaires) {
+		ligne2 += QString::number(eyepiece.focalLength()) + "|";
 	}
 	ligne2 = ligne2.left(ligne2.count() - 1);
 	QFile soa(fileName);
@@ -851,11 +851,6 @@ bool Soiree::paintPdf(QPrinter *printer)
 		if (painter.isActive()) {
 			QStringList listeConseils;
 			listeConseils << tr("pensez à régler votre télescope") << tr("profitez-en pour prendre une boisson une chaude") << tr("profitez-en pour prendre un goûter") << tr("observez le ciel à l'oeil nu pendant ce temps") << tr("remplissez la fiche de note avec vos impressions d'observations") << tr("si besoin, réalignez votre chercheur");
-
-			QVector<int> oculairesInt;
-			QStringList oculairesString = user->value("oculaires", OCULAIREES_DEFAUT).toString().split("|");
-			for (int l(0); l < oculairesString.size(); l++)
-				oculairesInt.push_back(oculairesString.at(l).toInt());
 
 			// PAGE DE GARDE
 			QRectF rect;
@@ -1052,7 +1047,8 @@ bool Soiree::paintPdf(QPrinter *printer)
 				hauAzi = hauteurAzimutObjet(i);
 				painter.drawText(QRectF(163 * k - mG * k, (tL + 9) * k - mT * k, 40 * k, 4 * k), Qt::AlignLeft, tr("Hauteur : ") + Calculastro::degreeToDms(hauAzi.at(0)));
 				painter.drawText(QRectF(163 * k - mG * k, (tL + 14) * k - mT * k, 40 * k, 4 * k), Qt::AlignLeft, tr("Azimut : ") + Calculastro::degreeToDms(hauAzi.at(1)));
-				painter.drawText(QRectF(163 * k - mG * k, (tL + 19) * k - mT * k, 40 * k, 4 * k), Qt::AlignLeft, tr("Oculaire : ") + Calculastro::getOculaire(m_listeObjets.at(i), m_diametre, m_focale, oculairesInt));
+				painter.drawText(QRectF(163 * k - mG * k, (tL + 19) * k - mT * k, 40 * k, 4 * k),
+				                 Qt::AlignLeft, tr("Oculaire : ") + Calculastro::getOculaire(m_listeObjets.at(i), m_diametre, m_focale, Settings::instance().eyepieces()));
 
 				tL += 32;
 			}

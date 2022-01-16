@@ -805,7 +805,7 @@ int Calculastro::miseEnTemperature(int diametre)
 	else
 		return -1;
 }
-QString Calculastro::getOculaire(Objet *objet, int diametre, int focale, QVector<int> oculaires)
+QString Calculastro::getOculaire(Objet *objet, int diametre, int focale, const QList<Eyepiece> &eyepieces)
 {
 	double fd(0), f(0);
 
@@ -865,10 +865,10 @@ QString Calculastro::getOculaire(Objet *objet, int diametre, int focale, QVector
 		bonOculaire[1] = 50;
 		int ecart(0);
 
-		for (int i(0); i < oculaires.size(); i++) {
-			ecart = qAbs(oculaires.at(i) - f);
+		for (const auto &eyepiece : eyepieces) {
+			ecart = qAbs(eyepiece.focalLength() - f);
 			if (ecart < bonOculaire[1]) {
-				bonOculaire[0] = oculaires.at(i);
+				bonOculaire[0] = eyepiece.focalLength();
 				bonOculaire[1] = ecart;
 			}
 		}

@@ -8,6 +8,7 @@
 #include <QListWidget>
 
 #include "FenPrincipal.h"
+#include "eyepiecesettingwidget.h"
 
 class FenPreferences : public QDialog
 {
@@ -60,7 +61,7 @@ private:
 	QPushButton *m_boutonAjouterTelescope;
 
 	// PAGE OCULAIRES
-	QVector<QCheckBox *> m_listeOculaires;
+	EyepieceSettingWidget *m_eyepiecePage;
 
 	// PAGE GENERATEUR
 	QSlider *m_hauteurMinimum;

@@ -30,7 +30,10 @@ HEADERS += ActionsFenetre.h \
            Onglet.h \
            Soiree.h \
            aboutdialog.h \
+           eyepiece.h \
+           eyepiecesettingwidget.h \
            homewidget.h \
+           settings.h \
            skymapdialog.h
 
 SOURCES += ActionsFenetre.cpp \
@@ -55,7 +58,10 @@ SOURCES += ActionsFenetre.cpp \
            Onglet.cpp \
            Soiree.cpp \
            aboutdialog.cpp \
+           eyepiece.cpp \
+           eyepiecesettingwidget.cpp \
            homewidget.cpp \
+           settings.cpp \
            skymapdialog.cpp
 
 TRANSLATIONS += \
@@ -72,6 +78,7 @@ else:unix|win32-g++: PRE_TARGETDEPS += $$top_builddir/lib/liblibastrocalc.a
 
 FORMS += \
     aboutdialog.ui \
+    eyepiecesettingwidget.ui \
     homewidget.ui \
     skymapdialog.ui
 
