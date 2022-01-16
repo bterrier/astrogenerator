@@ -76,10 +76,7 @@ ActionsFenetre::ActionsFenetre(QWidget *parent)
 	actionObjetsRemarquables = new QAction(tr("Objets remarquables"), parent);
 
 	actionAPropos = new QAction(tr("A propos d'astroGenerator"), parent);
-	actionAProposGenerateur = new QAction(tr("A propos du générateur"), parent);
-	actionUpdate = new QAction(tr("Mise à jour"), parent);
 	actionAide = new QAction(tr("Aide"), parent);
-	actionSiteUniversAstronomie = new QAction(tr("Site de l'éditeur"), parent);
 }
 
 QAction *ActionsFenetre::getActionInfoSoiree()
@@ -238,25 +235,15 @@ QAction *ActionsFenetre::getActionObjetsRemarquables()
 {
 	return actionObjetsRemarquables;
 }
+
 QAction *ActionsFenetre::getActionAPropos()
 {
 	return actionAPropos;
 }
-QAction *ActionsFenetre::getActionAProposGenerateur()
-{
-	return actionAProposGenerateur;
-}
-QAction *ActionsFenetre::getActionUpdate()
-{
-	return actionUpdate;
-}
+
 QAction *ActionsFenetre::getActionAide()
 {
 	return actionAide;
-}
-QAction *ActionsFenetre::getActionSiteUniversAstronomie()
-{
-	return actionSiteUniversAstronomie;
 }
 
 void ActionsFenetre::griserActionInfoSoiree(bool ok)
@@ -415,23 +402,13 @@ void ActionsFenetre::griserActionObjetsRemarquables(bool ok)
 {
 	actionObjetsRemarquables->setDisabled(ok);
 }
+
 void ActionsFenetre::griserActionAPropos(bool ok)
 {
 	actionAPropos->setDisabled(ok);
 }
-void ActionsFenetre::griserActionAProposGenerateur(bool ok)
-{
-	actionAProposGenerateur->setDisabled(ok);
-}
-void ActionsFenetre::griserActionUpdate(bool ok)
-{
-	actionUpdate->setDisabled(ok);
-}
+
 void ActionsFenetre::griserActionAide(bool ok)
 {
 	actionAide->setDisabled(ok);
-}
-void ActionsFenetre::griserActionSiteUniversAstronomie(bool ok)
-{
-	actionSiteUniversAstronomie->setDisabled(ok);
 }

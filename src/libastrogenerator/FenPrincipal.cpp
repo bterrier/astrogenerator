@@ -178,7 +178,6 @@ FenPrincipal::FenPrincipal()
 	connect(listeActions->getActionFermer(), &QAction::triggered, this, qOverload<>(&FenPrincipal::fermerOnglet));
 
 	connect(listeActions->getActionQuitter(), &QAction::triggered, this, &FenPrincipal::quitterApplication);
-	connect(listeActions->getActionSiteUniversAstronomie(), &QAction::triggered, this, &FenPrincipal::ouvrirUniversAstronomie);
 	connect(listeActions->getActionObjetsRemarquables(), &QAction::triggered, this, &FenPrincipal::ouvrirObjetsRemarquables);
 	connect(listeActions->getActionAide(), &QAction::triggered, this, &FenPrincipal::aide);
 	connect(listeActions->getActionAPropos(), &QAction::triggered, this, &FenPrincipal::aPropos);
@@ -296,10 +295,7 @@ void FenPrincipal::creerMenu()
 
 	QMenu *menuAide = menuBar()->addMenu(tr("Aide"));
 	menuAide->addAction(listeActions->getActionAPropos());
-	// menuAide->addAction(listeActions->getActionAProposGenerateur());
-	menuAide->addAction(listeActions->getActionUpdate());
 	menuAide->addAction(listeActions->getActionAide());
-	menuAide->addAction(listeActions->getActionSiteUniversAstronomie());
 }
 void FenPrincipal::nouvelOngletSoiree(Soiree &soiree)
 {
@@ -462,10 +458,7 @@ void FenPrincipal::closeEvent(QCloseEvent *event)
 	else
 		event->ignore();
 }
-void FenPrincipal::ouvrirUniversAstronomie()
-{
-	QDesktopServices::openUrl(QUrl(URL_UNIVERS_ASTRONOMIE));
-}
+
 void FenPrincipal::ouvrirObjetsRemarquables()
 {
 	QDesktopServices::openUrl(QUrl(URL_OBJET_REMARQUABLE));
@@ -564,8 +557,8 @@ void FenPrincipal::aPropos()
 	about += "Copyright © 2021-2022 Terrier Benjamin<br />";
 	about += tr("<strong>Sources&nbsp;: </strong><a href='%1'>%1</a><br />").arg(URL_GITHUB);
 	about += "<strong>Site web : </strong><a href='" URL_UNIVERS_ASTRONOMIE "'>" URL_UNIVERS_ASTRONOMIE "</a><br />";
-	about += "<strong> Outil en ligne : </strong><a href='" URL_GENERATEUR "'> " URL_GENERATEUR "</a><br />";
-	about += "<strong> Langue ordinateur : </strong>" + QLocale::system().name();
+	about += "<strong>Outil en ligne : </strong><a href='" URL_GENERATEUR "'> " URL_GENERATEUR "</a><br />";
+	about += "<strong>Langue ordinateur : </strong>" + QLocale::system().name();
 	about += R"(
 <p>astroGenerator is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -582,32 +575,10 @@ along with astroGenerator.  If not, see <a href="https://www.gnu.org/licenses/">
 )";
 	QMessageBox::information(this, "A propos d'Astrogenerator", about);
 }
+
 void FenPrincipal::aide()
 {
 	if (!QDesktopServices::openUrl(QUrl::fromLocalFile("doc.pdf"))) {
 		QMessageBox::critical(this, tr("Erreur"), tr("Impossible d'ouvrir le fichier aide."));
 	}
-}
-
-bool FenPrincipal::existsNewVersion(QString ligne)
-{
-	QStringList versionNewChiffreListe = ligne.split(".");
-	QStringList versionChiffreListe = QStringLiteral(VERSION_STRING).split('.');
-
-	// On fait en sorte qu'ils aient le même nombre de chiffre
-	if (versionNewChiffreListe.count() < versionChiffreListe.count()) {
-		int ecart(versionChiffreListe.count() - versionNewChiffreListe.count());
-		for (int i(0); i < ecart; i++)
-			versionNewChiffreListe.push_back("0");
-	} else if (versionNewChiffreListe.count() > versionChiffreListe.count()) {
-		int ecart(versionNewChiffreListe.count() - versionChiffreListe.count());
-		for (int i(0); i < ecart; i++)
-			versionChiffreListe.push_back("0");
-	}
-	// On traite
-	for (int j(0); j < versionChiffreListe.count(); j++) {
-		if (versionChiffreListe.at(j).toInt() < versionNewChiffreListe.at(j).toInt())
-			return true;
-	}
-	return false;
 }

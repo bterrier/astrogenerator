@@ -51,10 +51,7 @@ public:
 	QAction *getActionCDS();
 	QAction *getActionObjetsRemarquables();
 	QAction *getActionAPropos();
-	QAction *getActionAProposGenerateur();
-	QAction *getActionUpdate();
 	QAction *getActionAide();
-	QAction *getActionSiteUniversAstronomie();
 
 	void griserActionInfoSoiree(bool ok);
 	void griserActionCreerSoiree(bool ok);
@@ -96,10 +93,7 @@ public:
 	void griserActionCDS(bool ok);
 	void griserActionObjetsRemarquables(bool ok);
 	void griserActionAPropos(bool ok);
-	void griserActionAProposGenerateur(bool ok);
-	void griserActionUpdate(bool ok);
 	void griserActionAide(bool ok);
-	void griserActionSiteUniversAstronomie(bool ok);
 
 private:
 	QAction *actionInfoSoiree;
@@ -142,10 +136,7 @@ private:
 	QAction *actionCDS;
 	QAction *actionObjetsRemarquables;
 	QAction *actionAPropos;
-	QAction *actionAProposGenerateur;
-	QAction *actionUpdate;
 	QAction *actionAide;
-	QAction *actionSiteUniversAstronomie;
 };
 
 #endif // ACTIONSFENETRE_H

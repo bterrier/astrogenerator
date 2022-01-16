@@ -31,13 +31,10 @@ public slots:
 	bool fermerOnglet(Interface *interface);
 	void ouvrirSoa(QString fileSoa = QString());
 	bool quitterApplication();
-	void ouvrirUniversAstronomie();
 	void ouvrirObjetsRemarquables();
 	void ouvrirCDS();
 	void aPropos();
 	void aide();
-
-	static bool existsNewVersion(QString ligne);
 
 	void initialiserOngletActif(int index);
 	void initialiserOngletActif();
