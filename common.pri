@@ -4,7 +4,7 @@ CONFIG += \
           c++17 \
           warn_on
 
-VERSION = 3.0.0
+VERSION = 3.1.0
 DEFINES += VERSION=$${VERSION} \
            VERSION_STRING=\\\"$${VERSION}\\\"
 
