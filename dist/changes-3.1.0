@@ -1,0 +1,10 @@
+ - Port to Qt 5.15
+ - Removed dependency on QtWebKit
+ - Automatically open PDF after exporting
+ - Fix scan time of planets whene generating night
+ - Increase intitial window size
+ - Improve accuracy of clock widget and timer widget
+ - Remove Help actions that called the old website
+ - Remove status bar
+ - Restore lost v2 features:
+   * Eyepiece settings is using a list instead of checkboxes
