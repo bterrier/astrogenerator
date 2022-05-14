@@ -38,9 +38,13 @@ The goal is to have astroGenerator working with Qt 5. The choice of 5.5 is to ac
 astroGenerator version 3.1+ is the same as 3.0, but ported to Qt 5.15.
 The code is modified to remove dependancies to Qt WebKit
 
-## Authors
-Original author: Valentin Gallouedec
+### Version 4
+Version 4 of astroGenerator works with Qt 6.
+The project files are now using CMake instead of qmake.
 
+## Authors
+Current maintainer: Benjamin Terrier
+Original author: Valentin Gallouedec
 Translators: Vincent Hourdin
 
 ## License
@@ -59,32 +63,27 @@ along with astroGenerator.  If not, see <https://www.gnu.org/licenses/>.
 
 ## How to build
 ### Requirements
-Since the only dependancy is Qt 5, this should build on any platform where Qt 5 is available.
+Since the only dependancy is Qt 6, this should build on any platform where Qt 6 is available.
 However, it has mostly been tested on Window with MinGW.
 
 ### Build steps
-
-Generate translations:
-```cmd
-lrelease astrogenerator.pro
-```
 
 Build:
 ```cmd
 cd ..
 mkdir build-astrogenerator
 cd build-astrogenerator
-qmake ../astrogenerator/astrogenerator.pro
-mingw32-make
-mingw32-make install
-windeployqt astroGenerator.exe
+cmake ../astrogenerator
+cmake --build . -j
 ```
 
-The `make install` step will copy required files and assets in the build directory.
+### Create package
 
-### Linux, macOs and others
+```cmd
+cpack -G ZIP
+```
 
-The only shortcoming is the handling of deployments.
-On macOs you can replace `windeployqt` by `macdeployqt`.
+On Windows, this will create a zip file: `astrogenerator-<version>-win64.zip`
+The zip contains also the required Qt DLL and can be redistributed.
 
-On Linux, if you use your system installed Qt, you can skip this step.
+Support on other OS has not been tested.

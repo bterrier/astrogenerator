@@ -55,7 +55,7 @@ static void initTranslation()
 	}
 
 	translator = new QTranslator(qApp);
-	if (translator->load(QLocale(), "astroGenerator", "_", ":/i18n")) {
+	if (translator->load(QLocale(), "astroGenerator", "_", qApp->applicationDirPath() % "/translations")) {
 		qApp->installTranslator(translator);
 	}
 }
