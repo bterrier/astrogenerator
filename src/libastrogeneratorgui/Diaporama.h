@@ -16,12 +16,15 @@ class Diaporama : public QWidget
 public:
 	explicit Diaporama(Soiree *soiree);
 	void keyPressEvent(QKeyEvent *event);
+
 public slots:
+	void demarrer();
+
+private slots:
 	void afficher(int id);
 	void suivant();
 	void precedent();
 	void pause(int secondes);
-	void demarrer();
 
 private:
 	QVector<QWidget *> widgets;

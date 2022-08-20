@@ -84,7 +84,7 @@
        <height>250</height>
       </size>
      </property>
-     <layout class="QVBoxLayout" name="vLayout1">
+     <layout class="QVBoxLayout" name="vLayout2">
       <item>
        <widget class="QLabel" name="lblGenTitle">
         <property name="font">
@@ -140,7 +140,7 @@
        <height>250</height>
       </size>
      </property>
-     <layout class="QVBoxLayout" name="vLayout1">
+     <layout class="QVBoxLayout" name="vLayout3">
       <item>
        <widget class="QLabel" name="lblOpenTitle">
         <property name="font">
@@ -196,7 +196,7 @@
        <height>250</height>
       </size>
      </property>
-     <layout class="QVBoxLayout" name="vLayout1">
+     <layout class="QVBoxLayout" name="vLayout4">
       <item>
        <widget class="QLabel" name="lblCreateTitle">
         <property name="font">

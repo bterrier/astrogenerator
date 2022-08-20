@@ -171,6 +171,8 @@ FenPrincipal::FenPrincipal() :
 void FenPrincipal::creerActions()
 {
 	listeActions = new ActionsFenetre(this);
+
+	connect(listeActions->getActionEnregistrer(), &QAction::triggered, this, &FenPrincipal::saveAll);
 }
 void FenPrincipal::creerMenu()
 {
@@ -293,7 +295,7 @@ bool FenPrincipal::fermerOnglet(int index)
 
 			switch (ret) {
 			case QMessageBox::Save:
-				continuer = m_listeInterface.at(index)->getSoiree()->enregistrerSoiree();
+				continuer = save(m_listeInterface.at(index)->getSoiree());
 				break;
 			case QMessageBox::Discard:
 				continuer = true;
@@ -387,6 +389,60 @@ void FenPrincipal::closeEvent(QCloseEvent *event)
 		event->accept();
 	else
 		event->ignore();
+}
+
+void FenPrincipal::saveAll()
+{
+	for (auto interface : qAsConst(m_listeInterface)) {
+		auto night = interface->getSoiree();
+		// emit afficher(tr("Enregistrement de la soirée en cours..."));
+		if (night->shouldBeSaved()) // Si on doit réellement l'enregistrer
+		{
+			save(night);
+		}
+	}
+
+	QMessageBox::information(this, "Succès", "Enregistrement réussi.");
+}
+
+bool FenPrincipal::save(Soiree *night)
+{
+	if (night->getFile().isEmpty()) // si il n'y a pas de fichier raccordés à la soirée, alors on l'enregistre
+	{
+		QString fileName = QFileDialog::getSaveFileName(nullptr, tr("Enregistrer la soirée"), QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/soiree.soa", "Soirée d'observation astronomie (*.soa)");
+		if (!fileName.isEmpty()) {
+			if (!night->soireeToSoa(fileName)) {
+				qCritical() << "Echec de l'enregistrement de la soirée.";
+				return false;
+			} else {
+				night->setFile(fileName);
+				{
+					if (fileName.right(4) == ".soa" && QFile::exists(fileName)) {
+						QSqlQuery requete("SELECT COUNT(*) AS nbr FROM soireesRecentes WHERE fichier = :fichier");
+						requete.bindValue(":fichier", fileName);
+						requete.exec();
+						requete.next();
+						if (requete.value(0).toInt() == 0) {
+							requete.prepare("INSERT INTO soireesRecentes (fichier) VALUES(:fichier)");
+							requete.bindValue(":fichier", fileName);
+							requete.exec();
+						}
+					}
+				}
+				night->setPlanningOld(night->getPlanning());
+				return true;
+			}
+		}
+	} else {
+		if (!night->soireeToSoa(night->getFile())) {
+			qCritical() << "Echec de l'enregistrement de la soirée.";
+		} else {
+			night->setPlanningOld(night->getPlanning());
+			return true;
+		}
+	}
+
+	return false;
 }
 
 void FenPrincipal::ouvrirObjetsRemarquables()

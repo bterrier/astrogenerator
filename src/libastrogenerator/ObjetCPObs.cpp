@@ -2,7 +2,6 @@
 #include "ObjetCP.h"
 #include "ObjetObs.h"
 
-#include <QMessageBox>
 #include <QSqlQuery>
 #include <QVariant>
 
@@ -51,7 +50,7 @@ void ObjetCPObs::initialiser(QString ref)
 
 		m_ref = ref;
 	} else {
-		QMessageBox::critical(nullptr, tr("Objet introuvable"), tr("L'objet demandé est introuvable : ", "Suivi de l'objet introuvable") + ref);
+		qCritical() << "L'objet demandé est introuvable : " + ref;
 		m_valid = false;
 		m_nom = "";
 		m_type = "";

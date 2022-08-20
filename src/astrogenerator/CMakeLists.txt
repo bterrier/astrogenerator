@@ -19,6 +19,7 @@ add_executable(astroGenerator WIN32
 
 target_link_libraries(astroGenerator PRIVATE
     libastrogenerator
+    libastrogeneratorgui
 )
 
 install(TARGETS astroGenerator RUNTIME DESTINATION .)

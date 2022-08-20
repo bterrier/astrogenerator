@@ -2,18 +2,13 @@
 
 #include <cmath>
 
-#include <QDesktopServices>
-#include <QMessageBox>
 #include <QTextStream>
 
-#include <QApplication>
-#include <QFileDialog>
-#include <QGraphicsView>
+#include <QCoreApplication>
 #include <QSqlQuery>
 #include <QtXml>
 
 #include "Calculastro.h"
-#include "Carteciel.h"
 #include "Constantes.h"
 #include "HauteurMaxTemps.h"
 #include "ObjetCP.h"
@@ -169,8 +164,6 @@ void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime 
 	QMap<double, QString> objets_visibles1;
 	ObjetCP *objet(nullptr);
 
-	HauteurMaxTemps hauteurMax2;
-
 	QSqlQuery requeteCount("SELECT COUNT(*) as nbr FROM ngcic WHERE type <> '' AND magnitude <> 0 AND taille > 0 AND interet > 2" + sql);
 	requeteCount.next();
 	int nbResult(0);
@@ -182,7 +175,7 @@ void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime 
 		emit generation(7 + requete.at() * 25 / nbResult);
 
 		objet = new ObjetCP(requete.value(1).toString());
-		hauteurMax2 = Calculastro::hauteurMaxObjet(objet, debut, fin, lat, longi);
+		HauteurMaxTemps hauteurMax2 = Calculastro::hauteurMaxObjet(objet, debut, fin, lat, longi);
 
 		if (hauteurMax2.hauteurMax() > hMin) {
 			note = Calculastro::noterObjetVisible(requete.value(2).toString(), requete.value(8).toInt(), requete.value(6).toDouble(), diametre, niveau, hauteurMax2.hauteurMax(), requete.value(10).toInt(), notes); // on calcule sa note
@@ -447,7 +440,7 @@ void Soiree::supprimerObjet(int index)
 	if (index >= 0 && index < m_listeObjets.size())
 		m_listeObjets.erase(m_listeObjets.begin() + index);
 	else
-		QMessageBox::critical(nullptr, tr("Suppression impossible"), tr("L'index fourni pour la supression est invalide"));
+		qCritical() << "L'index fourni pour la supression est invalide";
 }
 QString Soiree::getPays() const
 {
@@ -488,7 +481,7 @@ void Soiree::monterObjet(int index)
 
 		m_listeObjets = trierPlanning(m_listeObjets);
 	} else
-		QMessageBox::critical(nullptr, tr("Erreur de modification"), tr("L'index de modification fournie est invalide"));
+		qCritical() << "L'index de modification fournie est invalide";
 }
 void Soiree::descendreObjet(int index)
 {
@@ -507,9 +500,9 @@ void Soiree::modifierDuree(int index, int duree)
 				m_listeObjets[i]->setFin(m_listeObjets[i]->getFin().addSecs(dif));
 			}
 		} else
-			QMessageBox::critical(nullptr, tr("Erreur de modification"), tr("Il est impossible de modifier l'objet avec la durée indiquée : %n min. Elle doit être comprise entre 1 et 20 min.", "", duree));
+			qCritical() << QStringLiteral("Il est impossible de modifier l'objet avec la durée indiquée : %1 min. Elle doit être comprise entre 1 et 20 min.").arg(duree);
 	} else
-		QMessageBox::critical(nullptr, tr("Erreur de modification"), tr("L'index fourni pour la modification est invalide"));
+		qCritical() << "L'index fourni pour la modification est invalide";
 }
 void Soiree::ajouterObjet(int index, ObjetCP *objetParam, int duree)
 { // INDEX : index de l'objet précédent REFERENCE : pour instancier Objet DUREE : duree de l'objet
@@ -534,12 +527,12 @@ void Soiree::ajouterObjet(int index, ObjetCP *objetParam, int duree)
 				m_listeObjets.push_back(objet);
 				m_listeObjets = trierPlanning(m_listeObjets);
 			} else
-				QMessageBox::critical(nullptr, tr("Ajout impossible"), tr("Il est impossible d'ajouter l'objet car il est trop bas sur l'horizon. Minimum 10°"));
+				qCritical() << "Il est impossible d'ajouter l'objet car il est trop bas sur l'horizon. Minimum 10°";
 		} else
-			QMessageBox::critical(nullptr, tr("Ajout impossible"), tr("L'objet demandé est introuvable"));
+			qCritical() << "L'objet demandé est introuvable";
 
 	} else
-		QMessageBox::critical(nullptr, tr("Erreur d'ajout"), tr("L'index fourni pour l'ajout de l'objet est invalide."));
+		qCritical() << "L'index fourni pour l'ajout de l'objet est invalide.";
 }
 void Soiree::ajouterObjet(int index, QString refPlanete, int duree)
 {
@@ -563,11 +556,11 @@ void Soiree::ajouterObjet(int index, QString refPlanete, int duree)
 				m_listeObjets.push_back(objet);
 				m_listeObjets = trierPlanning(m_listeObjets);
 			} else
-				QMessageBox::critical(nullptr, tr("Ajout impossible"), tr("Il est impossible d'ajouter l'objet car il est trop bas sur l'horizon."));
+				qCritical() << "Il est impossible d'ajouter l'objet car il est trop bas sur l'horizon.";
 		} else
-			QMessageBox::critical(nullptr, tr("Ajout impossible"), tr("L'objet demandé est introuvable"));
+			qCritical() << "L'objet demandé est introuvable";
 	} else
-		QMessageBox::critical(nullptr, tr("Erreur d'ajout"), tr("L'index fourni pour l'ajout de l'objet est invalide."));
+		qCritical() << "L'index fourni pour l'ajout de l'objet est invalide.";
 }
 void Soiree::ajouterObjet(ObjetObs *objet)
 {
@@ -588,52 +581,13 @@ void Soiree::ajouterObjet(ObjetObs *objet)
 				m_listeObjets.push_back(objet);
 				m_listeObjets = trierPlanning(m_listeObjets);
 			} else
-				QMessageBox::critical(nullptr, tr("Erreur"), tr("L'objet n'est pas assez haut au moment demandé pour pouvoir être ajouté dans la soirée."));
+				qCritical() << "L'objet n'est pas assez haut au moment demandé pour pouvoir être ajouté dans la soirée.";
 		} else
-			QMessageBox::critical(nullptr, tr("Erreur"), tr("L'objet n'est pas valide ou ne peut être placé ici"));
+			qCritical() << "L'objet n'est pas valide ou ne peut être placé ici";
 	} else
-		QMessageBox::critical(nullptr, tr("Erreur"), tr("La date de l'objet ne correspond pas avec la date de la soirée."));
+		qCritical() << "La date de l'objet ne correspond pas avec la date de la soirée.";
 }
 
-QStandardItemModel *Soiree::toModele() const
-{
-	QStandardItemModel *modele = new QStandardItemModel;
-	QStandardItem *reference(nullptr), *reference2(nullptr), *reference3(nullptr), *reference4(nullptr), *reference5(nullptr), *reference6(nullptr), *reference7(nullptr), *reference8(nullptr), *reference9(nullptr);
-	for (int i(0); i < m_listeObjets.count(); i++) {
-		reference = new QStandardItem(m_listeObjets.at(i)->nomComplet());
-		reference2 = new QStandardItem(m_listeObjets.at(i)->ref());
-		reference3 = new QStandardItem(m_listeObjets.at(i)->ascdr());
-		reference4 = new QStandardItem(m_listeObjets.at(i)->declinaison());
-		reference5 = new QStandardItem(QString::number(m_listeObjets.at(i)->magnitude()));
-		reference6 = new QStandardItem(Calculastro::abreviationToNom(m_listeObjets.at(i)->constellation()));
-		reference7 = new QStandardItem(m_listeObjets.at(i)->difficulte(true));
-		reference8 = new QStandardItem(m_listeObjets.at(i)->interet(true));
-		reference9 = new QStandardItem(m_listeObjets.at(i)->getDebut().toLocalTime().time().toString(tr("hh:mm")) + " à " + m_listeObjets.at(i)->getFin().toLocalTime().time().toString(tr("hh:mm")));
-
-		modele->setItem(i, 0, reference);
-		modele->setItem(i, 1, reference2);
-		modele->setItem(i, 2, reference3);
-		modele->setItem(i, 3, reference4);
-		modele->setItem(i, 4, reference5);
-		modele->setItem(i, 5, reference6);
-		modele->setItem(i, 6, reference7);
-		modele->setItem(i, 7, reference8);
-		modele->setItem(i, 8, reference9);
-
-		reference->appendRow(new QStandardItem(m_listeObjets.at(i)->ref()));
-	}
-	modele->setHeaderData(0, Qt::Horizontal, tr("Nom"));
-	modele->setHeaderData(1, Qt::Horizontal, tr("Référence"));
-	modele->setHeaderData(2, Qt::Horizontal, tr("Ascension droite"));
-	modele->setHeaderData(3, Qt::Horizontal, tr("Déclinaison"));
-	modele->setHeaderData(4, Qt::Horizontal, tr("Magnitude"));
-	modele->setHeaderData(5, Qt::Horizontal, tr("Constellation"));
-	modele->setHeaderData(6, Qt::Horizontal, tr("Difficulté"));
-	modele->setHeaderData(7, Qt::Horizontal, tr("Interêt"));
-	modele->setHeaderData(8, Qt::Horizontal, tr("Heure d'observation"));
-
-	return modele;
-}
 Soiree *Soiree::soaToSoiree(QString const &fileName)
 {
 	QFile soa(fileName);
@@ -651,7 +605,7 @@ Soiree *Soiree::soaToSoiree(QString const &fileName)
 		listInfosSoiree = infosSoiree.split("|");
 
 		if (listInfosSoiree.count() != 9) {
-			QMessageBox::critical(nullptr, tr("Fichier incorrect"), tr("Le fichier demandé est incorrect"));
+			qCritical() << "Le fichier demandé est incorrect";
 			return new Soiree;
 		} else {
 			oculaires = flux.readLine();
@@ -663,7 +617,7 @@ Soiree *Soiree::soaToSoiree(QString const &fileName)
 				ligne = flux.readLine();
 				listInfosObjet = ligne.split("|");
 				if (listInfosObjet.count() != 3) {
-					QMessageBox::critical(nullptr, tr("Fichier incorrect"), tr("Le fichier demandé est incorrect"));
+					qCritical() << "Le fichier demandé est incorrect";
 					return new Soiree;
 				}
 				if (listInfosObjet.at(0).at(0) != 'P') {
@@ -706,11 +660,10 @@ Soiree *Soiree::soaToSoiree(QString const &fileName)
 			soiree->setPlanningOld(planning);
 			soiree->setFile(fileName);
 
-			ajouterSoireeRecentes(fileName);
 			return soiree;
 		}
 	} else {
-		QMessageBox::critical(nullptr, tr("Erreur d'ouverture"), tr("Le fichier demandé est impossible à ouvrir : ", "Suivi du nom du fichier") + fileName);
+		qCritical() << "Le fichier demandé est impossible à ouvrir : " + fileName;
 		Soiree *soiree = new Soiree;
 		return soiree;
 	}
@@ -763,7 +716,7 @@ bool Soiree::hasChanged()
 		return false;
 	}
 }
-void Soiree::toXML() const
+void Soiree::toXML(QIODevice *device) const
 {
 	QLocale locale;
 	QDomDocument doc;
@@ -826,342 +779,9 @@ void Soiree::toXML() const
 	}
 	soiree.appendChild(listeObjet);
 
-	QString filename = QFileDialog::getSaveFileName(nullptr, tr("Sauver la soirée au format XML"), QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/soiree.xml", "Extensible Markup Language (*.xml)");
-	if (!filename.isEmpty()) {
-		QFile file(filename);
-		if (file.open(QIODevice::WriteOnly)) {
-			file.write(doc.toByteArray());
-			file.close();
-		} else {
-			QMessageBox::critical(nullptr, tr("ERROR: Failed to save file!"),
-			                      tr("Could not open file.\n") % file.errorString());
-		}
-	}
+	device->write(doc.toByteArray());
 }
-bool Soiree::paintPdf(QPrinter *printer)
-{
-	qreal mT(7), mG(7), mD(7);
-	const auto margins = printer->pageLayout().margins(QPageLayout::Millimeter);
-	mT = margins.top();
-	mG = margins.left();
-	mD = margins.right();
 
-	if (printer->isValid()) {
-		QSettings *user = new QSettings(NOM_EQUIPE, NOM_PROGRAMME);
-		// ON CREE LE PDF
-		double k(printer->resolution() / 25.4); // On crée le facteur de positionnement pour la résolution
-		QPainter painter(printer);
-		if (painter.isActive()) {
-			QStringList listeConseils;
-			listeConseils << tr("pensez à régler votre télescope") << tr("profitez-en pour prendre une boisson une chaude") << tr("profitez-en pour prendre un goûter") << tr("observez le ciel à l'oeil nu pendant ce temps") << tr("remplissez la fiche de note avec vos impressions d'observations") << tr("si besoin, réalignez votre chercheur");
-
-			// PAGE DE GARDE
-			QRectF rect;
-			painter.drawImage(52 * k - mG * k, 101 * k - mT * k, QImage(":/icons/bandeau-pdf"));
-			QFont font = painter.font();
-			font.setPointSize(7 * k);
-			font.setFamily("Arial");
-			font.setWeight(QFont::Bold);
-			painter.setFont(font);
-			// On écrit le titre de la soirée
-			painter.drawText(QRectF(52.1 * k - mG * k, 132.5 * k - mT * k, 105 * k, 20 * k), Qt::AlignCenter, tr("Soirée d'observation\n") + m_debut.toLocalTime().toString("d") + " " + QLocale().monthName(m_debut.toLocalTime().date().month()) + " " + m_debut.toLocalTime().toString("yyyy"));
-			// On écrit l'horaire
-			font.setWeight(QFont::Normal);
-			font.setPointSize(3 * k);
-			painter.setFont(font);
-			painter.drawText(QRectF(52.1 * k - mG * k, 152.5 * k - mT * k, 105 * k, 7 * k), Qt::AlignCenter, tr("De ") + m_debut.toLocalTime().toString(tr("hh'h'mm")) + tr(" à ") + m_fin.toLocalTime().toString(tr("hh'h'mm")));
-			// On écrit le nombre d'objets
-			painter.drawText(QRectF(52.1 * k - mG * k, 159.5 * k - mT * k, 105 * k, 7 * k), Qt::AlignCenter, QString::number(m_listeObjets.size()) + " " + tr("objets"));
-			// On écrit la ville et le pays
-			painter.drawText(QRectF(0, 250 * k - mT * k, (210 - mD - mG) * k, 7 * k), Qt::AlignRight, tr("Près de ") + m_ville + ", " + m_pays);
-			// On écrit les coordonnées
-			painter.drawText(QRectF(0, 257 * k - mT * k, (210 - mD - mG) * k, 7 * k), Qt::AlignRight, Calculastro::degreeToDms(m_lat) + " / " + Calculastro::degreeToDms(m_longi));
-			// On écrit le numéro de page
-			font.setPointSize(2 * k);
-			painter.setFont(font);
-			painter.drawText(QRectF(0, 0, (210 - mD - mG) * k, 7 * k), Qt::AlignRight, "1");
-
-			// PAGE 2
-			printer->newPage();
-			// On écrit le numéro de page
-			font.setPointSize(2 * k);
-			painter.setFont(font);
-			painter.drawText(QRectF(0, 0, (210 - mD - mG) * k, 7 * k), Qt::AlignRight, "2");
-			// On écrit l'intro
-			font.setPointSize(3.5 * k);
-			painter.setFont(font);
-			painter.drawText(QRectF(13 * k - mG * k, 17 * k - mT * k, (210 - mD - mG) * k, 25 * k), Qt::AlignJustify, tr("Avec les informations que vous avez rentrées, nous avons préparé un dossier avec toutes les\ninformations pour réussir votre soirée. Dans ce dossier vous trouverez beaucoup d'infos : une\nliste de conseils, le planning d'observation, une carte du ciel et enfin une page de notes.\nCe dossier est destiné à être imprimé. Bonne observation !"));
-			// On écrit le titre
-			font.setPointSize(6 * k);
-			font.setWeight(QFont::Bold);
-			painter.setFont(font);
-			painter.setPen(QColor(36, 42, 112));
-			painter.drawImage(QRectF(13 * k - mG * k, 45 * k - mT * k, 7 * k, 7 * k), QImage(":/icons/title-pdf.png"));
-			painter.drawText(QRectF(22 * k - mG * k, 45 * k - mT * k, (210 - mD - mG) * k, 10 * k), Qt::AlignLeft, tr("Checklist"));
-			painter.drawLine(13 * k - mG * k, 55 * k - mT * k, (210 - mD - mG - 13) * k, 55 * k - mT * k);
-			// On écrit le texte de la checklist
-			font.setPointSize(3 * k);
-			font.setWeight(QFont::Normal);
-			painter.setFont(font);
-			painter.setPen(QColor(0, 0, 0));
-			painter.drawText(QRectF(13 * k - mG * k, 59 * k - mT * k, (210 - mD - mG) * k, 5 * k), Qt::AlignLeft, tr("Avant de commencer à observer, pensez à prendre les objets suivants (cochez quand c'est fait) : "));
-			// On écrit les items
-			painter.drawRect(QRectF(15 * k, 68 * k - mT * k, 5 * k, 5 * k));
-			painter.drawText(QRectF(22 * k, 68 * k - mT * k, (210 - mD - mG) * k, 5 * k), Qt::AlignLeft, tr("Une lampe rouge"));
-
-			painter.drawRect(QRectF(15 * k, 75 * k - mT * k, 5 * k, 5 * k));
-			painter.drawText(QRectF(22 * k, 75 * k - mT * k, (210 - mD - mG) * k, 5 * k), Qt::AlignLeft, tr("Un laser"));
-
-			painter.drawRect(QRectF(15 * k, 82 * k - mT * k, 5 * k, 5 * k));
-			painter.drawText(QRectF(22 * k, 82 * k - mT * k, (210 - mD - mG) * k, 5 * k), Qt::AlignLeft, tr("Des vêtements chauds"));
-
-			painter.drawRect(QRectF(15 * k, 89 * k - mT * k, 5 * k, 5 * k));
-			painter.drawText(QRectF(22 * k, 89 * k - mT * k, (210 - mD - mG) * k, 5 * k), Qt::AlignLeft, tr("Une boisson chaude (ex : café)"));
-
-			painter.drawRect(QRectF(15 * k, 96 * k - mT * k, 5 * k, 5 * k));
-			painter.drawText(QRectF(22 * k, 96 * k - mT * k, (210 - mD - mG) * k, 5 * k), Qt::AlignLeft, tr("Un goûter"));
-
-			painter.drawRect(QRectF(15 * k, 103 * k - mT * k, 5 * k, 5 * k));
-			painter.drawText(QRectF(22 * k, 103 * k - mT * k, (210 - mD - mG) * k, 5 * k), Qt::AlignLeft, tr("Un stylo (pour noter vos observations)"));
-
-			painter.drawRect(QRectF(15 * k, 110 * k - mT * k, 5 * k, 5 * k));
-			painter.drawText(QRectF(22 * k, 110 * k - mT * k, (210 - mD - mG) * k, 5 * k), Qt::AlignLeft, tr("Les accessoires du télescope (oculaires, barlow, filtres etc.)"));
-			// On écrit l'autre titre (planning d'observation de la soirée)
-			font.setPointSize(6 * k);
-			font.setWeight(QFont::Bold);
-			painter.setFont(font);
-			painter.setPen(QColor(36, 42, 112));
-			painter.drawImage(QRectF(13 * k - mG * k, 125 * k - mT * k, 7 * k, 7 * k), QImage(":/icons/title-pdf.png"));
-			painter.drawText(QRectF(22 * k - mG * k, 125 * k - mT * k, (210 - mD - mG) * k, 10 * k), Qt::AlignLeft, tr("Planning d'observation de la soirée"));
-			painter.drawLine(13 * k - mG * k, 135 * k - mT * k, (210 - mD - mG - 13) * k, 135 * k - mT * k);
-			// On écrit la légende
-			font.setPointSize(3.7 * k);
-			font.setWeight(QFont::Normal);
-			painter.setFont(font);
-			painter.setPen(QColor(0, 0, 0));
-			painter.drawText(QRectF(13 * k - mG * k, 140 * k - mT * k, (210 - mD - mG) * k, 50 * k), Qt::AlignLeft, tr("Le planning suivant donne plusieurs informations pratiques pour faciliter le repérage et\nl'observation des objets. Au dessus vous avez le nom principal de l'objet suivi si nécessaire\ndes autres références. Les deux colonnes de gauche vous indiquent les informations fixes\nsur l'objet (AD, DEC, magnitude etc...). La troisième colonne fournit l'heure d'observation\nconseillée. Enfin la dernière colonne renseigne sur l'azimut et la hauteur de l'objet au début\nde son observation. Vous avez également un conseil sur l'oculaire à utiliser. Il peut arriver\nque des pauses s'intercalent entre deux objets, dans ces cas-là, un conseil vous est donné\npour patienter. Bonne observation !"));
-			// On écrit le bloc de mise en température
-			painter.setPen(QColor(136, 136, 136));
-			rect = QRectF(13 * k - mG * k, 192 * k - mT * k, (210 - mD - mG - 13) * k, 8 * k);
-			painter.fillRect(rect, QColor(238, 238, 238));
-			painter.drawLine(rect.topLeft(), rect.topRight());
-			painter.drawLine(rect.topRight(), rect.bottomRight());
-			painter.drawLine(rect.bottomRight(), rect.bottomLeft());
-			painter.drawLine(rect.bottomLeft(), rect.topLeft());
-			painter.setPen(QColor(0, 0, 0));
-			painter.drawText(QRectF(13 * k - mG * k, 192.3 * k - mT * k, (210 - mD - mG - 13) * k, 8 * k), Qt::AlignCenter, tr("Conseil : Sortez votre télescope vers ") + m_debut.addSecs(-Calculastro::miseEnTemperature(m_diametre) * 60).toString("hh'h'mm") + tr(" pour le mettre en température"));
-			// On écrit tous les autres blocs dans une boucle
-
-			int tL(204), page(2); // Le point en haut à gauche du premier bloc
-			QString icone;
-			QVector<double> hauAzi;
-			for (int i(0); i < m_listeObjets.count(); i++) { // [FAIRE]  oculaires
-				if (tL + 28 > 285) {
-					printer->newPage();
-					page++;
-					tL = 27;
-					// On écrit le numéro de page
-					font.setPointSize(2 * k);
-					painter.setFont(font);
-					painter.drawText(QRectF(0, 0, (210 - mD - mG) * k, 7 * k), Qt::AlignRight, QString::number(page));
-				}
-				if (i > 0 && (m_listeObjets.at(i)->getDebut().toSecsSinceEpoch() - m_listeObjets.at(i - 1)->getFin().toSecsSinceEpoch()) > user->value("generateur/pauseMin", TEMPS_ESPACE).toUInt() * 60) {
-					// Si on est pas au premier objet et que le temps entre cet objet et celui d'avant est supérieur à TEMPS_ESPACE, alors on affiche une pause
-					int pause = m_listeObjets.at(i)->getDebut().toSecsSinceEpoch() - m_listeObjets.at(i - 1)->getFin().toSecsSinceEpoch();
-					pause = (int)pause / 60;
-					painter.setPen(QColor(136, 136, 136));
-					rect = QRectF(13 * k - mG * k, tL * k - mT * k, (210 - mD - mG - 13) * k, 6 * k);
-					painter.fillRect(rect, QColor(238, 238, 238));
-					painter.drawLine(rect.topLeft(), rect.topRight());
-					painter.drawLine(rect.topRight(), rect.bottomRight());
-					painter.drawLine(rect.bottomRight(), rect.bottomLeft());
-					painter.drawLine(rect.bottomLeft(), rect.topLeft());
-					painter.setPen(QColor(0, 0, 0));
-					font.setPointSize(2.2 * k);
-					painter.setFont(font);
-					painter.drawText(QRectF(13 * k - mG * k, tL * k - mT * k, (210 - mD - mG - 13) * k, 6 * k), Qt::AlignCenter, tr("Pause de ") + QString::number(pause) + tr(" min. Conseil : ") + listeConseils.at(QRandomGenerator::global()->bounded(listeConseils.size())));
-					tL += 10;
-					if (tL + 28 > 285) {
-						printer->newPage();
-						page++;
-
-						// On écrit le numéro de page
-						font.setPointSize(2 * k);
-						painter.setFont(font);
-						painter.drawText(QRectF(0, 0, (210 - mD - mG) * k, 7 * k), Qt::AlignRight, QString::number(page));
-
-						tL = 27;
-					}
-				}
-				if (QFile::exists("icones/" + m_listeObjets.at(i)->ref() + ".jpg"))
-					icone = "icones/" + m_listeObjets.at(i)->ref() + ".jpg";
-				else
-					icone = "icones/default.png";
-
-				painter.setPen(QColor(136, 136, 136));
-				// Rectangle principal
-				painter.drawRect(QRectF(13 * k - mG * k, tL * k - mT * k, (210 - mD - mG - 13) * k, 28 * k));
-				// Image
-				painter.drawImage(QRectF(13 * k - mG * k, tL * k - mT * k, 28 * k, 28 * k), QImage(icone));
-				// Nom de l'objet
-				font.setPointSize(2.8 * k);
-				painter.setFont(font);
-				rect = QRectF(45 * k - mG * k, (tL + 1) * k - mT * k, (210 - mD - mG - 45) * k, 5 * k);
-				painter.fillRect(rect, QColor(238, 238, 238));
-				painter.drawLine(rect.topLeft(), rect.topRight());
-				painter.drawLine(rect.topRight(), rect.bottomRight());
-				painter.drawLine(rect.bottomRight(), rect.bottomLeft());
-				painter.drawLine(rect.bottomLeft(), rect.topLeft());
-				painter.setPen(QColor(0, 0, 0));
-				painter.drawText(QRectF(46 * k - mG * k, (tL + 1.3) * k - mT * k, (210 - mD - mG - 46) * k, 5 * k), Qt::AlignLeft, m_listeObjets.at(i)->nomComplet());
-				// Constellation
-				font.setPointSize(1.6 * k);
-				painter.setFont(font);
-				painter.drawText(QRectF(46 * k - mG * k, (tL + 1.75) * k - mT * k, (210 - mD - mG - 48) * k, 5 * k), Qt::AlignRight, Calculastro::abreviationToNom(m_listeObjets.at(i)->constellation()));
-				// On écrit les infos de l'objet
-				font.setPointSize(2.2 * k);
-				painter.setFont(font);
-				painter.drawText(QRectF(48 * k - mG * k, (tL + 9) * k - mT * k, 30 * k, 4 * k), Qt::AlignLeft, tr("AD : ") + m_listeObjets.at(i)->ascdr());
-				painter.drawText(QRectF(48 * k - mG * k, (tL + 14) * k - mT * k, 30 * k, 4 * k), Qt::AlignLeft, tr("DEC : ") + m_listeObjets.at(i)->declinaison());
-				painter.drawText(QRectF(48 * k - mG * k, (tL + 19) * k - mT * k, 30 * k, 4 * k), Qt::AlignLeft, tr("Magnitude : ") + QString::number(m_listeObjets.at(i)->magnitude()));
-
-				if (m_listeObjets.at(i)->type() == "Planète") {
-					ObjetPlaneteObs *planete = qobject_cast<ObjetPlaneteObs *>(m_listeObjets.at(i));
-					painter.drawText(QRectF(80 * k - mG * k, (tL + 9) * k - mT * k, 40 * k, 4 * k), Qt::AlignLeft, tr("Illumination : ") + QString::number(planete->illumination()) + "%");
-					painter.drawText(QRectF(80 * k - mG * k, (tL + 14) * k - mT * k, 40 * k, 4 * k), Qt::AlignLeft, tr("Distance : ") + QString::number(planete->distance()) + " UA");
-					painter.drawText(QRectF(80 * k - mG * k, (tL + 19) * k - mT * k, 40 * k, 4 * k), Qt::AlignLeft, tr("Type : ") + m_listeObjets.at(i)->type());
-				} else {
-					painter.drawText(QRectF(80 * k - mG * k, (tL + 9) * k - mT * k, 40 * k, 4 * k), Qt::AlignLeft, tr("Interêt : ") + m_listeObjets.at(i)->interet(true));
-					painter.drawText(QRectF(80 * k - mG * k, (tL + 14) * k - mT * k, 40 * k, 4 * k), Qt::AlignLeft, tr("Taille : ") + QString::number(m_listeObjets.at(i)->taille()) + "'");
-					painter.drawText(QRectF(80 * k - mG * k, (tL + 19) * k - mT * k, 40 * k, 4 * k), Qt::AlignLeft, tr("Type : ") + m_listeObjets.at(i)->type());
-				}
-
-				painter.drawText(QRectF(124 * k - mG * k, (tL + 9) * k - mT * k, 30 * k, 4 * k), Qt::AlignLeft, tr("Observer entre"));
-				font.setPointSize(3 * k);
-				painter.setFont(font);
-				painter.drawText(QRectF(124 * k - mG * k, (tL + 14) * k - mT * k, 30 * k, 7 * k), Qt::AlignLeft, m_listeObjets.at(i)->getDebut().toLocalTime().toString("hh'h'mm") + tr(" et ") + m_listeObjets.at(i)->getFin().toLocalTime().toString("hh'h'mm"));
-				// On trace la ligne de séparation
-				painter.setPen(QColor(136, 136, 136));
-				painter.drawLine(158 * k - mG * k, (tL + 9) * k - mT * k, 158 * k - mG * k, (tL + 23) * k - mT * k);
-				// On écrit les infos de droite (hauteur, azimut,oculaire)
-				painter.setPen(QColor(0, 0, 0));
-				font.setPointSize(2.2 * k);
-				painter.setFont(font);
-				hauAzi = hauteurAzimutObjet(i);
-				painter.drawText(QRectF(163 * k - mG * k, (tL + 9) * k - mT * k, 40 * k, 4 * k), Qt::AlignLeft, tr("Hauteur : ") + Calculastro::degreeToDms(hauAzi.at(0)));
-				painter.drawText(QRectF(163 * k - mG * k, (tL + 14) * k - mT * k, 40 * k, 4 * k), Qt::AlignLeft, tr("Azimut : ") + Calculastro::degreeToDms(hauAzi.at(1)));
-				painter.drawText(QRectF(163 * k - mG * k, (tL + 19) * k - mT * k, 40 * k, 4 * k),
-				                 Qt::AlignLeft, tr("Oculaire : ") + Calculastro::getOculaire(m_listeObjets.at(i), m_diametre, m_focale, Settings::instance().eyepieces()));
-
-				tL += 32;
-			}
-			printer->newPage(); // On change de page
-			page++;
-			// On écrit le numéro de page
-			font.setPointSize(2 * k);
-			painter.setFont(font);
-			painter.drawText(QRectF(0, 0, (210 - mD - mG) * k, 7 * k), Qt::AlignRight, QString::number(page));
-			// On écrit le titre : CARTE DU CIEL
-			font.setPointSize(6 * k);
-			font.setWeight(QFont::Bold);
-			painter.setFont(font);
-			painter.setPen(QColor(36, 42, 112));
-			painter.drawImage(QRectF(13 * k - mG * k, 10 * k - mT * k, 7 * k, 7 * k), QImage(":/icons/title-pdf.png"));
-			painter.drawText(QRectF(22 * k - mG * k, 10 * k - mT * k, (210 - mD - mG) * k, 10 * k), Qt::AlignLeft, tr("Carte du ciel"));
-			painter.drawLine(13 * k - mG * k, 20 * k - mT * k, (210 - mD - mG - 13) * k, 20 * k - mT * k);
-			// On écrit la légende
-			font.setPointSize(3.7 * k);
-			font.setWeight(QFont::Normal);
-			painter.setFont(font);
-			painter.setPen(QColor(0, 0, 0));
-			QDateTime moitieObs;
-			moitieObs.setSecsSinceEpoch((m_debut.toSecsSinceEpoch() + m_fin.toSecsSinceEpoch()) / 2);
-			painter.drawText(QRectF(13 * k - mG * k, 25 * k - mT * k, (210 - mD - mG) * k, 10 * k), Qt::AlignLeft, tr("Carte du ciel à la moitié de la soirée d'observation(") + moitieObs.toString("hh'h'mm") + tr("). Seuls les objets de la soirée sont\nplacés."));
-			// On dessine l'image
-			QGraphicsView *vue = new QGraphicsView(new Carteciel(this));
-			vue->setBackgroundBrush(QColor(255, 255, 255));
-			vue->setFixedSize(800, 800);
-			QPixmap *pixmap = new QPixmap(800, 800);
-			QPainter *painterImage = new QPainter(pixmap);
-			painterImage->setRenderHint(QPainter::Antialiasing);
-			vue->render(painterImage, QRectF(0, 0, 800, 800), QRect(0, 0, 800, 800));
-			painterImage->end();
-			painter.drawImage(QRectF(13 * k - mG * k, 45 * k - mT * k, 185 * k, 185 * k), pixmap->toImage());
-
-			// ON FAIT LES DEUX PAGES DE NOTES
-			printer->newPage();
-			page++;
-			// On écrit le numéro de page
-			font.setPointSize(2 * k);
-			painter.setFont(font);
-			painter.drawText(QRectF(0, 0, (210 - mD - mG) * k, 7 * k), Qt::AlignRight, QString::number(page));
-			// Ecriture du titre
-			font.setPointSize(6 * k);
-			font.setWeight(QFont::Bold);
-			painter.setFont(font);
-			painter.setPen(QColor(36, 42, 112));
-			painter.drawImage(QRectF(13 * k - mG * k, 10 * k - mT * k, 7 * k, 7 * k), QImage(":/icons/title-pdf.png"));
-			painter.drawText(QRectF(22 * k - mG * k, 10 * k - mT * k, (210 - mD - mG) * k, 10 * k), Qt::AlignLeft, tr("Pages de notes"));
-			painter.drawLine(13 * k - mG * k, 20 * k - mT * k, (210 - mD - mG - 13) * k, 20 * k - mT * k);
-			// Ecriture des pointillés
-			font.setPointSize(3.7 * k);
-			font.setWeight(QFont::Normal);
-			painter.setFont(font);
-			painter.setPen(QColor(200, 200, 200));
-			QString pointilles;
-			for (int j(1); j <= 5217; j++) {
-				pointilles += "-";
-				if (j % 111 == 0 && j > 0)
-					pointilles += "\n";
-			}
-			painter.drawText(QRectF(13 * k - mG * k, 25 * k - mT * k, (210 - mD - mG) * k, 250 * k), Qt::AlignLeft, pointilles);
-			printer->newPage();
-			page++;
-			// On écrit le numéro de page
-			painter.setPen(QColor(0, 0, 0));
-			font.setPointSize(2 * k);
-			painter.setFont(font);
-			painter.drawText(QRectF(0, 0, (210 - mD - mG) * k, 7 * k), Qt::AlignRight, QString::number(page));
-			// On met les pointillés
-			painter.setPen(QColor(200, 200, 200));
-			font.setPointSize(3.7 * k);
-			painter.setFont(font);
-			painter.drawText(QRectF(13 * k - mG * k, 10 * k - mT * k, (210 - mD - mG) * k, 250 * k), Qt::AlignLeft, pointilles);
-
-			return true;
-		} else
-			return false;
-	} else
-		return false;
-}
-void Soiree::toPDF()
-{
-	QString fileName = QFileDialog::getSaveFileName(nullptr, tr("Exporter la soirée en PDF"), QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/soiree-pdf.pdf", "*.pdf");
-	if (!fileName.isEmpty()) {
-		QApplication::setOverrideCursor(Qt::WaitCursor);
-		int mT(7), mG(7), mD(7), mB(7); // On crée les marges (en millimètres)
-
-		if (QFileInfo(fileName).suffix().isEmpty())
-			fileName.append(".pdf");
-
-		QPrinter printer(QPrinter::ScreenResolution);
-		printer.setOutputFormat(QPrinter::PdfFormat);
-		printer.setOutputFileName(fileName);
-		printer.setPageMargins(QMarginsF(mG, mT, mD, mB), QPageLayout::Millimeter);
-
-		QApplication::restoreOverrideCursor();
-
-		if (printer.isValid()) {
-			if (paintPdf(&printer)) // ON DIT QUE TOUT S'EST BIEN PASSE
-			{
-				QMessageBox::information(nullptr, tr("Enregistrement réussi"), tr("La soirée a bien été enregistrée au format PDF"));
-				QDesktopServices::openUrl(QUrl::fromLocalFile(fileName));
-			}
-		} else {
-			QMessageBox::critical(nullptr, tr("Erreur d'ouverture"), tr("Erreur d'ouverture, le fichier est-il lisible ?"));
-		}
-	}
-}
 QVector<double> Soiree::hauteurAzimutObjet(int index) const
 {
 	QVector<double> hauteurAzimut;
@@ -1169,52 +789,6 @@ QVector<double> Soiree::hauteurAzimutObjet(int index) const
 
 	hauteurAzimut = Calculastro::hauteurAzimutDegree(objet->getDebut().date(), objet->getDebut().time(), objet->ascdrDouble(), objet->decDouble(), m_lat, m_longi);
 	return hauteurAzimut;
-}
-bool Soiree::ajouterSoireeRecentes(const QString &fileName)
-{
-	if (fileName.right(4) == ".soa" && QFile::exists(fileName)) {
-		QSqlQuery requete("SELECT COUNT(*) AS nbr FROM soireesRecentes WHERE fichier = :fichier");
-		requete.bindValue(":fichier", fileName);
-		requete.exec();
-		requete.next();
-		if (requete.value(0).toInt() == 0) {
-			requete.prepare("INSERT INTO soireesRecentes (fichier) VALUES(:fichier)");
-			requete.bindValue(":fichier", fileName);
-			return requete.exec();
-		} else
-			return false;
-	} else
-		return false;
-}
-bool Soiree::enregistrerSoiree()
-{
-	if (m_file == "") // si il n'y a pas de fichier raccordés à la soirée, alors on l'enregistre
-	{
-		QString fileName = QFileDialog::getSaveFileName(nullptr, tr("Enregistrer la soirée"), QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/soiree.soa", "Soirée d'observation astronomie (*.soa)");
-		if (fileName != "") {
-			if (!soireeToSoa(fileName)) {
-				QMessageBox::critical(nullptr, tr("Echec"), tr("Echec de l'enregistrement de la soirée."));
-				return false;
-			} else {
-				m_listeObjetsOld = m_listeObjets;
-				m_file = fileName;
-				ajouterSoireeRecentes(fileName);
-				return true;
-			}
-		} else
-			return false;
-	} else {
-		if (QFile::exists(m_file)) // Si le fichier existe on le supprime
-			QFile::remove(m_file);
-
-		if (!soireeToSoa(m_file)) {
-			QMessageBox::critical(nullptr, tr("Echec"), tr("Echec de l'enregistrement de la soirée."));
-			return false;
-		} else {
-			m_listeObjetsOld = m_listeObjets;
-			return true;
-		}
-	}
 }
 bool Soiree::shouldBeSaved()
 {

@@ -3,12 +3,14 @@
 
 #include <QCheckBox>
 #include <QComboBox>
+#include <QDateEdit>
 #include <QDialog>
 #include <QFormLayout>
 #include <QLabel>
 #include <QProgressBar>
+#include <QSpinBox>
 
-#include "FenPrincipal.h"
+#include "Soiree.h"
 
 class FenCreerSoiree : public QDialog
 {

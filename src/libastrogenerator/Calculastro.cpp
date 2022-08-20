@@ -1,11 +1,9 @@
 #include "Calculastro.h"
-#include "Constantes.h"
 
 #include <QtMath>
 
-#include <QApplication>
+#include <QCoreApplication>
 #include <QFile>
-#include <QMessageBox>
 #include <QSqlQuery>
 #include <QStringBuilder>
 #include <QTextStream>
@@ -459,14 +457,14 @@ QMap<char, double> Calculastro::getLBR(double j2000, QString planete)
 	else if (planete == "terre")
 		ext = "ear";
 	else {
-		QMessageBox::critical(nullptr, QObject::tr("Erreur"), QObject::tr("La planète demandée n'existe pas. Le programme va fermer."));
+		qCritical() << "La planète demandée n'existe pas. Le programme va fermer.";
 		qApp->exit();
 	}
 
 	// Ouverture du fichier
 	QFile fichier("VSOP87/VSOP87B." + ext);
 	if (!fichier.open(QIODevice::ReadOnly | QIODevice::Text))
-		QMessageBox::critical(nullptr, QObject::tr("Erreur d'ouverture", "N'arrive pas à ouvrir un fichier"), "Le fichier VSOP87/VSOP87B." + ext + " est impossible à ouvrir. Réésayer.");
+		qCritical() << "Le fichier VSOP87/VSOP87B." + ext + " est impossible à ouvrir. Réésayer.";
 	QTextStream flux(&fichier);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	flux.setCodec("UTF-8");
@@ -579,7 +577,7 @@ QString Calculastro::referencePlaneteToNom(QString ref, bool read)
 		retour = QObject::tr("neptune");
 	else {
 		retour = "mercure";
-		QMessageBox::critical(nullptr, QObject::tr("Problème de référence"), QObject::tr("La référence de la planète est inconnue. Contacter le developpeur."));
+		qCritical() << "La référence de la planète est inconnue. Contacter le developpeur.";
 	}
 	if (read)
 		retour = retour.at(0).toUpper() + retour.right(retour.count() - 1); // On met en majuscule la 1ere lettre

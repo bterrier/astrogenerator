@@ -6,11 +6,19 @@
 class HauteurMaxTemps
 {
 public:
-	HauteurMaxTemps();
-	HauteurMaxTemps(QDateTime temps, double hauteurMax);
-	QDateTime temps() const;
-	double hauteurMax() const;
-	void setDateTime(QDateTime date);
+	HauteurMaxTemps(const QDateTime &temps, double hauteurMax);
+
+	[[nodiscard]] QDateTime temps() const
+	{
+		return m_temps;
+	}
+
+	[[nodiscard]] constexpr double hauteurMax() const noexcept
+	{
+		return m_hauteurMax;
+	}
+
+	void setDateTime(const QDateTime &date);
 	void setHauteurMax(double hauteur);
 
 private:

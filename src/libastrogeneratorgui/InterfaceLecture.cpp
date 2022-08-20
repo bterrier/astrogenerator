@@ -1,35 +1,42 @@
 #include "InterfaceLecture.h"
+
+#include <QStandardPaths>
+#include <QStringBuilder>
+
 #include "ActionsFenetre.h"
 #include "Calculastro.h"
 #include "Carteciel.h"
 #include "Constantes.h"
 #include "Diaporama.h"
-#include "ObjetCPObs.h"
-#include "ObjetPlaneteObs.h"
 #include "Soiree.h"
 
 #include <QFile>
+#include <QFileDialog>
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QInputDialog>
 #include <QLabel>
 #include <QMessageBox>
+#include <QPageLayout>
 #include <QPrintDialog>
+#include <QPrinter>
 #include <QToolBar>
 
+#include "nightprinter.h"
 #include "skymapdialog.h"
 
 #include <QDebug>
 
 InterfaceLecture::InterfaceLecture(Soiree *soiree, ActionsFenetre *listeActionsParam, QWidget *parent) :
-    Interface(listeActionsParam, parent)
+    Interface(listeActionsParam, parent),
+    m_model(new NightModel(this))
 {
 	m_soiree = soiree;
 	m_active = true; // On considère qu'à sa construction l'interface est active
-	m_modele = soiree->toModele();
+	m_model->setNight(soiree);
 	m_carte = new Carteciel(soiree);
 	m_vue = new QTableView;
-	m_vue->setModel(m_modele);
+	m_vue->setModel(m_model);
 	m_vue->resizeColumnsToContents(); // Adapte la largeur des colonnes en fonction de leur contenu
 	m_vue->setCornerButtonEnabled(false);
 	m_vue->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -74,7 +81,7 @@ InterfaceLecture::InterfaceLecture(Soiree *soiree, ActionsFenetre *listeActionsP
 	connect(m_listeActions->getCarteCouleurFond(), &QAction::triggered, this, &InterfaceLecture::setCouleurFond);
 	connect(m_listeActions->getCarteCouleurLegende(), &QAction::triggered, this, &InterfaceLecture::setCouleurLegende);
 	connect(m_listeActions->getCarteCouleurObjet(), &QAction::triggered, this, &InterfaceLecture::setCouleurObjet);
-	connect(m_listeActions->getActionEnregistrer(), &QAction::triggered, this, &InterfaceLecture::enregistrerSoiree);
+	//	connect(m_listeActions->getActionEnregistrer(), &QAction::triggered, this, &InterfaceLecture::enregistrerSoiree);
 	connect(m_listeActions->getActionCarteCiel(), &QAction::triggered, this, &InterfaceLecture::carteCiel);
 	connect(m_listeActions->getActionDiaporama(), &QAction::triggered, this, &InterfaceLecture::diaporama);
 	connect(m_listeActions->getActionExporterXML(), &QAction::triggered, this, &InterfaceLecture::toXML);
@@ -85,7 +92,7 @@ InterfaceLecture::InterfaceLecture(Soiree *soiree, ActionsFenetre *listeActionsP
 void InterfaceLecture::afficherInfosObjet(QModelIndex cells)
 {
 	if (m_active) {
-		QString ref = m_modele->item(cells.row(), 1)->text();
+		QString ref = m_model->index(cells.row(), 1).data().toString();
 		int index = m_soiree->indexFromRef(ref);
 
 		ObjetObs *objet = m_soiree->getPlanning().at(index);
@@ -136,14 +143,13 @@ void InterfaceLecture::monterObjet()
 
 			if (reponse == QMessageBox::Yes) {
 				int ligne = m_vue->currentIndex().row();
-				QString ref = m_modele->item(ligne, 1)->text();
+				QString ref = m_model->index(ligne, 1).data().toString();
 
 				int index = m_soiree->indexFromRef(ref);
 
 				if (index >= 0) {
 					m_soiree->monterObjet(index);
-					m_modele = m_soiree->toModele();
-					m_vue->setModel(m_modele);
+					m_model->reload();
 					griserActions();
 					emit afficher(tr("L'objet a été monté"));
 				}
@@ -159,13 +165,12 @@ void InterfaceLecture::descendreObjet()
 
 			if (reponse == QMessageBox::Yes) {
 				int ligne = m_vue->currentIndex().row();
-				QString ref = m_modele->item(ligne, 1)->text();
+				QString ref = m_model->index(ligne, 1).data().toString();
 
 				int index = m_soiree->indexFromRef(ref);
 				if (index > -1) {
 					m_soiree->descendreObjet(index);
-					m_modele = m_soiree->toModele();
-					m_vue->setModel(m_modele);
+					m_model->reload();
 					griserActions();
 					emit afficher(tr("L'objet a été descendu"));
 				}
@@ -179,13 +184,12 @@ void InterfaceLecture::supprimerObjet()
 		if (m_vue->currentIndex().isValid()) {
 			int reponse = QMessageBox::question(nullptr, tr("Confirmer"), tr("Voulez-vous vraiment supprimer l'objet ?"), QMessageBox ::Yes | QMessageBox::No);
 			if (reponse == QMessageBox::Yes) {
-				QString ref = m_modele->item(m_vue->currentIndex().row(), 1)->text();
+				QString ref = m_model->index(m_vue->currentIndex().row(), 1).data().toString();
 
 				int index = m_soiree->indexFromRef(ref);
 				if (index > -1) {
 					m_soiree->supprimerObjet(index);
-					m_modele = m_soiree->toModele();
-					m_vue->setModel(m_modele);
+					m_model->reload();
 					griserActions();
 					emit afficher(tr("L'objet a été supprimé"));
 				}
@@ -200,13 +204,12 @@ void InterfaceLecture::modifierObjet()
 			bool *ok = new bool;
 			int reponse = QInputDialog::getInt(nullptr, tr("Modifier la durée"), tr("Quelle est la nouvelle durée ? (min)"), 5, DUREE_OBJET_MIN, DUREE_OBJET_MAX, 1, ok);
 			if (*ok == true) {
-				QString ref = m_modele->item(m_vue->currentIndex().row(), 1)->text();
+				QString ref = m_model->index(m_vue->currentIndex().row(), 1).data().toString();
 
 				int index = m_soiree->indexFromRef(ref);
 				if (index > -1) {
 					m_soiree->modifierDuree(index, reponse);
-					m_modele = m_soiree->toModele();
-					m_vue->setModel(m_modele);
+					m_model->reload();
 					griserActions();
 					emit afficher(tr("L'objet a été modifié"));
 				}
@@ -227,13 +230,12 @@ void InterfaceLecture::ajouterPlanete()
 				if (index == -1)
 					qDebug() << "[ERREUR INTERNE] ajouterPlanete() dans InterfaceLecture";
 				else {
-					QString ref = m_modele->item(m_vue->currentIndex().row(), 1)->text();
+					QString ref = m_model->index(m_vue->currentIndex().row(), 1).data().toString();
 					int indexPlace = m_soiree->indexFromRef(ref);
 
 					m_soiree->ajouterObjet(indexPlace, "P" + QString::number(index + 1), TEMPS_OBS_DEFAUT);
 
-					m_modele = m_soiree->toModele();
-					m_vue->setModel(m_modele);
+					m_model->reload();
 					griserActions();
 					emit afficher(tr("La planète a été ajoutée"));
 				}
@@ -250,26 +252,24 @@ void InterfaceLecture::ajouterObjet()
 			QString reponse = QInputDialog::getText(nullptr, tr("Ajouter un objet"), tr("Quel objet ajouter ? (NGC****, M** ou P*)"), QLineEdit::Normal, "", &ok);
 			if (ok == true) {
 				if (reponse.at(0) == 'P') {
-					QString ref = m_modele->item(m_vue->currentIndex().row(), 1)->text();
+					QString ref = m_model->index(m_vue->currentIndex().row(), 1).data().toString();
 
 					int index = m_soiree->indexFromRef(ref);
 					if (index > -1) {
 						m_soiree->ajouterObjet(index, reponse, TEMPS_OBS_DEFAUT);
-						m_modele = m_soiree->toModele();
-						m_vue->setModel(m_modele);
+						m_model->reload();
 						griserActions();
 						emit afficher(tr("La planète a été ajoutée"));
 					}
 				} else {
 					ObjetCP *objet = new ObjetCP(reponse);
 					if (objet->isValid()) {
-						QString ref = m_modele->item(m_vue->currentIndex().row(), 1)->text();
+						QString ref = m_model->index(m_vue->currentIndex().row(), 1).data().toString();
 
 						int index = m_soiree->indexFromRef(ref);
 						if (index > -1) {
 							m_soiree->ajouterObjet(index, objet, TEMPS_OBS_DEFAUT);
-							m_modele = m_soiree->toModele();
-							m_vue->setModel(m_modele);
+							m_model->reload();
 							griserActions();
 							emit afficher(tr("L'objet a été ajouté"));
 						}
@@ -304,18 +304,18 @@ void InterfaceLecture::setCouleurObjet()
 	if (m_active)
 		m_carte->setCouleurObjet();
 }
-void InterfaceLecture::enregistrerSoiree()
-{
-	if (m_active) {
-		emit afficher(tr("Enregistrement de la soirée en cours..."));
-		if (m_soiree->shouldBeSaved()) // Si on doit réellement l'enregistrer
-		{
-			m_soiree->enregistrerSoiree(); // On l'enregistre
-			QMessageBox::information(this, tr("Succès"), tr("Enregistrement réussi."));
-			griserActions();
-		}
-	}
-}
+// void InterfaceLecture::enregistrerSoiree()
+//{
+//	if (m_active) {
+//		emit afficher(tr("Enregistrement de la soirée en cours..."));
+//		if (m_soiree->shouldBeSaved()) // Si on doit réellement l'enregistrer
+//		{
+//			m_soiree->enregistrerSoiree(); // On l'enregistre
+//			QMessageBox::information(this, tr("Succès"), tr("Enregistrement réussi."));
+//			griserActions();
+//		}
+//	}
+// }
 void InterfaceLecture::carteCiel()
 {
 	if (m_active) {
@@ -355,13 +355,23 @@ void InterfaceLecture::diaporama()
 
 void InterfaceLecture::toXML()
 {
-	if (m_active)
-		m_soiree->toXML();
+	if (m_active) {
+		QString filename = QFileDialog::getSaveFileName(nullptr, tr("Sauver la soirée au format XML"), QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/soiree.xml", "Extensible Markup Language (*.xml)");
+		if (!filename.isEmpty()) {
+			QFile file(filename);
+			if (file.open(QIODevice::WriteOnly)) {
+				m_soiree->toXML(&file);
+				file.close();
+			} else {
+				qCritical() << "Could not open file.\n" % file.errorString();
+			}
+		}
+	}
 }
 void InterfaceLecture::toPDF()
 {
 	if (m_active)
-		m_soiree->toPDF();
+		NightPrinter::toPDF(m_soiree);
 }
 
 Soiree *InterfaceLecture::getSoiree()
@@ -441,5 +451,5 @@ void InterfaceLecture::imprimer()
 	if (dialog->exec() != QDialog::Accepted)
 		return;
 
-	m_soiree->paintPdf(printer);
+	// m_soiree->paintPdf(printer);
 }

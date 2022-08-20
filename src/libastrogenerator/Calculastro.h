@@ -9,7 +9,6 @@
 #include <QVector>
 
 #include "HauteurMaxTemps.h"
-#include "ObjetCPObs.h"
 #include "ObjetObs.h"
 #include "eyepiece.h"
 #include "settings.h"

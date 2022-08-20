@@ -1,6 +1,5 @@
 #include "ObjetCP.h"
 
-#include <QMessageBox>
 #include <QSqlQuery>
 #include <QVariant>
 
@@ -44,7 +43,7 @@ ObjetCP::ObjetCP(QString ref) :
 
 		m_refBdd = ref;
 	} else {
-		QMessageBox::critical(nullptr, tr("Objet introuvable"), tr("L'objet demandé est introuvable : ", "Suivi de la référence") + ref);
+		qCritical() << "L'objet demandé est introuvable : " + ref;
 		m_valid = false;
 		m_nom = "";
 		m_type = "";

@@ -5,11 +5,11 @@
 #include <QDoubleSpinBox>
 #include <QListView>
 #include <QSpinBox>
+#include <QStandardItemModel>
 #include <QTableView>
 #include <QTimeEdit>
 
 #include "ActionsFenetre.h"
-#include "FenPrincipal.h"
 #include "Interface.h"
 #include "Soiree.h"
 
@@ -37,7 +37,7 @@ public slots:
 	void modifierObjet();
 	void afficherInfosObjet(QModelIndex cells);
 
-	void enregistrerSoiree();
+	// void enregistrerSoiree();
 	void infosSoiree();
 	void griserActions();
 	Soiree *getSoiree();

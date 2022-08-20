@@ -2,12 +2,9 @@
 #define SOIREE_H
 
 #include <QObject>
-#include <QPrinter>
 #include <QSettings>
-#include <QStandardItemModel>
 
 #include "ObjetCP.h"
-#include "ObjetCPObs.h"
 #include "ObjetObs.h"
 #include "settings.h"
 
@@ -23,7 +20,6 @@ public:
 	static QVector<ObjetObs *> trierPlanning(QVector<ObjetObs *> planning);
 	static int trouverPlusPetit(const QVector<ObjetObs *> &planning);
 	static Soiree *soaToSoiree(const QString &fileName);
-	static bool ajouterSoireeRecentes(const QString &fileName);
 
 	bool soireeToSoa(QString const &fileName);
 
@@ -35,7 +31,6 @@ public:
 	void modifierDuree(int index, int duree);
 	void descendreObjet(int index);
 	void monterObjet(int index);
-	QStandardItemModel *toModele() const;
 	QString retourDebut() const;
 	QString retourFin() const;
 	QString duree() const;
@@ -72,13 +67,10 @@ public:
 	QVector<ObjetObs *> getPlanningOld() const;
 	QString getFile() const;
 
-	void toXML() const;
-	void toPDF();
-	bool paintPdf(QPrinter *printer);
+	void toXML(QIODevice *device) const;
 
 	bool hasChanged(); // Si la soirée a changé
 	bool shouldBeSaved(); // Si la soirée a changé ou qu'elle n'est pas enregistré
-	bool enregistrerSoiree();
 
 signals:
 	void generation(int);

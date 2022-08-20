@@ -1,42 +1,34 @@
 #include "HauteurMaxTemps.h"
 
-#include <QMessageBox>
+#include <QDebug>
 
-HauteurMaxTemps::HauteurMaxTemps() {}
-HauteurMaxTemps::HauteurMaxTemps(QDateTime temps, double hauteurMax)
+HauteurMaxTemps::HauteurMaxTemps(const QDateTime &time, double hauteurMax) :
+    m_temps(time),
+    m_hauteurMax(hauteurMax)
 {
-	if (temps.isValid() && !temps.isNull())
-		m_temps = temps;
-	else {
-		QMessageBox::critical(nullptr, QObject::tr("Date"), QObject::tr("Erreur de date dans HauteurMaxTemps. Contacter le developpeur."));
+	if (!time.isValid()) {
+		qCritical() << "Erreur de date dans HauteurMaxTemps. Contacter le developpeur.";
 		m_temps = QDateTime();
 	}
-	if (hauteurMax < 90 && hauteurMax > -90)
-		m_hauteurMax = hauteurMax;
-	else {
-		QMessageBox::critical(nullptr, QObject::tr("Hauteur maximum"), QObject::tr("La hauteur maximum doit être comprise entre -90° et 90°"));
+
+	if (hauteurMax > 90 || hauteurMax < -90) {
+		qCritical() << "La hauteur maximum doit être comprise entre -90° et 90°";
 		m_hauteurMax = 0;
 	}
 }
-double HauteurMaxTemps::hauteurMax() const
-{
-	return m_hauteurMax;
-}
-QDateTime HauteurMaxTemps::temps() const
-{
-	return m_temps;
-}
+
 void HauteurMaxTemps::setHauteurMax(double hauteur)
 {
 	if (hauteur < 90 && hauteur > -90)
 		m_hauteurMax = hauteur;
 	else
-		QMessageBox::critical(nullptr, QObject::tr("Hauteur maximum"), QObject::tr("La hauteur maximum doit être comprise entre -90° et 90°"));
+		qCritical() << "La hauteur maximum doit être comprise entre -90° et 90°";
 }
-void HauteurMaxTemps::setDateTime(QDateTime date)
+
+void HauteurMaxTemps::setDateTime(const QDateTime &date)
 {
 	if (date.isValid())
 		m_temps = date;
 	else
-		QMessageBox::critical(nullptr, QObject::tr("Date"), QObject::tr("Erreur de date dans HauteurMaxTemps. Contacter le developpeur."));
+		qCritical() << "Erreur de date dans HauteurMaxTemps. Contacter le developpeur.";
 }

@@ -46,6 +46,10 @@ public slots:
 protected:
 	void closeEvent(QCloseEvent *event);
 
+private slots:
+	void saveAll();
+	bool save(Soiree *night);
+
 private:
 	// Liste des actions dans une classe (pour être accessible partout
 	ActionsFenetre *listeActions;

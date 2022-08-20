@@ -95,7 +95,7 @@ InterfaceCreation::InterfaceCreation(double latitude, double longitude, QDateTim
 	connect(m_listeActions->getActionMonterObjet(), &QAction::triggered, this, &InterfaceCreation::monterObjet);
 	connect(m_listeActions->getActionDescendreObjet(), &QAction::triggered, this, &InterfaceCreation::descendreObjet);
 	connect(m_listeActions->getActionChangerDureeObjet(), &QAction::triggered, this, &InterfaceCreation::modifierObjet);
-	connect(m_listeActions->getActionEnregistrer(), &QAction::triggered, this, &InterfaceCreation::enregistrerSoiree);
+	//	connect(m_listeActions->getActionEnregistrer(), &QAction::triggered, this, &InterfaceCreation::enregistrerSoiree);
 	connect(m_listeActions->getActionAjouterPlanete(), &QAction::triggered, this, &InterfaceCreation::fenetrePlanete);
 	connect(m_listeActions->getActionInfoSoiree(), &QAction::triggered, this, &InterfaceCreation::infosSoiree);
 	connect(m_vue, &QTableView::doubleClicked, this, &InterfaceCreation::afficherInfosObjet);
@@ -459,18 +459,18 @@ void InterfaceCreation::afficherInfosObjet(QModelIndex cells)
 		fenetreInfos.exec();
 	}
 }
-void InterfaceCreation::enregistrerSoiree()
-{
-	if (m_active) {
-		emit afficher(tr("Enregistrement de la soirée en cours..."));
-		if (m_soiree->shouldBeSaved()) // Si on doit réellement l'enregistrer
-		{
-			m_soiree->enregistrerSoiree(); // On l'enregistre
-			QMessageBox::information(this, "Succès", "Enregistrement réussi.");
-			griserActions();
-		}
-	}
-}
+// void InterfaceCreation::enregistrerSoiree()
+//{
+//	if (m_active) {
+//		emit afficher(tr("Enregistrement de la soirée en cours..."));
+//		if (m_soiree->shouldBeSaved()) // Si on doit réellement l'enregistrer
+//		{
+//			m_soiree->enregistrerSoiree(); // On l'enregistre
+//			QMessageBox::information(this, "Succès", "Enregistrement réussi.");
+//			griserActions();
+//		}
+//	}
+// }
 void InterfaceCreation::infosSoiree()
 {
 	if (m_active) {

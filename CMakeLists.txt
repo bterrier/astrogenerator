@@ -19,12 +19,9 @@ add_definitions(
 add_subdirectory(src)
 
 if(WIN32)
-    message(here)
-find_program(WINDEPLOYQT windeployqt HINTS "${_qt_bin_dir}")
-message(here ${WINDEPLOYQT})
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/deploy-qt-windows.cmake.in" "${CMAKE_CURRENT_SOURCE_DIR}/deploy-qt-windows.cmake" @ONLY)
-
-set(CPACK_PRE_BUILD_SCRIPTS ${CMAKE_CURRENT_SOURCE_DIR}/deploy-qt-windows.cmake)
+    find_program(WINDEPLOYQT windeployqt HINTS "${_qt_bin_dir}")
+    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/deploy-qt-windows.cmake.in" "${CMAKE_CURRENT_SOURCE_DIR}/deploy-qt-windows.cmake" @ONLY)
+    set(CPACK_PRE_BUILD_SCRIPTS ${CMAKE_CURRENT_SOURCE_DIR}/deploy-qt-windows.cmake)
 endif()
 
 include(CPack)

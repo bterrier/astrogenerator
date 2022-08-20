@@ -9,6 +9,8 @@
 #include "Interface.h"
 #include "Soiree.h"
 
+#include "nightmodel.h"
+
 class InterfaceLecture : public Interface
 {
 	Q_OBJECT
@@ -29,7 +31,7 @@ public slots:
 	void setCouleurObjet();
 	void setCouleurConstellations();
 
-	void enregistrerSoiree();
+	// void enregistrerSoiree();
 	void carteCiel();
 	void afficherInfosObjet(QModelIndex cells);
 	void diaporama();
@@ -42,7 +44,7 @@ public slots:
 	Soiree *getSoiree();
 
 private:
-	QStandardItemModel *m_modele;
+	NightModel *m_model;
 	QTableView *m_vue;
 	Soiree *m_soiree;
 	Carteciel *m_carte;
