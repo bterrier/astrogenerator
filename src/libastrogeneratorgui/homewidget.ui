@@ -25,7 +25,7 @@
      <property name="maximumSize">
       <size>
        <width>250</width>
-       <height>250</height>
+       <height>275</height>
       </size>
      </property>
      <layout class="QVBoxLayout" name="vLayout1">
@@ -47,7 +47,7 @@
       <item>
        <widget class="QLabel" name="lblSettingsImage">
         <property name="pixmap">
-         <pixmap>:/icons/preferences.png</pixmap>
+         <pixmap resource="../../resources.qrc">:/icons/preferences.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -56,6 +56,12 @@
       </item>
       <item>
        <widget class="QLabel" name="lblSettingsDesc">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>Vous pouvez personnaliser le générateur pour que les résultats qu'il vous fournit soient plus proches de vos attentes.</string>
         </property>
@@ -81,7 +87,7 @@
      <property name="maximumSize">
       <size>
        <width>250</width>
-       <height>250</height>
+       <height>275</height>
       </size>
      </property>
      <layout class="QVBoxLayout" name="vLayout2">
@@ -103,7 +109,7 @@
       <item>
        <widget class="QLabel" name="lblGenImage">
         <property name="pixmap">
-         <pixmap>:/icons/generate.png</pixmap>
+         <pixmap resource="../../resources.qrc">:/icons/generate.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -112,6 +118,12 @@
       </item>
       <item>
        <widget class="QLabel" name="lblGenDesc">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>Rentrez plusieurs informations telles que votre latitude, longitude, niveau en astronomie ainsi que l'heure et la date d'observation et notre générateur vous créera automatiquement une liste d'objets à observer pour la soirée.</string>
         </property>
@@ -137,7 +149,7 @@
      <property name="maximumSize">
       <size>
        <width>250</width>
-       <height>250</height>
+       <height>275</height>
       </size>
      </property>
      <layout class="QVBoxLayout" name="vLayout3">
@@ -159,7 +171,7 @@
       <item>
        <widget class="QLabel" name="lblOpenImage">
         <property name="pixmap">
-         <pixmap>:/icons/ouvrir.png</pixmap>
+         <pixmap resource="../../resources.qrc">:/icons/ouvrir.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -193,7 +205,7 @@
      <property name="maximumSize">
       <size>
        <width>250</width>
-       <height>250</height>
+       <height>275</height>
       </size>
      </property>
      <layout class="QVBoxLayout" name="vLayout4">
@@ -215,7 +227,7 @@
       <item>
        <widget class="QLabel" name="lblCreateImage">
         <property name="pixmap">
-         <pixmap>:/icons/creer-soiree.png</pixmap>
+         <pixmap resource="../../resources.qrc">:/icons/creer-soiree.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -224,6 +236,12 @@
       </item>
       <item>
        <widget class="QLabel" name="lblCreateDesc">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>Créez facilement votre soirée de toute pièce sans la générer. Les objets qu'il est possible d'observer sont accessibles grâce à une grande base de données. Outil réservé aux astronomes confirmés.</string>
         </property>
@@ -240,6 +258,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
