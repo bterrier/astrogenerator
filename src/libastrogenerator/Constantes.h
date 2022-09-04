@@ -1,10 +1,8 @@
 #ifndef CONSTANTES_H
 #define CONSTANTES_H
 
-#define NOM_PROGRAMME       "astroGenerator"
-#define NOM_EQUIPE          "ua"
-#define FICHIER_VERSION     "http://www.univers-astronomie.fr/generateur-soiree/astrogenerator/version.vs"
-#define PAGE_TELECHARGEMENT "http://www.univers-astronomie.fr/generateur-soiree/astrogenerator/telecharger.php"
+#define NOM_PROGRAMME "astroGenerator"
+#define NOM_EQUIPE    "ua"
 
 #define HAUTEUR_MIN_OBJET   10 // La hauteur minimum pour qu'un objet soit placé dans la soirée (en °)
 #define TEMPS_ESPACE        3 // Espace minimum entre deux objets dans la soirée
@@ -29,11 +27,9 @@
 #define COULEUR_ETOILE        "#FFFF00"
 #define COULEUR_CONSTELLATION "#FFFFFF"
 
-#define URL_UNIVERS_ASTRONOMIE "http://www.univers-astronomie.fr"
-#define URL_GENERATEUR         "http://www.univers-astronomie.fr/generateur-soiree/"
-#define URL_CDS                "http://cds.u-strasbg.fr/"
-#define DEBUT_URL_CDS_OBJET    "http://simbad.u-strasbg.fr/simbad/sim-id?Ident="
-#define URL_OBJET_REMARQUABLE  "http://www.univers-astronomie.fr/articles/techniques/121-50-objets-remarquables-du-ciel-profond.html"
+#define URL_CDS               "http://cds.u-strasbg.fr/"
+#define DEBUT_URL_CDS_OBJET   "http://simbad.u-strasbg.fr/simbad/sim-id?Ident="
+#define URL_OBJET_REMARQUABLE "http://www.univers-astronomie.fr/articles/techniques/121-50-objets-remarquables-du-ciel-profond.html"
 
 constexpr auto URL_GITHUB = "https://github.com/bterrier/astrogenerator";
 
