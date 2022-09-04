@@ -94,7 +94,7 @@ DMS DMS::fromDegrees(double deg)
 
 QString DMS::toString() const
 {
-	return QStringLiteral("%1%2\xB0 %3' %4\"").arg(sign > 0 ? "" : "-").arg(d).arg(minutes).arg(seconds);
+	return QStringLiteral("%1%2° %3' %4\"").arg(sign > 0 ? "" : "-").arg(d).arg(minutes).arg(seconds);
 }
 
 } // namespace AstroCalc

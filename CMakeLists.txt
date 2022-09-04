@@ -17,6 +17,7 @@ add_definitions(
 )
 
 add_subdirectory(src)
+add_subdirectory(tests)
 
 if(WIN32)
     find_program(WINDEPLOYQT windeployqt HINTS "${_qt_bin_dir}")
