@@ -14,7 +14,7 @@ public:
 	void initialiser(QString ref);
 	int ngc() const;
 	int messier() const;
-	QString nomComplet(bool abrege = false) const;
+	QString nomComplet(bool abrege = false) const override;
 
 protected:
 	int m_ngc;

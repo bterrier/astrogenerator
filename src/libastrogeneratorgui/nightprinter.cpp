@@ -59,7 +59,7 @@ bool NightPrinter::paintPdf(Soiree *night, QPrinter *printer)
 	if (!printer || !printer->isValid()) {
 		return false;
 	}
-	QSettings *user = new QSettings(NOM_EQUIPE, NOM_PROGRAMME);
+	QSettings user(NOM_EQUIPE, NOM_PROGRAMME);
 	// ON CREE LE PDF
 	double k(printer->resolution() / 25.4); // On crée le facteur de positionnement pour la résolution
 	QPainter painter(printer);
@@ -177,7 +177,7 @@ bool NightPrinter::paintPdf(Soiree *night, QPrinter *printer)
 				painter.setFont(font);
 				painter.drawText(QRectF(0, 0, (210 - mD - mG) * k, 7 * k), Qt::AlignRight, QString::number(page));
 			}
-			if (i > 0 && (night->getPlanning().at(i)->getDebut().toSecsSinceEpoch() - night->getPlanning().at(i - 1)->getFin().toSecsSinceEpoch()) > user->value("generateur/pauseMin", TEMPS_ESPACE).toUInt() * 60) {
+			if (i > 0 && (night->getPlanning().at(i)->getDebut().toSecsSinceEpoch() - night->getPlanning().at(i - 1)->getFin().toSecsSinceEpoch()) > user.value("generateur/pauseMin", TEMPS_ESPACE).toUInt() * 60) {
 				// Si on est pas au premier objet et que le temps entre cet objet et celui d'avant est supérieur à TEMPS_ESPACE, alors on affiche une pause
 				int pause = night->getPlanning().at(i)->getDebut().toSecsSinceEpoch() - night->getPlanning().at(i - 1)->getFin().toSecsSinceEpoch();
 				pause = (int)pause / 60;

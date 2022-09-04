@@ -8,7 +8,7 @@ class tst_AstroCalc : public QObject
 
 public:
 	tst_AstroCalc();
-	~tst_AstroCalc();
+	~tst_AstroCalc() override;
 
 private slots:
 	void test_dms();

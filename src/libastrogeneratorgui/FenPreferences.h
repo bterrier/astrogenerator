@@ -14,7 +14,7 @@ class FenPreferences : public QDialog
 {
 	Q_OBJECT
 public:
-	explicit FenPreferences(FenPrincipal *parent = 0);
+	explicit FenPreferences(FenPrincipal *parent = nullptr);
 
 signals:
 	void telescopeChange(QString);

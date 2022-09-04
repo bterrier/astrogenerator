@@ -44,7 +44,7 @@ public slots:
 	void afficherMessage(QString message, int duree = 2000);
 
 protected:
-	void closeEvent(QCloseEvent *event);
+	void closeEvent(QCloseEvent *event) override;
 
 private slots:
 	void saveAll();

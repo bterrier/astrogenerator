@@ -14,7 +14,7 @@ class HomeWidget : public QWidget
 
 public:
 	explicit HomeWidget(QWidget *parent = nullptr);
-	~HomeWidget();
+	~HomeWidget() override;
 
 signals:
 	void generateClicked();

@@ -13,7 +13,7 @@ class FenetreBDD : public QDialog
 {
 	Q_OBJECT
 public:
-	explicit FenetreBDD(QWidget *parent = 0);
+	explicit FenetreBDD(QWidget *parent = nullptr);
 	QString creerRequete() const;
 
 public slots:

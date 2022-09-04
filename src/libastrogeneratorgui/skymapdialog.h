@@ -15,7 +15,7 @@ class SkyMapDialog : public QDialog
 
 public:
 	explicit SkyMapDialog(Carteciel *map, QWidget *parent = nullptr);
-	~SkyMapDialog();
+	~SkyMapDialog() override;
 
 private slots:
 	void saveImage();

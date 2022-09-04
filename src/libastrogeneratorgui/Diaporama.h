@@ -15,7 +15,7 @@ class Diaporama : public QWidget
 
 public:
 	explicit Diaporama(Soiree *soiree);
-	void keyPressEvent(QKeyEvent *event);
+	void keyPressEvent(QKeyEvent *event) override;
 
 public slots:
 	void demarrer();

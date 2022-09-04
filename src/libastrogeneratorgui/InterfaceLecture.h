@@ -15,7 +15,7 @@ class InterfaceLecture : public Interface
 {
 	Q_OBJECT
 public:
-	InterfaceLecture(Soiree *soiree, ActionsFenetre *listeActionsParam, QWidget *parent = 0);
+	InterfaceLecture(Soiree *soiree, ActionsFenetre *listeActionsParam, QWidget *parent = nullptr);
 
 public slots:
 	void monterObjet();
@@ -38,10 +38,10 @@ public slots:
 	void toXML();
 	void imprimer();
 	void toPDF();
-	void infosSoiree();
-	void griserActions();
+	void infosSoiree() override;
+	void griserActions() override;
 
-	Soiree *getSoiree();
+	Soiree *getSoiree() override;
 
 private:
 	NightModel *m_model;

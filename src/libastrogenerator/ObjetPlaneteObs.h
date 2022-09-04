@@ -13,7 +13,7 @@ class ObjetPlaneteObs : public ObjetObs
 
 public:
 	ObjetPlaneteObs(QString nomPlanete, QDateTime debut, QDateTime fin);
-	QString nomComplet(bool abrege = false) const;
+	QString nomComplet(bool abrege = false) const override;
 
 	double illumination() const;
 	double distance() const;

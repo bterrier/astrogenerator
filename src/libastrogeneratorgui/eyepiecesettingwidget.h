@@ -14,7 +14,7 @@ class EyepieceSettingWidget : public QWidget
 
 public:
 	explicit EyepieceSettingWidget(QWidget *parent = nullptr);
-	~EyepieceSettingWidget();
+	~EyepieceSettingWidget() override;
 
 	QString settingString() const;
 	void add(int focalLength);

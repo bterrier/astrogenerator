@@ -1,0 +1,2 @@
+Checks: 'modernize-use-nullptr,modernize-use-override,modernize-use-using'
+FormatStyle: file

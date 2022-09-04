@@ -21,7 +21,7 @@ class FenInfosCreation : public QDialog
 {
 	Q_OBJECT
 public:
-	explicit FenInfosCreation(FenPrincipal *parent = 0);
+	explicit FenInfosCreation(FenPrincipal *parent = nullptr);
 
 public slots:
 	void actualiserCoordonnees(QString nom);

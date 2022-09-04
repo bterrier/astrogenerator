@@ -507,7 +507,7 @@ void Soiree::modifierDuree(int index, int duree)
 void Soiree::ajouterObjet(int index, ObjetCP *objetParam, int duree)
 { // INDEX : index de l'objet précédent REFERENCE : pour instancier Objet DUREE : duree de l'objet
 
-	QSettings *user = new QSettings(NOM_EQUIPE, NOM_PROGRAMME);
+	QScopedPointer<QSettings> user{new QSettings(NOM_EQUIPE, NOM_PROGRAMME)};
 	if (index >= 0 && index < m_listeObjets.size() && indexFromRef(objetParam->ref()) == -1) // On vérifie qu'on a un index correct et que l'objet n'est pas dans la soirée
 	{
 		QVector<double> hauteurAzimut;
@@ -536,7 +536,7 @@ void Soiree::ajouterObjet(int index, ObjetCP *objetParam, int duree)
 }
 void Soiree::ajouterObjet(int index, QString refPlanete, int duree)
 {
-	QSettings *user = new QSettings(NOM_EQUIPE, NOM_PROGRAMME);
+	QScopedPointer<QSettings> user{new QSettings(NOM_EQUIPE, NOM_PROGRAMME)};
 	if (index >= 0 && index < m_listeObjets.size() && indexFromRef(refPlanete) == -1) // On vérifie qu'on a un index correct et que l'objet n'est pas dans la soirée
 	{
 		QVector<double> hauteurAzimut;
@@ -564,7 +564,7 @@ void Soiree::ajouterObjet(int index, QString refPlanete, int duree)
 }
 void Soiree::ajouterObjet(ObjetObs *objet)
 {
-	QSettings *user = new QSettings(NOM_EQUIPE, NOM_PROGRAMME);
+	QScopedPointer<QSettings> user{new QSettings(NOM_EQUIPE, NOM_PROGRAMME)};
 	if (objet->getDebut() >= m_debut && objet->getDebut() < m_fin && objet->getFin() > m_debut && objet->getFin() <= m_fin) { // On vérifie qu'il rentre bien dans la soirée
 
 		bool ok(true);

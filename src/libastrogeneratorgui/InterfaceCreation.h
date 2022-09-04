@@ -38,9 +38,9 @@ public slots:
 	void afficherInfosObjet(QModelIndex cells);
 
 	// void enregistrerSoiree();
-	void infosSoiree();
-	void griserActions();
-	Soiree *getSoiree();
+	void infosSoiree() override;
+	void griserActions() override;
+	Soiree *getSoiree() override;
 
 private:
 	Soiree *m_soiree; // liste des objets à observer

@@ -10,7 +10,7 @@ class Interface : public QWidget
 {
 	Q_OBJECT
 public:
-	explicit Interface(ActionsFenetre *listeActions, QWidget *parent = 0);
+	explicit Interface(ActionsFenetre *listeActions, QWidget *parent = nullptr);
 	bool isActive();
 	void setActive(bool active);
 
