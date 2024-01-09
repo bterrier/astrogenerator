@@ -33,7 +33,7 @@
 #include "homewidget.h"
 
 FenPrincipal::FenPrincipal() :
-    m_homeWidget(new HomeWidget(this))
+	m_homeWidget(new HomeWidget(this))
 {
 	resize(1024, 768);
 	if (!QDir::setCurrent(QCoreApplication::applicationDirPath() + "/")) {
@@ -393,7 +393,7 @@ void FenPrincipal::closeEvent(QCloseEvent *event)
 
 void FenPrincipal::saveAll()
 {
-	for (auto interface : qAsConst(m_listeInterface)) {
+	for (auto interface : std::as_const(m_listeInterface)) {
 		auto night = interface->getSoiree();
 		// emit afficher(tr("Enregistrement de la soirée en cours..."));
 		if (night->shouldBeSaved()) // Si on doit réellement l'enregistrer
