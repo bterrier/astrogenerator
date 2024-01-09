@@ -37,7 +37,7 @@ QString Calculastro::enumQtToPays(QString ref)
 }
 QString Calculastro::enumQtToPays(QLocale::Country country)
 {
-	return enumQtToPays(QLocale::countryToString(country));
+	return enumQtToPays(QLocale::territoryToString(country));
 }
 
 QString Calculastro::paysToEnumQt(QString ref)

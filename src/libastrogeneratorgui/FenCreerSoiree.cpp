@@ -10,7 +10,7 @@
 #include "settings.h"
 
 FenCreerSoiree::FenCreerSoiree(QWidget *parent) :
-    QDialog(parent)
+	QDialog(parent)
 {
 	QString villeD, paysD;
 	paysD = Settings::instance().country();
@@ -222,7 +222,7 @@ void FenCreerSoiree::genererSoiree()
 	debut = debut.toUTC(); // Le convertissement est correct
 	fin = fin.toUTC();
 
-	QString countryLocal = Calculastro::enumQtToPays(QLocale::countryToString(QLocale::system().country()));
+	QString countryLocal = Calculastro::enumQtToPays(QLocale::territoryToString(QLocale::system().territory()));
 
 	if (countryLocal != m_pays->currentText() && countryLocal != "")
 		QMessageBox::warning(this, tr("Attention !"), tr("Vous essayez de générer une soirée dans un pays qui n'est pas le vôtre. L'heure correspond à celle de votre ordinateur (") + countryLocal + ").");
@@ -282,10 +282,10 @@ void FenCreerSoiree::genererSoiree()
 	connect(soiree, &Soiree::generation, m_progress, &QProgressBar::setValue);
 
 	soiree->genererSoiree(m_latitude->value(),
-	                      m_longitude->value(),
-	                      debut, fin,
-	                      m_dureeObjet->value(), constList, niveau, requeteTelescope->value(0).toUInt(), requeteTelescope->value(1).toUInt(),
-	                      0, 0, Settings::instance().notes(), m_planetes->isChecked());
+						  m_longitude->value(),
+						  debut, fin,
+						  m_dureeObjet->value(), constList, niveau, requeteTelescope->value(0).toUInt(), requeteTelescope->value(1).toUInt(),
+						  0, 0, Settings::instance().notes(), m_planetes->isChecked());
 
 	soiree->setVille(m_villes->currentText());
 	soiree->setPays(m_pays->currentText());
