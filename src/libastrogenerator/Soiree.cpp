@@ -19,9 +19,9 @@
 
 Soiree::Soiree() {}
 void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime fin, int duree_une, QString constellation, QString niveau, unsigned int diametre, unsigned int focale,
-                           int hauteurMin,
-                           int pauseMin,
-                           const Notes &notes, bool boolPlanete)
+						   int hauteurMin,
+						   int pauseMin,
+						   const Notes &notes, bool boolPlanete)
 {
 	int nb_objets(0), moyTime(0), hMin(30), rep(0), espaceMin(0);
 	QDateTime obsPla[2];
@@ -42,12 +42,12 @@ void Soiree::genererSoiree(double lat, double longi, QDateTime debut, QDateTime 
 
 	QStringList planetes;
 	planetes << "P1"
-	         << "P2"
-	         << "P3"
-	         << "P4"
-	         << "P5"
-	         << "P6"
-	         << "P7";
+			 << "P2"
+			 << "P3"
+			 << "P4"
+			 << "P5"
+			 << "P6"
+			 << "P7";
 
 	QDateTime dateTime;
 	dateTime.setSecsSinceEpoch(moyTime);
@@ -677,7 +677,7 @@ bool Soiree::soireeToSoa(const QString &fileName)
 	for (const auto &eyepiece : oculaires) {
 		ligne2 += QString::number(eyepiece.focalLength()) + "|";
 	}
-	ligne2 = ligne2.left(ligne2.count() - 1);
+	ligne2 = ligne2.left(ligne2.size() - 1);
 	QFile soa(fileName);
 	if (soa.open(QIODevice::WriteOnly)) {
 		QTextStream flux(&soa);
@@ -685,7 +685,7 @@ bool Soiree::soireeToSoa(const QString &fileName)
 		flux.setCodec("UTF-8");
 #endif
 		flux << ligne1 << Qt::endl
-		     << ligne2 << Qt::endl;
+			 << ligne2 << Qt::endl;
 
 		for (int j(0); j < m_listeObjets.count(); j++) {
 			flux << m_listeObjets.at(j)->ref() << "|" << QString::number(m_listeObjets.at(j)->getDebut().toSecsSinceEpoch()) << "|" << QString::number(m_listeObjets.at(j)->getFin().toSecsSinceEpoch()) << Qt::endl;
@@ -742,7 +742,7 @@ void Soiree::toXML(QIODevice *device) const
 
 		QDomElement horaire = doc.createElement("horaire");
 		horaire.appendChild(doc.createTextNode("Entre " + locale.toString(m_listeObjets.at(i)->getDebut().time(), QLocale::ShortFormat) + " et "
-		                                       + locale.toString(m_listeObjets.at(i)->getFin().time(), QLocale::ShortFormat)));
+											   + locale.toString(m_listeObjets.at(i)->getFin().time(), QLocale::ShortFormat)));
 		objet.appendChild(horaire);
 
 		QDomElement element = doc.createElement("infos");

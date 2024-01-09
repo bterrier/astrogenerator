@@ -276,7 +276,7 @@ void FenCreerSoiree::genererSoiree()
 		delete soiree;
 		return;
 	} else
-		constList = constList.left(constList.count() - 1);
+		constList = constList.left(constList.size() - 1);
 
 	m_close->setDisabled(true);
 	connect(soiree, &Soiree::generation, m_progress, &QProgressBar::setValue);

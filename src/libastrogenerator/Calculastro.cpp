@@ -580,7 +580,7 @@ QString Calculastro::referencePlaneteToNom(QString ref, bool read)
 		qCritical() << "La référence de la planète est inconnue. Contacter le developpeur.";
 	}
 	if (read)
-		retour = retour.at(0).toUpper() + retour.right(retour.count() - 1); // On met en majuscule la 1ere lettre
+		retour = retour.at(0).toUpper() + retour.right(retour.size() - 1); // On met en majuscule la 1ere lettre
 	return retour;
 }
 HauteurMaxTemps Calculastro::hauteurMaxObjet(Objet *objet, QDateTime debut, QDateTime fin, double latitude, double longitude)

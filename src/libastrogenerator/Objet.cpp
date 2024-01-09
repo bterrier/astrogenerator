@@ -147,9 +147,9 @@ double Objet::hmsToDegree(QString val)
 
 	QStringList list = val.split(' ');
 
-	degree = QStringView{list.value(0)}.left(list.value(0).count() - 1).toDouble() * 15;
-	degree += QStringView{list.value(1)}.left(list.value(1).count() - 3).toDouble() * 15 / 60;
-	degree += QStringView{list.value(2)}.left(list.value(2).count() - 1).toDouble() * 15 / 3600;
+	degree = QStringView{list.value(0)}.left(list.value(0).size() - 1).toDouble() * 15;
+	degree += QStringView{list.value(1)}.left(list.value(1).size() - 3).toDouble() * 15 / 60;
+	degree += QStringView{list.value(2)}.left(list.value(2).size() - 1).toDouble() * 15 / 3600;
 
 	return degree;
 }

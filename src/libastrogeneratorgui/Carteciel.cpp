@@ -14,7 +14,7 @@
 #include "astrocalc.h"
 
 Carteciel::Carteciel(Soiree *soireeParam) :
-    QGraphicsScene()
+	QGraphicsScene()
 {
 	m_user = new QSettings(NOM_EQUIPE, NOM_PROGRAMME);
 
@@ -74,14 +74,14 @@ void Carteciel::dessinerCarte()
 
 	// On place les étoiles
 	QSqlQuery etoiles("SELECT ascdr, declinaison, magnitude, nom FROM etoiles "
-	                  "WHERE magnitude < 6");
+					  "WHERE magnitude < 6");
 	while (etoiles.next()) {
 		// Afficher les étoiles ici : voir code PHP toradian.php
 		raDecimal = hmsToDegree(etoiles.value(0).toString());
 		declinaisonDecimal = dmsToDegree(etoiles.value(1).toString());
 
 		hauteurAzimut = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), raDecimal, declinaisonDecimal,
-		                                                 m_latitude, m_longitude);
+														 m_latitude, m_longitude);
 		decrad = AstroCalc::deg2rad(hauteurAzimut[0]);
 		adrad = AstroCalc::deg2rad(hauteurAzimut[1]);
 
@@ -106,7 +106,7 @@ void Carteciel::dessinerCarte()
 	double magnitude;
 	for (int i(0); i < m_planning.size(); i++) {
 		hauteurAzimut = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), m_planning[i]->ascdrDouble(),
-		                                                 m_planning[i]->decDouble(), m_latitude, m_longitude);
+														 m_planning[i]->decDouble(), m_latitude, m_longitude);
 		decrad = AstroCalc::deg2rad(hauteurAzimut[0]);
 		adrad = AstroCalc::deg2rad(hauteurAzimut[1]);
 
@@ -126,7 +126,7 @@ void Carteciel::dessinerCarte()
 			if (m_planning.at(i)->type() == "Planète") {
 				nomObjetSoiree->setDefaultTextColor(planeteToColor(m_planning.at(i)->ref()));
 				addEllipse(xInt, yInt, taille, taille, planeteToColor(m_planning.at(i)->ref()),
-				           planeteToColor(m_planning.at(i)->ref()));
+						   planeteToColor(m_planning.at(i)->ref()));
 			} else {
 				nomObjetSoiree->setDefaultTextColor(m_couleurObjet);
 				addEllipse(xInt, yInt, taille + 2, taille, m_couleurObjet, m_couleurFond);
@@ -162,7 +162,7 @@ void Carteciel::dessinerCarte()
 			declinaisonDecimal = dmsToDegree(requeteDessin.value(1).toString());
 
 			hauteurAzimut = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), raDecimal,
-			                                                 declinaisonDecimal, m_latitude, m_longitude);
+															 declinaisonDecimal, m_latitude, m_longitude);
 
 			if (hauteurAzimut[0] >= 0) {
 				decrad = AstroCalc::deg2rad(hauteurAzimut[0]);
@@ -183,7 +183,7 @@ void Carteciel::dessinerCarte()
 			declinaisonDecimal = dmsToDegree(requeteDessin.value(1).toString());
 
 			hauteurAzimut = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), raDecimal,
-			                                                 declinaisonDecimal, m_latitude, m_longitude);
+															 declinaisonDecimal, m_latitude, m_longitude);
 
 			if (hauteurAzimut[0] >= 0) {
 				decrad = AstroCalc::deg2rad(hauteurAzimut[0]);
@@ -225,7 +225,7 @@ void Carteciel::dessinerCarte()
 			declinaisonDecimal = dmsToDegree(requeteNoms.value(1).toString());
 
 			hauteurAzimut = Calculastro::hauteurAzimutDegree(m_temps.date(), m_temps.time(), raDecimal,
-			                                                 declinaisonDecimal, m_latitude, m_longitude);
+															 declinaisonDecimal, m_latitude, m_longitude);
 			decrad = AstroCalc::deg2rad(hauteurAzimut[0]);
 			adrad = AstroCalc::deg2rad(hauteurAzimut[1]);
 
@@ -258,9 +258,9 @@ double Carteciel::dmsToDegree(QString dms)
 	signe = list.at(0).at(0);
 
 	// On s'occupe des degrés
-	if (list.at(0).count() == 4)
+	if (list.at(0).size() == 4)
 		d = QStringView{list.at(0)}.mid(1, 2).toDouble();
-	else if (list.at(0).count() == 3)
+	else if (list.at(0).size() == 3)
 		d = QStringView{list.at(0)}.mid(1, 1).toDouble();
 	else {
 		qFatal("Erreur dans dmsToDegree()");
@@ -268,10 +268,10 @@ double Carteciel::dmsToDegree(QString dms)
 	}
 
 	// On s'occupe des minutes
-	m = QStringView{list.at(1)}.left(list.at(1).count() - 1).toDouble();
+	m = QStringView{list.at(1)}.left(list.at(1).size() - 1).toDouble();
 
 	// On s'occupe des secondes
-	s = QStringView{list.at(2)}.left(list.at(2).count() - 1).toDouble();
+	s = QStringView{list.at(2)}.left(list.at(2).size() - 1).toDouble();
 
 	if (signe == "+")
 		return d + m / 60 + s / 3600;
@@ -285,13 +285,13 @@ double Carteciel::hmsToDegree(QString hms)
 	list = hms.split(" ");
 
 	// On s'occupe des heures
-	h = QStringView{list.at(0)}.left(list.at(0).count() - 1).toDouble();
+	h = QStringView{list.at(0)}.left(list.at(0).size() - 1).toDouble();
 
 	// On s'occupe des minutes
-	m = QStringView{list.at(1)}.left(list.at(1).count() - 3).toDouble();
+	m = QStringView{list.at(1)}.left(list.at(1).size() - 3).toDouble();
 
 	// On s'occupe des secondes
-	s = QStringView{list.at(2)}.left(list.at(2).count() - 1).toDouble();
+	s = QStringView{list.at(2)}.left(list.at(2).size() - 1).toDouble();
 
 	return (h + m / 60 + s / 3600) * 15;
 }
